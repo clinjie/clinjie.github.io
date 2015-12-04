@@ -1,17 +1,6 @@
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>公益404</title>
-</head>
-<body>
-<h1>404 Page Not Found</h1>
-<br>
-<script type="text/javascript" src="http://www.qq.com/404/search_children.js" charset="utf-8">
-</script>
-<br>
-</body>
-</html>
-
+layout:false
+---
+<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -40,13 +29,13 @@ p{color:#fff;margin-top:40px;font-size:24px;}
 </script>
 </head>
 
-<body onload="redirect();">
+<body onLoad="redirect();">
 <div class="whole">
-	<img src="http://7xowaa.com1.z0.glb.clouddn.com/back.jpg">
+	<img src="http://7xowaa.com1.z0.glb.clouddn.com/back.jpg" />
     <div class="mask"></div>
 </div>
 <div class="b">
-		<img src="http://7xowaa.com1.z0.glb.clouddn.com/404.png" class="center">
+		<img src="http://7xowaa.com1.z0.glb.clouddn.com/404.png" class="center"/>
 		<p>
 			暂时未能找到您查找的页面<br>
 			可能输入的网址错误或此页面不存在<br>
