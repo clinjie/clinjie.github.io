@@ -94,7 +94,7 @@ var Instagram = (function(){
 						ctrler(_collection);
 					}
 				}else{
-					alert("access_token timeout!");
+					//alert("access_token timeout!");
 				}
 			}
 		});
