@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JQuery选择器、过滤器介绍 | 窗外临街</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、JQuery对象与DOM对象1.JQuery对象JQuery对象就是使用“$(“DOMObj”)”，将DOM对象包装起来。一般在JQuery对象前面加上“$”这样与DMO对象区分，它已经是一种公认的命名约定。JQuery对象不能调用DOM对象的属性和方法，同样DOM对象也不能调用JQuery对象的属性和方法。 
+2.JQuery对象转成DOM对象如果想使用JQuery对象调用DOM对象的方法，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JQuery选择器、过滤器介绍">
+<meta property="og:url" content="http://peihao.space/article/2015/12/05/JQuery选择器、过滤器介绍/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="一、JQuery对象与DOM对象1.JQuery对象JQuery对象就是使用“$(“DOMObj”)”，将DOM对象包装起来。一般在JQuery对象前面加上“$”这样与DMO对象区分，它已经是一种公认的命名约定。JQuery对象不能调用DOM对象的属性和方法，同样DOM对象也不能调用JQuery对象的属性和方法。 
+2.JQuery对象转成DOM对象如果想使用JQuery对象调用DOM对象的方法，">
+<meta property="og:updated_time" content="2015-12-05T15:38:23.791Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JQuery选择器、过滤器介绍">
+<meta name="twitter:description" content="一、JQuery对象与DOM对象1.JQuery对象JQuery对象就是使用“$(“DOMObj”)”，将DOM对象包装起来。一般在JQuery对象前面加上“$”这样与DMO对象区分，它已经是一种公认的命名约定。JQuery对象不能调用DOM对象的属性和方法，同样DOM对象也不能调用JQuery对象的属性和方法。 
+2.JQuery对象转成DOM对象如果想使用JQuery对象调用DOM对象的方法，">
+  
+    <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/article/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xowaa.com1.z0.glb.clouddn.com/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">培豪</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/album">相册</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/article/tags/Front-End/" style="font-size: 20px;">Front End</a> <a href="/article/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/article/tags/随笔/" style="font-size: 20px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">衣服晒干风在穿，我一个人，很简单，自己放纵自己管…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">培豪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xowaa.com1.z0.glb.clouddn.com/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">培豪</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/album">相册</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-JQuery选择器、过滤器介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/article/2015/12/05/JQuery选择器、过滤器介绍/" class="article-date">
+  	<time datetime="2015-12-05T15:25:16.000Z" itemprop="datePublished">2015-12-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JQuery选择器、过滤器介绍
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/article/tags/Front-End/">Front End</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/article/categories/前端/">前端</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、JQuery对象与DOM对象">一、JQuery对象与DOM对象</h2><p>1.JQuery对象<br>JQuery对象就是使用“$(“DOMObj”)”，将DOM对象包装起来。一般在JQuery对象前面加上“$”这样与DMO对象区分，它已经是一种公认的命名约定。JQuery对象不能调用DOM对象的属性和方法，同样DOM对象也不能调用JQuery对象的属性和方法。 </p>
+<p>2.JQuery对象转成DOM对象<br>如果想使用JQuery对象调用DOM对象的方法，怎么办？应该将JQuery对象转换成DOM对象，JQuery对象是一个数组对象，这个很特别。所以只需调用JQueryObj[x]或JQueryObj.get(X);即可转换为DOM对象。 </p>
+<p>3.DOM对象转换成JQuery对象<br>使用“$(“DOMObj”)”将DOM对象包装起来就可以了。 </p>
+<h2 id="二、JQuery选择器">二、JQuery选择器 </h2><p>选择器是JQuery的根基，在JQuery 中，对事件处理，遍历DOM和Ajax操作都依赖于选择器。这也是今天我们学习的重点内容。 </p>
+<p>1.基本选择器<br>基本选择器是JQuery中最常用的选择器，也是最简单的选择器，它通过元素id、class 和标签名来查找DOM元素。这个非常重要，下面的内容都是以此为基础，逐级提高的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>).“$(“<span class="preprocessor">#id”)”，<span class="comment">//获取id指定的元素，id是全局唯一的，所以它只有一个成员。 </span></span></span><br><span class="line"><span class="number">2</span>).“$(“.<span class="keyword">class</span>”)”，<span class="comment">//获取class指定的元素，不同的元素可以具有相同的class属性，所以它可能具有多个成员。 </span></span><br><span class="line"><span class="number">3</span>).“$(“element”)”，<span class="comment">//获取element（元素名，比如div、table等）指定的元素，它可能具有多个成员。 </span></span><br><span class="line"><span class="number">4</span>).“$(“*”)”，<span class="comment">//获取所有元素，相当于document。 </span></span><br><span class="line"><span class="number">5</span>).“$(“selector1,selector2,…,selectorN”)”，<span class="comment">//将每个选择器匹配到的元素合并后一起返回。返回selector1匹配的集合+selector2匹配的集合+…+selectorN匹配的集合。</span></span><br></pre></td></tr></table></figure>
+<p>2.层次选择器<br>什么是层次？层次就是父子关系、兄弟关系的节点。所以，层次选择器就是用来获取指定元素的父子节点、兄弟节点。 </p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>).“<span class="variable">$(</span>“ancestor descendant”)”，获取ancestor元素下边的所有元素。 </span><br><span class="line"><span class="number">2</span>).“<span class="variable">$(</span>“<span class="keyword">parent</span> &gt; child”)”，获取<span class="keyword">parent</span>元素下边的所有子元素（只包含第一层子元素）。 </span><br><span class="line"><span class="number">3</span>).“<span class="variable">$(</span>“pre + next”)”，获取紧随pre元素的后一个兄弟元素。 </span><br><span class="line"><span class="number">4</span>).“<span class="variable">$(</span>“pre ~ siblings”)”，获取pre元素后边的所有兄弟元素。</span><br></pre></td></tr></table></figure>
+<p>3.过滤选择器<br>过滤？肯定是要添加过滤条件的。通过“:”添加过滤条件，比如“$(“div:first”)”返回div元素集合的第一个div元素，first是过滤条件。<br>按照不同的过滤规则，过滤选择器可以分为基本过滤，内容过滤，可见性过滤，属性过滤，子元素过滤和表单对象属性过滤选择器。 </p>
+<p>1). 基本过滤选择器   </p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a) “:first”，选取第一个元素，别忘记它也是被放在一个集合里哦！因为JQuery它是DOM对象的一个集合。如，“<span class="variable">$(</span><span class="string">"tr:first"</span>)”返回所有<span class="keyword">tr</span>元素的第一个<span class="keyword">tr</span>元素，它仍然被保存在集合中。 </span><br><span class="line">b) “:<span class="keyword">last</span>”，选取最后一个元素。如，“<span class="variable">$(</span><span class="string">"tr:last"</span>)”返回所有<span class="keyword">tr</span>元素的最后一个<span class="keyword">tr</span>元素，它仍然被保存在集合中。 </span><br><span class="line">c) “:<span class="keyword">not</span>(selector)”，去除所有与给定选择器匹配的元素。如，“<span class="variable">$(</span><span class="string">"input:not(:checked)"</span>)”返回所有input元素，但去除被选中的元素（单选框、多选框）。 </span><br><span class="line">d) “:even”，选取所有元素中偶数的元素。因为JQuery对象是一个集合，这里的偶数指的就是集合的索引，索引从<span class="number">0</span>开始。 </span><br><span class="line">e) “:odd”，选取所有元素中奇数的元素，索引从<span class="number">0</span>开始。 </span><br><span class="line">f) “:e<span class="string">q(index)</span>”，选取指定索引的元素，索引从<span class="number">0</span>开始。 </span><br><span class="line">g) “:<span class="keyword">gt</span>(<span class="keyword">index</span>)”，选取索引大于指定<span class="keyword">index</span>的元素，索引从<span class="number">0</span>开始。 </span><br><span class="line">h) “:<span class="keyword">lt</span>(<span class="keyword">index</span>)”，选取索引小于指定<span class="keyword">index</span>的元素，索引从<span class="number">0</span>开始。 </span><br><span class="line">i) “:header”，选取所有的标题元素，如hq、h2等。 </span><br><span class="line">j) “:animated”，选取当前正在执行的所有动画元素。</span><br></pre></td></tr></table></figure>
+<p>2). 内容过滤选择器<br>它是对元素和文本内容的操作。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a) “:<span class="function"><span class="title">contains</span><span class="params">(text)</span></span>”，选取包含text文本内容的元素。 </span><br><span class="line">b) “:empty”，选取不包含子元素或者文本节点的空元素。 </span><br><span class="line">c) “:<span class="function"><span class="title">has</span><span class="params">(selector)</span></span>”，选取含有选择器所匹配的元素的元素。 </span><br><span class="line">d) “:parent”，选取含有子元素或文本节点的元素。（它是一个父节点）</span><br></pre></td></tr></table></figure>
+<p>3). 可见性过滤选择器<br>根据元素的可见与不可见状态来选取元素。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">“<span class="pseudo">:hidden</span>”，选取所有不可见元素。 </span><br><span class="line">“<span class="pseudo">:visible</span>”，选择所有可见元素。 </span><br><span class="line">可见选择器：<span class="tag">hidden</span> 不仅包含样式属性 <span class="tag">display</span> 为 <span class="tag">none</span> 的元素，也包含文本隐藏域 </span><br><span class="line">	(&lt;input type=“hidden”&gt;)</span><br><span class="line">和 <span class="tag">visible</span><span class="pseudo">:hidden</span> 之类的元素。</span><br></pre></td></tr></table></figure>
+<p>4).属性过滤选择器<br>通过元素的属性来选取相应的元素。 </p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a) “[<span class="literal">attribute</span>]”，选取拥有此属性的元素。 </span><br><span class="line">b) “[<span class="literal">attribute</span>=<span class="keyword">value</span>]”，选取指定属性值为<span class="keyword">value</span>的所有元素。 </span><br><span class="line">c) “[<span class="literal">attribute</span> !=<span class="keyword">value</span>]”，选取属性值不为<span class="keyword">value</span>的所有元素。 </span><br><span class="line">d) “[<span class="literal">attribute</span> ^= <span class="keyword">value</span>]”，选取属性值以<span class="keyword">value</span>开始的所有元素。 </span><br><span class="line">e) “[<span class="literal">attribute</span> $= <span class="keyword">value</span>]”，选取属性值以<span class="keyword">value</span>结束的所有元素。 </span><br><span class="line">f) “[<span class="literal">attribute</span> *= <span class="keyword">value</span>]”，选取属性值包含<span class="keyword">value</span>的所有元素。 </span><br><span class="line">g) “[selector1] [selector2]…[selectorN]”，复合性选择器，首先经[selector1]选择返回集合A，集合A再经过[selector2]选择返回集合B，集合B再经过[selectorN]选择返回结果集合。</span><br></pre></td></tr></table></figure>
+<p>5). 子元素过滤选择器<br>一看名字便是，它是对某一元素的子元素进行选取的。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">a) “:<span class="function"><span class="title">nth-child</span><span class="params">(index/even/odd)</span></span>”，选取索引为index的元素、索引为偶数的元素、索引为奇数的元素。 </span><br><span class="line">l <span class="function"><span class="title">nth-child</span><span class="params">(even/odd)</span></span>：能选取每个父元素下的索引值为偶(奇)数的元素。 </span><br><span class="line">l <span class="function"><span class="title">nth-child</span><span class="params">(<span class="number">2</span>)</span></span>：能选取每个父元素下的索引值为 <span class="number">2</span> 的元素。 </span><br><span class="line">l <span class="function"><span class="title">nth-child</span><span class="params">(<span class="number">3</span>n)</span></span>：能选取每个父元素下的索引值是 <span class="number">3</span> 的倍数的元素。 </span><br><span class="line">l <span class="function"><span class="title">nth-child</span><span class="params">(<span class="number">3</span>n + <span class="number">1</span>)</span></span>：能选取每个父元素下的索引值是 <span class="number">3</span>n + <span class="number">1</span>的元素。 </span><br><span class="line">b) “:first-child”，选取第一个子元素。 </span><br><span class="line">c) “:last-child”，选取最后一个子元素。 </span><br><span class="line">d) “:only-child”，选取唯一子元素，它的父元素只有它这一个子元素。</span><br></pre></td></tr></table></figure>
+<p>6). 表单过滤选择器<br>选取表单元素的过滤选择器。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">a</span>) “<span class="pseudo">:input</span>”，选取所有&lt;<span class="tag">input</span>&gt;、&lt;<span class="tag">textarea</span>&gt;、&lt;<span class="tag">select</span> &gt;和&lt;<span class="tag">button</span>&gt;元素。 </span><br><span class="line"><span class="tag">b</span>) “<span class="pseudo">:text</span>”，选取所有的文本框元素。 </span><br><span class="line"><span class="tag">c</span>) “<span class="pseudo">:password</span>”，选取所有的密码框元素。 </span><br><span class="line"><span class="tag">d</span>) “<span class="pseudo">:radio</span>”，选取所有的单选框元素。 </span><br><span class="line"><span class="tag">e</span>) “<span class="pseudo">:checkbox</span>”，选取所有的多选框元素。 </span><br><span class="line"><span class="tag">f</span>) “<span class="pseudo">:submit</span>”，选取所有的提交按钮元素。 </span><br><span class="line"><span class="tag">g</span>) “<span class="pseudo">:image</span>”，选取所有的图像按钮元素。 </span><br><span class="line"><span class="tag">h</span>) “<span class="pseudo">:reset</span>”，选取所有重置按钮元素。 </span><br><span class="line"><span class="tag">i</span>) “<span class="pseudo">:button</span>”，选取所有按钮元素。 </span><br><span class="line"><span class="tag">j</span>) “<span class="pseudo">:file</span>”，选取所有文件上传域元素。 </span><br><span class="line"><span class="tag">k</span>) “<span class="pseudo">:hidden</span>”，选取所有不可见元素。</span><br></pre></td></tr></table></figure>
+<p>7).表单对象属性过滤选择器<br>选取表单元素属性的过滤选择器。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">“<span class="pseudo">:enabled</span>”，选取所有可用元素。 </span><br><span class="line">“<span class="pseudo">:disabled</span>”，选取所有不可用元素。 </span><br><span class="line">“<span class="pseudo">:checked</span>”，选取所有被选中的元素，如单选框、复选框。 </span><br><span class="line">“<span class="pseudo">:selected</span>”，选取所有被选中项元素，如下拉列表框、列表框。</span><br></pre></td></tr></table></figure>
+<p>四、JQuery中的DOM操作<br>一种与浏览器，平台，语言无关的接口。使用该接口可以轻松地访问页面中所有的标准组件。<br>DOM Core：DOM Core 并不专属于 JavaScript，任何一种支持 DOM 的程序设计语言都可以使用它。它的用途并非仅限于处理网页，也可以用来处理任何一种是用标记语言编写出来的文档，例如：XML。<br>HTML DOM：使用 JavaScript 和 DOM 为 HTML 文件编写脚本时，有许多专属于HTML-DOM的属性。<br>CSS-DOM：针对于CSS操作，在JavaScript中，CSS-DOM 主要用于获取和设置 style 对象的各种属性。 </p>
+<p>1.查找节点<br>请见上面的“基本选择器”。 </p>
+<p>2.创建节点<br>使用JQuery的工厂函数，创建一个新节点：<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var <span class="variable">$newNode</span> = $(“&lt;p&gt;你好&lt;/p&gt;”);</span><br></pre></td></tr></table></figure></p>
+<p>然后将新节点插入到指定元素节点处。 </p>
+<p>3.插入节点<br>将新创建的节点，或获取的节点插入指定的位置。</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">“<span class="variable">$node</span>.append(<span class="variable">$newNode</span>)”，向每个匹配的元素内部的结尾处追加结尾处。如，“$(<span class="string">"p"</span>).append(<span class="string">"&lt;b&gt;Hello&lt;/b&gt;"</span>);”将<span class="string">"&lt;b&gt;Hello&lt;/b&gt;"</span>添加到<span class="string">"p"</span>内部的结尾处。 </span><br><span class="line">“<span class="variable">$newNode</span>.appendTo(<span class="variable">$node</span>)”，将新元素追加到每个匹配元素内部的结尾处。 </span><br><span class="line">“<span class="variable">$node</span>.prepend(<span class="variable">$newNode</span>)”，向每个匹配的元素内部的结尾处追加开始处。如，“$(<span class="string">"p"</span>).prepend(<span class="string">"&lt;b&gt;Hello&lt;/b&gt;"</span>);”将<span class="string">"&lt;b&gt;Hello&lt;/b&gt;"</span>添加到<span class="string">"p"</span>内部的起始处。 </span><br><span class="line">“<span class="variable">$newNode</span>.prependTo(<span class="variable">$node</span>)”， 将新元素追加到每个匹配元素内部的开始处。 </span><br><span class="line">“<span class="variable">$node</span>.after(<span class="variable">$newNode</span>)”，向每个匹配的元素的之后插入内容，是并列兄弟。如，“$(<span class="string">"p"</span>).after(<span class="string">"&lt;b&gt;Hello&lt;/b&gt;"</span>);”将<span class="string">"&lt;b&gt;Hello&lt;/b&gt;"</span>插入到<span class="string">"p"</span>的后边。它们是兄弟关系。 </span><br><span class="line">“<span class="variable">$newNode</span>.insertAfter(<span class="variable">$node</span>)”，将新元素插入到每个匹配元素之后。 </span><br><span class="line">“<span class="variable">$newNode</span>.before(<span class="variable">$node</span>)”，向每个匹配的元素的之前插入内容。如，“$(<span class="string">"p"</span>).before(<span class="string">"&lt;b&gt;Hello&lt;/b&gt;"</span>);”将<span class="string">"&lt;b&gt;Hello&lt;/b&gt;"</span>插入到<span class="string">"p"</span>的前面，它们是兄弟关系。 </span><br><span class="line">“<span class="variable">$node</span>.insertBefore(<span class="variable">$newNode</span>)”，将新元素插入到每个匹配元素之前。</span><br></pre></td></tr></table></figure>
+<p>注意：如果插入的节点是不是新创建的，插入将变成移动操作。所以，在插入这样的节点之前应该使用clone的节点。 </p>
+<p>4.删除节点<br>从DOM中删除所有匹配的元素。如，<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"p"</span>).<span class="keyword">remove</span>(<span class="string">".hello"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>删除所为class属性值为hello的p元素，还有它下面的所有元素。 </p>
+<p>从DOM中清除所有匹配的元素。如，<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(</span><span class="string">"p"</span>).empty();</span><br></pre></td></tr></table></figure></p>
+<p>清除所有p元素，还有它下面的所有元素。 </p>
+<p>5.复制节点<br>克隆匹配的DOM元素。如，<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(</span><span class="string">"p"</span>).clone();</span><br></pre></td></tr></table></figure></p>
+<p>返回克隆后的副本，但不具有任何行为。如果要将DOM的事件一起克隆，应该使用<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(</span><span class="string">"p"</span>).clone(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure></p>
+<p>6.替换节点<br>将所有匹配的元素都替换为指定的 HTML 或 DOM 元素。如，<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(</span><span class="string">"p"</span>).replaceWith(<span class="string">"&lt;b&gt;Paragraph. &lt;/b&gt;"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>将所有p元素，替换为<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"<span class="tag">&lt;<span class="title">b</span>&gt;</span>Paragraph. <span class="tag">&lt;/<span class="title">b</span>&gt;</span>"</span><br></pre></td></tr></table></figure></p>
+<p>与replaceWith相返：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(</span><span class="string">"&lt;b&gt;Paragraph. &lt;/b&gt;"</span>).replaceAll(<span class="string">"p"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>7.包裹节点<br>wrap()：将指定节点用其他标记包裹起来。该方法对于需要在文档中插入额外的结构化标记非常有用， 而且不会破坏原始文档的语义。如，<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$("p").wrap("<span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">'wrap'</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>");</span><br></pre></td></tr></table></figure></p>
+<p>每个p元素被包裹到<div>中。<br>wrapAll()：将所有匹配的元素用一个元素来包裹。而wrap()方法是将所有的元素进行单独包裹。如，<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(</span><span class="string">"p"</span>).wrapAll(<span class="string">"&lt;div&gt;&lt;/div&gt;"</span>);</span><br></pre></td></tr></table></figure></div></p>
+<p>将所有p元素包裹到<div>中。<br>wrapInner()：将每一个匹配的元素的子内容(包括文本节点)用其他结构化标记包裹起来。如，<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$("p").wrapInner("<span class="tag">&lt;<span class="title">b</span>&gt;</span><span class="tag">&lt;/<span class="title">b</span>&gt;</span>");</span><br><span class="line"> <span class="tag">&lt;<span class="title">b</span>&gt;</span>被每一个p元素包裹。</span><br></pre></td></tr></table></figure></div></p>
+<p>8.属性设置<br>attr()：获取属性和设置属性。<br>当为该方法传递一个参数时，即为某元素的获取指定属性。如，<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(</span><span class="string">"img"</span>).attr(<span class="string">"src"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>获取img元素的src属性值。<br>当为该方法传递两个参数时，即为某元素设置指定属性的值。如，<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(</span><span class="string">"img"</span>).attr(<span class="string">"src"</span>,<span class="string">"test.jpg"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>设置img元素的src属性值为test.jsp。<br>jQuery 中有很多方法都是一个函数实现获取和设置。如：<br>attr()，html()，text()，val()，height()，width()，css()等。<br>removeAttr()：删除指定元素的指定属性。 </p>
+<p>9.样式操作<br>可以通过“attr()”设置或获取css样式。<br>追加样式：addClass() 。如，<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(</span><span class="string">"p"</span>).addClass(<span class="string">"selected"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>向所有P元素中追加“selected”样式。<br>移除样式：removeClass() — 从匹配的元素中删除全部或指定的class。如，<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(</span><span class="string">"p"</span>).removeClass(<span class="string">"selected"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>删除所有P元素中的“selected”。<br>切换样式：toggleClass() — 控制样式上的重复切换。如果类名存在则删除它，如果类名不存在则添加它。如，<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"p"</span>).<span class="function"><span class="title">toggleClass</span><span class="params">(<span class="string">"selected"</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>所有的P元素中，如果存在“selected”样式就删除“selected”样式，否则就添加“selected”样式。<br>判断是否含有某个样式：hasClass() — 判断元素中是否含有某个 class，有返回 true； 否则返回 false。如，<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(this).<span class="function"><span class="title">hasClass</span><span class="params">(<span class="string">"protected"</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>判断当前节点是否有“protected”样式。 </p>
+<p>10.设置或获取HTML、文本和值<br>读取和设置某个元素中的 HTML 内容： html()，该方法可以用于 XHTML，但不能用于 XML 文档。<br>读取和设置某个元素中的文本内容：text()，该方法既可以用于 XHTML 也可以用于 XML 文档。<br>读取和设置某个元素中的值：val()，该方法类似 JavaScript 中的 value 属性。对于文本框，下拉列表框，单选框该方法可返回元素的值(多选框只能返回第一个值)。如果为多选下拉列表框，则返回一个包含所有选择值的数组。 </p>
+<p>11.常用遍历节点的方法<br>取得匹配元素的所有子元素组成的集合：children()。该方法只考虑第一层子元素而不考虑任何后代元素。<br>取得匹配元素后面紧邻的兄弟元素的集合(但集合中只有一个元素)：next()。<br>取得匹配元素前面紧邻的兄弟元素的集合(但集合中只有一个元素)：prev()。<br>取得匹配元素前后所有的兄弟元素: siblings()。 </p>
+<p>12.CSS-DOM操作<br>获取和设置元素的样式属性：css()。<br>获取和设置元素透明度：opacity()属性。<br>获取和设置元素高度，宽度：height()，width()。在设置值时，若只传递数字，则默认单位是px。如需要使用其他单位则需传递一个字符串，例如 “$(“p:first”).height(“2em”)”；<br>获取元素在当前视窗中的相对位移：offset()。它返回的对象包含了两个属性：top，left。该方法只对可见元素有效。 </p>
+<p>五、JQuery中的事件 </p>
+<p>1.加载DOM<br>在页面加载完毕后，浏览器会通过 JavaScript 为 DOM 元素添加事件。在常规的 JavaScript 代码中，通常使用 window.onload 方法，在JQuery 中使用$(document).ready() 方法。JQuery中的简化写法“$()”。在window.onload中注册事件时，只能在一个window.onload体中注册。但使用JQuery，可以在多个$(document).ready()或$()中注册。 </p>
+<p>2.事件绑定<br>对匹配的元素对指定的事件绑定。如，昨天我们在window.onload中绑定事件的方法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"p"</span>).onclick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert( $(<span class="keyword">this</span>).text() ); &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>在JQuery的$(document).ready()中可以这样绑定：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"p"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert( $(<span class="keyword">this</span>).text() ); &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>使用bind()，可以这样绑定：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"p"</span>).bind(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert( $(<span class="keyword">this</span>).text() ); &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>3.合成事件<br>hover()：模拟光标悬停时间。当光标移动到元素上时，会触发指定的第一个函数，当光标移出这个元素时，会触发指定的第二个函数。如，悬停效果：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"td"</span>).hover( <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;$(<span class="keyword">this</span>).addClass(<span class="string">"hover"</span>);&#125;,           </span><br><span class="line">	<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;$(<span class="keyword">this</span>).removeClass(<span class="string">"hover"</span>);&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>toggle()：用于模拟鼠标连续单击事件。第一次单击元素，触发指定的第一个函数，当再一次单击同一个元素时，则触发指定的第二个函数，如果有更多个函数，则依次触发，直到最后一个。如，设置元素的选择与非选中效果：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">"td"</span>).toggle( <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;$(<span class="keyword">this</span>).addClass(<span class="string">"selected"</span>);&#125;,        </span><br><span class="line">	<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;$(<span class="keyword">this</span>).removeClass(<span class="string">"selected"</span>);&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>使用toggle()而不传递参数，效果为切换元素的可见状态。 </p>
+<p>4.事件的冒泡<br>事件会按照 DOM 层次结构像水泡一样不断向上只止顶端。<br>解决：在事件处理函数中返回 false，会对事件停止冒泡。还可以停止元素的默认行为。<br>目前的所有UI交互或其事件，都支持这个特性。在自己的事件处理函数返回false将中止事件的继续向下传递。返回true事件继续向下传递。 </p>
+<p>5.事件对象的属性<br>事件对象：当触发事件时，事件对象就被创建了。在程序中使用事件只需要为处理函数添加一个参数。在事件处理函数中使用些参数。如，获取事件发生时，相对于页面的位置：event.pageX, event.pageY，event是事件处理函数的参数。 </p>
+<p>6.移除事件<br>移除某按钮上的所有click 事件：$(“btn”).unbind(“click”)<br>移除某按钮上的所有事件：$(“btn”).unbind();<br>one()：该方法可以为元素绑定处理函数。当处理函数触发一次后，事件立即被删除。即在每个对象上，事件处理函数只会被执行一次。 </p>
+<p>六、JQuery中的DOM动画<br>通过设置DOM对象的显示与隐藏方式，可以产生动画效果。 </p>
+<p>1.无动画效果的隐藏与显示<br>hide()：在HTML文档中，为一个元素调用hide()方法会将该元素的display样式改为none。代码功能同css(“display”, “none”);相同。<br>show()：将元素的display样式改为先前的显示状态。<br>toggle()：切换元素的可见状态：如果元素时可见的，则切换为隐藏；如果元素时隐藏的，则切换为可见的。 </p>
+<p>2.通过设置透明度效果的隐藏与显示，达到淡入淡出的动画效果<br>fadeIn()，fadeOut()：只改变元素的透明度。fadeOut() 会在指定的一段时间内降低元素的不透明度，直到元素完全消失。fadeIn() 则相反。如，用600毫秒缓慢的将段落淡入：$(“p”).fadeIn(“slow”);。<br>fadeTo()：把不透明度以渐近的方式调整到指定的值(0 – 1 之间)。并在动画完成后可选地触发一个回调函数。如，用200毫秒快速将段落的透明度调整到0.25，动画结束后，显示一个“Animation Done”信息框：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"p"</span>).fadeTo(<span class="string">"fast"</span>, <span class="number">0.25</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert(<span class="string">"Animation Done."</span>); &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>3.通过设置高度效果的隐藏与显示，达到滑下与收起的动画效果<br>slideDown()，slideUp()：只会改变元素的高度。如果一个元素的display属性为none，当调用slideDown() 方法时，这个元素将由上至下延伸显示。slideUp() 方法正好相反，元素由下至上缩短隐藏。如，用600毫秒缓慢的将段落滑下：<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(</span><span class="string">"p"</span>).slideDown(<span class="string">"slow"</span>);。</span><br></pre></td></tr></table></figure></p>
+<p>slideToggle()：通过高度变化来切换匹配元素的可见性。如，200毫秒快速将段落滑上或滑下，动画结束后，会显示一个“Animation Done”信息框：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"p"</span>).slideToggle(<span class="string">"fast"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert(<span class="string">"Animation Done."</span>); &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>使用JavaScript、JQuery可以处理当前页面的动态更新，再结合CSS样式可以做出十分漂亮的UI，甚至比桌面软件UI漂亮的多。JavaScript的编写与调试非常麻烦，所以也有一些公司出品了专门针对JavaScript应用的简化开发，比如Google出品的GWT，可以像使用Java编写swing那样编写JavaScript。它为用户提供像swing那样的UI接口与事件等操作并且支持JAVA的核心库。使用GWT自己的编译器，可以将JAVA代码编译为JavaScript代码、CSS样式文件和HTML。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/article/2015/12/05/some-css-selector/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">一些CSS选择器</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="JQuery选择器、过滤器介绍" data-title="JQuery选择器、过滤器介绍" data-url="http://peihao.space/article/article/2015/12/05/JQuery选择器、过滤器介绍/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 培豪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/article/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/article/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

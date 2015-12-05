@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++虚函数 | 窗外临街</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="C++的精髓——虚函数　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应的函数，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++虚函数">
+<meta property="og:url" content="http://peihao.space/article/2015/12/05/C++虚函数/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="C++的精髓——虚函数　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应的函数，">
+<meta property="og:updated_time" content="2015-12-05T15:05:22.900Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++虚函数">
+<meta name="twitter:description" content="C++的精髓——虚函数　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应的函数，">
+  
+    <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/article/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xowaa.com1.z0.glb.clouddn.com/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">培豪</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/album">相册</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/article/tags/Front-End/" style="font-size: 20px;">Front End</a> <a href="/article/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/article/tags/随笔/" style="font-size: 20px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">衣服晒干风在穿，我一个人，很简单，自己放纵自己管…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">培豪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xowaa.com1.z0.glb.clouddn.com/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">培豪</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/album">相册</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-C++虚函数" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/article/2015/12/05/C++虚函数/" class="article-date">
+  	<time datetime="2015-12-05T08:39:55.000Z" itemprop="datePublished">2015-12-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++虚函数
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/article/tags/基础知识/">基础知识</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/article/categories/C/">C++</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="C++的精髓——虚函数">C++的精髓——虚函数</h1><p>　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应的函数，这个函数就是虚函数。 </p>
+<p>定义虚函数的限制：  </p>
+<p>（1）非类的成员函数不能定义为虚函数，类的成员函数中静态成员函数和构造函数也不能定义为虚函数，但可以将析构函数定义为虚函数。实际上，优秀的程序员常常把基类的析构函数定义为虚函数。因为，将基类的析构函数定义为虚函数后，当利用delete删除一个指向派生类定义的对象指针时，系统会调用相应的类的析构函数。而不将析构函数定义为虚函数时，只调用基类的析构函数。  </p>
+<p>（2）只需要在声明函数的类体中使用关键字“virtual”将函数声明为虚函数，而定义函数时不需要使用关键字“virtual”。  </p>
+<p>（3）当将基类中的某一成员函数声明为虚函数后，派生类中的同名函数（函数名相同、参数列表完全一致、返回值类型相关）自动成为虚函数。  </p>
+<p>（4）如果声明了某个成员函数为虚函数，则在该类中不能出现和这个成员函数同名并且返回值、参数个数、类型都相同的非虚函数。在以该类为基类的派生类中，也不能出现这种同名函数。</p>
+<p>纯虚函数在基类中是没有定义的，必须在子类中加以实现，很像java中的接口函数！ </p>
+<p>define : virtual &lt;类型&gt;&lt;函数名&gt;(&lt;参数表&gt;)=0;  </p>
+<p>　　在许多情况下，在基类中不能对虚函数给出有意义的实现，而把它声明为纯虚函数，它的实现留给该基类的派生类去做。这就是纯虚函数的作用。<br>纯虚函数可以让类先具有一个操作名称，而没有操作内容，让派生类在继承时再去具体地给出定义。凡是含有纯虚函数的类叫做抽象类。这种类不能声明对象，只是作为基类为派生类服务。除非在派生类中完全实现基类中所有的的纯虚函数，否则，派生类也变成了抽象类，不能实例化对象。<br>一般而言纯虚函数的函数体是缺省的，但是也可以给出纯虚函数的函数体（此时纯虚函数变为虚函数），这一点经常被人们忽视，调用纯虚函数的方法为baseclass::virtual function.</p>
+<h2 id="虚函数">虚函数</h2><p>引入原因：为了方便使用多态特性，我们常常需要在基类中定义虚函数。<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Cman</span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Eat</span>(<span class="params"></span>)</span>&#123;……&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Move</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">CChild</span> : <span class="title">public</span> <span class="title">CMan</span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Eat</span>(<span class="params"></span>)</span>&#123;……&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">CMan m_man;</span><br><span class="line"></span><br><span class="line">CChild m_child;</span><br><span class="line"></span><br><span class="line"><span class="comment">//这才是使用的精髓，如果不定义基类的指针去使用，没有太大的意义</span></span><br><span class="line"></span><br><span class="line">CMan *p ;</span><br><span class="line"></span><br><span class="line">p = &amp;m_man ;</span><br><span class="line"></span><br><span class="line">p-&gt;Eat(); <span class="comment">//始终调用CMan的Eat成员函数，不会调用 CChild 的</span></span><br><span class="line"></span><br><span class="line">p = &amp;m_child;</span><br><span class="line"></span><br><span class="line">p-&gt;Eat(); <span class="comment">//如果子类实现(覆盖)了该方法，则始终调用CChild的Eat函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//不会调用CMan 的 Eat 方法；如果子类没有实现该函数，则调用CMan的Eat函数</span></span><br><span class="line"></span><br><span class="line">p-&gt;Move(); <span class="comment">//子类中没有该成员函数，所以调用的是基类中的</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="纯虚函数">纯虚函数</h2><p>引入原因：</p>
+<p>1、同“虚函数”；</p>
+<p>2、在很多情况下，基类本身生成对象是不合情理的。例如，动物作为一个基类可以派生出老虎、孔雀等子类，但动物本身生成对象明显不合常理。</p>
+<p>纯虚函数就是基类只定义了函数体，没有实现过程定义方法如下</p>
+<pre><code><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Eat</span><span class="params">()</span> </span>= <span class="number">0</span>; <span class="comment">//直接=0 不要 在cpp中定义就可以了</span>
+</code></pre><p>　　纯虚函数相当于接口，不能直接实例话，需要派生类来实现函数定义。有的人可能在想，定义这些有什么用啊 ，我觉得很有用。</p>
+<p>　　比如你想描述一些事物的属性给别人，而自己不想去实现，就可以定义为纯虚函数。说的再透彻一些。比如盖楼房，你是老板，你给建筑公司描述清楚你的楼房的特性，多少层，楼顶要有个花园什么的建筑公司就可以按照你的方法去实现了，如果你不说清楚这些，可能建筑公司不太了解你需要楼房的特性。用纯需函数就可以很好的分工合作了。</p>
+<p>虚函数和纯虚函数区别</p>
+<p>观点一：</p>
+<p>类里声明为虚函数的话,这个函数是实现的，哪怕是空实现，它的作用就是为了能让这个函数在它的子类里面可以被重载，这样的话，这样编译器就可以使用后期绑定来达到多态了</p>
+<p>纯虚函数只是一个接口，是个函数的声明而已，它要留到子类里去实现。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> A&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">protected</span>:</span><br><span class="line">	</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span></span>;<span class="comment">//普通类函数</span></span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">foo1</span><span class="params">()</span></span>;<span class="comment">//虚函数</span></span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">foo2</span><span class="params">()</span> </span>= <span class="number">0</span>;<span class="comment">//纯虚函数</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>观点二：</p>
+<p>虚函数在子类里面也可以不重载的；但纯虚必须在子类去实现，这就像Java的接口一样。通常我们把很多函数加上virtual，是一个好的习惯，虽然牺牲了一些性能，但是增加了面向对象的多态性，因为你很难预料到父类里面的这个函数不在子类里面不去修改它的实现</p>
+<p>观点三：</p>
+<p>虚函数的类用于“实作继承”，继承接口的同时也继承了父类的实现。当然我们也可以完成自己的实现。纯虚函数的类用于“介面继承”，主要用于通信协议方面。关注的是接口的统一性，实现由子类完成。一般来说，介面类中只有纯虚函数的。</p>
+<p>观点四：</p>
+<p>错误：带纯虚函数的类叫虚基类，这种基类不能直接生成对象，而只有被继承，并重写其虚函数后，才能使用。这样的类也叫抽象类。</p>
+<p>虚函数是为了继承接口和默认行为</p>
+<p>纯虚函数只是继承接口，行为必须重新定义</p>
+<p>虚基类的初始化<br>—　</p>
+<p>虚基类的初始化与一般多继承的初始化在语法上是一样的,但构造函数的调用次序不同.派生类构造函数的调用次序有三个原则:</p>
+<p>(1)虚基类的构造函数在非虚基类之前调用;</p>
+<p>(2)若同一层次中包含多个虚基类,这些虚基类的构造函  虚基类和非虚基类的区别虚基类和非虚基类的区别数按它们说明的次序调用;</p>
+<p>(3)若虚基类由非虚基类派生而来,则仍先调用基类构造函数,再调用派生类的构造函数.</p>
+<p>C++的虚基类　　在派生类继承基类时，加上一个virtual关键词则为虚拟基类继承，如：</p>
+<pre><code><span class="keyword">class</span> derive:<span class="keyword">virtual</span> <span class="keyword">public</span> base{};
+</code></pre><p>　　虚基类主要解决在多重继承时，基类可能被多次继承，虚基类主要提供一个基类给派生类，如：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span>&#123;&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D1</span>:<span class="typename">public B&#123;&#125;;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D2</span>:<span class="typename">public B&#123;&#125;;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>:<span class="typename">public D1</span>,<span class="typename">public D2&#123;&#125;;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>　　这里C在D1,D2上继承，但有两个基类，造成混乱。因而使用虚基类，即：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span>&#123;&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D1</span>:<span class="typename">virtual public B&#123;&#125;;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D2</span>:<span class="typename">virtual publicB&#123;&#125;;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>:<span class="typename">public D1</span>,<span class="typename">public D2</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="在使用虚基类时要注意：">在使用虚基类时要注意：</h2><p>(1) 一个类可以在一个类族中既被用作虚基类，也被用作非虚基类。
+　　</p>
+<p>(2) 在派生类的对象中，同名的虚基类只产生一个虚基类子对象，而某个非虚基类产生各自的子对象。
+　　</p>
+<p>(3) 虚基类子对象是由最远派生类的构造函数通过调用虚基类的构造函数进行初始化的。  </p>
+<p>(4) 最远派生类是指在继承结构中建立对象时所指定的类。
+　　</p>
+<p>(5) 派生类的构造函数的成员初始化列表中必须列出对虚基类构造函数的调用；如果未列出，则表示使用该虚基类的缺省构造函数。
+　　</p>
+<p>(6) 从虚基类直接或间接派生的派生类中的构造函数的成员初始化列表中都要列出对虚基类构造函数的调用。但仅仅用建立对象的最远派生类的构造函数调用虚基类的构造函数，而该派生类的所有基类中列出的对虚基类的构造函数的调用在执行中被忽略，从而保证对虚基类子对象只初始化一次。
+　　</p>
+<p>(7) 在一个成员初始化列表中同时出现对虚基类和非虚基类构造函数的调用时，虚基类的构造函数先于非虚基类的构造函数执行。</p>
+<p>静态联编：在程序链接阶段就可以确定的调用。</p>
+<p>动态联编：在程序执行时才能确定的调用。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/article/2015/12/05/some-css-selector/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          一些CSS选择器
+        
+      </div>
+    </a>
+  
+  
+    <a href="/article/2015/11/17/小记-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">小记(2)</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="C++虚函数" data-title="C++虚函数" data-url="http://peihao.space/article/article/2015/12/05/C++虚函数/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 培豪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/article/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/article/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
