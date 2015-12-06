@@ -11,7 +11,8 @@
 <meta property="og:url" content="http://peihao.space/2015/08/05/C++虚函数/index.html">
 <meta property="og:site_name" content="窗外临街">
 <meta property="og:description" content="C++的精髓——虚函数　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应的函数，">
-<meta property="og:updated_time" content="2015-12-06T04:29:35.069Z">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/C虚.jpg">
+<meta property="og:updated_time" content="2015-12-06T09:04:34.402Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++虚函数">
 <meta name="twitter:description" content="C++的精髓——虚函数　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应的函数，">
@@ -27,7 +28,13 @@
 <body>
   <div id="container">
     <div class="left-col">
-    <div class="overlay"></div>
+    <div class="overlay"> 
+<div align="left" style="margin-top:6px;">
+<p style="color:#cccc99;font-size:90%">欢迎你，第
+<img border="0" src="http://cc.amazingcounters.com/counter.php?i=3197773&c=9593632" style="height:16px;">
+位访客</p>
+</div>
+</div>
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
@@ -97,6 +104,8 @@
 							<li><a href="/tags/随笔">随笔</a></li>
 				        
 							<li><a href="/album">相册</a></li>
+				        
+							<li><a href="/gallery">Gallery</a></li>
 				        
 						</ul>
 					</nav>
@@ -179,6 +188,8 @@
 		        
 					<li><a href="/album">相册</a></li>
 		        
+					<li><a href="/gallery">Gallery</a></li>
+		        
 		        <div class="clearfix"></div>
 				</ul>
 			</nav>
@@ -237,13 +248,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="C++的精髓——虚函数">C++的精髓——虚函数</h1><p>　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应的函数，这个函数就是虚函数。 </p>
+        <p><img src="http://7xowaa.com1.z0.glb.clouddn.com/C虚.jpg" alt=""></p>
+<h1 id="C++的精髓——虚函数">C++的精髓——虚函数</h1><p>　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应的函数，这个函数就是虚函数。 </p>
+<a id="more"></a>
 <p>定义虚函数的限制：  </p>
 <p>（1）非类的成员函数不能定义为虚函数，类的成员函数中静态成员函数和构造函数也不能定义为虚函数，但可以将析构函数定义为虚函数。实际上，优秀的程序员常常把基类的析构函数定义为虚函数。因为，将基类的析构函数定义为虚函数后，当利用delete删除一个指向派生类定义的对象指针时，系统会调用相应的类的析构函数。而不将析构函数定义为虚函数时，只调用基类的析构函数。  </p>
 <p>（2）只需要在声明函数的类体中使用关键字“virtual”将函数声明为虚函数，而定义函数时不需要使用关键字“virtual”。  </p>
 <p>（3）当将基类中的某一成员函数声明为虚函数后，派生类中的同名函数（函数名相同、参数列表完全一致、返回值类型相关）自动成为虚函数。  </p>
 <p>（4）如果声明了某个成员函数为虚函数，则在该类中不能出现和这个成员函数同名并且返回值、参数个数、类型都相同的非虚函数。在以该类为基类的派生类中，也不能出现这种同名函数。</p>
-<a id="more"></a>
 <p>纯虚函数在基类中是没有定义的，必须在子类中加以实现，很像java中的接口函数！ </p>
 <p>define : virtual &lt;类型&gt;&lt;函数名&gt;(&lt;参数表&gt;)=0;  </p>
 <p>　　在许多情况下，在基类中不能对虚函数给出有意义的实现，而把它声明为纯虚函数，它的实现留给该基类的派生类去做。这就是纯虚函数的作用。<br>纯虚函数可以让类先具有一个操作名称，而没有操作内容，让派生类在继承时再去具体地给出定义。凡是含有纯虚函数的类叫做抽象类。这种类不能声明对象，只是作为基类为派生类服务。除非在派生类中完全实现基类中所有的的纯虚函数，否则，派生类也变成了抽象类，不能实例化对象。<br>一般而言纯虚函数的函数体是缺省的，但是也可以给出纯虚函数的函数体（此时纯虚函数变为虚函数），这一点经常被人们忽视，调用纯虚函数的方法为baseclass::virtual function.</p>
@@ -423,7 +435,7 @@ MathJax.Hub.Queue(function() {
 
 
 <div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;">
-<a title="Back To Top"><img src="/img/scrollup.png"/></a>
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 </div>
 <script src="/js/totop.js"></script>
 

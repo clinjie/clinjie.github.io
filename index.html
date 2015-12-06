@@ -26,7 +26,13 @@
 <body>
   <div id="container">
     <div class="left-col">
-    <div class="overlay"></div>
+    <div class="overlay"> 
+<div align="left" style="margin-top:6px;">
+<p style="color:#cccc99;font-size:90%">欢迎你，第
+<img border="0" src="http://cc.amazingcounters.com/counter.php?i=3197773&c=9593632" style="height:16px;">
+位访客</p>
+</div>
+</div>
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
@@ -96,6 +102,8 @@
 							<li><a href="/tags/随笔">随笔</a></li>
 				        
 							<li><a href="/album">相册</a></li>
+				        
+							<li><a href="/gallery">Gallery</a></li>
 				        
 						</ul>
 					</nav>
@@ -177,6 +185,8 @@
 					<li><a href="/tags/随笔">随笔</a></li>
 		        
 					<li><a href="/album">相册</a></li>
+		        
+					<li><a href="/gallery">Gallery</a></li>
 		        
 		        <div class="clearfix"></div>
 				</ul>
@@ -283,12 +293,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="C++的精髓——虚函数">C++的精髓——虚函数</h1><p>　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应的函数，这个函数就是虚函数。 </p>
-<p>定义虚函数的限制：  </p>
-<p>（1）非类的成员函数不能定义为虚函数，类的成员函数中静态成员函数和构造函数也不能定义为虚函数，但可以将析构函数定义为虚函数。实际上，优秀的程序员常常把基类的析构函数定义为虚函数。因为，将基类的析构函数定义为虚函数后，当利用delete删除一个指向派生类定义的对象指针时，系统会调用相应的类的析构函数。而不将析构函数定义为虚函数时，只调用基类的析构函数。  </p>
-<p>（2）只需要在声明函数的类体中使用关键字“virtual”将函数声明为虚函数，而定义函数时不需要使用关键字“virtual”。  </p>
-<p>（3）当将基类中的某一成员函数声明为虚函数后，派生类中的同名函数（函数名相同、参数列表完全一致、返回值类型相关）自动成为虚函数。  </p>
-<p>（4）如果声明了某个成员函数为虚函数，则在该类中不能出现和这个成员函数同名并且返回值、参数个数、类型都相同的非虚函数。在以该类为基类的派生类中，也不能出现这种同名函数。</p>
+        <p><img src="http://7xowaa.com1.z0.glb.clouddn.com/C虚.jpg" alt=""></p>
+<h1 id="C++的精髓——虚函数">C++的精髓——虚函数</h1><p>　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应的函数，这个函数就是虚函数。 </p>
       
     </div>
     
@@ -350,12 +356,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="一、JQuery对象与DOM对象">一、JQuery对象与DOM对象</h2><p>1.JQuery对象<br>JQuery对象就是使用“$(“DOMObj”)”，将DOM对象包装起来。一般在JQuery对象前面加上“$”这样与DMO对象区分，它已经是一种公认的命名约定。JQuery对象不能调用DOM对象的属性和方法，同样DOM对象也不能调用JQuery对象的属性和方法。 </p>
+        <p><img src="http://7xowaa.com1.z0.glb.clouddn.com/jquery.jpg" alt=""></p>
+<h2 id="一、JQuery对象与DOM对象">一、JQuery对象与DOM对象</h2><p>1.JQuery对象<br>JQuery对象就是使用“$(“DOMObj”)”，将DOM对象包装起来。一般在JQuery对象前面加上“$”这样与DMO对象区分，它已经是一种公认的命名约定。JQuery对象不能调用DOM对象的属性和方法，同样DOM对象也不能调用JQuery对象的属性和方法。 </p>
 <p>2.JQuery对象转成DOM对象<br>如果想使用JQuery对象调用DOM对象的方法，怎么办？应该将JQuery对象转换成DOM对象，JQuery对象是一个数组对象，这个很特别。所以只需调用JQueryObj[x]或JQueryObj.get(X);即可转换为DOM对象。 </p>
 <p>3.DOM对象转换成JQuery对象<br>使用“$(“DOMObj”)”将DOM对象包装起来就可以了。 </p>
-<h2 id="二、JQuery选择器">二、JQuery选择器 </h2><p>选择器是JQuery的根基，在JQuery 中，对事件处理，遍历DOM和Ajax操作都依赖于选择器。这也是今天我们学习的重点内容。 </p>
-<p>1.基本选择器<br>基本选择器是JQuery中最常用的选择器，也是最简单的选择器，它通过元素id、class 和标签名来查找DOM元素。这个非常重要，下面的内容都是以此为基础，逐级提高的。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>).“$(“<span class="preprocessor">#id”)”，<span class="comment">//获取id指定的元素，id是全局唯一的，所以它只有一个成员。 </span></span></span><br><span class="line"><span class="number">2</span>).“$(“.<span class="keyword">class</span>”)”，<span class="comment">//获取class指定的元素，不同的元素可以具有相同的class属性，所以它可能具有多个成员。 </span></span><br><span class="line"><span class="number">3</span>).“$(“element”)”，<span class="comment">//获取element（元素名，比如div、table等）指定的元素，它可能具有多个成员。 </span></span><br><span class="line"><span class="number">4</span>).“$(“*”)”，<span class="comment">//获取所有元素，相当于document。 </span></span><br><span class="line"><span class="number">5</span>).“$(“selector1,selector2,…,selectorN”)”，<span class="comment">//将每个选择器匹配到的元素合并后一起返回。返回selector1匹配的集合+selector2匹配的集合+…+selectorN匹配的集合。</span></span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -417,15 +421,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="一些CSS选择器">一些CSS选择器</h1><h2 id="1-*">1.*</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* <span class="rules">&#123;</span><br><span class="line"><span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+        <p><img src="http://7xowaa.com1.z0.glb.clouddn.com/css.jpg" alt=""></p>
+<h1 id="一些CSS选择器">一些CSS选择器</h1><h2 id="1-*">1.*</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* <span class="rules">&#123;</span><br><span class="line"><span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
 <p>　　在我们看比较高级的选择器之前，应该认识下这个众所周知的清空选择器。星号呢会将页面上所有每一个元素都选到。许多开发者都用它来清空margin和padding。当然你在练习的时候使用这个没问题，但是我不建议在生产环境中使用它。它会给浏览器凭添许多不必要的东西。</p>
-<p>*也可以用来选择某元素的所有子元素。</p>
-<p> #id</p>
-<pre><code><span class="id">#container</span> * <span class="rules">{
-  <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1px</span> solid black</span></span>;
-}</span>
-</code></pre><p>　　它会选中#container下的所有元素。当然，我还是不建议你去使用它，如果可能的话。</p>
-<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/star.html">DEMO</a></p>
       
     </div>
     
@@ -584,7 +582,7 @@ MathJax.Hub.Queue(function() {
 
 
 <div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;">
-<a title="Back To Top"><img src="/img/scrollup.png"/></a>
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 </div>
 <script src="/js/totop.js"></script>
 

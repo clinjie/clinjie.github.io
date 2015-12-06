@@ -13,7 +13,8 @@
 <meta property="og:site_name" content="窗外临街">
 <meta property="og:description" content="一、JQuery对象与DOM对象1.JQuery对象JQuery对象就是使用“$(“DOMObj”)”，将DOM对象包装起来。一般在JQuery对象前面加上“$”这样与DMO对象区分，它已经是一种公认的命名约定。JQuery对象不能调用DOM对象的属性和方法，同样DOM对象也不能调用JQuery对象的属性和方法。 
 2.JQuery对象转成DOM对象如果想使用JQuery对象调用DOM对象的方法，">
-<meta property="og:updated_time" content="2015-12-06T04:18:33.418Z">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/jquery.jpg">
+<meta property="og:updated_time" content="2015-12-06T09:04:54.836Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JQuery选择器、过滤器介绍">
 <meta name="twitter:description" content="一、JQuery对象与DOM对象1.JQuery对象JQuery对象就是使用“$(“DOMObj”)”，将DOM对象包装起来。一般在JQuery对象前面加上“$”这样与DMO对象区分，它已经是一种公认的命名约定。JQuery对象不能调用DOM对象的属性和方法，同样DOM对象也不能调用JQuery对象的属性和方法。 
@@ -30,7 +31,13 @@
 <body>
   <div id="container">
     <div class="left-col">
-    <div class="overlay"></div>
+    <div class="overlay"> 
+<div align="left" style="margin-top:6px;">
+<p style="color:#cccc99;font-size:90%">欢迎你，第
+<img border="0" src="http://cc.amazingcounters.com/counter.php?i=3197773&c=9593632" style="height:16px;">
+位访客</p>
+</div>
+</div>
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
@@ -100,6 +107,8 @@
 							<li><a href="/tags/随笔">随笔</a></li>
 				        
 							<li><a href="/album">相册</a></li>
+				        
+							<li><a href="/gallery">Gallery</a></li>
 				        
 						</ul>
 					</nav>
@@ -182,6 +191,8 @@
 		        
 					<li><a href="/album">相册</a></li>
 		        
+					<li><a href="/gallery">Gallery</a></li>
+		        
 		        <div class="clearfix"></div>
 				</ul>
 			</nav>
@@ -240,13 +251,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="一、JQuery对象与DOM对象">一、JQuery对象与DOM对象</h2><p>1.JQuery对象<br>JQuery对象就是使用“$(“DOMObj”)”，将DOM对象包装起来。一般在JQuery对象前面加上“$”这样与DMO对象区分，它已经是一种公认的命名约定。JQuery对象不能调用DOM对象的属性和方法，同样DOM对象也不能调用JQuery对象的属性和方法。 </p>
+        <p><img src="http://7xowaa.com1.z0.glb.clouddn.com/jquery.jpg" alt=""></p>
+<h2 id="一、JQuery对象与DOM对象">一、JQuery对象与DOM对象</h2><p>1.JQuery对象<br>JQuery对象就是使用“$(“DOMObj”)”，将DOM对象包装起来。一般在JQuery对象前面加上“$”这样与DMO对象区分，它已经是一种公认的命名约定。JQuery对象不能调用DOM对象的属性和方法，同样DOM对象也不能调用JQuery对象的属性和方法。 </p>
 <p>2.JQuery对象转成DOM对象<br>如果想使用JQuery对象调用DOM对象的方法，怎么办？应该将JQuery对象转换成DOM对象，JQuery对象是一个数组对象，这个很特别。所以只需调用JQueryObj[x]或JQueryObj.get(X);即可转换为DOM对象。 </p>
 <p>3.DOM对象转换成JQuery对象<br>使用“$(“DOMObj”)”将DOM对象包装起来就可以了。 </p>
+<a id="more"></a>
 <h2 id="二、JQuery选择器">二、JQuery选择器 </h2><p>选择器是JQuery的根基，在JQuery 中，对事件处理，遍历DOM和Ajax操作都依赖于选择器。这也是今天我们学习的重点内容。 </p>
 <p>1.基本选择器<br>基本选择器是JQuery中最常用的选择器，也是最简单的选择器，它通过元素id、class 和标签名来查找DOM元素。这个非常重要，下面的内容都是以此为基础，逐级提高的。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>).“$(“<span class="preprocessor">#id”)”，<span class="comment">//获取id指定的元素，id是全局唯一的，所以它只有一个成员。 </span></span></span><br><span class="line"><span class="number">2</span>).“$(“.<span class="keyword">class</span>”)”，<span class="comment">//获取class指定的元素，不同的元素可以具有相同的class属性，所以它可能具有多个成员。 </span></span><br><span class="line"><span class="number">3</span>).“$(“element”)”，<span class="comment">//获取element（元素名，比如div、table等）指定的元素，它可能具有多个成员。 </span></span><br><span class="line"><span class="number">4</span>).“$(“*”)”，<span class="comment">//获取所有元素，相当于document。 </span></span><br><span class="line"><span class="number">5</span>).“$(“selector1,selector2,…,selectorN”)”，<span class="comment">//将每个选择器匹配到的元素合并后一起返回。返回selector1匹配的集合+selector2匹配的集合+…+selectorN匹配的集合。</span></span><br></pre></td></tr></table></figure>
-<a id="more"></a>
 <p>2.层次选择器<br>什么是层次？层次就是父子关系、兄弟关系的节点。所以，层次选择器就是用来获取指定元素的父子节点、兄弟节点。 </p>
 <figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>).“<span class="variable">$(</span>“ancestor descendant”)”，获取ancestor元素下边的所有元素。 </span><br><span class="line"><span class="number">2</span>).“<span class="variable">$(</span>“<span class="keyword">parent</span> &gt; child”)”，获取<span class="keyword">parent</span>元素下边的所有子元素（只包含第一层子元素）。 </span><br><span class="line"><span class="number">3</span>).“<span class="variable">$(</span>“pre + next”)”，获取紧随pre元素的后一个兄弟元素。 </span><br><span class="line"><span class="number">4</span>).“<span class="variable">$(</span>“pre ~ siblings”)”，获取pre元素后边的所有兄弟元素。</span><br></pre></td></tr></table></figure>
 <p>3.过滤选择器<br>过滤？肯定是要添加过滤条件的。通过“:”添加过滤条件，比如“$(“div:first”)”返回div元素集合的第一个div元素，first是过滤条件。<br>按照不同的过滤规则，过滤选择器可以分为基本过滤，内容过滤，可见性过滤，属性过滤，子元素过滤和表单对象属性过滤选择器。 </p>
@@ -442,7 +454,7 @@ MathJax.Hub.Queue(function() {
 
 
 <div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;">
-<a title="Back To Top"><img src="/img/scrollup.png"/></a>
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 </div>
 <script src="/js/totop.js"></script>
 
