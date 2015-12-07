@@ -942,6 +942,13 @@ a {
 .article-title:hover {
   color: #b0a0aa;
 }
+.article-hit {
+  color: #696969;
+  font-size: 14;
+  margin-left: 750px;
+  position: absolute;
+  top: 23px;
+}
 .article-inner {
   position: relative;
   margin-bottom: 20px;
