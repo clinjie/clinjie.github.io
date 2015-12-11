@@ -945,8 +945,8 @@ a {
 .article-hit {
   color: #696969;
   font-size: 14;
-  margin-left: 750px;
   position: absolute;
+  right: 180px;
   top: 23px;
 }
 .article-inner {
@@ -1117,7 +1117,6 @@ a {
 .article-meta {
   width: 150px;
   font-size: 14;
-  text-align: right;
   position: absolute;
   right: 0;
   top: 23px;
