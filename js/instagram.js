@@ -53,23 +53,24 @@ var Instagram = (function(){
 	var ctrler = function(data){
 		var imgObj = {};
 		for(var i=0,len=data.length;i<len;i++){
-			var d = new Date(data[i].created_time*1000);
-			var y = d.getFullYear();
-			var m = d.getMonth()+1;
-			var src = replacer(data[i].images.low_resolution.url);
-			var bigSrc = replacer(data[i].images.standard_resolution.url);
-			var text = data[i].caption ? data[i].caption.text : ''; // data[i].caption 有可能为 null
+			//var d = new Date(data[i].created_time*1000);
+			var y = data[i].y;
+			var m = data[i].m;
+			var src = data[i].src;
+			//var bigSrc = replacer(data[i].images.standard_resolution.url);
+			var text = data[i].text; // data[i].caption 有可能为 null
 			var key = y+"-"+m;
 			if(imgObj[key]){
 				imgObj[key].srclist.push(src);
-				imgObj[key].bigSrclist.push(bigSrc);
+				imgObj[key].bigSrclist.push(src);
 				imgObj[key].text.push(text);
-			}else{
+			}else
+			{
 				imgObj[key] = {
 					year:y,
 					month:m,
-					srclist:[bigSrc],
-					bigSrclist:[bigSrc],
+					srclist:[src],
+					bigSrclist:[src],
 					text:[text]
 				}
 			}
@@ -78,14 +79,29 @@ var Instagram = (function(){
 	}
 
 	var getList = function(url){
-		$(".open-ins").html("图片来自instagram，正在加载中…");
-		$.ajax({
+		//$(".open-ins").html("图片来自instagram，正在加载中…");
+		_collection=[{"src":"http://7xowaa.com1.z0.glb.clouddn.com/shanghai1.png","text":"上海外滩","y":2015,"m":10},
+{"src":"http://7xowaa.com1.z0.glb.clouddn.com/shanghai2.png","text":"我-背影","y":2015,"m":10},
+{"src":"http://7xowaa.com1.z0.glb.clouddn.com/shanghai3.png","text":"我与马赛克","y":2015,"m":10},
+{"src":"http://7xowaa.com1.z0.glb.clouddn.com/shanghai4.png","text":"未名桥","y":2015,"m":10},
+{"src":"http://7xowaa.com1.z0.glb.clouddn.com/shanghai5.png","text":"色彩斑斓","y":2015,"m":10},
+{"src":"http://7xowaa.com1.z0.glb.clouddn.com/shanghai6.png","text":"随手拍","y":2014,"m":6},
+{"src":"http://7xowaa.com1.z0.glb.clouddn.com/shanghai7.png","text":"宜家","y":2015,"m":10},
+{"src":"http://7xowaa.com1.z0.glb.clouddn.com/shanghai8.png","text":"被抓拍","y":2015,"m":10},
+{"src":"http://7xowaa.com1.z0.glb.clouddn.com/shaonv.png","text":"很像","y":2015,"m":12},
+{"src":"http://7xowaa.com1.z0.glb.clouddn.com/renshenghaihai.jpg","text":"人生海海","y":2014,"m":11},
+{"src":"http://7xowaa.com1.z0.glb.clouddn.com/giveup.jpg","text":"你知道的-不放弃","y":2015,"m":12},
+{"src":"http://7xowaa.com1.z0.glb.clouddn.com/eo.jpg","text":"理想型、很像","y":2015,"m":11},
+{"src":"http://7xowaa.com1.z0.glb.clouddn.com/asinecat.jpg","text":"ashin-瞄","y":2013,"m":7}];
+		ctrler(_collection);
+		/*$.ajax({
 			url: url,
 			type:"GET",
 			dataType:"jsonp",
 			success:function(re){
 				if(re.meta.code == 200){
 					_collection = _collection.concat(re.data);
+					alert(re.data);
 					var next = re.pagination.next_url;
 					if(next){
 						getList(next);
@@ -97,7 +113,7 @@ var Instagram = (function(){
 					//alert("access_token timeout!");
 				}
 			}
-		});
+		});*/
 	}
 	
 
@@ -120,15 +136,15 @@ var Instagram = (function(){
 	return {
 		init:function(){
 			getList("https://api.instagram.com/v1/users/2309138942/media/recent?access_token=2309138942.1fb234f.eb4b75cd72b74d7a92c82c5bb6ba9df3&count=100");
-			var insid = $(".instagram").attr("data-client-id");
-            var userId = $(".instagram").attr("data-user-id");
+			//var insid = $(".instagram").attr("data-client-id");
+            //var userId = $(".instagram").attr("data-user-id");
 
-			if(!insid){
+			/*if(!insid){
 				alert("Didn't set your instagram client_id.\nPlease see the info on the console of your brower.");
 				console.log("Please open 'http://instagram.com/developer/clients/manage/' to get your client-id.");
 				return;
 			}
-			getList("https://api.instagram.com/v1/users/"+ userId +"/media/recent/?client_id="+insid+"&count=100");
+			getList("https://api.instagram.com/v1/users/"+ userId +"/media/recent/?client_id="+insid+"&count=100");*/
 			bind();
 		}
 	}
