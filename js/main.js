@@ -102,6 +102,13 @@ require([], function (){
 		
 	}
 	
+	//是否加载ins
+	if($("#post-instagram").length != 0){
+		require(['/js/instagram.js', '/fancybox/jquery.fancybox.js', '/js/jquery.lazyload.js'], function(ins){
+			ins.init();
+		});
+	}
+
 	//是否新窗口打开链接
 	if(yiliaConfig.open_in_new == true){
 		$(".article a[href]").attr("target", "_blank")
