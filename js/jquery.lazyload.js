@@ -18,6 +18,7 @@
 }(this, function ($) {
 
     $.fn.lazyload = function(options) {
+    	//使用each方法 即符合选择器的都调用lazyload方法
         return this.each(function() {
 
             options = options || {};
