@@ -3,17 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: 基础知识 | 窗外临街</title>
+  <title>PL中的伪随机 | 窗外临街</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="窗外临街">
-<meta property="og:url" content="http://peihao.space/tags/基础知识/index.html">
+  <meta name="description" content="这里先说一下伪随机与真随机的区别:   
+真正意义上的随机数（或者随机事件）在某次产生过程中是按照实验过程中表现的分布概率随机产生的，其结果是不可预测的，是不可见的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PL中的伪随机">
+<meta property="og:url" content="http://peihao.space/2015/12/20/python_rand/index.html">
 <meta property="og:site_name" content="窗外临街">
-<meta property="og:description">
+<meta property="og:description" content="这里先说一下伪随机与真随机的区别:   
+真正意义上的随机数（或者随机事件）在某次产生过程中是按照实验过程中表现的分布概率随机产生的，其结果是不可预测的，是不可见的。">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_suiji.jpg">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/random.jpg">
+<meta property="og:updated_time" content="2015-12-23T14:15:12.480Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="窗外临街">
-<meta name="twitter:description">
+<meta name="twitter:title" content="PL中的伪随机">
+<meta name="twitter:description" content="这里先说一下伪随机与真随机的区别:   
+真正意义上的随机数（或者随机事件）在某次产生过程中是按照实验过程中表现的分布概率随机产生的，其结果是不可预测的，是不可见的。">
   
     <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
   
@@ -210,57 +216,123 @@ var _hmt = _hmt || [];
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-python_rand" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/08/05/C++虚函数/" class="archive-article-date">
-  	<time datetime="2015-08-05T08:39:55.000Z" itemprop="datePublished">Aug 5</time>
+    <div class="article-meta">
+      <a href="/2015/12/20/python_rand/" class="article-date">
+  	<time datetime="2015-12-20T06:46:11.000Z" itemprop="datePublished">2015-12-20</time>
 </a>
-        </div>
-    	 
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/08/05/C++虚函数/">C++虚函数</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      PL中的伪随机
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础知识/">基础知识</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
 	</div>
 
-          
+        
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/C/">C++</a>
+	<a class="article-category-link" href="/categories/python/">python</a>
 	</div>
 
 
-        </div>
         <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
+      </div>
+      
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://7xowaa.com1.z0.glb.clouddn.com/chatu_suiji.jpg" alt=""></p>
+<p>这里先说一下伪随机与真随机的区别:   </p>
+<p>真正意义上的随机数（或者随机事件）在某次产生过程中是按照实验过程中表现的分布概率随机产生的，其结果是不可预测的，是不可见的。<a id="more"></a>而计算机中的随机函数是按照一定算法模拟产生的，其结果是确定的，是可见的。我们可以这样认为这个可预见的结果其出现的概率是100%。所以用计算机随机函数所产生的“随机数”并不随机，是伪随机数。</p>
+<p>当然了，在python中使用random模块的普通功能生成的数字都是伪随机数，这在一般情况下是够用了，如果想要体验真的随机性，应该使用os模块的urandom函数或者random模块的SystemRandom类，让数据接近真的随机性.</p>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/random.jpg" alt=""></p>
+<p>getrandbits(n)以长整形形式返回给定的位数，输出时转换成为10进制数</p>
+<p>uniform提供来年各个数值参数a、b，他会返回在a~b随机实数n</p>
+<p>randrange能够产生该范围内的随机数。randrange(1,20,2)会产生小于20的随机正奇数</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/12/20/python/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Python学习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/12/14/书单/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">书单</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="python_rand" data-title="PL中的伪随机" data-url="http://peihao.space/2015/12/20/python_rand/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"chuangwailinjie"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
 
 </div>
       <footer id="footer">
@@ -286,9 +358,9 @@ var _hmt = _hmt || [];
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false
 	}
