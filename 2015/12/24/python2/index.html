@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Python学习(二) | 窗外临街</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="接着我的上篇文章，Python学习(一)这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python学习(二)">
+<meta property="og:url" content="http://peihao.space/2015/12/24/python2/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="接着我的上篇文章，Python学习(一)这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_python_main.jpg">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_tktokit.jpg">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_db_error.jpg">
+<meta property="og:updated_time" content="2015-12-25T16:12:51.349Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python学习(二)">
+<meta name="twitter:description" content="接着我的上篇文章，Python学习(一)这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。">
+  
+    <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?47c906842634689dc55e7f1660f58105";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"> 
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div align="left" style="margin-top:6px;">
+<p style="color:#cccc99;font-size:90%">您好，培豪的第<span id="busuanzi_value_site_uv"></span>个小伙伴</p>
+</div>
+</div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xowaa.com1.z0.glb.clouddn.com/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">培豪</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/album">相册</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Front-End/" style="font-size: 16.67px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 13.33px;">JQuery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 16.67px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">衣服晒干风在穿，我一个人，很简单，自己放纵自己管…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">培豪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xowaa.com1.z0.glb.clouddn.com/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">培豪</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/album">相册</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-python2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/12/24/python2/" class="article-date">
+  	<time datetime="2015-12-24T09:39:55.000Z" itemprop="datePublished">2015-12-24</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python学习(二)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/python/">python</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>接着我的上篇文章，<a href="http://peihao.space/2015/12/20/python/">Python学习(一)</a>这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。</p>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/chatu_python_main.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="文件素材">文件素材</h2><p>open函数用来大爱文件，语法如下：</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">open</span>(name<span class="comment">[,mode<span class="comment">[,buffering]</span>]</span>)</span><br></pre></td></tr></table></figure>
+<p>open函数使用一个文件名作为唯一的强制参数，然后返回一个文件对象。模式mode和缓冲buffering参数都是可选的。下面是open函数中模式参数的常用值:</p>
+<ul>
+<li>‘r’—读模式(不提供参数时的默认选择)</li>
+<li>‘w’—写模式</li>
+<li>‘w’—写模式</li>
+<li>‘a’—追加模式</li>
+<li>‘b’—二进制模式(可添加到其他模式中使用)</li>
+<li>‘+’—读/写模式(可添加到其他模式中使用)</li>
+</ul>
+<p>‘+’参数可以应用到其他任何模式中，指明读和写都是允许的，比如’r+’能在打开一个文本文件用来读写时使用</p>
+<p>‘b’模式给变处理文件的方法，普通情况下，Python嘉定处理的是文本文件（包含字符），但是如果处理的是其他类型的文件，比如说是图形、视频文件，就乐意选用此参数</p>
+<p>open的第3个参数控制着文件的缓冲。如果参数是0或者是False，IO就是无缓冲的，所有的读写操作都是直接针对硬盘，如果是1或者是True，IO就是有缓冲的。，意味着Python使用暂时使用内存代替硬盘，让程序更快，只有使用flush或者close方法才会将缓冲写入硬盘。如果参数是大于1的数值，代表缓冲区的大小(B)，-1或者任意负数则是使用默认缓冲区大小。</p>
+<h2 id="基本文件方法:">基本文件方法:</h2><p>类文件对象是支持一些文件的方法的对象（有时候也称为流），比如file方法，更重要的是支持read、write方法。</p>
+<p>UNIX中的管式输出:</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#data.txt内容</span></span><br><span class="line">My name is chuangwailinjie ,<span class="operator">and</span> I want <span class="built_in">to</span> make friends <span class="operator">with</span> u.</span><br><span class="line"></span><br><span class="line"><span class="comment">#hello.py内容</span></span><br><span class="line">import sys</span><br><span class="line"><span class="keyword">text</span>=sys.<span class="keyword">stdin</span>.<span class="built_in">read</span>()</span><br><span class="line"><span class="keyword">words</span>=<span class="keyword">text</span>.<span class="built_in">split</span>()</span><br><span class="line">wordcount=<span class="built_in">len</span>(<span class="keyword">words</span>)</span><br><span class="line">print(<span class="string">'Wordcount:'</span>,wordcount)</span><br><span class="line"><span class="comment">#在终端中输入</span></span><br><span class="line">$ cat data.txt|python hello.py</span><br><span class="line"><span class="comment">#运行结果</span></span><br><span class="line">Wordcount:<span class="number">12</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>cat data.txt        ：吧data.txt的内容写到标准输出(sys.stdout)</li>
+</ul>
+<ul>
+<li>python hello.py      ：运行了Python脚本hello.py，脚本从标准输入读，结果写入标准输出</li>
+</ul>
+<ul>
+<li>管道符号 ‘|’             :管道符号讲一个命令的标准输出和下一个命令的标准输入连接在一起.</li>
+</ul>
+<p>如此，就知道hello.py会从它的sys.stdin中读取数据(从data.txt写入),并把结果写入它的sys.stdout中.</p>
+<p>如果想要确保文件对象被关闭，有下面两种方法：</p>
+<ol>
+<li><p>使用try/except/finally块，并且在finally自剧中调用close方法.</p>
+</li>
+<li><p>使用with语句.with语句可以打开文件并且复制到变量上面，之后就可将数据写入具体中的文件或执行其他操作，文件在语句结束后自动关闭.</p>
+</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">with <span class="function"><span class="title">open</span><span class="params">(<span class="string">'data.txt'</span>)</span></span> as file:</span><br><span class="line">	file.<span class="function"><span class="title">read</span><span class="params">()</span></span>#或者其他文件操作</span><br><span class="line">#输出结果</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#基本的文件使用方法：</span><br><span class="line">f=<span class="function"><span class="title">open</span><span class="params">(<span class="string">'data.txt'</span>)</span></span></span><br><span class="line">#这里length是指想要读取的字节数，要注意的是虽然python使用utf-<span class="number">8</span>但是依然无法通过普通的<span class="function"><span class="title">read</span><span class="params">(n)</span></span></span><br><span class="line">#正常显示汉字信息</span><br><span class="line">f.<span class="function"><span class="title">read</span><span class="params">(length)</span></span></span><br><span class="line">#读取整个文件的信息</span><br><span class="line">file.<span class="function"><span class="title">read</span><span class="params">()</span></span></span><br><span class="line">#<span class="function"><span class="title">readline</span><span class="params">()</span></span>函数，逐行获取文件内容</span><br><span class="line">#一次性逐行获取内容，并分行将信息储存到序列中</span><br><span class="line">file.<span class="function"><span class="title">readlines</span><span class="params">()</span></span></span><br><span class="line">file.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line">#当文件的打开模式设置为包括写权限(w、+)时，可以进行写操作</span><br><span class="line">file=<span class="function"><span class="title">open</span><span class="params">(<span class="string">'data.txt'</span>,<span class="string">'w'</span>)</span></span></span><br><span class="line">#虽然文件操作没有writeline函数，但是可以通过在字符串中添加换行符达到相同的目的</span><br><span class="line">file.<span class="function"><span class="title">write</span><span class="params">(<span class="string">'this is\njust a\ntest'</span>)</span></span></span><br><span class="line">#还有一个常用的写方法</span><br><span class="line">file.<span class="function"><span class="title">writelines</span><span class="params">(#需要写的文本序列)</span></span></span><br><span class="line">file.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>Python的GUI</p>
+<hr>
+<p>Python有很多流行的跨平台GUI模块，Tkinter、wxPython、Jython等等。这些模块可以协助我们打造很多精美的用户界面接口。本章主要介绍TKinter的使用，原来比较流行的wxpython最高只支持到python2.x.  </p>
+<p>Tkinter模块(“Tk 接口”)是Python的标准Tk GUI工具包的接口.Python使用Tkinter可以快速的创建GUI应用程序。<br>由于Tkinter是内置到python的安装包中、只要安装好Python之后就能import Tkinter库、而且IDLE也是用Tkinter编写而成、对于简单的图形界面Tkinter还是能应付自如。   </p>
+<p>创建一个GUI程序<br>1、导入Tkinter模块<br>2、创建控件<br>3、指定这个控件的master， 即这个控件属于哪一个<br>4、告诉GM(geometry manager)有一个控件产生了。</p>
+<figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"><span class="keyword">import</span> tkinter</span></span><br><span class="line">top = Tk()<span class="preprocessor"></span><br><span class="line"># 进入消息循环</span></span><br><span class="line">top.mainloop()</span><br></pre></td></tr></table></figure>
+<p><strong>两个简单的列表控件 </strong>   </p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from tkinter <span class="keyword">import</span> *</span><br><span class="line">list1=[<span class="string">'C'</span>,<span class="string">'C++'</span>,<span class="string">'Java'</span>,<span class="string">'Python'</span>]</span><br><span class="line">list2=[<span class="string">'Python'</span>,<span class="string">'Java'</span>,<span class="string">'C++'</span>,<span class="string">'C'</span>]</span><br><span class="line">root=Tk()</span><br><span class="line"></span><br><span class="line">listbox=Listbox(root)</span><br><span class="line"><span class="keyword">for</span> <span class="literal">item</span> <span class="keyword">in</span> list1:</span><br><span class="line">	listbox.<span class="keyword">insert</span>(<span class="number">0</span>,<span class="literal">item</span>)</span><br><span class="line">listbox1=Listbox(root)</span><br><span class="line"><span class="keyword">for</span> <span class="literal">item</span> <span class="keyword">in</span> list2:</span><br><span class="line">	listbox1.<span class="keyword">insert</span>(<span class="number">0</span>,<span class="literal">item</span>)</span><br><span class="line">listbox.pack()</span><br><span class="line">listbox1.pack()</span><br><span class="line">root.mainloop()</span><br></pre></td></tr></table></figure>
+<p>Tkinter 组件</p>
+<hr>
+<p>Tkinter的提供各种控件，如按钮，标签和文本框，一个GUI应用程序中使用。这些控件通常被称为控件或者部件。<br>目前有15种Tkinter的部件。我们提出这些部件以及一个简短的介绍，在下面的表:  </p>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/chatu_tktokit.jpg" alt=""></p>
+<h2 id="Python与数据库的支持">Python与数据库的支持</h2><p>支持SQL标准的可用数据库有很多，其中多数在Python中都有对应的客户端模块。在提供相同功能的不同模块之间进行切换的问题通常是他们的接口API不同，为了解决Python中各种数据库模块间的兼容问题，现在已经通过了一个标准的DB API。每个数据库模块都支持一下三种全局变量：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">apilevel</span>		<span class="comment">#所使用的Python DB API版本</span></span><br><span class="line">threadsafety	<span class="comment">#模块的线程安全等级</span></span><br><span class="line">paramstyle		<span class="comment">#在SQL查询中使用的参数风格</span></span><br></pre></td></tr></table></figure>
+<p>这里的线程安全性等级是个取值为0~3的整数。0表示线程安全不共享模块，3表示模块是完全线程安全的。1表示线程本身可以共享模块，但不对连接共享。</p>
+<p><strong>异常</strong></p>
+<p>下面是Python为DB提供的一些标准异常类：</p>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/chatu_db_error.jpg" alt=""></p>
+<p><strong>连接</strong></p>
+<p>为了使用基础的数九系统，首先必须连接到它。这个时候需要使用具有恰当名称的connect函数，该函数有多个参数，二聚体使用哪个参数取决于数据库。API推荐一下参数作为数据库模块连接函数的参数，并以顺序输入.</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dsn			数据源名称，给出该参数表示数据库依赖		必选</span><br><span class="line"><span class="keyword">user</span>		<span class="title">用户名								可选</span><br><span class="line">password</span>	用户密码								可选</span><br><span class="line">host		主机名								可选</span><br><span class="line">database	数据库名								可选</span><br></pre></td></tr></table></figure>
+<p>当正确连接到数据库之后，在使用connect()函数之后会返回一个句柄，使用此句柄可以进行其他函数操作。其他有关的函数:  </p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">close</span><span class="params">()</span></span>			关闭连接后，连接对象和他的游标均不可用</span><br><span class="line"><span class="function"><span class="title">commit</span><span class="params">()</span></span>		如果支持的话就提交挂起的事务，否则不做任何事</span><br><span class="line"><span class="function"><span class="title">rollback</span><span class="params">()</span></span>		回滚挂起的事务</span><br><span class="line"><span class="function"><span class="title">cursor</span><span class="params">()</span></span>		返回连接的游标对象</span><br></pre></td></tr></table></figure>
+<p><strong>SQLite和PySQLite</strong>  </p>
+<p>如果你曾经经历过安卓开发，一定对SQLite这个数据库不陌生。小型的数据库引擎SQlite，不需要作为独立的服务器运行，并且不基于集中式数据库存储机制，而好似直接作用于本地文件，所以上手非常容易。  </p>
+<p>在Python3.x版本中，SQLite的一个优势在于它的一个包装（PySQLite）已经被包括在标准库内。</p>
+<p><strong>SQLite的简单入门</strong><br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#将SQlite作为名为sqlite3的模块导入</span><br><span class="line">import sqlite3</span><br><span class="line">#创建一个到数据库文件的连接，如果文件不存在就会被创建</span><br><span class="line">conn=sqlite3.<span class="function"><span class="title">connect</span><span class="params">(<span class="string">'firstdb.db'</span>)</span></span></span><br><span class="line">#之后使用conn这个对象可以对数据库进行操作</span><br><span class="line">#获取连接的游标，这些游标用来执行SQL查询</span><br><span class="line">curs=conn.<span class="function"><span class="title">cursor</span><span class="params">()</span></span></span><br><span class="line">#完成查询并且做出某些更改后确保已经进行了提交，这样才能确保修改真正保存在数据库文件</span><br><span class="line">conn.<span class="function"><span class="title">commit</span><span class="params">()</span></span></span><br><span class="line">conn.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
+<p><strong>数据库应用程序示例</strong><br>建立一个小型营养成分数据库作为示例程序，程序基于USDA的营养数据实验室提供的数据，数据文件<a href="https://www.ars.usda.gov/SP2UserFiles/Place/80400525/Data/SR/SR28/dnload/sr28abbr.zip" target="_blank" rel="external">点此下载</a>，国外的服务器，所以可能回需要梯子操作。</p>
+<p>ABBREV.txt文件中的数据每行都有一个数据记录，字段以脱字符(^)进行分割。数字字段直接包含数字，而文本字段由波浪号（~）括起来的字符串。<br>使用line.split(‘^’)可以很轻松的把这样一行文字解析为多个字段。如果字段以波浪号开始，就是个字符串，使用field.strip(‘~’)获取字段的有效值。</p>
+<p>根据ABBREV.txt的数据建表  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#通过调用curs.execute执行<span class="operator"><span class="keyword">INSERT</span>语句并将文本字段中的值插入到数据库</span><br><span class="line"><span class="keyword">import</span> sqlite3</span><br><span class="line"><span class="keyword">def</span> <span class="keyword">convert</span>(<span class="keyword">value</span>):</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">value</span>.startswith(<span class="string">'~'</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">value</span>.strip(<span class="string">'~'</span>)</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">value</span>:</span><br><span class="line">		<span class="keyword">value</span>=<span class="string">'0'</span></span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">float</span>(<span class="keyword">value</span>)</span><br><span class="line"><span class="keyword">conn</span>=sqlite3.<span class="keyword">connect</span>(<span class="string">'food.db'</span>)</span><br><span class="line">curs=<span class="keyword">conn</span>.<span class="keyword">cursor</span>()</span><br><span class="line">curs.<span class="keyword">execute</span>(<span class="string">'''</span><br><span class="line">	CREATE TABLE food(</span><br><span class="line">		id    TEXT    PRIMARY KEY,</span><br><span class="line">		desc  TEXT,</span><br><span class="line">		water FLOAT,</span><br><span class="line">		kcal  FLOAT,</span><br><span class="line">		fat   FLOAT,</span><br><span class="line">		ash   FLOAT,</span><br><span class="line">		carbs FLOAT,</span><br><span class="line">		fiber FLOAT,</span><br><span class="line">		sugar FLOAT</span><br><span class="line">	)</span><br><span class="line">	'''</span>)</span><br><span class="line"><span class="keyword">query</span>=<span class="string">'INSERT INTO food VALUES(?,?,?,?,?,?,?,?,?)'</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> <span class="keyword">open</span>(<span class="string">'ABBREV.txt'</span>):</span><br><span class="line">	<span class="keyword">fields</span>=line.<span class="keyword">split</span>(<span class="string">'^'</span>)</span><br><span class="line">	#这里要注意的是，因为提供的数据一行有很多数值，我们需要的只有在表中定义的列数，所以只使用前<span class="number">9</span>列</span><br><span class="line">	vals=[<span class="keyword">convert</span>(<span class="keyword">f</span>) <span class="keyword">for</span> <span class="keyword">f</span> <span class="keyword">in</span> <span class="keyword">fields</span>[:<span class="number">9</span>]]</span><br><span class="line">	curs.<span class="keyword">execute</span>(<span class="keyword">query</span>,vals)</span><br><span class="line"><span class="keyword">conn</span>.<span class="keyword">commit</span>()</span><br><span class="line"><span class="keyword">conn</span>.<span class="keyword">close</span>()</span></span><br></pre></td></tr></table></figure>
+<p><strong>搜索和展示数据</strong></p>
+<p>使用数据库很简单，创建连接并获得该链接的游标，使用execute方法执行SQL查询，用fetchall提取结果。  </p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sqlite3,sys</span><br><span class="line">conn=sqlite3.connect(<span class="string">'food.db'</span>)</span><br><span class="line">curs=conn.cursor()</span><br><span class="line"><span class="comment">#这里使用sys.argv[1]获取输入的query指令，sys.argv[0]是 </span></span><br><span class="line"><span class="comment">#'python hello.py'</span></span><br><span class="line">query=<span class="string">'select * from food where %s'</span> % sys.argv[<span class="number">1</span>]</span><br><span class="line">curs.execute(query)</span><br><span class="line"><span class="comment">#curs.description存储的是关于表没列属性的一些信息，序列包裹着元组，子序列的第一个值就是标的属性名称</span></span><br><span class="line">names=[f[<span class="number">0</span>] <span class="keyword">for</span> f <span class="keyword">in</span> curs.description]</span><br><span class="line">curs.fetchall()存储的是根据query语句获得的纯数据，形式也是序列包裹着元组，因为属性的数目是确定的，用元组</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> curs.fetchall():</span><br><span class="line">	<span class="keyword">for</span> pair <span class="keyword">in</span> zip(names,row):</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">'%s:%s'</span> % pair)</span><br><span class="line">	<span class="built_in">print</span>()</span><br><span class="line"><span class="comment">#在终端中输入如下命令</span></span><br><span class="line">$ python hello.py <span class="string">'kcal &lt;= 100 AND fiber &gt;=10 order by sugar'</span></span><br><span class="line"><span class="comment">#在终端中会有滚屏显示数据</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/12/25/致杂乱/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          致杂乱
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/12/24/re/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">正则表达式简单应用</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="python2" data-title="Python学习(二)" data-url="http://peihao.space/2015/12/24/python2/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"chuangwailinjie"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 培豪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<div id="totop" style="position:fixed;bottom:100px;right:30px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>
