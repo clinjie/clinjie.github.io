@@ -14,7 +14,7 @@
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_python_main.jpg">
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_tktokit.jpg">
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_db_error.jpg">
-<meta property="og:updated_time" content="2016-01-22T02:15:10.502Z">
+<meta property="og:updated_time" content="2016-01-22T06:09:08.902Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python学习(二)">
 <meta name="twitter:description" content="接着我的上篇文章，Python学习(一)这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。">
@@ -463,7 +463,9 @@ events=<span class="tag">p</span>.<span class="function"><span class="title">pol
 <p>class SimpleLogger(Protocol):<br>    def connectionMade(self):<br>        print(‘GOt connection from’,self.transport.client)<br>    def connectionLost(self,reason):<br>        print(self.transport.client,’disconnected’)<br>    def dataReceived(self,data):<br>        print(data)</p>
 <p>factory=Factory()<br>factory.protocol=SimpleLogger</p>
 <p>#监听函数<br>reactor.listenTCP(1234,factory)</p>
-<p>#Twisted主服务器循环<br>reaction.run()<br>```</p>
+<p>#Twisted主服务器循环<br>reaction.run()<br><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="gherkin"><span class="comment">## Python与万维网 ##</span></span><br><span class="line"></span><br><span class="line">----------</span><br><span class="line"></span><br><span class="line"><span class="keyword">*</span><span class="keyword">*</span>屏幕抓取技术<span class="keyword">*</span><span class="keyword">*</span>   </span><br><span class="line"></span><br><span class="line">屏幕抓取是程序下载网页并提取信息的过程。如果涉及的网页时动态变化的，那么这项技术将更加有用，正常的情况下，使用urllib和re就可以很方便的测试这项技术。</span></span><br></pre></td></tr></table></figure></p>
+<p>from urllib.request import urlopen<br>import re</p>
+<p>p=re.compile(‘<a href="(.*)" title=".*">(.*)</a>‘);<br>text=urlopen(‘<a href="https://www.python.org/community/jobs/&#39;).read().decode(&#39;utf-8" target="_blank" rel="external">https://www.python.org/community/jobs/&#39;).read().decode(&#39;utf-8</a>‘);<br>for url,name in p.findall(text):<br>    print(‘%s (%s)’ % (name,url))<br>```</p>
 
       
     </div>
