@@ -8,13 +8,13 @@
   <meta name="description" content="接着我的上篇文章，Python学习(一)这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python学习(二)">
-<meta property="og:url" content="http://peihao.space/2015/12/24/python2/index.html">
+<meta property="og:url" content="http://clinjie.cn/2015/12/24/python2/index.html">
 <meta property="og:site_name" content="窗外临街">
 <meta property="og:description" content="接着我的上篇文章，Python学习(一)这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。">
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_python_main.jpg">
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_tktokit.jpg">
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_db_error.jpg">
-<meta property="og:updated_time" content="2015-12-26T10:17:13.181Z">
+<meta property="og:updated_time" content="2016-01-22T02:15:10.502Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python学习(二)">
 <meta name="twitter:description" content="接着我的上篇文章，Python学习(一)这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。">
@@ -255,7 +255,7 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>接着我的上篇文章，<a href="http://peihao.space/2015/12/20/python/">Python学习(一)</a>这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。</p>
+        <p>接着我的上篇文章，<a href="http://clinjie.cn/2015/12/20/python/">Python学习(一)</a>这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。</p>
 <p><img src="http://7xowaa.com1.z0.glb.clouddn.com/chatu_python_main.jpg" alt=""></p>
 <a id="more"></a>
 <h2 id="文件素材">文件素材</h2><p>open函数用来大爱文件，语法如下：</p>
@@ -334,12 +334,136 @@ var _hmt = _hmt || [];
 <p>listen方法之后一个参数，即服务器未处理的连接的长度，也就是允许排队等待的连接数目，这些连接在停止接收之前等待接收。   </p>
 <p>服务器端套接字开始监听后，他就可以接收客户端的连接。这个步骤使用accept方法来完成，方法会阻塞直到客户端的连接，然后该方法返回一个格式为(client,address)的元组，client是客户端的套接字。   </p>
 <p>套接字有两个方法：send和recv来传输接收数据。  </p>
-<p>一个简单的客户端、服务器端示例:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#服务器端</span><br><span class="line">import socket</span><br><span class="line"></span><br><span class="line">s=socket.<span class="function"><span class="title">socket</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">host=socket.<span class="function"><span class="title">gethostname</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">s.<span class="function"><span class="title">bind</span><span class="params">((host,<span class="number">1224</span>)</span></span>)</span><br><span class="line"></span><br><span class="line">s.<span class="function"><span class="title">listen</span><span class="params">(<span class="number">3</span>)</span></span></span><br><span class="line"></span><br><span class="line">while True:</span><br><span class="line">	c,addr=s.<span class="function"><span class="title">accept</span><span class="params">()</span></span></span><br><span class="line">	<span class="function"><span class="title">print</span><span class="params">(<span class="string">'get connect from'</span>,addr)</span></span></span><br><span class="line">	<span class="id">#Python3</span>.x以上要求send流为字节化字符串</span><br><span class="line">	c.<span class="function"><span class="title">send</span><span class="params">(b<span class="string">'Thx your connect'</span>)</span></span></span><br><span class="line">	c.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">#客户端</span><br><span class="line">import socket</span><br><span class="line"></span><br><span class="line">s=socket.<span class="function"><span class="title">socket</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">host=socket.<span class="function"><span class="title">gethostname</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">s.<span class="function"><span class="title">connect</span><span class="params">((host,<span class="number">1224</span>)</span></span>)</span><br><span class="line"></span><br><span class="line">#加上<span class="string">'.decode('</span>utf-<span class="number">8</span><span class="string">')是为了将字节字符串正常显示'</span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(s.recv(<span class="number">1024</span>)</span></span>.<span class="function"><span class="title">decode</span><span class="params">(<span class="string">'utf-8'</span>)</span></span>)</span><br></pre></td></tr></table></figure></p>
+<p>一个简单的客户端、服务器端示例:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#服务器端</span><br><span class="line">import socket</span><br><span class="line"></span><br><span class="line">s=socket.<span class="function"><span class="title">socket</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">host=socket.<span class="function"><span class="title">gethostname</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">s.<span class="function"><span class="title">bind</span><span class="params">((host,<span class="number">1224</span>)</span></span>)</span><br><span class="line"></span><br><span class="line">s.<span class="function"><span class="title">listen</span><span class="params">(<span class="number">3</span>)</span></span></span><br><span class="line"></span><br><span class="line">while True:</span><br><span class="line">	c,addr=s.<span class="function"><span class="title">accept</span><span class="params">()</span></span></span><br><span class="line">	<span class="function"><span class="title">print</span><span class="params">(<span class="string">'get connect from'</span>,addr)</span></span></span><br><span class="line">	<span class="id">#Python3</span>.x以上要求send流为字节化字符串</span><br><span class="line">	c.<span class="function"><span class="title">send</span><span class="params">(<span class="string">'Thx your connect'</span>.decode(<span class="string">'utf-8'</span>)</span></span>)</span><br><span class="line">	c.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">#客户端</span><br><span class="line">import socket</span><br><span class="line"></span><br><span class="line">s=socket.<span class="function"><span class="title">socket</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">host=socket.<span class="function"><span class="title">gethostname</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">s.<span class="function"><span class="title">connect</span><span class="params">((host,<span class="number">1224</span>)</span></span>)</span><br><span class="line"></span><br><span class="line">#加上<span class="string">'.decode('</span>utf-<span class="number">8</span><span class="string">')是为了将字节字符串正常显示'</span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(s.recv(<span class="number">1024</span>)</span></span>.<span class="function"><span class="title">decode</span><span class="params">(<span class="string">'utf-8'</span>)</span></span>)</span><br></pre></td></tr></table></figure></p>
 <p><strong>urllib模块</strong>  </p>
 <p>这个模块能让通过网络访问文件，通过简单的函数调用，几乎可以吧任何URL所指的东西用作程序的输入。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import urllib<span class="class">.request</span></span><br><span class="line"></span><br><span class="line">#获取存储在本机的文本信息</span><br><span class="line">localapp=<span class="function"><span class="title">urlopen</span><span class="params">(r<span class="string">'file:c:\key.txt'</span>)</span></span></span><br><span class="line">data=localapp.<span class="function"><span class="title">read</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(data.decode(<span class="string">'utf-8'</span>)</span></span>)</span><br><span class="line"></span><br><span class="line">#获取网络信息</span><br><span class="line">webapp=<span class="function"><span class="title">urlopen</span><span class="params">(<span class="string">'http://www.python.org'</span>)</span></span></span><br><span class="line">data=wepapp.<span class="function"><span class="title">read</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(data.decode(<span class="string">'utf-8'</span>)</span></span>)</span><br></pre></td></tr></table></figure>
 <p>urllib.request模块提供了获取远程文件的方法，我们可以通过调用它实现简单的下载器:   </p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import urllib.request</span><br><span class="line"><span class="comment">#这里以前面提到的USDA的营养数据实验室提供的数据文件作为示范,由于是国外的数据文件，需要vpn或者能够直连代理</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; urllib.request.urlretrieve(<span class="string">'https://www.ars.usda.gov/SP2UserFiles/Place/8040</span><br><span class="line">0525/Data/SR/SR28/dnload/sr28abbr.zip'</span>,r<span class="string">'c:\123.zip'</span>)</span><br><span class="line"><span class="comment">#函数调用之后返回的信息</span></span><br><span class="line">(<span class="string">'c:\\123.zip'</span>, &lt;http.client.<span class="constant">HTTPMessage</span> object at <span class="number">0x02E0ACD0</span>&gt;)</span><br><span class="line"><span class="comment">#现在下载的文件就保存在本机电脑的硬盘上</span></span><br></pre></td></tr></table></figure>
+<p><strong>socketserver模块</strong></p>
+<p>SocketServer包含了4个基本的类：</p>
+<ol>
+<li><p>针对TCP套接字的TCPServer</p>
+</li>
+<li><p>针对UDO数据包套接字的UDPServer</p>
+</li>
+<li><p>UnixStreamServer</p>
+</li>
+<li><p>UnixDatagramServer</p>
+</li>
+</ol>
+<p>为了写一个使用SocketServer框架的服务器，大部分代码会在一个请求处理程序中。每当服务器收到一个客户端的连接请求，就会实例化一个请求处理程序，并且处理方法会在处理请求时被调用。具体使用那个方法取决于特定的服务器和使用的处理程序类。  </p>
+<p>基本的BaseRequestHandler类所有的操作都放在了处理器的一个叫做handle的方法中，当有客户消息进入的时候,方法会被服务器调用。这个方法会访问属性self.request中的客户端套接字，如果使用的是流(例如TCPServer)那么可以使用StreamRequestHandler类，创建两个新属性，self.rfile用于读取，self.wfile用于写入。然会就可以使用这类文件对象和客户机进行通信.</p>
+<p>socketserver(在Python2.*中的是SocketServer模块)是标准库中一个高级别的模块。用于简化网络客户与服务器的实现（在前面使用socket的过程中，我们先设置了socket的类型，然后依次调用bind(),listen(),accept()，最后使用while循环来让服务器不断的接受请求。而这些步骤可以通过socketserver包来简化。）。模块中，已经实现了一些可供使用的类。</p>
+<p>我们将再次实现之前的那个基本TCP的例子。你会注意到新实现与之前有很多相似之处，但你也要注意到，现在很多繁杂的事情已经被封装好了，你不用再去关心那个样板代码了。例子给出的是一个最简单的同步服务器。</p>
+<p>为了要隐藏实现的细节。我们现在写程序时会使用类，这是与之前代码的另一个不同。用面向对象的方法可以帮助我们更好的组织数据与逻辑功能。你也会注意到，我们的程序现在是“事件驱动”了。这就意味着，只有在事件出现的时候，程序才有“反应”。</p>
+<p>在之前的服务循环中，我们阻塞等待请求，有请求来的时候就处理请求，然后再回去继续等待。现在的服务循环中，就不用在服务器里写代码了，改成定义一个处理器，服务器在收到进来的请求的时候，可以调用你的处理函数。</p>
+<ul>
+<li><p>BaseServer 　　　                               包含服务器的核心功能与混合(mix-in)类的钩子功能。这个类用于派生，不要直接生成这个类的类对象，可以考虑使用 TCPServer 和UDPServer。 </p>
+</li>
+<li><p>TCPServer/UDPServer                             基本的网络同步 TCP/UDP 服务器</p>
+</li>
+<li><p>UnixStreamServer/UnixDatagramServer               基本的基于文件同步 TCP/UDP 服务器</p>
+</li>
+<li><p>ForkingMixIn/ThreadingMixIn                    实现了核心的进程化或线程化的功能，用于与服务器类进行混合(mix-in)，以提供一些异步特性。不要直接生成这个类的对象</p>
+</li>
+<li><p>ForkingTCPServer/ForkingUDPServer                 ForkingMixIn 和 TCPServer/UDPServer 的组合</p>
+</li>
+<li><p>ThreadingTCPServer/ThreadingUDPServer             ThreadingMixIn 和 TCPServer/UDPServer 的组合  </p>
+</li>
+<li><p>BaseRequestHandler                               包含处理服务请求的核心功能。只用于派生新的类，不要直接生成这个类的对象，可以考虑使用StreamRequestHandler或DatagramRequestHandler</p>
+</li>
+<li><p>StreamRequestHandler/DatagramRequestHandler   TCP/UDP 服务器的请求处理类的一个实现  </p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#使用socketserver重新创建简易服务器</span><br><span class="line">from socketserver import TCPServer,StreamRequestHandler</span><br><span class="line">from time import ctime</span><br><span class="line"></span><br><span class="line">class <span class="operator"><span class="keyword">Handler</span>(StreamRequestHandler):</span><br><span class="line">	<span class="keyword">def</span> handle(<span class="keyword">self</span>):</span><br><span class="line">		addr=<span class="keyword">self</span>.request.getpeername()</span><br><span class="line">		print(<span class="string">'got connect from'</span>,<span class="keyword">self</span>.client_address)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">self</span>.wfile.write((<span class="string">'[%s] %s'</span> %(ctime(),<span class="keyword">self</span>.rfile.readline().<span class="keyword">decode</span>(<span class="string">'utf-8'</span>))).<span class="keyword">encode</span>(<span class="string">'utf-8'</span>))		</span><br><span class="line"></span><br><span class="line"><span class="keyword">server</span>=TCPServer((<span class="string">''</span>,<span class="number">1234</span>),<span class="keyword">Handler</span>)		</span><br><span class="line"><span class="keyword">server</span>.serve_forever()</span><br><span class="line"></span><br><span class="line">#客户端代码，依然使用socket模块</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	<span class="keyword">client</span>=socket.socket()</span><br><span class="line">	host=socket.gethostname()</span><br><span class="line">	<span class="keyword">client</span>.<span class="keyword">connect</span>((host,<span class="number">1234</span>))</span><br><span class="line"></span><br><span class="line">	<span class="keyword">data</span>=<span class="keyword">input</span>(<span class="string">'--&gt;'</span>)</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">data</span>:</span><br><span class="line">		break</span><br><span class="line">	<span class="keyword">data</span>=(<span class="keyword">data</span>+<span class="string">'\r\n'</span>).<span class="keyword">encode</span>(<span class="string">'utf-8'</span>)</span><br><span class="line">	<span class="keyword">client</span>.send(<span class="keyword">data</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">data</span>=<span class="keyword">client</span>.recv(<span class="number">1024</span>).<span class="keyword">decode</span>(<span class="string">'utf-8'</span>)</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">data</span>:</span><br><span class="line">		break</span><br><span class="line">	print(<span class="keyword">data</span>.strip())</span><br><span class="line">	<span class="keyword">client</span>.<span class="keyword">close</span>()</span></span><br></pre></td></tr></table></figure>
+<p><strong>多连接</strong></p>
+<p>前面提到的服务器解决方案都是同步的：一次只能连接一个客户机并处理它的请求。  </p>
+<p>有3种方法能够实现多连接模式：  </p>
+<ul>
+<li><p>分叉forking</p>
+</li>
+<li><p>线程thread</p>
+</li>
+<li><p>异步I/O asynchronous</p>
+</li>
+</ul>
+<p>通过对socketserver服务器使用混入类(mix-in class)，派生进程和线程很容易处理。即使要自己实现它们，这些方法也很容易使用。它们确实有缺点：分叉占据资源，并且如果有太多的客户端时分叉不能很好分叉（尽管如此，对于合理数量的客户端，分叉在现代的UNIX或者Linux系统中是很高效的，如果有一个多CPU系统，那系统效率会更高）；线程处理能导致同步问题。使用socketserver框架创建分叉或者线程服务器非常简单。   </p>
+<p>分叉是一个UNIX术语，当分叉一个进程(一个运行的程序)时，基本上是复制了它，并且分叉后的两个进程都是从当前的执行点继续运行，并且每 个进程都有自己的内存副本。一个进程成为父进程，另一个进程成为子进程。  </p>
+<p>当一个使用分叉的服务器中，每一个客户机连接都利用分叉创在一个子进程。父进程继续监听新的连接，同时子进程处理客户端。当客户端的请求结束时，子进程就退出了。分叉的晋城市并行运行的，所以客户端之间不必互相等待。  </p>
+<p>线程是轻量级的进程或者子进程，所有的线程都存在与相同的进程中，共享内存。资源消耗的下降伴随一个缺陷：因为线程共享内存，所以必须确保他们的变量不会冲突，这些都是同步问题。</p>
+<p>Tips:现代操作系统中windows不支持分叉</p>
+<p>–分叉服务器<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#windows不支持分叉</span></span><br><span class="line"><span class="keyword">from</span> socketserver <span class="keyword">import</span> (TCPServer <span class="keyword">as</span> TCP, StreamRequestHandler <span class="keyword">as</span> SRH,ForkingMixIn <span class="keyword">as</span> FMI)   <span class="comment">#变动位置  </span></span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> ctime  </span><br><span class="line">   </span><br><span class="line">HOST = <span class="string">''</span>  </span><br><span class="line">PORT = <span class="number">1234</span>  </span><br><span class="line">ADDR = (HOST, PORT)  </span><br><span class="line">   </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Server</span><span class="params">(FMI, TCP)</span>:</span>                                                                         <span class="comment">#变动位置  </span></span><br><span class="line">    <span class="keyword">pass</span>  </span><br><span class="line">  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRequestHandler</span><span class="params">(SRH)</span>:</span>  </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span><span class="params">(self)</span>:</span>  </span><br><span class="line">        <span class="keyword">print</span> (<span class="string">'已经连接:'</span>, self.client_address)  </span><br><span class="line">        self.wfile.write((<span class="string">'[%s] %s'</span> % (ctime(), self.rfile.readline().decode(<span class="string">"UTF-8"</span>))).encode(<span class="string">"UTF-8"</span>))  </span><br><span class="line">  </span><br><span class="line">tcpServ = Server(ADDR, MyRequestHandler)                                                         <span class="comment">#变动位置  </span></span><br><span class="line"><span class="keyword">print</span> (<span class="string">'等待新的连接。。。。'</span>)  </span><br><span class="line">tcpServ.serve_forever()  </span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">--多线程SocketServer服务器</span><br></pre></td></tr></table></figure></p>
+<p>from socketserver import (TCPServer as TCP, StreamRequestHandler as SRH,ThreadingMixIn as TMI)   #变动位置<br>from time import ctime  </p>
+<p>HOST = ‘’<br>PORT = 1234<br>ADDR = (HOST, PORT)<br>class Server(TMI, TCP):                                         #变动位置<br>    pass  </p>
+<p>class MyRequestHandler(SRH):<br>    def handle(self):<br>        print (‘已经连接:’, self.client_address)<br>        data=self.request.recv(1024).strip().decode(‘utf-8’)<br>        self.wfile.write((‘[%s] %s’ % (ctime(), data)).encode(“UTF-8”))  </p>
+<p>tcpServ = Server(ADDR, MyRequestHandler)                        #变动位置<br>print (‘等待新的连接。。。。’)<br>tcpServ.serve_forever() </p>
+<p>#对应的客户端代码<br>import socket</p>
+<p>s=socket.socket()</p>
+<p>host=socket.gethostname()</p>
+<p>s.connect((host,1234))</p>
+<p>s.send(‘I am connecting successful!’.encode(‘utf-8’))</p>
+<p>print(s.recv(1024).decode(‘utf-8’))<br><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="lua"><span class="comment">--带有select和poll的异步I/O</span></span><br><span class="line"></span><br><span class="line">当一个服务器与一个客户端通信时，来自客户端的数据可能是不连续的。如果使用分叉或者线程处理，这些没有问题。因为当一个程序在等待数据，另一个并行的程序可以继续处理他们自己的客户端。另外的方法就是只处理在给定时间内真正要进行通信的客户端，不需要一直监听，然后把它方法其他客户端的后面。  </span><br><span class="line"></span><br><span class="line">这就是asyncore/asynchat框架和Twisted框架采用的方法，这种功能的基础是<span class="built_in">select</span>/poll函数。（poll函数只能在unix系统中使用，poll函数的伸缩性相对性要好）</span><br><span class="line"></span><br><span class="line"><span class="built_in">select</span>函数需要<span class="number">3</span>个序列作为必选参数，此外还有一个以秒为单位的超时时间作为可选。这些参数都是文件描述符整数，或者是带有返回这样整数的fileno方法的对象。这些就是我们等待的连接。<span class="number">3</span>个序列分别用于输入、输出以及异常情况。如果没有给定超时时间，则默认为阻塞方式，如果超时时间为<span class="number">0</span>，就是一个连续的poll，不阻塞。<span class="built_in">select</span>的返回值是<span class="number">3</span>个序列，每个代表相应参数的活动子集。  </span><br><span class="line"></span><br><span class="line">下面的示例代码展示了一个使用<span class="built_in">select</span>的为很多连接服务的服务器。服务器套接字本身被提供给<span class="built_in">select</span>，这样<span class="built_in">select</span>就能在准备接受一个新的连接时发出通知。服务器是一个简单的记录器，输出来自客户机的所有数据。</span></span><br></pre></td></tr></table></figure></p>
+<p>import socket,select</p>
+<p>s=socket.socket()<br>host=socket.gethostname()<br>port=1234<br>s.bind((host,port))</p>
+<p>s.listen(5)</p>
+<p>inputs=[s]<br>while True:</p>
+<pre><code>#返回相应参数的活动子集
+rs,ws,es=select.<span class="function"><span class="title">select</span><span class="params">(inputs,[],[])</span></span>
+<span class="keyword">for</span> r <span class="keyword">in</span> rs:
+    <span class="keyword">if</span> r is s:
+        #如果是刚join的客户机，就将创建的socket加入到inputs参数
+        c,addr=s.<span class="function"><span class="title">accept</span><span class="params">()</span></span>
+        <span class="function"><span class="title">print</span><span class="params">(<span class="string">'Got connection from'</span>,addr)</span></span>
+        inputs.<span class="function"><span class="title">append</span><span class="params">(c)</span></span>
+    <span class="keyword">else</span>:
+        try:
+            data=r.<span class="function"><span class="title">recv</span><span class="params">(<span class="number">1024</span>)</span></span>
+            disconnected=not data
+        except socket<span class="class">.error</span>:
+            disconnected=True
+        <span class="keyword">if</span> disconnected:
+            <span class="function"><span class="title">print</span><span class="params">(r.getpeername()</span></span>,<span class="string">'disconnected'</span>)
+            inputs.<span class="function"><span class="title">remove</span><span class="params">(r)</span></span>
+        <span class="keyword">else</span>:
+            <span class="function"><span class="title">print</span><span class="params">(data.decode(<span class="string">'utf-8'</span>)</span></span>)
+</code></pre><p>#客户端的代码参考上面<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">可以看出来，通过一个<span class="keyword">While</span> <span class="literal">True</span>跟一个<span class="keyword">for</span>循环，逐次的处理客户机的事件。  </span><br><span class="line">通过测试代码可以打印出来rs中的信息:</span><br></pre></td></tr></table></figure></p>
+<p>[<socket.socket fd="296," family="AddressFamily.AF_INET," type="SocketKind.SOCK_STREA" m,="" proto="0," laddr="('192.168.252.1'," 1234)="">]<br>Got connection from (‘192.168.252.1’, 4451)<br>[<socket.socket fd="364," family="AddressFamily.AF_INET," type="SocketKind.SOCK_STREA" m,="" proto="0," laddr="('192.168.252.1'," 1234),="" raddr="('192.168.252.1'," 4451)="">]<br>I am connecting successful!<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">inputs中保存的是服务器的依次socket、以及服务器与客户机连接创建的socket信息。  </span><br><span class="line"></span><br><span class="line">而通过select函数返回的则是一一对应的关于socket的信息。如果for循环的是服务器socket，则处理它的客户机加入事件，否则则处理客户机的桥梁socket的会话消息</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="code">   </span></span><br><span class="line">*<span class="strong">*poll方法的使用*</span>*  </span><br><span class="line">poll方法使用起来币select方法较简单。在调用poll时候=，会得到一个poll对象，然后可以使用poll对象的register方法注册一个文件描述符（或者带有fileno方法的对象）。注册后可以使用register方法注册一个文件描述符。   </span><br><span class="line">poll方法有一个可选的超时时间参数，并得到一个（fd，event）格式列表。其中fd是文件描述符，event则告诉你发生了什么，event是一个位掩符码(bitmask),就是一个整数，整数的每一位都会对应不同的事件，可以使用按位与&amp;操作符进行检测某件事件是否发生。    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="code">----------</span><br><span class="line">pollin				读取来自文件描述符的数据</span><br><span class="line">pollpri				读取来自文件描述符的紧急数据</span><br><span class="line">pollout				文件描述符已经准备好数据，写入时候不会发生阻塞  </span><br><span class="line">pollerr				与文件描述符有关的错误情况    </span><br><span class="line">pollhup				挂起，链接丢失    </span><br><span class="line">pollnyal			无效请求，链接没有打开  </span><br><span class="line">----------</span></span><br></pre></td></tr></table></figure></socket.socket></socket.socket></p>
+<p>#使用poll方法重写select方法实现的serversocket</p>
+<p>#在Windows系统下面不适用<br>import socket,select</p>
+<p>s=socket.socket()<br>host=socket.gethostname()<br>port=1234</p>
+<p>#socket.bind方法的参数是一个元组<br>s.bind((host,port))</p>
+<p>#fd是一个字典映射，键和值分别是文件描述符(ints)和套接字的映射<br>fdmap={s.fileno():s}</p>
+<p>#表示监听数目最多为5个<br>s.listen(5)</p>
+<p>#poll方法实现的原理还是select模块，不过相比select更加灵活。不需要一直监听，只需要监听一会，然后将此服务器信息放在消息队列的末尾，等待再次处理</p>
+<p>#p是select模块的poll对象<br>p=select.poll()</p>
+<p>#通过p.register方法将套接字对象添加到监听的套接字列表<br>p.register(s)</p>
+<p>while True:</p>
+<pre><code>#将文件描述符以及事件返回
+events=<span class="tag">p</span>.<span class="function"><span class="title">poll</span><span class="params">()</span></span>
+<span class="keyword">for</span> fd,event <span class="keyword">in</span> events:
+    <span class="keyword">if</span> fd <span class="keyword">in</span> fdmap:
+        #如果是服务器套接字的文件描述符，则获取与服务器连接的主机信息
+        c,addr=s.<span class="function"><span class="title">accept</span><span class="params">()</span></span>
+        <span class="function"><span class="title">print</span><span class="params">(<span class="string">"Got connection from"</span>,addr)</span></span>
+        #将新加入的套接字添加到监听列表
+        <span class="tag">p</span>.<span class="function"><span class="title">register</span><span class="params">(c)</span></span>
+    elif event &amp; select<span class="class">.POLLIN</span>:
+        #如果是其他主机通过其他套接字发送的数据，信息获取
+        data=fdmap[fd].<span class="function"><span class="title">recv</span><span class="params">(<span class="number">1024</span>)</span></span>
+        <span class="keyword">if</span> not data:
+            <span class="function"><span class="title">print</span><span class="params">(fdmap[fd].getpeername()</span></span>,disconnction)
+            <span class="tag">p</span>.<span class="function"><span class="title">unregister</span><span class="params">(fd)</span></span>
+            <span class="tag">del</span> fdmap[fd]
+    <span class="keyword">else</span>:
+        <span class="function"><span class="title">print</span><span class="params">(data)</span></span>
+</code></pre><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="gherkin">----------</span><br><span class="line"><span class="keyword">*</span><span class="keyword">*</span>编写Twisted服务器<span class="keyword">*</span><span class="keyword">*</span>   </span><br><span class="line"></span><br><span class="line">前面编写的基本套接字服务器都是显式的，其中有一些很清楚的事件循环，用来查找新的连接和新数据，但是基于socketserver的服务器有一个隐式的循环，在循环中服务器查找连接并为每个连接创建一个处理程序，但处理程序在读取数据时必须是显式的。Twited以及asyncore/asynchat框架使用一个甚至多个基于事件的方法。要编写基本的服务器，就要就要实现处理比如新客户端连接、新数据到达以及一个客户端断开连接等事件的时间处理程序。具体的类能通过基本类简历更精炼的事件，比如包装”数据到达“事件、收集数据直到新的一行，然后触发”一行数据到达“事件。     </span><br><span class="line"></span><br><span class="line">事件处理程序在一个协议protocol中定义，在一个新的连接到达时，同样需要一个创建这种协议对象的工厂，但如果只是想要创建一个通用的协议类实例，那么可以使用Twited自带的工厂。factory类在twisted.internet.protocol模块中。当编写自己的协议时候，要使用和超类一样的模块中的protocol。得到了一个连接后，事件处理程序connectionMade就会被调用；丢失了一个连接后，connetctionLost会被调用。来自客户端的数据是通过处理程序dataReceived接收的。不能把事件处理策略把数据发回到客户端，如果要实现此功能，可以使用对象self.transport，这个对象有一个write方法，也有一个包含客户机地址（hostname+port）的client属性。  </span><br><span class="line"></span><br><span class="line">这里只设计一点设置，必须实例化factory，还要设置它的protocol属性，这样它在和客户机通信时就知道是用什么协议（自定义协议）。然后就开始在给定的端口处使用工厂监听，这个工厂要通过实例化协议对象来准备处理连接。程序使用的是reactor中的listenTCP函数来监听，最后通过调用同一个模块中的run函数启动服务器。</span></span><br></pre></td></tr></table></figure>
+<p>#Tips: Twisted并非是python提供的标准模块，所以需要在第三方网站中下载，目前支持的最高版本为python2.7</p>
+<p>#作为监听实例对象<br>from twisted.internet import reactor<br>from twisted.internet.protocol import Protocol，Factory</p>
+<p>class SimpleLogger(Protocol):<br>    def connectionMade(self):<br>        print(‘GOt connection from’,self.transport.client)<br>    def connectionLost(self,reason):<br>        print(self.transport.client,’disconnected’)<br>    def dataReceived(self,data):<br>        print(data)</p>
+<p>factory=Factory()<br>factory.protocol=SimpleLogger</p>
+<p>#监听函数<br>reactor.listenTCP(1234,factory)</p>
+<p>#Twisted主服务器循环<br>reaction.run()<br>```</p>
 
       
     </div>
@@ -389,7 +513,7 @@ var _hmt = _hmt || [];
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="python2" data-title="Python学习(二)" data-url="http://peihao.space/2015/12/24/python2/"></div>
+	<div class="ds-thread" data-thread-key="python2" data-title="Python学习(二)" data-url="http://clinjie.cn/2015/12/24/python2/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -414,7 +538,7 @@ var _hmt = _hmt || [];
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2015 培豪
+    		&copy; 2016 培豪
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
