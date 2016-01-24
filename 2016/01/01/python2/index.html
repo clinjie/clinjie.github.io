@@ -8,13 +8,13 @@
   <meta name="description" content="接着我的上篇文章，Python学习(一)这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python学习(二)">
-<meta property="og:url" content="http://clinjie.cn/2015/12/24/python2/index.html">
+<meta property="og:url" content="http://peihao.space/2016/01/01/python2/index.html">
 <meta property="og:site_name" content="窗外临街">
 <meta property="og:description" content="接着我的上篇文章，Python学习(一)这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。">
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_python_main.jpg">
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_tktokit.jpg">
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_db_error.jpg">
-<meta property="og:updated_time" content="2016-01-22T06:09:08.902Z">
+<meta property="og:updated_time" content="2016-01-24T15:30:57.123Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python学习(二)">
 <meta name="twitter:description" content="接着我的上篇文章，Python学习(一)这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。">
@@ -217,8 +217,8 @@ var _hmt = _hmt || [];
       <div class="body-wrap"><article id="post-python2" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/12/24/python2/" class="article-date">
-  	<time datetime="2015-12-24T09:39:55.000Z" itemprop="datePublished">2015-12-24</time>
+      <a href="/2016/01/01/python2/" class="article-date">
+  	<time datetime="2016-01-01T09:39:55.000Z" itemprop="datePublished">2016-01-01</time>
 </a>
     </div>
   
@@ -255,7 +255,7 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>接着我的上篇文章，<a href="http://clinjie.cn/2015/12/20/python/">Python学习(一)</a>这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。</p>
+        <p>接着我的上篇文章，<a href="http://chuangwailinjie.github.io/2015/12/20/python/" target="_blank" rel="external">Python学习(一)</a>这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。</p>
 <p><img src="http://7xowaa.com1.z0.glb.clouddn.com/chatu_python_main.jpg" alt=""></p>
 <a id="more"></a>
 <h2 id="文件素材">文件素材</h2><p>open函数用来大爱文件，语法如下：</p>
@@ -465,7 +465,75 @@ events=<span class="tag">p</span>.<span class="function"><span class="title">pol
 <p>#监听函数<br>reactor.listenTCP(1234,factory)</p>
 <p>#Twisted主服务器循环<br>reaction.run()<br><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="gherkin"><span class="comment">## Python与万维网 ##</span></span><br><span class="line"></span><br><span class="line">----------</span><br><span class="line"></span><br><span class="line"><span class="keyword">*</span><span class="keyword">*</span>屏幕抓取技术<span class="keyword">*</span><span class="keyword">*</span>   </span><br><span class="line"></span><br><span class="line">屏幕抓取是程序下载网页并提取信息的过程。如果涉及的网页时动态变化的，那么这项技术将更加有用，正常的情况下，使用urllib和re就可以很方便的测试这项技术。</span></span><br></pre></td></tr></table></figure></p>
 <p>from urllib.request import urlopen<br>import re</p>
-<p>p=re.compile(‘<a href="(.*)" title=".*">(.*)</a>‘);<br>text=urlopen(‘<a href="https://www.python.org/community/jobs/&#39;).read().decode(&#39;utf-8" target="_blank" rel="external">https://www.python.org/community/jobs/&#39;).read().decode(&#39;utf-8</a>‘);<br>for url,name in p.findall(text):<br>    print(‘%s (%s)’ % (name,url))<br>```</p>
+<p>p=re.compile(‘<a href="(.*)" title=".*">(.*)</a>‘);<br>text=urlopen(‘<a href="https://www.python.org/community/jobs/&#39;).read().decode(&#39;utf-8" target="_blank" rel="external">https://www.python.org/community/jobs/&#39;).read().decode(&#39;utf-8</a>‘);<br>for url,name in p.findall(text):<br>    print(‘%s (%s)’ % (name,url))</p>
+<p>#输出<br>Skip to content (#content)<br>Sign In (/accounts/login/)<br>About (/about/)<br>Applications (/about/apps/)<br>Quotes (/about/quotes/)<br>Getting Started (/about/gettingstarted/)<br>Help (/about/help/)<br>Downloads (/downloads/)<br>All releases (/downloads/)<br>Source code (/downloads/source/)<br>Windows (/downloads/windows/)<br>Mac OS X (/downloads/mac-osx/)<br>Other Platforms (/download/other/)<br>License (<a href="https://docs.python.org/3/license.html" target="_blank" rel="external">https://docs.python.org/3/license.html</a>)<br>Alternative Implementations (/download/alternatives)<br>Documentation (/doc/)<br>Docs (/doc/)<br>Audio/Visual Talks (/doc/av)<br>Beginner&#39;s Guide (<a href="https://wiki.python.org/moin/BeginnersGuide" target="_blank" rel="external">https://wiki.python.org/moin/BeginnersGuide</a>)<br>Developer&#39;s Guide (<a href="https://docs.python.org/devguide/" target="_blank" rel="external">https://docs.python.org/devguide/</a>)<br>FAQ (<a href="https://docs.python.org/faq/" target="_blank" rel="external">https://docs.python.org/faq/</a>)<br>Non-English Docs (<a href="http://wiki.python.org/moin/Languages" target="_blank" rel="external">http://wiki.python.org/moin/Languages</a>)<br>PEP Index (<a href="http://python.org/dev/peps/" target="_blank" rel="external">http://python.org/dev/peps/</a>)<br>Python Books (<a href="https://wiki.python.org/moin/PythonBooks" target="_blank" rel="external">https://wiki.python.org/moin/PythonBooks</a>)<br>Community (/community/)<br>Diversity (/community/diversity/)<br>IRC (/community/irc/)<br>Mailing Lists (/community/lists/)<br>Python Conferences (/community/workshops/)<br>Special Interest Groups (/community/sigs/)<br>Python Wiki (<a href="https://wiki.python.org/moin/" target="_blank" rel="external">https://wiki.python.org/moin/</a>)<br>Python Logo (/community/logos/)<br>Merchandise (/community/merchandise/)<br>Community Awards (/community/awards)<br>Success Stories (/about/success/)<br>Arts (/about/success/#arts)<br>Business (/about/success/#business)<br>Education (/about/success/#education)<br>Engineering (/about/success/#engineering)<br>Government (/about/success/#government)<br>Scientific (/about/success/#scientific)<br>Software Development (/about/success/#software-development)<br>News (/blogs/)<br>Python News (/blogs/)<br>Community News (<a href="http://planetpython.org/" target="_blank" rel="external">http://planetpython.org/</a>)<br>PSF News (<a href="http://pyfound.blogspot.com/" target="_blank" rel="external">http://pyfound.blogspot.com/</a>)<br>PyCon News (<a href="http://pycon.blogspot.com/" target="_blank" rel="external">http://pycon.blogspot.com/</a>)<br>Events (/events/)<br>Python Events (/events/python-events/)<br>User Group Events (/events/python-user-group/)<br>Python Events Archive (/events/python-events/past/)<br>User Group Events Archive (/events/python-user-group/past/)<br>Submit an Event (<a href="https://wiki.python.org/moin/PythonEventsCalendar#Submitting_an" target="_blank" rel="external">https://wiki.python.org/moin/PythonEventsCalendar#Submitting_an</a><br>_Event)<br>Applications (/about/apps/)<br>Quotes (/about/quotes/)<br>Getting Started (/about/gettingstarted/)<br>Help (/about/help/)<br>All releases (/downloads/)<br>Source code (/downloads/source/)<br>Windows (/downloads/windows/)<br>Mac OS X (/downloads/mac-osx/)<br>Other Platforms (/download/other/)<br>License (<a href="https://docs.python.org/3/license.html" target="_blank" rel="external">https://docs.python.org/3/license.html</a>)<br>Alternative Implementations (/download/alternatives)<br>Docs (/doc/)<br>Audio/Visual Talks (/doc/av)<br>Beginner&#39;s Guide (<a href="https://wiki.python.org/moin/BeginnersGuide" target="_blank" rel="external">https://wiki.python.org/moin/BeginnersGuide</a>)<br>Developer&#39;s Guide (<a href="https://docs.python.org/devguide/" target="_blank" rel="external">https://docs.python.org/devguide/</a>)<br>FAQ (<a href="https://docs.python.org/faq/" target="_blank" rel="external">https://docs.python.org/faq/</a>)<br>Non-English Docs (<a href="http://wiki.python.org/moin/Languages" target="_blank" rel="external">http://wiki.python.org/moin/Languages</a>)<br>PEP Index (<a href="http://python.org/dev/peps/" target="_blank" rel="external">http://python.org/dev/peps/</a>)<br>Python Books (<a href="https://wiki.python.org/moin/PythonBooks" target="_blank" rel="external">https://wiki.python.org/moin/PythonBooks</a>)<br>Diversity (/community/diversity/)<br>IRC (/community/irc/)<br>Mailing Lists (/community/lists/)<br>Python Conferences (/community/workshops/)<br>Special Interest Groups (/community/sigs/)<br>Python Wiki (<a href="https://wiki.python.org/moin/" target="_blank" rel="external">https://wiki.python.org/moin/</a>)<br>Python Logo (/community/logos/)<br>Merchandise (/community/merchandise/)<br>Community Awards (/community/awards)<br>Success Stories (/about/success/)<br>Arts (/about/success/#arts)<br>Business (/about/success/#business)<br>Education (/about/success/#education)<br>Engineering (/about/success/#engineering)<br>Government (/about/success/#government)<br>Scientific (/about/success/#scientific)<br>Software Development (/about/success/#software-development)<br>News (/blogs/)<br>Python News (/blogs/)<br>Community News (<a href="http://planetpython.org/" target="_blank" rel="external">http://planetpython.org/</a>)<br>PSF News (<a href="http://pyfound.blogspot.com/" target="_blank" rel="external">http://pyfound.blogspot.com/</a>)<br>PyCon News (<a href="http://pycon.blogspot.com/" target="_blank" rel="external">http://pycon.blogspot.com/</a>)<br>Python Events (/events/python-events/)<br>User Group Events (/events/python-user-group/)<br>Python Events Archive (/events/python-events/past/)<br>User Group Events Archive (/events/python-user-group/past/)<br>Submit an Event (<a href="https://wiki.python.org/moin/PythonEventsCalendar#Submitting_an" target="_blank" rel="external">https://wiki.python.org/moin/PythonEventsCalendar#Submitting_an</a><br>_Event)<br>Developer&#39;s Guide (<a href="http://docs.python.org/devguide/" target="_blank" rel="external">http://docs.python.org/devguide/</a>)<br>Issue Tracker (<a href="http://bugs.python.org/" target="_blank" rel="external">http://bugs.python.org/</a>)<br>python-dev list (<a href="https://mail.python.org/mailman/listinfo/python-dev" target="_blank" rel="external">https://mail.python.org/mailman/listinfo/python-dev</a>)<br>Core Mentorship (<a href="http://pythonmentors.com/" target="_blank" rel="external">http://pythonmentors.com/</a>)<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这段代码并不是完全可读的，对于更复杂的HTML代码和查询来说，表达式会变得乱七八糟并且不可维护。   </span><br><span class="line"></span><br><span class="line">程序对于CDATA部分和字符实体&amp;amp;之类的HTML特性是无法处理的，如果碰到了这类特性，程序很有可能会失败。    </span><br><span class="line"></span><br><span class="line">正则表达式被HTML源代码约束，而不是取决于更抽象的结构，这就意味着网页结构中很小的改变就会导致程序中断。   </span><br><span class="line"></span><br><span class="line"><span class="keyword">*</span><span class="keyword">*</span>Tidy和XHTML解析<span class="keyword">*</span><span class="keyword">*</span>   </span><br><span class="line"> </span><br><span class="line">Python标准库中有很多支持结构化格式的库，例如HTML和XML。XHTML是HTML最新的方言，是XML的一种形式。对于包含正确而且有效的XHTML的网页方言，解析的工作一定相当加单，问题在于很多人在使用HTML的时候并不标准，而很多浏览器对于这些语法问题都相当的宽容，并且会尽最大努力渲染最混乱且无意义的HTML。    </span><br><span class="line"></span><br><span class="line">标准库中解析HTML的一般方法是基于事件的，所以需要编写像解析器一样顺序处理数据的时间处理程序。标准库模块sgmllib和htmllib可以用这种方式解析非常混乱的HTML，但是如果希望提取基于文档结构的数据（例如在第二个二级标题下的第一个项目），那么在确实标签的情况下可能会比较复杂。这里介绍另外一种办法：Tidy    </span><br><span class="line"></span><br><span class="line">Tidy是用来修复不规范而且随意的HTML的工具，能够以相当智能的方法修复一般错误。Tidy当然不可能修复HTMl文件中的苏有问题，但是它能够至少保证所有被修复过的HTML文件语法正确，保证正确的嵌套结构。这样修复之后再处理解析，工作量就会大大降低。  </span><br><span class="line"></span><br><span class="line">最新发布的Tidy版本一般都放在github的repository上面，可以自行搜索获取安装，同时要下载一个Tidy的Python包装，例如uTidyLib、mxTidy。</span><br><span class="line">需要注意的是mxTidy也是只支持到python2.x版本。下面通过Tidy的subprocess模块或者其他包含popen函数的模块运行Tidy程序：</span><br></pre></td></tr></table></figure></p>
+<p>from subprocess import Popen. PIPE</p>
+<p>text=open(‘messy.html’).read()<br>tidy=Popen(‘tidy’,stdin=PIPE,stdout=PIPE,stderr=PIPE)</p>
+<p>tidy.stdin.write(text)<br>tidy.stdin.close()</p>
+<p>#由于只能在python2.x版本中使用Tidy，所以这里是用的python语法也是2.x时代<br>print tidy.stdout.read()<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">之后我们可以将通过Tidy解析过得html内容或者其他标准XHTML、HTML内容使用HTMLParser模块（需要注意的是，这里并不是htmllib中的HTMLParser类）。使用HTMLParser的意思就是继承他，并且对handle_starttage或handle_data等事件处理方法进行覆盖。</span><br><span class="line"></span><br><span class="line">![](<span class="string">http:</span><span class="comment">//7xowaa.com1.z0.glb.clouddn.com/htmlparser.png)</span></span><br><span class="line"></span><br><span class="line">如果只是需要正常的屏幕截取，一般不需要实现所有的解析器（事件处理程序）回调，也可能不用创造整个文档抽象表示法来查找自己需要的内容。</span><br></pre></td></tr></table></figure></p>
+<p>from urllib import urlopen<br>from HTMLParser import HTMLParser</p>
+<p>class Scraper(HTMLParser):<br>    in_li=False<br>    in_link=False</p>
+<pre><code><span class="function"><span class="keyword">def</span> <span class="title">handle_starttag</span><span class="params">(self,tag,attrs)</span>:</span>
+    attrs = dict(attrs)
+    <span class="keyword">if</span> tag== <span class="string">'li'</span>:
+        self.in_li=<span class="keyword">True</span>
+
+    <span class="keyword">if</span> tag==<span class="string">'a'</span> <span class="keyword">and</span> <span class="string">'href'</span> <span class="keyword">in</span> attrs:
+        self.in_link=<span class="keyword">True</span>
+        self.chunks=[]
+        self.url=attrs[<span class="string">'href'</span>]
+
+<span class="function"><span class="keyword">def</span> <span class="title">handle_data</span><span class="params">(self,data)</span>:</span>
+    <span class="keyword">if</span> self.in_link:
+        self.chunks.append(data)
+
+<span class="function"><span class="keyword">def</span> <span class="title">handle_endtag</span><span class="params">(self,tag)</span>:</span>
+    <span class="keyword">if</span> tag==<span class="string">'li'</span>:
+        self.in_li=<span class="keyword">False</span>
+    <span class="keyword">if</span> tag==<span class="string">'a'</span>:
+        <span class="keyword">if</span> self.in_li <span class="keyword">and</span> self.in_link:
+            <span class="keyword">print</span> <span class="string">'%s ,(%s)'</span> % (<span class="string">''</span>.join(self.chunks),self.url)
+        self.in_link=<span class="keyword">False</span>
+</code></pre><p>text=urlopen(‘<a href="https://python.org/community/jobs&#39;).read().decode(&#39;utf-8" target="_blank" rel="external">https://python.org/community/jobs&#39;).read().decode(&#39;utf-8</a>‘)<br>parser=Scraper()<br>parser.feed(text)<br>parser.close()<br><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="markdown"><span class="horizontal_rule">----------</span></span><br><span class="line">现在介绍另外一种较轻量级的抓取模块Beautuful Soup   </span><br><span class="line"></span><br><span class="line">Beaytiful Soup是个小模块，用来解析和检查经常在网上看到的那类乱七八糟而且极为不规范的HTML，下载完成后将BeautifulSoup.py文件放置在python安装目录中专门存放第三方模块的site-packages文件夹中。捉着直接使用pip命令安装第三方库，pip等工具的安装可以浏览[<span class="link_label">这里</span>](<span class="link_url">http://www.cnblogs.com/zdz8207/p/python_learn_note_16.html "这里"</span>)。放置完成后，我们开始进行一个简单的测试：</span></span><br></pre></td></tr></table></figure></p>
+<p>from bs4 import BeautifulSoup #process html</p>
+<p>html_doc = “””</p>
+<p><html><head><title>The Dormouse’s story</title></head></html></p>
+<p><body></body></p>
+<p></p><p class="title"><b>The Dormouse’s story</b></p><p></p>
+<p></p><p class="story"><a href="http://example.com/elsie" class="sister" id="link1" target="_blank" rel="external">Elsie</a><br>and they lived at the bottom of a well.</p><p></p>
+<p></p><p class="story">…</p><br>“””<br>soup = BeautifulSoup(html_doc)<p></p>
+<p>print(soup.find_all(‘title’))<br>print(soup.find_all(‘p’,’title’))<br>print(soup.find_all(‘a’))<br>print(soup.find_all(id=”link2”))<br>print(soup.find_all(id=True))</p>
+<p>#输出结果</p>
+<p><html><head><title>The Dormouse’s story</title></head></html></p>
+<p><body></body></p>
+<p></p><p class="title"><b>The Dormouse’s story</b></p><p></p>
+<p></p><p class="story"><a class="sister" href="http://example.com/elsie" id="link1" target="_blank" rel="external">El<br>sie</a><br>and they lived at the bottom of a well.</p><p></p>
+<p></p><p class="story">…</p><br><br>```<p></p>
+<p>如上面的代码，可以看出来，本来的原始信息是不正规的，不符合Html语法，但是经过BeautifulSoup函数处理之后输出返回，是格式化的正确修饰信息。当然，BeautifulSoup的强大之处在于对于网页各部分元素、属性的查找。在我另外一篇文章中这方面设计的比较多。<a href="chuangwailinjie.github.io/2016/01/22/BeautifulSooup/" title="Python抓取豆瓣电影排行">戳这里</a></p>
+<p><strong>使用CGI创建动态网页</strong><br>前面讲的都是客户端技术，现在来开始看服务器端。CGI（Common Gateway Interface,通用网页接口）。CGI是网络服务器可以将查询（一般来说是通过Web表单）传递到专门的程序（比如Python等）中并且在网页上显示结果的标准机制。它是创建万维网应用程序而不用编写特殊用途的应用服务器的简单方法。     </p>
+<p>Python CGI程序设计的关键工具是cgi、cgitb模块。    </p>
+<ol>
+<li>CGI程序应该放在通过网络可以访问的目录中，并且将他们标识为CGI脚本，这样网络服务器就不会将普通源代码作为网页处理。</li>
+</ol>
+<ul>
+<li><p>将脚本放在叫做cgi-bin的子目录中.</p>
+</li>
+<li><p>将脚本文件的扩展名改为.cgi. </p>
+</li>
+</ul>
+<ol>
+<li><p>当把脚本放在正确位置之后，需要在脚本的开始处增加pound bang行。这一步是至关重要的，如果没要这行标识，网络服务器就不知道如何执行脚本。脚本可以用其他语言来写，比如Perl、Ruby。一般来讲，只要加上这句</p>
+<p> #!/usr/bin/env python</p>
+</li>
+</ol>
+<p>这一这行文字是以UNIX风格填写的，前面无空行、结尾以’\n’而非’\r\n’.在Windows中，可以使用Python二进制版本的全路径：</p>
+<pre><code><span class="shebang">#!C:\Python34\python.exe</span>
+</code></pre><ol>
+<li><p>要做的最后一件事情就是这只合适的文件许可。确保每个人都可以读取和执行脚本文件，同时要确保这个文件只能由你写入。（就是在Linux中修改文件的权限）修改文件许可的Linux命令式chmod，只要运行下列命令</p>
+<p> chmod 755 somescript.cgi</p>
+</li>
+</ol>
+<p>即将文件权限设置为只能由本用户全部操作，而用户组以及其他用户只享有r、w权限，无x执行权限。在做好这些准备之后，应该能够将脚本作为网页打开、执行。</p>
 
       
     </div>
@@ -475,18 +543,18 @@ events=<span class="tag">p</span>.<span class="function"><span class="title">pol
     
 <nav id="article-nav">
   
-    <a href="/2015/12/25/致杂乱/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/01/22/BeautifulSooup/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          致杂乱
+          抓取豆瓣电影信息
         
       </div>
     </a>
   
   
-    <a href="/2015/12/24/re/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">正则表达式简单应用</div>
+    <a href="/2015/12/25/致杂乱/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">致杂乱</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -515,7 +583,7 @@ events=<span class="tag">p</span>.<span class="function"><span class="title">pol
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="python2" data-title="Python学习(二)" data-url="http://clinjie.cn/2015/12/24/python2/"></div>
+	<div class="ds-thread" data-thread-key="python2" data-title="Python学习(二)" data-url="http://peihao.space/2016/01/01/python2/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
