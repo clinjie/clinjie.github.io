@@ -15,7 +15,7 @@
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_tktokit.jpg">
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_db_error.jpg">
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/htmlparser.png">
-<meta property="og:updated_time" content="2016-01-26T08:05:10.222Z">
+<meta property="og:updated_time" content="2016-01-26T08:22:33.913Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python学习(二)">
 <meta name="twitter:description" content="接着我的上篇文章，Python学习(一)这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。">
@@ -135,7 +135,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Front-End/" style="font-size: 16.67px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 13.33px;">JQuery</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 16.67px;">随笔</a>
+						<a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Front-End/" style="font-size: 16.67px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 13.33px;">JQuery</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 16.67px;">随笔</a>
 					</div>
 				</section>
 				
@@ -484,7 +484,19 @@ var _hmt = _hmt || [];
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">form</span> = cgi.<span class="function"><span class="title">FieldStorage</span><span class="params">()</span></span></span><br><span class="line">name = <span class="tag">form</span>[<span class="string">'name'</span>]<span class="class">.value</span></span><br><span class="line">#或者如下操作</span><br><span class="line"><span class="tag">form</span> = cgi.<span class="function"><span class="title">FieldStorage</span><span class="params">()</span></span></span><br><span class="line">name = <span class="tag">form</span>.<span class="function"><span class="title">getvalue</span><span class="params">(<span class="string">'name'</span>,<span class="string">'Unkonwn'</span>)</span></span></span><br><span class="line">#这里提供了一个默认值<span class="string">'Unkonwn'</span>，如果不提供的话，就会将None作为默认值提供</span><br></pre></td></tr></table></figure>
 <p>下面是一个上面示例的扩展版本，在同一个页面内添加一个form表单，尝试改变属性名’name’的值，然后提交，表单的action是页面文件本身。当没有提交的时候，页面显示程序提供的默认值。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!C:\Python34\python.exe</span></span><br><span class="line"><span class="keyword">import</span> cgi</span><br><span class="line">form = cgi.FieldStorage()</span><br><span class="line">name = form.getvalue(<span class="string">'name'</span>,<span class="string">'Python'</span>)</span><br><span class="line">print(<span class="string">'Content-type: text/html'</span>)</span><br><span class="line">print()<span class="comment">#打印空行以结束首部</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">'''</span><br><span class="line">	&lt;html&gt;</span><br><span class="line">		&lt;head&gt;</span><br><span class="line">			&lt;title&gt;Greeting Page&lt;/title&gt;</span><br><span class="line">		&lt;head&gt;</span><br><span class="line">		&lt;body&gt;</span><br><span class="line">			&lt;h1&gt;Hello,%s!&lt;/h1&gt;</span><br><span class="line"></span><br><span class="line">			&lt;form action="test.py"&gt;</span><br><span class="line">			Change name&lt;input type="text" name="name"/&gt;</span><br><span class="line">			&lt;input type="submit"/&gt;</span><br><span class="line">			&lt;/form&gt;</span><br><span class="line">		&lt;/body&gt;</span><br><span class="line">	&lt;/html&gt;</span><br><span class="line">	'''</span> %name)</span><br></pre></td></tr></table></figure>
-<p><strong>Mod_Python</strong></p>
+<p><strong>Mod_Python</strong>   </p>
+<p>mod_python是apache组织的一个项目，通过它，可以开发psp或cgi，mod_python功能强大，速度快，是非常优秀的web开发工具。mod_python的一个最主要优点就是在性能上超越传统CGI。   </p>
+<p>Apache分阶段的处理请求(比方说：读取请求,解析header, 检查存取路径,等等)。这些阶段能被称为”处理器”(handler)的函数实现。传统上, “处理器”是由C语言编写，并编译成Apache的模块。Mod_python提供了一个通过Python写的Apache处理器的来扩展Apache功能的方法。关于Apache请求处理过程的详尽描述，请参阅 Apache API Notes, 也可以参阅 Mod_python - Integrating Python with Apache。<br>为了轻松地从CGI移植，一个标准的mod_python处理器提供了模拟的CGI环境，允许用户在不对代码做任何修改的情况下，使遗留的脚本运行在mod_python下(大多数情况)。  </p>
+<p>mod_python可以让Python解释器直接成为Apache的一部分，这样一来就可以在程序中应用很多很酷的东西。它提供了Python中编写Apache处理程序的功能，使用mod_python处理程序框架可以访问丰富的API，深入Apache内核。 </p>
+<ul>
+<li><p>CGI处理程序，允许使用mod_python解释器运行CGI脚本，执行速度会有相当大的提高。</p>
+</li>
+<li><p>PSP处理程序，允许用HTML以及Python代码混合编程创建可执行网页（executable web page）或者Python服务器页面（Python Server Page）。</p>
+</li>
+<li><p>发布处理程序（Publisher Handler），允许使用URL调用Python函数。  </p>
+</li>
+</ul>
+<p>更多的信息，我就不在这里叙述了。想要了解的可以自行在网络上获取。</p>
 
       
     </div>
