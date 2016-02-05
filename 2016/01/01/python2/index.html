@@ -15,7 +15,7 @@
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_tktokit.jpg">
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/chatu_db_error.jpg">
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/htmlparser.png">
-<meta property="og:updated_time" content="2016-01-26T08:22:33.913Z">
+<meta property="og:updated_time" content="2016-02-03T16:33:59.980Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python学习(二)">
 <meta name="twitter:description" content="接着我的上篇文章，Python学习(一)这篇文章，到目前为止，学习到的知识都是和解释器自带的数据结构打交道，程序与外部的交互知识通过input、print函数，这篇文章以及以后的内容会更多在这些方面倾斜。">
@@ -135,7 +135,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Front-End/" style="font-size: 16.67px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 13.33px;">JQuery</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 16.67px;">随笔</a>
+						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Front-End/" style="font-size: 16.67px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 13.33px;">JQuery</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 16.67px;">随笔</a>
 					</div>
 				</section>
 				
@@ -472,7 +472,7 @@ var _hmt = _hmt || [];
 <hr>
 <p>下面开始进行一些简单的CGI脚本演示：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!usr/bin/env python</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">'Content-type: text/plain'</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">()</span></span>#打印空行以结束首部</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">'Hello,world!'</span>)</span></span></span><br></pre></td></tr></table></figure>
-<p>将我们需要放置的服务器配置完成后（<a href="peihao.space//2016/01/25/python_cgi/" title="Python CGI初体验">peihao.space//2016/01/25/python_cgi/</a>）,就可以通过正确的URL访问我们的CGI程序。   </p>
+<p>将我们需要放置的服务器配置完成后（<a href="/2016/01/25/python_cgi/" title="Python CGI初体验">/2016/01/25/python_cgi/</a>）,就可以通过正确的URL访问我们的CGI程序。   </p>
 <p><strong>使用cgitb调试</strong>   </p>
 <p>有时候编程的错误会让程序因为没有捕捉到异常而已堆栈跟踪终止。当通过CGI运行程序时，这种情况很有可能会得到由服务器返回的无帮助错误信息。cgitb，适用于CGI回溯的模块，导入它并且调用enable函数，就能够包含出错信息的有用的网页。</p>
 <figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!C:\Python34\python.exe</span></span><br><span class="line"><span class="keyword">import</span> cgitb; cgitb.enable()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'Content-type: text/html'</span>)</span><br><span class="line"><span class="built_in">print</span>()<span class="comment">#打印空行以结束首部</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="number">1</span>/<span class="number">0</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'Hello Python!'</span>)</span><br></pre></td></tr></table></figure>
