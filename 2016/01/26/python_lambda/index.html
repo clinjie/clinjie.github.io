@@ -21,7 +21,7 @@ Python中使用lambda的话，写成这样
 123g = lambda x : x**3print g(5)#同样的结果  125
 lambda表达式在很多编程语言都有对应的实现。比如C#：
 12">
-<meta property="og:updated_time" content="2016-02-03T16:41:41.165Z">
+<meta property="og:updated_time" content="2016-02-25T05:04:06.244Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Lambda">
 <meta name="twitter:description" content="Python的Lambda函数lambda函数也叫匿名函数，即，函数没有具体的名称。先来看一个最简单例子：
@@ -51,7 +51,17 @@ var _hmt = _hmt || [];
 <body>
   <div id="container">
     <div class="left-col">
-    <div class="overlay"> 
+    <div class="baidu_js_push">
+	<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</div>
+<div class="overlay"> 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 <div align="left" style="margin-top:6px;">
@@ -146,7 +156,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Front-End/" style="font-size: 16.67px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 13.33px;">JQuery</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 16.67px;">随笔</a>
+						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Front-End/" style="font-size: 16.67px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 13.33px;">JQuery</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/Requests/" style="font-size: 10px;">Requests</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/noc/" style="font-size: 13.33px;">noc</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 16.67px;">随笔</a>
 					</div>
 				</section>
 				
@@ -267,6 +277,13 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
+	      	<!-- Table of Contents -->
+			
+			  <div id="toc" class="toc-article">
+			    <strong class="toc-title">文章目录</strong>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python的Lambda函数"><span class="toc-number">1.</span> <span class="toc-text">Python的Lambda函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#lambda基础"><span class="toc-number">1.1.</span> <span class="toc-text">lambda基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非lambda不可？"><span class="toc-number">1.2.</span> <span class="toc-text">非lambda不可？</span></a></li></ol></li></ol>
+			  </div>
+			
         <h1 id="Python的Lambda函数">Python的Lambda函数</h1><p>lambda函数也叫匿名函数，即，函数没有具体的名称。先来看一个最简单例子：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x**<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> f(<span class="number">5</span>)</span><br><span class="line"><span class="comment">#结果是125</span></span><br></pre></td></tr></table></figure>
 <p>Python中使用lambda的话，写成这样</p>
@@ -284,13 +301,13 @@ var _hmt = _hmt || [];
 <li><p>使用lambda在某些时候让代码更容易理解。</p>
 </li>
 </ol>
-<p>lambda基础<br>lambda语句中，冒号前是参数，可以有多个，用逗号隔开，冒号右边的返回值。lambda语句构建的其实是一个函数对象，见证一下：</p>
+<h2 id="lambda基础">lambda基础</h2><p>lambda语句中，冒号前是参数，可以有多个，用逗号隔开，冒号右边的返回值。lambda语句构建的其实是一个函数对象，见证一下：</p>
 <figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">g = lambda x : x**<span class="number">2</span></span><br><span class="line"><span class="built_in">print</span> g</span><br><span class="line"></span><br><span class="line">&lt;<span class="function"><span class="keyword">function</span></span> &lt;lambda&gt; at x00AFAAF0&gt;</span><br></pre></td></tr></table></figure>
 <p>C#3.0开始，也有了lambda表达式，省去了使用delegate的麻烦写法。C#中的lambda表达式关键字是=&gt;，看下面的一个例子：</p>
 <figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="type">array</span> = new <span class="type">int</span>[] &#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="literal">result</span> = <span class="type">array</span>.<span class="type">Where</span>(n =&gt; n &gt; <span class="number">3</span>); // [<span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>]</span><br></pre></td></tr></table></figure>
 <p>C#使用了扩展方法，才使得数组对象拥有了像Where,Sum之类方便的方法。Python中，也有几个定义好的全局函数方便使用的，他们就是filter, map, reduce。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span>foo = [<span class="number">2</span>, <span class="number">18</span>, <span class="number">9</span>, <span class="number">22</span>, <span class="number">17</span>, <span class="number">24</span>, <span class="number">8</span>, <span class="number">12</span>, <span class="number">27</span>]</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">print</span> filter(<span class="keyword">lambda</span> x: x % <span class="number">3</span> == <span class="number">0</span>, foo)</span><br><span class="line">[<span class="number">18</span>, <span class="number">9</span>, <span class="number">24</span>, <span class="number">12</span>, <span class="number">27</span>]</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">print</span> map(<span class="keyword">lambda</span> x: x * <span class="number">2</span> + <span class="number">10</span>, foo)</span><br><span class="line">[<span class="number">14</span>, <span class="number">46</span>, <span class="number">28</span>, <span class="number">54</span>, <span class="number">44</span>, <span class="number">58</span>, <span class="number">26</span>, <span class="number">34</span>, <span class="number">64</span>]</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">print</span> reduce(<span class="keyword">lambda</span> x, y: x + y, foo)</span><br><span class="line"><span class="number">139</span></span><br></pre></td></tr></table></figure>
-<p>非lambda不可？<br>上面例子中的map的作用，和C#的Where扩展方法一样，非常简单方便。但是，Python是否非要使用lambda才能做到这样的简洁程度呢？在对象遍历处理方面，其实Python的for..in..if语法已经很强大，并且在易读上胜过了lambda。比如上面map的例子，可以写成：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span> [x * <span class="number">2</span> + <span class="number">10</span> <span class="keyword">for</span> x <span class="keyword">in</span> foo]</span><br></pre></td></tr></table></figure></p>
+<h2 id="非lambda不可？">非lambda不可？</h2><p>上面例子中的map的作用，和C#的Where扩展方法一样，非常简单方便。但是，Python是否非要使用lambda才能做到这样的简洁程度呢？在对象遍历处理方面，其实Python的for..in..if语法已经很强大，并且在易读上胜过了lambda。比如上面map的例子，可以写成：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span> [x * <span class="number">2</span> + <span class="number">10</span> <span class="keyword">for</span> x <span class="keyword">in</span> foo]</span><br></pre></td></tr></table></figure></p>
 <p>非常的简洁，易懂。</p>
 <p>filter的例子可以写成：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span> [x <span class="keyword">for</span> x <span class="keyword">in</span> foo <span class="keyword">if</span> x % <span class="number">3</span> == <span class="number">0</span>]</span><br></pre></td></tr></table></figure></p>
 <p>同样也是比lambda的方式更容易理解。</p>
@@ -333,6 +350,33 @@ var _hmt = _hmt || [];
 </nav>
 
   
+  
+  
+	<! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &weierp;&weierp;&weierp;<br>
+		   喜欢你看不惯我，却不得不和我一起建设特色社会主义
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/wx.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
 </article>
 
 
@@ -371,7 +415,6 @@ var _hmt = _hmt || [];
 	</script>
 	<!-- 多说公共JS代码 end -->
 </div>
-
 
 
 

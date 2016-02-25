@@ -5,17 +5,20 @@
   
   <title>C++虚函数 | 窗外临街</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="C++的精髓——虚函数　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应的函数，">
+  <meta name="description" content="C++的精髓——虚函数===
+　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++虚函数">
 <meta property="og:url" content="http://peihao.space/2015/08/05/C++虚函数/index.html">
 <meta property="og:site_name" content="窗外临街">
-<meta property="og:description" content="C++的精髓——虚函数　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应的函数，">
+<meta property="og:description" content="C++的精髓——虚函数===
+　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应">
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/C虚.jpg">
-<meta property="og:updated_time" content="2015-12-06T09:04:34.402Z">
+<meta property="og:updated_time" content="2016-02-25T05:07:07.019Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++虚函数">
-<meta name="twitter:description" content="C++的精髓——虚函数　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应的函数，">
+<meta name="twitter:description" content="C++的精髓——虚函数===
+　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应">
   
     <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
   
@@ -37,7 +40,17 @@ var _hmt = _hmt || [];
 <body>
   <div id="container">
     <div class="left-col">
-    <div class="overlay"> 
+    <div class="baidu_js_push">
+	<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</div>
+<div class="overlay"> 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 <div align="left" style="margin-top:6px;">
@@ -132,7 +145,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Front-End/" style="font-size: 16.67px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 13.33px;">JQuery</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 16.67px;">随笔</a>
+						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Front-End/" style="font-size: 16.67px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 13.33px;">JQuery</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/Requests/" style="font-size: 10px;">Requests</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/noc/" style="font-size: 13.33px;">noc</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 16.67px;">随笔</a>
 					</div>
 				</section>
 				
@@ -253,19 +266,28 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
+	      	<!-- Table of Contents -->
+			
+			  <div id="toc" class="toc-article">
+			    <strong class="toc-title">文章目录</strong>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#C++的精髓——虚函数"><span class="toc-number">1.</span> <span class="toc-text">C++的精髓——虚函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定义虚函数的限制："><span class="toc-number">1.1.</span> <span class="toc-text">定义虚函数的限制：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#虚函数"><span class="toc-number">2.</span> <span class="toc-text">虚函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#纯虚函数"><span class="toc-number">2.1.</span> <span class="toc-text">纯虚函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#虚基类的初始化"><span class="toc-number">2.2.</span> <span class="toc-text">虚基类的初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在使用虚基类时要注意："><span class="toc-number">2.3.</span> <span class="toc-text">在使用虚基类时要注意：</span></a></li></ol></li></ol>
+			  </div>
+			
         <p><img src="http://7xowaa.com1.z0.glb.clouddn.com/C虚.jpg" alt=""></p>
-<h1 id="C++的精髓——虚函数">C++的精髓——虚函数</h1><p>　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应的函数，这个函数就是虚函数。 </p>
+<h1 id="C++的精髓——虚函数">C++的精髓——虚函数</h1><p>===</p>
+<p>　　简单地说，那些被virtual关键字修饰的成员函数，就是虚函数。虚函数的作用，用专业术语来解释就是实现多态性（Polymorphism），多态性是将接口与实现进行分离；用形象的语言来解释就是实现以共同的方法，但因个体差异，而采用不同的策略.多态有个关键之处就是一切用指向基类的指针或引用来操作对象,指向基类的指针在操作它的多态类对象时，会根据不同的类对象，调用其相应的函数，这个函数就是虚函数。 </p>
 <a id="more"></a>
-<p>定义虚函数的限制：  </p>
-<p>（1）非类的成员函数不能定义为虚函数，类的成员函数中静态成员函数和构造函数也不能定义为虚函数，但可以将析构函数定义为虚函数。实际上，优秀的程序员常常把基类的析构函数定义为虚函数。因为，将基类的析构函数定义为虚函数后，当利用delete删除一个指向派生类定义的对象指针时，系统会调用相应的类的析构函数。而不将析构函数定义为虚函数时，只调用基类的析构函数。  </p>
+<h2 id="定义虚函数的限制：">定义虚函数的限制：</h2><p>（1）非类的成员函数不能定义为虚函数，类的成员函数中静态成员函数和构造函数也不能定义为虚函数，但可以将析构函数定义为虚函数。实际上，优秀的程序员常常把基类的析构函数定义为虚函数。因为，将基类的析构函数定义为虚函数后，当利用delete删除一个指向派生类定义的对象指针时，系统会调用相应的类的析构函数。而不将析构函数定义为虚函数时，只调用基类的析构函数。  </p>
 <p>（2）只需要在声明函数的类体中使用关键字“virtual”将函数声明为虚函数，而定义函数时不需要使用关键字“virtual”。  </p>
 <p>（3）当将基类中的某一成员函数声明为虚函数后，派生类中的同名函数（函数名相同、参数列表完全一致、返回值类型相关）自动成为虚函数。  </p>
 <p>（4）如果声明了某个成员函数为虚函数，则在该类中不能出现和这个成员函数同名并且返回值、参数个数、类型都相同的非虚函数。在以该类为基类的派生类中，也不能出现这种同名函数。</p>
 <p>纯虚函数在基类中是没有定义的，必须在子类中加以实现，很像java中的接口函数！ </p>
 <p>define : virtual &lt;类型&gt;&lt;函数名&gt;(&lt;参数表&gt;)=0;  </p>
 <p>　　在许多情况下，在基类中不能对虚函数给出有意义的实现，而把它声明为纯虚函数，它的实现留给该基类的派生类去做。这就是纯虚函数的作用。<br>纯虚函数可以让类先具有一个操作名称，而没有操作内容，让派生类在继承时再去具体地给出定义。凡是含有纯虚函数的类叫做抽象类。这种类不能声明对象，只是作为基类为派生类服务。除非在派生类中完全实现基类中所有的的纯虚函数，否则，派生类也变成了抽象类，不能实例化对象。<br>一般而言纯虚函数的函数体是缺省的，但是也可以给出纯虚函数的函数体（此时纯虚函数变为虚函数），这一点经常被人们忽视，调用纯虚函数的方法为baseclass::virtual function.</p>
-<h2 id="虚函数">虚函数</h2><p>引入原因：为了方便使用多态特性，我们常常需要在基类中定义虚函数。<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Cman</span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Eat</span>(<span class="params"></span>)</span>&#123;……&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Move</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">CChild</span> : <span class="title">public</span> <span class="title">CMan</span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Eat</span>(<span class="params"></span>)</span>&#123;……&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">CMan m_man;</span><br><span class="line"></span><br><span class="line">CChild m_child;</span><br><span class="line"></span><br><span class="line"><span class="comment">//这才是使用的精髓，如果不定义基类的指针去使用，没有太大的意义</span></span><br><span class="line"></span><br><span class="line">CMan *p ;</span><br><span class="line"></span><br><span class="line">p = &amp;m_man ;</span><br><span class="line"></span><br><span class="line">p-&gt;Eat(); <span class="comment">//始终调用CMan的Eat成员函数，不会调用 CChild 的</span></span><br><span class="line"></span><br><span class="line">p = &amp;m_child;</span><br><span class="line"></span><br><span class="line">p-&gt;Eat(); <span class="comment">//如果子类实现(覆盖)了该方法，则始终调用CChild的Eat函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//不会调用CMan 的 Eat 方法；如果子类没有实现该函数，则调用CMan的Eat函数</span></span><br><span class="line"></span><br><span class="line">p-&gt;Move(); <span class="comment">//子类中没有该成员函数，所以调用的是基类中的</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="纯虚函数">纯虚函数</h2><p>引入原因：</p>
+<h1 id="虚函数">虚函数</h1><hr>
+<p>引入原因：为了方便使用多态特性，我们常常需要在基类中定义虚函数。<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Cman</span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Eat</span>(<span class="params"></span>)</span>&#123;……&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Move</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">CChild</span> : <span class="title">public</span> <span class="title">CMan</span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Eat</span>(<span class="params"></span>)</span>&#123;……&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">CMan m_man;</span><br><span class="line"></span><br><span class="line">CChild m_child;</span><br><span class="line"></span><br><span class="line"><span class="comment">//这才是使用的精髓，如果不定义基类的指针去使用，没有太大的意义</span></span><br><span class="line"></span><br><span class="line">CMan *p ;</span><br><span class="line"></span><br><span class="line">p = &amp;m_man ;</span><br><span class="line"></span><br><span class="line">p-&gt;Eat(); <span class="comment">//始终调用CMan的Eat成员函数，不会调用 CChild 的</span></span><br><span class="line"></span><br><span class="line">p = &amp;m_child;</span><br><span class="line"></span><br><span class="line">p-&gt;Eat(); <span class="comment">//如果子类实现(覆盖)了该方法，则始终调用CChild的Eat函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//不会调用CMan 的 Eat 方法；如果子类没有实现该函数，则调用CMan的Eat函数</span></span><br><span class="line"></span><br><span class="line">p-&gt;Move(); <span class="comment">//子类中没有该成员函数，所以调用的是基类中的</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="纯虚函数">纯虚函数</h2><hr>
+<p>引入原因：</p>
 <p>1、同“虚函数”；</p>
 <p>2、在很多情况下，基类本身生成对象是不合情理的。例如，动物作为一个基类可以派生出老虎、孔雀等子类，但动物本身生成对象明显不合常理。</p>
 <p>纯虚函数就是基类只定义了函数体，没有实现过程定义方法如下</p>
@@ -285,7 +307,7 @@ var _hmt = _hmt || [];
 <p>错误：带纯虚函数的类叫虚基类，这种基类不能直接生成对象，而只有被继承，并重写其虚函数后，才能使用。这样的类也叫抽象类。</p>
 <p>虚函数是为了继承接口和默认行为</p>
 <p>纯虚函数只是继承接口，行为必须重新定义</p>
-<p>虚基类的初始化<br>—　</p>
+<h2 id="虚基类的初始化">虚基类的初始化</h2><p>—　</p>
 <p>虚基类的初始化与一般多继承的初始化在语法上是一样的,但构造函数的调用次序不同.派生类构造函数的调用次序有三个原则:</p>
 <p>(1)虚基类的构造函数在非虚基类之前调用;</p>
 <p>(2)若同一层次中包含多个虚基类,这些虚基类的构造函  虚基类和非虚基类的区别虚基类和非虚基类的区别数按它们说明的次序调用;</p>
@@ -295,7 +317,8 @@ var _hmt = _hmt || [];
 </code></pre><p>　　虚基类主要解决在多重继承时，基类可能被多次继承，虚基类主要提供一个基类给派生类，如：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span>&#123;&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D1</span>:<span class="typename">public B&#123;&#125;;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D2</span>:<span class="typename">public B&#123;&#125;;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>:<span class="typename">public D1</span>,<span class="typename">public D2&#123;&#125;;</span></span></span><br></pre></td></tr></table></figure></p>
 <p>　　这里C在D1,D2上继承，但有两个基类，造成混乱。因而使用虚基类，即：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span>&#123;&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D1</span>:<span class="typename">virtual public B&#123;&#125;;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D2</span>:<span class="typename">virtual publicB&#123;&#125;;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>:<span class="typename">public D1</span>,<span class="typename">public D2</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="在使用虚基类时要注意：">在使用虚基类时要注意：</h2><p>(1) 一个类可以在一个类族中既被用作虚基类，也被用作非虚基类。
+<h2 id="在使用虚基类时要注意：">在使用虚基类时要注意：</h2><hr>
+<p>(1) 一个类可以在一个类族中既被用作虚基类，也被用作非虚基类。
 　　</p>
 <p>(2) 在派生类的对象中，同名的虚基类只产生一个虚基类子对象，而某个非虚基类产生各自的子对象。
 　　</p>
@@ -336,6 +359,33 @@ var _hmt = _hmt || [];
 </nav>
 
   
+  
+  
+	<! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &weierp;&weierp;&weierp;<br>
+		   喜欢你看不惯我，却不得不和我一起建设特色社会主义
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/wx.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
 </article>
 
 
@@ -374,7 +424,6 @@ var _hmt = _hmt || [];
 	</script>
 	<!-- 多说公共JS代码 end -->
 </div>
-
 
 
 

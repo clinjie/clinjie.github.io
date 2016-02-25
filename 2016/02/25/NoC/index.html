@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>NoC小序 | 窗外临街</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="片上网络（NoC）是基于多处理器技术的一种新型的计算集成形式，涉及硬件通信结构、中间件、操作系统通信服务、设计方法及工具等。基于NoC的系统能很好地适应在现在复杂SoC设计中常使用的多异步时钟。
+片上网络的存储结构
+物理层（Wiring）:主要解决通信通道的物理实现问题，包括互连结构、电气性能等，这时候的信号由于噪音的存在是不可靠的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NoC小序">
+<meta property="og:url" content="http://peihao.space/2016/02/25/NoC/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="片上网络（NoC）是基于多处理器技术的一种新型的计算集成形式，涉及硬件通信结构、中间件、操作系统通信服务、设计方法及工具等。基于NoC的系统能很好地适应在现在复杂SoC设计中常使用的多异步时钟。
+片上网络的存储结构
+物理层（Wiring）:主要解决通信通道的物理实现问题，包括互连结构、电气性能等，这时候的信号由于噪音的存在是不可靠的。">
+<meta property="og:updated_time" content="2016-02-25T14:04:53.351Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NoC小序">
+<meta name="twitter:description" content="片上网络（NoC）是基于多处理器技术的一种新型的计算集成形式，涉及硬件通信结构、中间件、操作系统通信服务、设计方法及工具等。基于NoC的系统能很好地适应在现在复杂SoC设计中常使用的多异步时钟。
+片上网络的存储结构
+物理层（Wiring）:主要解决通信通道的物理实现问题，包括互连结构、电气性能等，这时候的信号由于噪音的存在是不可靠的。">
+  
+    <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?47c906842634689dc55e7f1660f58105";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="baidu_js_push">
+	<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</div>
+<div class="overlay"> 
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div align="left" style="margin-top:6px;">
+<p style="color:#cccc99;font-size:90%">您好，培豪的第<span id="busuanzi_value_site_uv"></span>个小伙伴</p>
+</div>
+</div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xowaa.com1.z0.glb.clouddn.com/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">培豪</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/album">相册</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Front-End/" style="font-size: 16.67px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 13.33px;">JQuery</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/Requests/" style="font-size: 10px;">Requests</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/noc/" style="font-size: 13.33px;">noc</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 16.67px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">衣服晒干风在穿，我一个人，很简单，自己放纵自己管…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">培豪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xowaa.com1.z0.glb.clouddn.com/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">培豪</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/album">相册</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-NoC" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/02/25/NoC/" class="article-date">
+  	<time datetime="2016-02-25T08:14:42.000Z" itemprop="datePublished">2016-02-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      NoC小序
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/noc/">noc</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/片上网络/">片上网络</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	      	<!-- Table of Contents -->
+			
+			  <div id="toc" class="toc-article">
+			    <strong class="toc-title">文章目录</strong>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#片上网络的存储结构"><span class="toc-number">1.</span> <span class="toc-text">片上网络的存储结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#片上网络的性能"><span class="toc-number">2.</span> <span class="toc-text">片上网络的性能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#片上网络的优缺点"><span class="toc-number">3.</span> <span class="toc-text">片上网络的优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#优点"><span class="toc-number">3.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缺点"><span class="toc-number">3.2.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#片上网络面临的问题"><span class="toc-number">4.</span> <span class="toc-text">片上网络面临的问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#片上网络的发展趋势"><span class="toc-number">5.</span> <span class="toc-text">片上网络的发展趋势</span></a></li></ol>
+			  </div>
+			
+        <p>片上网络（NoC）是基于多处理器技术的一种新型的计算集成形式，涉及硬件通信结构、中间件、操作系统通信服务、设计方法及工具等。基于NoC的系统能很好地适应在现在复杂SoC设计中常使用的多异步时钟。</p>
+<h1 id="片上网络的存储结构">片上网络的存储结构</h1><ol>
+<li>物理层（Wiring）:主要解决通信通道的物理实现问题，包括互连结构、电气性能等，这时候的信号由于噪音的存在是不可靠的。　　</li>
+</ol>
+<a id="more"></a>
+<ol>
+<li>数据链路层（Data Link）:通过数据分包（packetize）技术解决物理层信号不可靠的问题。在数据包中加入标准错误检测码（ECC）或者其他冗余信息来实现数据包的检错纠错功能。　
+　</li>
+<li><p>网络层（Network）:主要研究数据包如何在网络中传输，分为开关（Switching）算法或路由（Routing）算法，前者决定建立连接的类型，后者决定数据传输的路径。　</p>
+</li>
+<li><p>传输层（Transport）:主要研究在发送方如何将数据分解并建立数据包以及在接受方如何从数据包中获得数据信息。　　</p>
+</li>
+<li><p>系统层（System）:系统软件负责提供一个抽象的物理平台。　
+　</p>
+</li>
+<li>应用层（Application）。</li>
+</ol>
+<h1 id="片上网络的性能">片上网络的性能</h1><ol>
+<li><p>网络结构：在NOC中，普遍使用也是最适合的网络结构是包交换的直接网络。每个节点通过双向通道连接到相邻的节点。NOC的网络连接是异构的，需连接不同的处理部件和存储部件，通信量的分布也是不均匀的。　　</p>
+</li>
+<li><p>协议：在NOC巾，通信协议比总线协议要复杂得多，为了便于扩展，往往采用分层的网络协议。协议的每一层提供特定的功能和接口。　　</p>
+</li>
+<li><p>服务质量QOS：在NOC的路由决策时，可以提供服务质量，对关键部件的网络带宽或者延迟进行保证，没有被保证的通信采用尽力而为的路由策略。另外，由于中扰和电压降等问题使得部件之间的连线是不可靠的，为了保证可靠的数据传输，当遇到数据错误时，需要进行重传，NOC通过流控机制来保证服务质量。</p>
+</li>
+</ol>
+<h1 id="片上网络的优缺点">片上网络的优缺点</h1><h2 id="优点">优点</h2><ol>
+<li><p>通过点对点传输获得低功耗　　</p>
+</li>
+<li><p>通过分层协议获得可靠的传输　　</p>
+</li>
+<li><p>通过分组交换获得更高的链路利用率　　</p>
+</li>
+<li><p>通过并发和非阻塞交换获得更高的带宽　　</p>
+</li>
+<li><p>全局异步或准同步的、模块化、可升级的结构　　</p>
+</li>
+</ol>
+<h2 id="缺点">缺点</h2><ol>
+<li><p>交换电路和接口增加了电路面积　　</p>
+</li>
+<li><p>缓冲和增加的逻辑造成了功耗增加　　</p>
+</li>
+<li><p>与原有IP核接口和协议的兼容问题　　</p>
+</li>
+<li><p>数据打包、缓冲、同步和接口增加了延迟</p>
+</li>
+</ol>
+<h1 id="片上网络面临的问题">片上网络面临的问题</h1><ol>
+<li><p>带宽限制：总线是一种共享介质的互连结构，某一时刻只允许一个设备使用总线。仲裁逻辑允许高优先级的设备获得总线的使用权，在总线被占用期间，所有其他的请求被阻塞，直到总线空闲。如果成百上千个组件争用一条总线，很难想象结果会是怎样。这还没考虑由于太多的组件连接到总线上而导致的总线频率降低等因素。　　</p>
+</li>
+<li><p>信号集成度：更低的电源电压，更小的线宽，使得整个VLSI系统对电流中的噪声更加敏感。而共享介质上的更多功能部件则进一步加重了噪声。　　</p>
+</li>
+<li><p>信号延迟：随着特征尺寸的下降，连线延迟成为影响信号延迟的主要因素。总线结构是全局控制的。在10亿晶体管时代，全局的线延迟会大于时钟周期。总线结构的全局连线使得时钟的偏移很难管理。　　</p>
+</li>
+<li><p>全局同步：全局连线上的信号延迟决定了系统的时钟周期，为了保持甚至提高系统时钟频率，只能对全局连线进行分布流水，或者采用区域同步全局异步（GALS）的时钟模式。</p>
+</li>
+</ol>
+<h1 id="片上网络的发展趋势">片上网络的发展趋势</h1><p>片上网络的研究才刚刚起步，还没有在商业产品中广泛应用。片上网络的标准化可以增加组件的互连性，但会造成性能的损失，而对特定的片上系统，性能是片上系统的一个关键因素。片上网络的标准化与性能的权衡是一个重要的研究方向。另外，片上网络是一个全局异步、局部同步的系统，如何对片上网络系统进行模拟也是值得研究的问题。还有，不同应用领域对片上网络有不同的需求，研究面向特定应用领域（如多媒体、无线通信等）的片上网络，也是一个重要的研究方向。低功耗是片上系统的永恒话题，片上网络的低功耗研究当然也是一个重要的研究方向。由于片上网络涉及了从物理实现到体系结构、到操作系统、到应用的各个层次，这就需要对片上网络的各个层面进行研究。　　尽管我们可以看到NOC在片上通信方面相比共享总线技术有着很大的优势，然而可以想象NOC并不会完全取代共享总线技术，事实上为了达到性能与复杂性的平衡，它们会相互结合并存在CMP系统中，比如在局部范围内仍然采用总线方式以达到较高的通信速度和较低的复杂度，而在全局范围内采用NOC以减少全局同步的需求、增加数据带宽并达到较高的信号可靠性。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/02/25/片上网络/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">片上网络</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+  
+  
+	<! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &weierp;&weierp;&weierp;<br>
+		   喜欢你看不惯我，却不得不和我一起建设特色社会主义
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/wx.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="NoC" data-title="NoC小序" data-url="http://peihao.space/2016/02/25/NoC/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"chuangwailinjie"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 培豪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<div id="totop" style="position:fixed;bottom:100px;right:30px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>

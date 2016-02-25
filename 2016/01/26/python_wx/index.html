@@ -25,7 +25,7 @@
 最终会遗留下一个只有自己的群组,需要手工删一下
 没试过被拉黑的情况
 转自 https://github.com/0x5e/wechat-deleted-friends">
-<meta property="og:updated_time" content="2016-02-03T16:42:45.400Z">
+<meta property="og:updated_time" content="2016-02-25T05:07:49.692Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python查看微信删除好友">
 <meta name="twitter:description" content="查看被删的微信好友原理就是新建群组,如果加不进来就是被删好友了(不要在群组里讲话,别人是看不见的)
@@ -57,7 +57,17 @@ var _hmt = _hmt || [];
 <body>
   <div id="container">
     <div class="left-col">
-    <div class="overlay"> 
+    <div class="baidu_js_push">
+	<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</div>
+<div class="overlay"> 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 <div align="left" style="margin-top:6px;">
@@ -152,7 +162,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Front-End/" style="font-size: 16.67px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 13.33px;">JQuery</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 16.67px;">随笔</a>
+						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Front-End/" style="font-size: 16.67px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 13.33px;">JQuery</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/Requests/" style="font-size: 10px;">Requests</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/noc/" style="font-size: 13.33px;">noc</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 16.67px;">随笔</a>
 					</div>
 				</section>
 				
@@ -273,7 +283,14 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="查看被删的微信好友">查看被删的微信好友</h2><p>原理就是新建群组,如果加不进来就是被删好友了(不要在群组里讲话,别人是看不见的)</p>
+	      	<!-- Table of Contents -->
+			
+			  <div id="toc" class="toc-article">
+			    <strong class="toc-title">文章目录</strong>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#查看被删的微信好友"><span class="toc-number">1.</span> <span class="toc-text">查看被删的微信好友</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#用法:"><span class="toc-number">1.1.</span> <span class="toc-text">用法:</span></a></li></ol></li></ol>
+			  </div>
+			
+        <h1 id="查看被删的微信好友">查看被删的微信好友</h1><p>原理就是新建群组,如果加不进来就是被删好友了(不要在群组里讲话,别人是看不见的)</p>
 <p>用的是微信网页版的接口</p>
 <p>查询结果可能会引起一些心理上的不适,请小心使用 :)</p>
 <p>还有些小问题:</p>
@@ -281,7 +298,7 @@ var _hmt = _hmt || [];
 <p>最终会遗留下一个只有自己的群组,需要手工删一下</p>
 <p>没试过被拉黑的情况</p>
 <p>转自 <a href="https://github.com/0x5e/wechat-deleted-friends" title="github" target="_blank" rel="external">https://github.com/0x5e/wechat-deleted-friends</a></p>
-<p>用法: 启动终端Terminal</p>
+<h2 id="用法:">用法:</h2><p>启动终端Terminal</p>
 <p>$ python code.py</p>
 <p>由于我正常使用的python3.x，而代码的原作者是适配在Pyhton2.x版本上的，所以如果不想重新改写代码的话，再装一个python2.7吧。</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#正常的Python bash在系统环境变量中还是指向Pyhton3.x</span></span><br><span class="line"><span class="variable">$ </span><span class="constant">C</span><span class="symbol">:/Python27/python</span>.exe code.py</span><br></pre></td></tr></table></figure>
@@ -314,6 +331,33 @@ var _hmt = _hmt || [];
 </nav>
 
   
+  
+  
+	<! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &weierp;&weierp;&weierp;<br>
+		   喜欢你看不惯我，却不得不和我一起建设特色社会主义
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/wx.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
 </article>
 
 
@@ -352,7 +396,6 @@ var _hmt = _hmt || [];
 	</script>
 	<!-- 多说公共JS代码 end -->
 </div>
-
 
 
 

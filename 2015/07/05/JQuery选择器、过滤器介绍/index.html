@@ -18,7 +18,7 @@ JQuery对象不能调用dom对象的属性和方法，同样DOM对象也不能�
 JQuery对象不能调用dom对象的属性和方法，同样DOM对象也不能调用JQuery对象的属性和方法。 
 2.JQuery对象转成DOM对象如果想使用JQuery对象调用DOM对象的方法，怎么办？">
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/jquery.jpg">
-<meta property="og:updated_time" content="2015-12-11T04:45:38.577Z">
+<meta property="og:updated_time" content="2016-02-24T14:43:40.089Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JQuery选择器、过滤器介绍">
 <meta name="twitter:description" content="一、JQuery对象与DOM对象1.JQuery对象JQuery对象就是使用 $(domobj)，将dom对象包装起来.  
@@ -46,7 +46,17 @@ var _hmt = _hmt || [];
 <body>
   <div id="container">
     <div class="left-col">
-    <div class="overlay"> 
+    <div class="baidu_js_push">
+	<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</div>
+<div class="overlay"> 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 <div align="left" style="margin-top:6px;">
@@ -141,7 +151,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Front-End/" style="font-size: 16.67px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 13.33px;">JQuery</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 16.67px;">随笔</a>
+						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Front-End/" style="font-size: 16.67px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 13.33px;">JQuery</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/Requests/" style="font-size: 10px;">Requests</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/noc/" style="font-size: 13.33px;">noc</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 16.67px;">随笔</a>
 					</div>
 				</section>
 				
@@ -262,6 +272,13 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
+	      	<!-- Table of Contents -->
+			
+			  <div id="toc" class="toc-article">
+			    <strong class="toc-title">文章目录</strong>
+			    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、JQuery对象与DOM对象"><span class="toc-number">1.</span> <span class="toc-text">一、JQuery对象与DOM对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、JQuery选择器"><span class="toc-number">2.</span> <span class="toc-text">二、JQuery选择器 </span></a></li></ol>
+			  </div>
+			
         <p><img src="http://7xowaa.com1.z0.glb.clouddn.com/jquery.jpg" alt=""></p>
 <h2 id="一、JQuery对象与DOM对象">一、JQuery对象与DOM对象</h2><p>1.JQuery对象<br>JQuery对象就是使用 $(domobj)，将dom对象包装起来.  </p>
 <p>一般在jqury前面加上$与dom对象区分，它已经是一种公认的命名约定.  </p>
@@ -363,6 +380,33 @@ var _hmt = _hmt || [];
 </nav>
 
   
+  
+  
+	<! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &weierp;&weierp;&weierp;<br>
+		   喜欢你看不惯我，却不得不和我一起建设特色社会主义
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/wx.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
 </article>
 
 
@@ -401,7 +445,6 @@ var _hmt = _hmt || [];
 	</script>
 	<!-- 多说公共JS代码 end -->
 </div>
-
 
 
 
