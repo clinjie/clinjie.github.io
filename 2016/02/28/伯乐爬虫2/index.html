@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>伯乐对象年龄爬虫 | 窗外临街</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="接着上一篇相关文章，还是说伯乐在线这个网站上有一个面向对象栏目。这次呢，不看妹子要求男生的身高问题，来瞧一瞧妹子在这个栏目上发帖子寻找soul mate的时间：）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="伯乐对象年龄爬虫">
+<meta property="og:url" content="http://peihao.space/2016/02/28/伯乐爬虫2/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="接着上一篇相关文章，还是说伯乐在线这个网站上有一个面向对象栏目。这次呢，不看妹子要求男生的身高问题，来瞧一瞧妹子在这个栏目上发帖子寻找soul mate的时间：）">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/duixiang.jpg">
+<meta property="og:updated_time" content="2016-03-01T02:55:21.906Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="伯乐对象年龄爬虫">
+<meta name="twitter:description" content="接着上一篇相关文章，还是说伯乐在线这个网站上有一个面向对象栏目。这次呢，不看妹子要求男生的身高问题，来瞧一瞧妹子在这个栏目上发帖子寻找soul mate的时间：）">
+  
+    <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?47c906842634689dc55e7f1660f58105";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="baidu_js_push">
+	<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</div>
+<div class="overlay"> 
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div align="left" style="margin-top:6px;">
+<p style="color:#cccc99;font-size:90%">您好，培豪的第<span id="busuanzi_value_site_uv"></span>个小伙伴</p>
+</div>
+</div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xowaa.com1.z0.glb.clouddn.com/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">培豪</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/album">相册</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 12.5px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 15px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 12.5px;">JQuery</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/Requests/" style="font-size: 15px;">Requests</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/hexo优化/" style="font-size: 12.5px;">hexo优化</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/noc/" style="font-size: 12.5px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/re/" style="font-size: 12.5px;">re</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">衣服晒干风在穿，我一个人，很简单，自己放纵自己管…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">培豪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xowaa.com1.z0.glb.clouddn.com/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">培豪</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/album">相册</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-伯乐爬虫2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/02/28/伯乐爬虫2/" class="article-date">
+  	<time datetime="2016-02-28T14:23:35.000Z" itemprop="datePublished">2016-02-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      伯乐对象年龄爬虫
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Requests/">Requests</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/re/">re</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Python/">Python</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	      	<!-- Table of Contents -->
+			
+        <p><img src="http://7xowaa.com1.z0.glb.clouddn.com/duixiang.jpg" alt=""></p>
+<p>接着上一篇<a href="\2016\02\27\伯乐爬虫" title="博客爬虫-身高">相关文章</a>，还是说伯乐在线这个网站上有一个面向对象栏目。这次呢，不看妹子要求男生的身高问题，来瞧一瞧妹子在这个栏目上发帖子寻找soul mate的时间：）</p>
+<a id="more"></a>   
+<p>实际上呢，网页信息是跟上次的一模一样，也就是说完全可以将上篇文章的网页代码保存在本地，设置好间隔符，通过不同的过滤规则获取相应的数据。</p>
+<p>下面是我的代码：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">urlsFile = os.path.join(sys.path[<span class="number">0</span>],<span class="string">'urls.txt'</span>)</span><br><span class="line"><span class="comment"># 保存帖子url的本地路径的字符串,os.path.join()知识提供文件路径拼接功能 如果想要创建文件 则使用os.mkdir(path)</span></span><br><span class="line">infoNum = <span class="number">0</span> <span class="comment">#有效信息的总条数</span></span><br><span class="line">num = <span class="number">0</span>   <span class="comment">#包含敏感信息的总条数</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getUrls</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">if</span> os.path.exists(urlsFile) :</span><br><span class="line">        <span class="keyword">return</span> getUrlsFromFile()</span><br><span class="line">    urlList = list()</span><br><span class="line">    url=<span class="string">'http://date.jobbole.com/page/1/?sort=latest'</span></span><br><span class="line">    <span class="keyword">while</span> url:</span><br><span class="line">        html = requests.get(url)</span><br><span class="line">        pattern=<span class="string">'href=\"(.*?)\"&gt;.*?&lt;/a&gt;&lt;label class=\"hide-on-480 small-domain-url\"&gt;&lt;/label&gt;'</span></span><br><span class="line">        urlList += re.findall(pattern,html.text)</span><br><span class="line">        tem=(re.findall(<span class="string">'&lt;li id=\"pagination-next-page\"&gt;&lt;a href=\"(.*?)\"'</span>,html.text))</span><br><span class="line">        <span class="keyword">if</span> len(tem)&gt;<span class="number">0</span>:url=tem[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">else</span>:url=<span class="keyword">None</span></span><br><span class="line">    saveUrls(urlList)</span><br><span class="line">    <span class="keyword">return</span> urlList</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getUrlsFromFile</span><span class="params">()</span>:</span></span><br><span class="line">    urlList = list()</span><br><span class="line">    f = open(urlsFile,<span class="string">'r'</span>)</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> f.readlines():</span><br><span class="line">        <span class="comment">#需要注意的是，智力读取的是包括换行符的字符串，因为在写入文件时已经直接写入了换行符，这里将文件按行分开</span></span><br><span class="line">        <span class="comment">#想要获取纯正的源数据可以使用str.strip()函数</span></span><br><span class="line">        urlList.append(line)</span><br><span class="line">    f.close()</span><br><span class="line">    <span class="keyword">return</span> urlList</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">saveUrls</span><span class="params">(urlList)</span>:</span></span><br><span class="line">    <span class="keyword">with</span> open(urlsFile, <span class="string">"w"</span>,encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> fp:</span><br><span class="line">        fp.write(<span class="string">"%s"</span> % <span class="string">'\n'</span>.join(urlList))</span><br><span class="line"></span><br><span class="line"><span class="comment">#查询该帖子下的内容</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">viewUrl</span><span class="params">(url)</span>:</span></span><br><span class="line">    result = <span class="string">""</span></span><br><span class="line">    html = requests.get(url)</span><br><span class="line">    info = re.findall(<span class="string">'出生年月：(.*?)&lt;br /&gt;'</span>,html.text)</span><br><span class="line">    print(url.strip())</span><br><span class="line">    <span class="keyword">if</span> len(info):</span><br><span class="line">        <span class="keyword">if</span> len(info)&gt;<span class="number">1</span>:</span><br><span class="line">            <span class="keyword">if</span> len(info[<span class="number">0</span>])&gt;len(info[<span class="number">1</span>]) <span class="keyword">and</span> info[<span class="number">1</span>]!=<span class="string">''</span>:info[<span class="number">0</span>]=info[<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">if</span> info[<span class="number">0</span>]!=<span class="string">''</span>:</span><br><span class="line">            result = info[<span class="number">0</span>]</span><br><span class="line">            isAboutA(result)</span><br><span class="line">    f.close()</span><br><span class="line"></span><br><span class="line"><span class="comment">#是否有涉及身高的敏感信息</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isAboutA</span><span class="params">(info)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> num</span><br><span class="line">    keys=[<span class="string">'(\d&#123;4&#125;)'</span>,<span class="string">'(\d&#123;4&#125;\.\d&#123;2&#125;)'</span>,<span class="string">'(\d&#123;2&#125;\.\d*)'</span>,<span class="string">'(\d&#123;2&#125;)年'</span>]</span><br><span class="line">    f=open(<span class="string">'infoA.txt'</span>,<span class="string">'a'</span>)</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> keys:</span><br><span class="line">        r = re.findall(p,info)</span><br><span class="line">        <span class="keyword">if</span>(len(r)):</span><br><span class="line">            num = num + <span class="number">1</span></span><br><span class="line">            f.write(str(r[<span class="number">0</span>])+<span class="string">"\n"</span>)</span><br><span class="line">            print(info)</span><br><span class="line">            print(r[<span class="number">0</span>])</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    f.close()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getAvarge</span><span class="params">()</span>:</span></span><br><span class="line">    numList=list()</span><br><span class="line">    f = open(<span class="string">"infoA.txt"</span>,<span class="string">"r"</span>)</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> f.readlines():</span><br><span class="line">        line=line.strip()</span><br><span class="line">        <span class="keyword">if</span> line!=<span class="string">''</span>:</span><br><span class="line">            <span class="comment">#去除小数点</span></span><br><span class="line">            <span class="keyword">if</span> line.find(<span class="string">'.'</span>)!=-<span class="number">1</span>:</span><br><span class="line">                line=(line.split(<span class="string">'.'</span>))[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">if</span> len(line)==<span class="number">2</span>:</span><br><span class="line">                line=<span class="string">'19'</span>+line</span><br><span class="line">            num = int(line)</span><br><span class="line">            numList.append(num)</span><br><span class="line">    result=<span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> numList:</span><br><span class="line">        result+=num</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'%.2f'</span> % (<span class="number">2016</span>-result/len(numList))</span><br><span class="line"></span><br><span class="line">f=open(<span class="string">'infoA.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line">f.close()</span><br><span class="line">urlList = getUrls()</span><br><span class="line">num = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(urlList)):</span><br><span class="line">    print(<span class="string">'第'</span>+str(i+<span class="number">1</span>)+<span class="string">'个begin:'</span>)</span><br><span class="line">    viewUrl(urlList[i])</span><br><span class="line">    print(<span class="string">'进度 %.2f\n'</span> % ((i+<span class="number">1</span>)/len(urlList)))</span><br><span class="line">    time.sleep(<span class="number">0.1</span>)</span><br><span class="line">print(len(urlList))</span><br><span class="line">print(num)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'结果为 %.2f'</span> % getAvarge())</span><br></pre></td></tr></table></figure>
+<p><code>结果为27.44</code></p>
+<p>通过爬虫信息可以看出，27岁是个中间值，我也没有具体的研究年龄分布问题，后续等我有更科学的方法、数据量之后再来研究~</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/02/28/电脑定时睡眠/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">电脑定时睡眠</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+  
+  
+	<! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &weierp;&weierp;&weierp;<br>
+		   喜欢你看不惯我，却不得不和我一起建设特色社会主义
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/wx.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="伯乐爬虫2" data-title="伯乐对象年龄爬虫" data-url="http://peihao.space/2016/02/28/伯乐爬虫2/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"chuangwailinjie"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 培豪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<div id="totop" style="position:fixed;bottom:100px;right:30px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>
