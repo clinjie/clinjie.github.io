@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Python中的map_reduce | 窗外临街</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="提起map和reduce想必大家并不陌生，Google公司2003年提出了一个名为MapReduce的编程模型，用于处理大规模海量数据，并在之后广泛的应用于Google的各项应用中，2006年Apache的Hadoop项目正式将MapReduce纳入到项目中。
+好吧，闲话少说，今天要介绍的是Python函数式编程中的另外两个内建函数map()和reduce()，而不是Google的MapReduc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python中的map_reduce">
+<meta property="og:url" content="http://peihao.space/2015/03/01/Map_Reduce/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="提起map和reduce想必大家并不陌生，Google公司2003年提出了一个名为MapReduce的编程模型，用于处理大规模海量数据，并在之后广泛的应用于Google的各项应用中，2006年Apache的Hadoop项目正式将MapReduce纳入到项目中。
+好吧，闲话少说，今天要介绍的是Python函数式编程中的另外两个内建函数map()和reduce()，而不是Google的MapReduc">
+<meta property="og:image" content="http://cimage.tianjimedia.com/uploadImages/2012/283/7Q94QWFV28V7.jpg">
+<meta property="og:image" content="http://www.pythoner.com/wp-content/uploads/2013/01/map-1-300x162.png">
+<meta property="og:image" content="http://www.pythoner.com/wp-content/uploads/2013/01/map-2-300x191.png">
+<meta property="og:image" content="http://www.pythoner.com/wp-content/uploads/2013/01/reduce.png">
+<meta property="og:updated_time" content="2016-03-06T13:32:18.170Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python中的map_reduce">
+<meta name="twitter:description" content="提起map和reduce想必大家并不陌生，Google公司2003年提出了一个名为MapReduce的编程模型，用于处理大规模海量数据，并在之后广泛的应用于Google的各项应用中，2006年Apache的Hadoop项目正式将MapReduce纳入到项目中。
+好吧，闲话少说，今天要介绍的是Python函数式编程中的另外两个内建函数map()和reduce()，而不是Google的MapReduc">
+  
+    <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?47c906842634689dc55e7f1660f58105";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="baidu_js_push">
+	<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</div>
+<div class="overlay"> 
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div align="left" style="margin-top:6px;">
+<p style="color:#cccc99;font-size:90%">您好，培豪的第<span id="busuanzi_value_site_uv"></span>个小伙伴</p>
+</div>
+</div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xowaa.com1.z0.glb.clouddn.com/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">培豪</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/album">相册</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 12.5px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 15px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 12.5px;">JQuery</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/Requests/" style="font-size: 15px;">Requests</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/hexo优化/" style="font-size: 12.5px;">hexo优化</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/noc/" style="font-size: 12.5px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/re/" style="font-size: 12.5px;">re</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">衣服晒干风在穿，我一个人，很简单，自己放纵自己管…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">培豪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xowaa.com1.z0.glb.clouddn.com/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">培豪</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/album">相册</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Map_Reduce" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/03/01/Map_Reduce/" class="article-date">
+  	<time datetime="2015-03-01T14:23:35.000Z" itemprop="datePublished">2015-03-01</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python中的map_reduce
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Python/">Python</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	      	<!-- Table of Contents -->
+			
+			  <div id="toc" class="toc-article">
+			    <strong class="toc-title">文章目录</strong>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#map"><span class="toc-number">1.</span> <span class="toc-text">map</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#seq只有一个时"><span class="toc-number">1.1.</span> <span class="toc-text">seq只有一个时</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#seq多于一个"><span class="toc-number">1.2.</span> <span class="toc-text">seq多于一个</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#reduce"><span class="toc-number">2.</span> <span class="toc-text">reduce</span></a></li></ol>
+			  </div>
+			
+        <p><img src="http://cimage.tianjimedia.com/uploadImages/2012/283/7Q94QWFV28V7.jpg" alt=""></p>
+<p>提起map和reduce想必大家并不陌生，Google公司2003年提出了一个名为MapReduce的编程模型，用于处理大规模海量数据，并在之后广泛的应用于Google的各项应用中，2006年Apache的Hadoop项目正式将MapReduce纳入到项目中。</p>
+<p>好吧，闲话少说，今天要介绍的是Python函数式编程中的另外两个内建函数map()和reduce()，而不是Google的MapReduce。</p>
+<a id="more"></a>
+<h1 id="map">map</h1><p>格式：<code>map( func, seq1[, seq2...] )</code></p>
+<p>Python函数式编程中的<code>map()</code>函数是将<code>func</code>作用于<code>seq</code>中的每一个元素，并用一个列表给出返回值。如果<code>func</code>为<code>None</code>，作用同<code>zip()</code>。</p>
+<h2 id="seq只有一个时">seq只有一个时</h2><p>将func函数作用于这个seq的每个元素上，得到一个新的seq。下图说明了只有一个seq的时候map()函数是如何工作的</p>
+<p><img src="http://www.pythoner.com/wp-content/uploads/2013/01/map-1-300x162.png" alt=""></p>
+<p>可以看出，seq中的每个元素都经过了func函数的作用，得到了func(seq[n])组成的列表。</p>
+<p>下面举一个例子进行说明。假设我们想要得到一个列表中数字%3的余数，那么可以写成下面的代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用map</span></span><br><span class="line"><span class="keyword">print</span> map( <span class="keyword">lambda</span> x: x%<span class="number">4</span>, range(<span class="number">9</span>) )  <span class="comment"># [0, 1, 2, 3, 0, 1, 2, 3, 0]</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#使用列表解析</span></span><br><span class="line"><span class="keyword">print</span> [x%<span class="number">4</span> <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">9</span>)]  <span class="comment"># [0, 1, 2, 3, 0, 1, 2, 3, 0]</span></span><br></pre></td></tr></table></figure>
+<h2 id="seq多于一个">seq多于一个</h2><p><code>map</code>可以并行地对每个seq执行如下图所示的过程：</p>
+<p><img src="http://www.pythoner.com/wp-content/uploads/2013/01/map-2-300x191.png" alt=""></p>
+<p>也就是说每个seq的同一位置的元素在执行过一个多元的func函数之后，得到一个返回值，这些返回值放在一个结果列表中。</p>
+<p>下面的例子是求两个列表对应元素的积，可以想象，这是一种可能会经常出现的状况，而如果不是用map的话，就要使用一个for循环，依次对每个位置执行该函数。</p>
+<p><code>print map( lambda x, y: x * y, [4, 5, 6],[1, 2, 3] )  # [4, 10, 18]</code></p>
+<p>上面是返回值是一个值的情况，实际上也可以是一个元组。下面的代码不止实现了乘法，也实现了加法，并把积与和放在一个元组中。</p>
+<p><code>print map( lambda x, y: ( x * y, x + y),[4, 5, 6],[1, 2, 3])  # [(4, 5), (10, 7), (18, 9)]</code></p>
+<p>还有就是上面说的<code>func</code>是<code>None</code>的情况，它的目的是将多个列表相同位置的元素归并到一个元组，在现在已经有了专用的函数<code>zip()</code>了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> map( <span class="keyword">None</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>] )  <span class="comment"># [(1, 4), (2, 5), (3, 6)]</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> zip( [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>] )  <span class="comment"># [(1, 4), (2, 5), (3, 6)]</span></span><br></pre></td></tr></table></figure>
+<h1 id="reduce">reduce</h1><p>格式：<code>reduce( func, seq[, init] )</code></p>
+<p><code>reduce</code>函数即为化简，它是这样一个过程：每次迭代，将上一次的迭代结果（第一次时为init的元素，如没有<code>init</code>则为<code>seq</code>的第一个元素）与下一个元素一同执行一个二元的<code>func</code>函数。在<code>reduce</code>函数中，<code>init</code>是可选的，如果使用，则作为第一次迭代的第一个元素使用。</p>
+<p>简单来说，可以用这样一个形象化的式子来说明：</p>
+<p><code>reduce( func, [1, 2, 3, 4] ) = func( func(1, 2), 3, 4)</code></p>
+<p>下面是reduce函数的工作过程图：</p>
+<p><img src="http://www.pythoner.com/wp-content/uploads/2013/01/reduce.png" alt=""></p>
+<p>举个例子来说，阶乘是一个常见的数学方法，Python中并没有给出一个阶乘的内建函数，我们可以使用<code>reduce</code>实现一个阶乘的代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">5</span></span><br><span class="line"><span class="keyword">print</span> reduce(<span class="keyword">lambda</span> x, y: x * y, range(<span class="number">1</span>, n + <span class="number">1</span>))  <span class="comment"># 120</span></span><br></pre></td></tr></table></figure>
+<p>那么，如果我们希望得到2倍阶乘的值呢？这就可以用到<code>init</code>这个可选参数了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">m = <span class="number">2</span></span><br><span class="line">n = <span class="number">5</span></span><br><span class="line"><span class="keyword">print</span> reduce( <span class="keyword">lambda</span> x, y: x * y, range( <span class="number">1</span>, n + <span class="number">1</span> ), m )  <span class="comment"># 240</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/03/01/scrapy/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          初窥Scrapy(Py3.x)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/11/27/小记/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">小记(1)</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+  
+  
+	<! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &weierp;&weierp;&weierp;<br>
+		   喜欢你看不惯我，却不得不和我一起建设特色社会主义
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/wx.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Map_Reduce" data-title="Python中的map_reduce" data-url="http://peihao.space/2015/03/01/Map_Reduce/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"chuangwailinjie"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 培豪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<div id="totop" style="position:fixed;bottom:100px;right:30px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>

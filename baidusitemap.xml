@@ -4,6 +4,83 @@
 
     
   <url>
+    <loc>http://peihao.space/2015/03/01/Map_Reduce/</loc>
+    <lastmod>2016-03-06T13:32:18.170Z</lastmod>
+    <data>
+        <display>
+        <title>Python中的map_reduce</title>
+        <pubTime>2015-03-01T14:23:35.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://peihao.space/categories/Python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2015/03/01/scrapy/</loc>
+    <lastmod>2016-03-06T05:44:58.804Z</lastmod>
+    <data>
+        <display>
+        <title>初窥Scrapy(Py3.x)</title>
+        <pubTime>2015-03-01T14:23:35.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+        <tag>Scrapy</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://peihao.space/categories/Python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2016/03/06/xxx/</loc>
+    <lastmod>2016-03-06T05:44:51.982Z</lastmod>
+    <data>
+        <display>
+        <title>SSD编程</title>
+        <pubTime>2016-03-06T14:23:35.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2015/03/06/actor/</loc>
+    <lastmod>2016-03-06T05:27:02.383Z</lastmod>
+    <data>
+        <display>
+        <title>演员电影评分排序</title>
+        <pubTime>2015-03-06T14:23:35.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://peihao.space/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://peihao.space/2016/02/28/%E4%BC%AF%E4%B9%90%E7%88%AC%E8%99%AB2/</loc>
     <lastmod>2016-03-01T02:55:21.906Z</lastmod>
     <data>
