@@ -10,12 +10,13 @@
 本文档将通过介绍Scrapy背后的概念使您对其工作原理有所了解， 并确">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初窥Scrapy(Py3.x)">
-<meta property="og:url" content="http://peihao.space/2015/03/01/scrapy/index.html">
+<meta property="og:url" content="http://peihao.space/2016/02/28/scrapy/index.html">
 <meta property="og:site_name" content="窗外临街">
 <meta property="og:description" content="Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。
 其最初是为了 页面抓取 (更确切来说, 网络抓取 )所设计的， 也可以应用在获取API所返回的数据(例如 Amazon Associates Web Services ) 或者通用的网络爬虫。
 本文档将通过介绍Scrapy背后的概念使您对其工作原理有所了解， 并确">
-<meta property="og:updated_time" content="2016-03-06T05:44:58.804Z">
+<meta property="og:image" content="http://a1.jikexueyuan.com/home/201506/08/d4bc/5574f3f42607c.jpg">
+<meta property="og:updated_time" content="2016-03-16T07:56:40.383Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初窥Scrapy(Py3.x)">
 <meta name="twitter:description" content="Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。
@@ -63,7 +64,7 @@ var _hmt = _hmt || [];
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="http://7xowaa.com1.z0.glb.clouddn.com/me1.jpg" class="js-avatar">
+			<img lazy-src="\img\avatar.jpg" class="js-avatar">
 			
 		</a>
 
@@ -147,7 +148,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 12.5px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 15px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 12.5px;">JQuery</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/Requests/" style="font-size: 15px;">Requests</a> <a href="/tags/SSD/" style="font-size: 10px;">SSD</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/hexo优化/" style="font-size: 12.5px;">hexo优化</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/noc/" style="font-size: 12.5px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/re/" style="font-size: 12.5px;">re</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a>
+						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 12.5px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 15px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 12.5px;">JQuery</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/Requests/" style="font-size: 15px;">Requests</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/Verilog-HDL/" style="font-size: 15px;">Verilog HDL</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/hexo优化/" style="font-size: 12.5px;">hexo优化</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/noc/" style="font-size: 12.5px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/re/" style="font-size: 12.5px;">re</a> <a href="/tags/torrent/" style="font-size: 12.5px;">torrent</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/仿真/" style="font-size: 15px;">仿真</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/编码/" style="font-size: 12.5px;">编码</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a>
 					</div>
 				</section>
 				
@@ -193,7 +194,7 @@ var _hmt = _hmt || [];
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img lazy-src="http://7xowaa.com1.z0.glb.clouddn.com/me1.jpg" class="js-avatar">
+				<img lazy-src="\img\avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author">培豪</h1>
@@ -230,8 +231,8 @@ var _hmt = _hmt || [];
       <div class="body-wrap"><article id="post-scrapy" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/03/01/scrapy/" class="article-date">
-  	<time datetime="2015-03-01T14:23:35.000Z" itemprop="datePublished">2015-03-01</time>
+      <a href="/2016/02/28/scrapy/" class="article-date">
+  	<time datetime="2016-02-28T14:23:35.000Z" itemprop="datePublished">2016-02-28</time>
 </a>
     </div>
   
@@ -275,7 +276,8 @@ var _hmt = _hmt || [];
 			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#选择一个网站"><span class="toc-number">1.</span> <span class="toc-text">选择一个网站</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#定义您想抓取的数据"><span class="toc-number">2.</span> <span class="toc-text">定义您想抓取的数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#执行spider，获取数据"><span class="toc-number">3.</span> <span class="toc-text">执行spider，获取数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查看提取到的数据"><span class="toc-number">4.</span> <span class="toc-text">查看提取到的数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#支持Python3-x的新版本"><span class="toc-number">5.</span> <span class="toc-text">支持Python3.x的新版本</span></a></li></ol>
 			  </div>
 			
-        <p>Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。</p>
+        <p><img src="http://a1.jikexueyuan.com/home/201506/08/d4bc/5574f3f42607c.jpg" alt=""></p>
+<p>Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。</p>
 <p>其最初是为了 页面抓取 (更确切来说, 网络抓取 )所设计的， 也可以应用在获取API所返回的数据(例如 Amazon Associates Web Services ) 或者通用的网络爬虫。</p>
 <p>本文档将通过介绍Scrapy背后的概念使您对其工作原理有所了解， 并确定Scrapy是否是您所需要的。</p>
 <p>当您准备好开始您的项目后，您可以参考 <a href="http://scrapy-chs.readthedocs.org/zh_CN/latest/intro/tutorial.html#intro-tutorial" title="入门教程" target="_blank" rel="external">入门教程</a> 。</p>
@@ -327,18 +329,18 @@ var _hmt = _hmt || [];
     
 <nav id="article-nav">
   
-    <a href="/2015/03/06/actor/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/02/28/伯乐爬虫2/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          演员电影评分排序
+          伯乐对象年龄爬虫
         
       </div>
     </a>
   
   
-    <a href="/2015/03/01/Map_Reduce/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Python中的map_reduce</div>
+    <a href="/2016/02/28/电脑定时睡眠/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">电脑定时睡眠</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -394,7 +396,7 @@ var _hmt = _hmt || [];
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="scrapy" data-title="初窥Scrapy(Py3.x)" data-url="http://peihao.space/2015/03/01/scrapy/"></div>
+	<div class="ds-thread" data-thread-key="scrapy" data-title="初窥Scrapy(Py3.x)" data-url="http://peihao.space/2016/02/28/scrapy/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Verilog小叙(三) | 窗外临街</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="好的，接着上篇文章Verilog小叙(二)
+数据流建模之前的介绍中，我们已经初步了解到数据流描述方式，本节对数据流的建模方式进一步讨论，主要讲述连续赋值语句、阻塞赋值语句、非阻塞赋值语句，并针对一个系统设计频率计数器的实例进行讲解。
+连续赋值语句数据流的描述是采用连续赋值语句(assign )语句来实现的。语法如下：assign net_type = 表达式；连续赋值语句用于组合逻辑的建模。 等式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Verilog小叙(三)">
+<meta property="og:url" content="http://peihao.space/2016/03/09/verilog_hdl3/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="好的，接着上篇文章Verilog小叙(二)
+数据流建模之前的介绍中，我们已经初步了解到数据流描述方式，本节对数据流的建模方式进一步讨论，主要讲述连续赋值语句、阻塞赋值语句、非阻塞赋值语句，并针对一个系统设计频率计数器的实例进行讲解。
+连续赋值语句数据流的描述是采用连续赋值语句(assign )语句来实现的。语法如下：assign net_type = 表达式；连续赋值语句用于组合逻辑的建模。 等式">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/top_down.png">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/verilog_stream.png">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/mealy.png">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/moore.png">
+<meta property="og:updated_time" content="2016-03-09T05:35:46.256Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Verilog小叙(三)">
+<meta name="twitter:description" content="好的，接着上篇文章Verilog小叙(二)
+数据流建模之前的介绍中，我们已经初步了解到数据流描述方式，本节对数据流的建模方式进一步讨论，主要讲述连续赋值语句、阻塞赋值语句、非阻塞赋值语句，并针对一个系统设计频率计数器的实例进行讲解。
+连续赋值语句数据流的描述是采用连续赋值语句(assign )语句来实现的。语法如下：assign net_type = 表达式；连续赋值语句用于组合逻辑的建模。 等式">
+  
+    <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?47c906842634689dc55e7f1660f58105";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="baidu_js_push">
+	<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</div>
+<div class="overlay"> 
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div align="left" style="margin-top:6px;">
+<p style="color:#cccc99;font-size:90%">您好，培豪的第<span id="busuanzi_value_site_uv"></span>个小伙伴</p>
+</div>
+</div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="\img\avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">培豪</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/album">相册</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 12.5px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 15px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 12.5px;">JQuery</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/Requests/" style="font-size: 15px;">Requests</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/Verilog-HDL/" style="font-size: 15px;">Verilog HDL</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/hexo优化/" style="font-size: 12.5px;">hexo优化</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/noc/" style="font-size: 12.5px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/re/" style="font-size: 12.5px;">re</a> <a href="/tags/torrent/" style="font-size: 12.5px;">torrent</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/仿真/" style="font-size: 15px;">仿真</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/编码/" style="font-size: 12.5px;">编码</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">衣服晒干风在穿，我一个人，很简单，自己放纵自己管…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">培豪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="\img\avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">培豪</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/album">相册</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-verilog_hdl3" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/09/verilog_hdl3/" class="article-date">
+  	<time datetime="2016-03-09T14:23:35.000Z" itemprop="datePublished">2016-03-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Verilog小叙(三)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Verilog-HDL/">Verilog HDL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/仿真/">仿真</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Verilog/">Verilog</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	      	<!-- Table of Contents -->
+			
+			  <div id="toc" class="toc-article">
+			    <strong class="toc-title">文章目录</strong>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数据流建模"><span class="toc-number">1.</span> <span class="toc-text">数据流建模</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#连续赋值语句"><span class="toc-number">1.1.</span> <span class="toc-text">连续赋值语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#阻塞赋值语句"><span class="toc-number">1.2.</span> <span class="toc-text">阻塞赋值语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非阻塞赋值语句"><span class="toc-number">1.3.</span> <span class="toc-text">非阻塞赋值语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据流建模具体实例"><span class="toc-number">1.4.</span> <span class="toc-text">数据流建模具体实例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#行为建模"><span class="toc-number">2.</span> <span class="toc-text">行为建模</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">2.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#顺序语句块"><span class="toc-number">2.2.</span> <span class="toc-text">顺序语句块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#过程赋值语句"><span class="toc-number">2.3.</span> <span class="toc-text">过程赋值语句</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#状态机"><span class="toc-number">3.</span> <span class="toc-text">状态机</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Mealy状态机"><span class="toc-number">3.1.</span> <span class="toc-text">Mealy状态机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Moore状态机"><span class="toc-number">3.2.</span> <span class="toc-text">Moore状态机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三段式状态机"><span class="toc-number">3.3.</span> <span class="toc-text">三段式状态机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行为建模具体实例"><span class="toc-number">3.4.</span> <span class="toc-text">行为建模具体实例</span></a></li></ol></li></ol>
+			  </div>
+			
+        <p>好的，接着上篇文章<a href="/2016/03/08/verilog_hdl2/">Verilog小叙(二)</a></p>
+<h1 id="数据流建模">数据流建模</h1><p>之前的介绍中，我们已经初步了解到数据流描述方式，本节对数据流的建模方式进一步讨论，主要讲述连续赋值语句、阻塞赋值语句、非阻塞赋值语句，并针对一个系统设计频率计数器的实例进行讲解。</p>
+<h2 id="连续赋值语句">连续赋值语句</h2><p>数据流的描述是采用连续赋值语句(assign )语句来实现的。语法如下：<br><code>assign net_type = 表达式；</code><br>连续赋值语句用于组合逻辑的建模。 等式左边是wire 类型的变量。等式右边可以是常量、由运算符如逻辑运算符、算术运算符参与的表达。<br>如下几个实例：</p>
+<a id="more"></a>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wire [3:0] Z, preset,clear; //线网说明</span><br><span class="line">assign z = preset &amp; clear; //连续赋值语句</span><br><span class="line">wire cout, cin ;</span><br><span class="line">wire [3:0] sum, a, bB;</span><br><span class="line">. . .</span><br><span class="line">assign &#123;cout,sum&#125; = a + b + cin;</span><br><span class="line">assign mux = (s == 3)? d : 'bz;</span><br></pre></td></tr></table></figure>
+<p>注意如下几个方面：</p>
+<ol>
+<li>连续赋值语句的执行是：只要右边表达式任一个变量有变化，表达式立即被计算，计算的结果立即赋给左边信号。</li>
+<li>连续赋值语句之间是并行语句，因此与位置顺序无关。</li>
+</ol>
+<p><strong>Tips：</strong><br>实际电路中赋值语句的执行其实会有ps级别的延迟，这个延迟是线、门器件本身特性造成的，不过只要是同步电路，那么ps级别延迟就可以忽略不计，因为后续的寄存器是在时钟上升沿采样，ps级别延迟和一个典型的时钟周期来比，完全不用考虑。</p>
+<h2 id="阻塞赋值语句">阻塞赋值语句</h2><p>“=”用于阻塞的赋值，凡是在组合逻辑（如在assign 语句中）赋值的请用阻塞赋值。阻塞赋值“=”在begin 和end 之间的语句是顺序执行，属于串行语句<br>说明：<br>always语句的敏感变量如果不含有时钟，即always（*）这样描述，那么也属于组合逻辑，需要使用阻塞赋值。<br>一个组合逻辑的例子：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">always @(*) begin</span><br><span class="line">if ( new_vld_after == 1'b1 )</span><br><span class="line">port_win = new_port_after ;</span><br><span class="line">else if ( new_vld_before ==1'b1 )</span><br><span class="line">port_win = new_port_before ;</span><br><span class="line">else</span><br><span class="line">port_win = last_sel_port ;</span><br><span class="line">end//阻塞赋值在begin-end之间串行执行</span><br></pre></td></tr></table></figure>
+<h2 id="非阻塞赋值语句">非阻塞赋值语句</h2><p><code>“&lt;=”</code>用于阻塞的赋值，凡是在时序逻辑（如在always语句中）赋值的请用非阻塞赋值，非阻塞赋值<code>“&lt;=”</code>在<code>begin</code>和<code>end</code>之间的语句是并行执行，属于并行执语句。</p>
+<p><strong>Tips：</strong></p>
+<p><code>时序逻辑值</code>的是<code>带有时钟的always块逻辑</code>，只有always带有时钟，那么这个逻辑才能是寄存器。<br>一个时序逻辑的例子：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">always @(posedge sys_clk or negedge sys_rst_n) begin</span><br><span class="line">if (sys_rst_n ==1'b0)</span><br><span class="line">clk_cnt &lt;= 26'b0;</span><br><span class="line">else</span><br><span class="line">clk_cnt &lt;= clk_cnt + 26'b1;</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<h2 id="数据流建模具体实例">数据流建模具体实例</h2><p>以上面的频率计数器为例，其中的AND2模块我们用数据流来建模。</p>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/top_down.png" alt=""></p>
+<p>AND2模块对应文件AND2.v 的内容如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">module <span class="title">AND2</span> <span class="params">(A0, A1, Y)</span></span>;</span><br><span class="line">input A0;</span><br><span class="line">input A1;</span><br><span class="line">output Y;</span><br><span class="line">wire A0;</span><br><span class="line">wire A1;</span><br><span class="line">wire Y;</span><br><span class="line">assign Y = A0 &amp; A1;<span class="comment">//连续赋值语句</span></span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+<h1 id="行为建模">行为建模</h1><p>在第四节中，我们已经对行为描述方式有个概念，这里对行为建模进一步的描述，并通过一个系统设计频率计数器加以巩固。</p>
+<h2 id="简介">简介</h2><p>行为建模方式是通过对设计的行为的描述来实现对设计建模，一般是指用过程赋值语句（<code>initial</code>语句和<code>always</code>语句）来设计的称为行为建模。</p>
+<h2 id="顺序语句块">顺序语句块</h2><p>语句块提供将两条或更多条语句组合成语法结构上相当于一条语句的机制。这里主要讲Verilog HDL的顺序语句块(begin . . . end)：语句块中的语句按给定次序顺序执行。<br>顺序语句块中的语句按顺序方式执行。每条语句中的时延值与其前面的语句执行的模拟时间相关。一旦顺序语句块执行结束，跟随顺序语句块过程的下一条语句继续执行。顺序语句块的语法如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">begin [:block_id&#123;declarations&#125;]</span><br><span class="line">procedural_statement (s)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>例如：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 产生波形:</span></span><br><span class="line">begin</span><br><span class="line"> <span class="preprocessor">#<span class="number">2</span> Stream = <span class="number">1</span>;</span></span><br><span class="line"> <span class="preprocessor">#<span class="number">5</span> Stream = <span class="number">0</span>;</span></span><br><span class="line"> <span class="preprocessor">#<span class="number">3</span> Stream = <span class="number">1</span>;</span></span><br><span class="line"> <span class="preprocessor">#<span class="number">4</span> Stream = <span class="number">0</span>;</span></span><br><span class="line"> <span class="preprocessor">#<span class="number">2</span> Stream = <span class="number">1</span>;</span></span><br><span class="line"> <span class="preprocessor">#<span class="number">5</span> Stream = <span class="number">0</span>;</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>假定顺序语句块在第10个时间单位开始执行。两个时间单位后第1条语句执行，即第12个时间单位。此执行完成后，下1条语句在第17个时间单位执行(延迟5 个时间单位)。然后下1条语句在第20个时间单位执行，以此类推。该顺序语句块执行过程中产生的波形如图：</p>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/verilog_stream.png" alt=""></p>
+<h2 id="过程赋值语句">过程赋值语句</h2><p>Verilog HDL中提供两种过程赋值语句initial和always语句，用这两种语句来实现行为的建模。这两种语句之间的执行是并行的，即语句的执行与位置顺序无关。这两种语句通常与语句块（begin ….end）相结合，则语句块中的执行是按顺序执行的。</p>
+<ol>
+<li>initial 语句</li>
+</ol>
+<hr>
+<p>initial语句只执行一次，即在设计被开始模拟执行时开始（0时刻）。<em>通常只用在对设计进行仿真的测试文件中，用于对一些信号进行初始化和产生特定的信号波形</em>。<br>语法如下：（大家只要先有个概念就可以）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">initial</span><br><span class="line">[timing_control] procedural_statement</span><br><span class="line">procedural_statement 是下列语句之一：</span><br><span class="line">procedural_assignment(blocking or non-blocking) <span class="comment">//阻塞或非阻塞性过程赋值语句</span></span><br><span class="line"><span class="function">procedural_continuous_assignment</span><br><span class="line">conditional_statement</span><br><span class="line">case_statement</span><br><span class="line">loop_statement</span><br><span class="line">wait_statement</span><br><span class="line">disable_statement</span><br><span class="line">event_trigger</span><br><span class="line"><span class="title">task_enable</span> <span class="params">(user or system)</span></span></span><br></pre></td></tr></table></figure>
+<p>例子如上产生一个信号波形：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">initial</span><br><span class="line">begin</span><br><span class="line"><span class="preprocessor">#<span class="number">2</span> Stream = <span class="number">1</span>;</span></span><br><span class="line"><span class="preprocessor">#<span class="number">5</span> Stream = <span class="number">0</span>;</span></span><br><span class="line"><span class="preprocessor">#<span class="number">3</span> Stream = <span class="number">1</span>;</span></span><br><span class="line"><span class="preprocessor">#<span class="number">4</span> Stream = <span class="number">0</span>;</span></span><br><span class="line"><span class="preprocessor">#<span class="number">2</span> Stream = <span class="number">1</span>;</span></span><br><span class="line"><span class="preprocessor">#<span class="number">5</span> Stream = <span class="number">0</span>;</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>说明：<br>initial只能使用在仿真中，是不可综合语法，很多初学者在开始的时候以为initial是可以综合的。</p>
+<ol>
+<li>always 语句</li>
+</ol>
+<hr>
+<p>always语句与initial语句相反，是被重复执行，执行机制是通过对一个称为敏感变量表的<strong>事件驱动</strong>来实现的，下面会具体讲到。always 语句可实现组合逻辑或时序逻辑的建模。<br>例子1：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">initial</span><br><span class="line">clk = <span class="number">0</span> ；</span><br><span class="line">always</span><br><span class="line"><span class="preprocessor">#<span class="number">5</span> clk = ~clk；</span></span><br></pre></td></tr></table></figure>
+<p>因为always 语句是重复执行的，因此，clk是初始值为0 的，周期为10 的方波。<br>例子2： D触发器</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//并行执行</span></span><br><span class="line">always @ ( posedge clk or negedge rst ) begin</span><br><span class="line">	<span class="keyword">if</span> （ rst == <span class="number">1</span>’b0 ）<span class="comment">//当rst为0时</span></span><br><span class="line">		q &lt;= ‘ b <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		q &lt;= d;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>上面<em>括号内的内容称为敏感变量</em>，即整个always 语句当敏感变量有变化时被执行，否则不执行。因此，当rst为0时，q被复位，在时钟上升沿时，d被采样到q。</p>
+<p>例子3： 2选一的分配器</p>
+<p><code>always @( sel ，a ，b）</code><br><code>c = sel ? a ：b；</code></p>
+<p>这里的sel ，a，b 同样称为敏感变量，当三者之一有变化时，always 被执行，当sel 为 1 ，c被赋值为a ，否则为b 。描述的是一个组合逻辑 mux 器件。<br>说明：<br>Verilog 2001语法定义敏感变量可以使用“*”代替，<br>例子3的2 选一的分配器可以这样写：：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">always @<span class="comment">(*）</span><br><span class="line">c = sel ? a ：b；</span></span><br></pre></td></tr></table></figure></p>
+<p>此处强烈建议大家使用*替代敏感变量，减少错误发生。</p>
+<p><strong>Tips:</strong></p>
+<ol>
+<li>对<strong>组合逻辑</strong>的always 语句，敏感变量建议使用*替代。</li>
+<li>对组合逻辑器件的赋值采用阻塞赋值 “=”。</li>
+<li>时序逻辑器件的赋值语句采用非阻塞赋值 “&lt;=”；</li>
+</ol>
+<h1 id="状态机">状态机</h1><p>有限状态机英文名字，<em>Finite State Machine</em>，简称状态机，缩写为FSM。</p>
+<p>有限状态机是指输出取决于过去输入部分和当前输入部分的时序逻辑电路。有限状态机又可以认为是组合逻辑和寄存器逻辑的一种组合。状态机特别适合描述那些发生有先后顺序或者有逻辑规律的事情，其实这就是状态机的本质。状态机就是对具有逻辑顺序或时序规律的事件进行描述的一种方法</p>
+<p>根据状态机的输出是否与输入条件相关，可将状态机分为两大类，即摩尔 (Moore) 型状态机和米勒 (Mealy) 型状态机。</p>
+<ul>
+<li><p>Mealy状态机：时序逻辑的输出不仅取决于当前状态，还取决于输入。</p>
+</li>
+<li><p>Moore状态机：时序逻辑的输出只取决于当前。</p>
+</li>
+</ul>
+<p>根据实际写法，状态机还可以分为一段式、二段式和三段式状态机。</p>
+<ul>
+<li><p>一段式： 把整个状态机写在一个always模块中， 并且这个模块既包含状态转移，又含有组合逻辑输入 /输出 。</p>
+</li>
+<li><p>二段式： 状态切换用时序逻辑，次态输出和信号输出用组合逻辑。</p>
+</li>
+<li><p>三段式： 状态切换用时序逻辑，次态输出用组合逻辑，信号输出用时序逻辑。</p>
+</li>
+</ul>
+<p><strong>Tips：</strong></p>
+<p>实际应用中三段式使用最多，也最为可靠，避免了状态和输入输出的干扰，推荐大家使用第三种写法，我们实际项目中基本全部是第三种写法。本文也着重讲解三段式。</p>
+<h2 id="Mealy状态机">Mealy状态机</h2><ul>
+<li><p>下一个状态 = F(当前状态，输入信号)； </p>
+</li>
+<li><p>输出信号 = G(当前状态，输入信号)；</p>
+</li>
+</ul>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/mealy.png" alt=""></p>
+<h2 id="Moore状态机">Moore状态机</h2><ul>
+<li><p>下一个状态 = F(当前状态，输入信号)； </p>
+</li>
+<li><p>输出信号 = G(当前状态)；</p>
+</li>
+</ul>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/moore.png" alt=""></p>
+<h2 id="三段式状态机">三段式状态机</h2><p>两段式直接采用组合逻辑输出，而三段式则通过在组合逻辑后再增加一级寄存器来实现时序逻辑输出。这样做的好处是可以有效地滤去租个逻辑输出的毛刺，同时可以有效地进行时序计算与约束，另外对于总线形式的输出信号来说，容易使总线数据对齐，从而减小总线数据间的偏移，减小接收端数据采样出错的频率。<br>三段式状态机的基本格式是：</p>
+<ul>
+<li><p>第一个always语句实现同步状态跳转；</p>
+</li>
+<li><p>第二个always语句实现组合逻辑；</p>
+</li>
+<li><p>第三个always语句实现同步输出。</p>
+</li>
+</ul>
+<p>Verilog描述状态机需要注意的事项：</p>
+<ol>
+<li><p>定义模块名和输入出端口；</p>
+</li>
+<li><p>定义输入、输出变量或寄存器；</p>
+</li>
+<li><p>定义时钟和复位信号；</p>
+</li>
+<li><p>定义状态变量和状态寄存器；</p>
+</li>
+<li><p>用时钟沿触发的<code>always</code>块表示状态转移过程；</p>
+</li>
+<li><p>在复位信号有效时给状态寄存器赋初始值；</p>
+</li>
+<li><p>描述状态的转换过程：符合条件，从一个状态到另外一个状态。否则留在原状态；</p>
+</li>
+<li><p>验证状态转移的正确性，必须完整和全面。</p>
+</li>
+</ol>
+<p>一个三段式状态机例子：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">module divider7_fsm (</span><br><span class="line">//input</span><br><span class="line">input sys_clk ,    //系统时钟</span><br><span class="line">input sys_rst_n ,  //系统复位，以n结尾-低为有效</span><br><span class="line">//output</span><br><span class="line">output reg clk_divide_7 // 七分Clock</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">//reg define</span><br><span class="line"></span><br><span class="line">reg [6:0] curr_st ; // 状态机目前的状态</span><br><span class="line">reg [6:0] next_st ; // 状态机下一时刻状态</span><br><span class="line">reg clk_divide_7 ; // 时钟七分频</span><br><span class="line">//wire define</span><br><span class="line">//parameter define</span><br><span class="line">//one hot code design</span><br><span class="line">parameter S0 = 7'b0000000;</span><br><span class="line">parameter S1 = 7'b0000001;</span><br><span class="line">parameter S2 = 7'b0000010;</span><br><span class="line">parameter S3 = 7'b0000100;</span><br><span class="line">parameter S4 = 7'b0001000;</span><br><span class="line">parameter S5 = 7'b0010000;</span><br><span class="line">parameter S6 = 7'b0100000;</span><br><span class="line">/********************************************</span><br><span class="line">** Main Program</span><br><span class="line">**</span><br><span class="line">*********************************************/</span><br><span class="line">//同步状态跳转  时钟上升沿或下降沿系统复位为低是事件驱动</span><br><span class="line">always @(posedge sys_clk or negedge sys_rst_n) begin</span><br><span class="line">	if (sys_rst_n ==1'b0) begin</span><br><span class="line">		curr_st &lt;= 7'b0;//非阻塞赋值，并行</span><br><span class="line">	end</span><br><span class="line">	else begin//系统时钟上升沿</span><br><span class="line">		curr_st &lt;= next_st;</span><br><span class="line">	end</span><br><span class="line">end</span><br><span class="line">//实现组合逻辑</span><br><span class="line">always @(*) begin</span><br><span class="line">	case (curr_st)</span><br><span class="line">		S0: begin</span><br><span class="line">			next_st = S1;</span><br><span class="line">		end</span><br><span class="line">		S1: begin</span><br><span class="line">			next_st = S2;</span><br><span class="line">		end</span><br><span class="line">		S2: begin</span><br><span class="line">			next_st = S3;</span><br><span class="line">		end</span><br><span class="line">		S3: begin</span><br><span class="line">			next_st = S4;</span><br><span class="line">		end</span><br><span class="line">		S4: begin</span><br><span class="line">			next_st = S5;</span><br><span class="line">		end</span><br><span class="line">		S5: begin</span><br><span class="line">			next_st = S6;</span><br><span class="line">		end</span><br><span class="line">		S6: begin</span><br><span class="line">			next_st = S0;</span><br><span class="line">		end</span><br><span class="line">		default: next_st = S0;</span><br><span class="line">	endcase</span><br><span class="line">end</span><br><span class="line">//control divide clock offset实现同步输出</span><br><span class="line">always @(posedge sys_clk or negedge sys_rst_n) begin</span><br><span class="line">	if (sys_rst_n ==1'b0) begin</span><br><span class="line">		clk_divide_7 &lt;= 1'b0;</span><br><span class="line">	end</span><br><span class="line">	else if ((curr_st == S0) | (curr_st == S1) | (curr_st == S2) | (curr_st == S3))</span><br><span class="line">		clk_divide_7 &lt;= 1'b0;</span><br><span class="line">	else if ((curr_st == S4) | (curr_st == S5) | (curr_st == S6))</span><br><span class="line">		clk_divide_7 &lt;= 1'b1;</span><br><span class="line">	else</span><br><span class="line">		;</span><br><span class="line">end</span><br><span class="line">endmodule</span><br><span class="line">//end of RTL code</span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<ol>
+<li>本状态机采用独热码设计，简称one-hot code，独热码编码的最大优势在于状态比较时仅仅需要比较一个位，从而一定程度上简化了译码逻辑。</li>
+<li>一般状态机状态编码使用二进制编码、格雷码、独热码。 各种编码比较: 二进制编码、格雷码编码使用最少的触发器，消耗较多的组合逻辑，而独热码编码反之。独热码编码的最大优势在于状态比较时仅仅需要比较一个位，从而一定程度上简化了译码逻辑。虽然在需要表示同样的状态数时，独热编码占用较多的位，也就是消耗较多的触发器，但这些额外触发器占用的面积可与译码电路省下来的面积相抵消。 Binary（二进制编码）、gray-code（格雷码）编码使用最少的触发器，较多的组合逻辑，而one-hot（独热码）编码反之。one-hot 编码的最大优势在于状态比较时仅仅需要比较一个bit，一定程度上从而简化了比较逻辑，减少了毛刺产生的概率。另一方面，对于小型设计使用gray-code和binary编码更有效，而大型状态机使用one-hot更高效。</li>
+</ol>
+<h2 id="行为建模具体实例">行为建模具体实例</h2><p>以上面的LED流水灯为例，采用行为建模方法。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">module LED (</span><br><span class="line">//input</span><br><span class="line">input sys_clk , //系统时钟</span><br><span class="line">input sys_rst_n , //系统复位，低电平有效</span><br><span class="line">//output</span><br><span class="line">output reg [7:0] LED );</span><br><span class="line"></span><br><span class="line">//Parameter define</span><br><span class="line">parameter WIDTH = 8 ;</span><br><span class="line">parameter SIZE = 8 ;</span><br><span class="line">parameter WIDTH2 = 18 ;</span><br><span class="line">parameter Para = 100000;</span><br><span class="line"></span><br><span class="line">//Reg define</span><br><span class="line">reg [SIZE-1:0] counter ;</span><br><span class="line">reg [WIDTH2-1:0] count ;</span><br><span class="line"></span><br><span class="line">//Wire define</span><br><span class="line">//*****************************************************</span><br><span class="line">//** Main Program</span><br><span class="line">//**</span><br><span class="line">//*****************************************************</span><br><span class="line">// count for add counter</span><br><span class="line"></span><br><span class="line">always @(posedge sys_clk or negedge sys_rst_n) begin</span><br><span class="line">	if (sys_rst_n ==1'b0)</span><br><span class="line">		count &lt;= 18'b0;</span><br><span class="line">	else</span><br><span class="line">		count &lt;= count + 18'b1;</span><br><span class="line">end</span><br><span class="line">// counter for delay time to LED display</span><br><span class="line">always @(posedge sys_clk or negedge sys_rst_n) begin</span><br><span class="line">	if (sys_rst_n ==1'b0)</span><br><span class="line">		counter &lt;= 8'b0;</span><br><span class="line">	else if ( count == Para)</span><br><span class="line">		counter &lt;= counter + 8'b1;</span><br><span class="line">	else ;</span><br><span class="line">end</span><br><span class="line">// ctrlLED pipeline display when counter is equal 10 or 20 ....</span><br><span class="line">always @(posedge sys_clk or negedge sys_rst_n) begin</span><br><span class="line">	if (sys_rst_n ==1'b0)</span><br><span class="line">		LED &lt;= 8'b0;</span><br><span class="line">	else begin</span><br><span class="line">		case (counter)</span><br><span class="line">			8'd10 : LED &lt;= 8'b10000000 ;</span><br><span class="line">			8'd20 : LED &lt;= 8'b01000000 ;</span><br><span class="line">			8'd30 : LED &lt;= 8'b00100000 ;</span><br><span class="line">			8'd40 : LED &lt;= 8'b00010000 ;</span><br><span class="line">			8'd50 : LED &lt;= 8'b00001000 ;</span><br><span class="line">			8'd60 : LED &lt;= 8'b00000100 ;</span><br><span class="line">			8'd70 : LED &lt;= 8'b00000010 ;</span><br><span class="line">			8'd80 : LED &lt;= 8'b00000001 ;</span><br><span class="line">			default : LED &lt;= 8'b00000000 ;</span><br><span class="line">		endcase</span><br><span class="line">	end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/03/14/torrent/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          torrent文件编码
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/03/08/net_auth/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">session教务数据</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+  
+  
+	<! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &weierp;&weierp;&weierp;<br>
+		   喜欢你看不惯我，却不得不和我一起建设特色社会主义
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/wx.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="verilog_hdl3" data-title="Verilog小叙(三)" data-url="http://peihao.space/2016/03/09/verilog_hdl3/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"chuangwailinjie"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 培豪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<div id="totop" style="position:fixed;bottom:100px;right:30px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>

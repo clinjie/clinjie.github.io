@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>torrent文件编码 | 窗外临街</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Torrent小记由于某些众所周知的原因，我对torrent文件(也就是我们常说的种子文件)产生了浓厚的兴趣，这里是官方百科对torrent文件的定义：
+torrent文件本质上是文本文件，包含Tracker信息和文件信息两部分。Tracker信息主要是BT下载中需要用到的Tracker服务器的地址和针对Tracker服务器的设置，文件信息是根据对目标文件的计算生成的，计算结果根据BitTorre">
+<meta property="og:type" content="article">
+<meta property="og:title" content="torrent文件编码">
+<meta property="og:url" content="http://peihao.space/2016/03/14/torrent/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="Torrent小记由于某些众所周知的原因，我对torrent文件(也就是我们常说的种子文件)产生了浓厚的兴趣，这里是官方百科对torrent文件的定义：
+torrent文件本质上是文本文件，包含Tracker信息和文件信息两部分。Tracker信息主要是BT下载中需要用到的Tracker服务器的地址和针对Tracker服务器的设置，文件信息是根据对目标文件的计算生成的，计算结果根据BitTorre">
+<meta property="og:image" content="http://img1.mydrivers.com/img/20150517/008c977d53a449319839b62734ab656b.jpg">
+<meta property="og:updated_time" content="2016-03-16T07:01:57.107Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="torrent文件编码">
+<meta name="twitter:description" content="Torrent小记由于某些众所周知的原因，我对torrent文件(也就是我们常说的种子文件)产生了浓厚的兴趣，这里是官方百科对torrent文件的定义：
+torrent文件本质上是文本文件，包含Tracker信息和文件信息两部分。Tracker信息主要是BT下载中需要用到的Tracker服务器的地址和针对Tracker服务器的设置，文件信息是根据对目标文件的计算生成的，计算结果根据BitTorre">
+  
+    <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?47c906842634689dc55e7f1660f58105";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="baidu_js_push">
+	<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</div>
+<div class="overlay"> 
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div align="left" style="margin-top:6px;">
+<p style="color:#cccc99;font-size:90%">您好，培豪的第<span id="busuanzi_value_site_uv"></span>个小伙伴</p>
+</div>
+</div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="\img\avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">培豪</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/album">相册</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 12.5px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 15px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 12.5px;">JQuery</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/Requests/" style="font-size: 15px;">Requests</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/Verilog-HDL/" style="font-size: 15px;">Verilog HDL</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/hexo优化/" style="font-size: 12.5px;">hexo优化</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/noc/" style="font-size: 12.5px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/re/" style="font-size: 12.5px;">re</a> <a href="/tags/torrent/" style="font-size: 12.5px;">torrent</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/仿真/" style="font-size: 15px;">仿真</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/编码/" style="font-size: 12.5px;">编码</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">衣服晒干风在穿，我一个人，很简单，自己放纵自己管…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">培豪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="\img\avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">培豪</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/album">相册</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-torrent" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/14/torrent/" class="article-date">
+  	<time datetime="2016-03-14T14:23:35.000Z" itemprop="datePublished">2016-03-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      torrent文件编码
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/torrent/">torrent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编码/">编码</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/torrent/">torrent</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	      	<!-- Table of Contents -->
+			
+			  <div id="toc" class="toc-article">
+			    <strong class="toc-title">文章目录</strong>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Torrent小记"><span class="toc-number">1.</span> <span class="toc-text">Torrent小记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#bencoding编码"><span class="toc-number">2.</span> <span class="toc-text">bencoding编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Torrent文件基本结构"><span class="toc-number">3.</span> <span class="toc-text">Torrent文件基本结构</span></a></li></ol>
+			  </div>
+			
+        <p><img src="http://img1.mydrivers.com/img/20150517/008c977d53a449319839b62734ab656b.jpg" alt=""></p>
+<h1 id="Torrent小记">Torrent小记</h1><p>由于某些众所周知的原因，我对torrent文件(也就是我们常说的种子文件)产生了浓厚的兴趣，这里是官方百科对torrent文件的定义：</p>
+<p><em>torrent文件本质上是文本文件，包含Tracker信息和文件信息两部分。Tracker信息主要是BT下载中需要用到的Tracker服务器的地址和针对Tracker服务器的设置，文件信息是根据对目标文件的计算生成的，计算结果根据BitTorrent协议内的B编码规则进行编码。所以，torrent文件就是被下载文件的“索引”。</em></p>
+<a id="more"></a>
+<p>既然是文本文件，使用文本编辑器，意料之中的失败，打开之后是大片大片的乱码，当然主要是中文乱码… 数字以及字母信息还是显示的相当完整的。也许当我打开一个纯英文Tracker信息的torrent文件时，就可以很清楚的了解其中的内容了。现在先来看一下torrent文件的编码格式.</p>
+<h1 id="bencoding编码">bencoding编码</h1><p>BT种子文件使用了一种叫bencoding的编码方法来保存数据。</p>
+<p>bencoding现有四种类型的数据：<code>srings</code>(字符串)，<code>integers</code>(整数)，<code>lists</code>(列表)，<code>dictionaries</code>(字典)</p>
+<p>编码规则如下：</p>
+<ul>
+<li><p>strings(字符串)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">编码为：&lt;字符串长度&gt;：&lt;字符串&gt;</span><br><span class="line">例如： </span><br><span class="line"><span class="number">4</span>:test 表示为字符串<span class="string">"test"</span></span><br><span class="line"><span class="number">4</span>:例子 表示为字符串“例子”</span><br><span class="line">字符串长度单位为字节</span><br><span class="line">没开始或结束标记</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>integers(整数)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">编码为：i&lt;整数&gt;e</span><br><span class="line">开始标记i，结束标记为e</span><br><span class="line">例如： </span><br><span class="line">i1234e 表示为整数<span class="number">1234</span></span><br><span class="line">i-<span class="number">1234</span>e 表示为整数-<span class="number">1234</span></span><br><span class="line">整数没有大小限制</span><br><span class="line">i0e 表示为整数<span class="number">0</span></span><br><span class="line">i-<span class="number">0</span>e 为非法</span><br><span class="line">以<span class="number">0</span>开头的为非法如： i01234e 为非法</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>lists(列表)</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">编码为：<span class="keyword">l</span>&lt;bencoding编码类型&gt;<span class="literal">e</span></span><br><span class="line">开始标记为<span class="keyword">l</span>,结束标记为<span class="literal">e</span></span><br><span class="line">列表里可以包含任何bencoding编码类型，包括整数，字符串，列表，字典。</span><br><span class="line">例如： l4:test5abcdee 表示为二个字符串[<span class="string">"test"</span>,<span class="string">"abcde"</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>dictionaries(字典)</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">编码为<span class="keyword">d</span>&lt;bencoding字符串&gt;&lt;bencoding编码类型&gt;<span class="keyword">e</span>   </span><br><span class="line">开始标记为<span class="keyword">d</span>,结束标记为<span class="literal">e</span></span><br><span class="line">关键字必须为bencoding字符串</span><br><span class="line">值可以为任何bencoding编码类型</span><br><span class="line">例如： d3:agei20ee 表示为&#123;<span class="string">"age"</span>=20&#125;</span><br><span class="line">d4:path3:C:\8:filename8:<span class="keyword">test</span>.txte 表示为&#123;<span class="string">"path"</span>=<span class="string">"C:\"</span>,<span class="string">"filename"</span>=<span class="string">"test.txt"</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Torrent文件基本结构">Torrent文件基本结构</h1><p>种子具体文件结构如下：</p>
+<p>全部内容必须都为bencoding编码类型。</p>
+<p>如果字典用{}表示，列表用[]表示，字符用””表示，目录类型的BT文件大致是这样的</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="string">"announce"</span>=<span class="string">"http://btfans.3322.org:8000/announce"</span>   ;tracker 服务器的<span class="type">URL</span>(字符串)</span><br><span class="line"><span class="string">"announce-list"</span>=[<span class="string">"http://.."</span>,<span class="string">"http://.."</span>]           ;备用tracker服务器列表(列表)</span><br><span class="line"><span class="string">"creation date"</span>=<span class="number">1175204110</span>                          ;种子创建的时间，<span class="type">Unix</span>标准时间格式</span><br><span class="line"><span class="string">"encoding"</span>=<span class="string">"GBK"</span>                                    ;编码</span><br><span class="line"><span class="string">"comment"</span>=<span class="string">"备注"</span></span><br><span class="line"><span class="string">"created by"</span>=<span class="string">"创建人信息"</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="string">"info"</span>=&#123;<span class="string">"files"</span>=[&#123;<span class="string">"filehash"</span>=<span class="string">"SHA1 Hash"</span>,<span class="string">"length"</span>=<span class="number">168099584</span>,<span class="string">"path"</span>=[<span class="string">"01.rmvb"</span>]&#125;,</span><br><span class="line">                  <span class="decorator">&#123;...&#125;</span>,</span><br><span class="line">                  <span class="decorator">&#123;...&#125;</span>                </span><br><span class="line">                 ]</span><br><span class="line">        </span><br><span class="line">         <span class="string">"name"</span>=<span class="string">"保存目录名"</span></span><br><span class="line">         <span class="string">"piece length"</span>=<span class="number">2097152</span>    ；每个块的大小，单位字节(整数)</span><br><span class="line">         <span class="string">"pieces"</span>=<span class="string">"每个块的SHA1 Hash的值的顺序排列(二进制格式,长度为"</span><span class="number">20</span> X 块数<span class="string">")"</span></span><br><span class="line">          </span><br><span class="line"></span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中，filehash为20个字节的二进制的SHA1 Hash</p>
+<p>需要下载文件的主要信息保存在<code>&#39;info&#39;</code>值中，可以逐字解码。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/03/16/alter_torrent/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          洗白BT文件
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/03/09/verilog_hdl3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Verilog小叙(三)</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+  
+  
+	<! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &weierp;&weierp;&weierp;<br>
+		   喜欢你看不惯我，却不得不和我一起建设特色社会主义
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/wx.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="torrent" data-title="torrent文件编码" data-url="http://peihao.space/2016/03/14/torrent/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"chuangwailinjie"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 培豪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<div id="totop" style="position:fixed;bottom:100px;right:30px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>

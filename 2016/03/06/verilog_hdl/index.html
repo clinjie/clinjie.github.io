@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Verilog小叙(一) | 窗外临街</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言当前业界的硬件描述语言中主要有VHDL 和Verilog HDL。根据当前ASIC/FPGA设计现有的特点、现状，Verilog HDL 语言已经成为决定的主导语言，使用Verilog HDL，可以统一ASIC/FPGA设计平台，简化流程。
+设计方法学数字电路设计方法当前的数字电路设计从层次上分可分成以下几个层次：
+
+算法级设计：利用高级语言如C语言及其他一些系统分析工具（如MATLAB）对设">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Verilog小叙(一)">
+<meta property="og:url" content="http://peihao.space/2016/03/06/verilog_hdl/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="前言当前业界的硬件描述语言中主要有VHDL 和Verilog HDL。根据当前ASIC/FPGA设计现有的特点、现状，Verilog HDL 语言已经成为决定的主导语言，使用Verilog HDL，可以统一ASIC/FPGA设计平台，简化流程。
+设计方法学数字电路设计方法当前的数字电路设计从层次上分可分成以下几个层次：
+
+算法级设计：利用高级语言如C语言及其他一些系统分析工具（如MATLAB）对设">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/verilog_hdl.png">
+<meta property="og:updated_time" content="2016-03-09T05:58:28.977Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Verilog小叙(一)">
+<meta name="twitter:description" content="前言当前业界的硬件描述语言中主要有VHDL 和Verilog HDL。根据当前ASIC/FPGA设计现有的特点、现状，Verilog HDL 语言已经成为决定的主导语言，使用Verilog HDL，可以统一ASIC/FPGA设计平台，简化流程。
+设计方法学数字电路设计方法当前的数字电路设计从层次上分可分成以下几个层次：
+
+算法级设计：利用高级语言如C语言及其他一些系统分析工具（如MATLAB）对设">
+  
+    <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?47c906842634689dc55e7f1660f58105";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="baidu_js_push">
+	<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</div>
+<div class="overlay"> 
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div align="left" style="margin-top:6px;">
+<p style="color:#cccc99;font-size:90%">您好，培豪的第<span id="busuanzi_value_site_uv"></span>个小伙伴</p>
+</div>
+</div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="\img\avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">培豪</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/album">相册</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 12.5px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 15px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 12.5px;">JQuery</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/Requests/" style="font-size: 15px;">Requests</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/Verilog-HDL/" style="font-size: 15px;">Verilog HDL</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/hexo优化/" style="font-size: 12.5px;">hexo优化</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/noc/" style="font-size: 12.5px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/re/" style="font-size: 12.5px;">re</a> <a href="/tags/torrent/" style="font-size: 12.5px;">torrent</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/仿真/" style="font-size: 15px;">仿真</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/编码/" style="font-size: 12.5px;">编码</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 10px;">随感</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">衣服晒干风在穿，我一个人，很简单，自己放纵自己管…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">培豪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="\img\avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">培豪</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/album">相册</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/peihaozhu" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-verilog_hdl" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/06/verilog_hdl/" class="article-date">
+  	<time datetime="2016-03-06T14:23:35.000Z" itemprop="datePublished">2016-03-06</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Verilog小叙(一)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Verilog-HDL/">Verilog HDL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/仿真/">仿真</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Verilog/">Verilog</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	      	<!-- Table of Contents -->
+			
+			  <div id="toc" class="toc-article">
+			    <strong class="toc-title">文章目录</strong>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设计方法学"><span class="toc-number">2.</span> <span class="toc-text">设计方法学</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数字电路设计方法"><span class="toc-number">2.1.</span> <span class="toc-text">数字电路设计方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#硬件描述语言"><span class="toc-number">2.2.</span> <span class="toc-text">硬件描述语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计方法学-1"><span class="toc-number">2.3.</span> <span class="toc-text">设计方法学</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Verilog简介"><span class="toc-number">3.</span> <span class="toc-text">Verilog简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">3.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#功能"><span class="toc-number">3.2.</span> <span class="toc-text">功能</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Verilog建模概述"><span class="toc-number">4.</span> <span class="toc-text">Verilog建模概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#模块"><span class="toc-number">4.1.</span> <span class="toc-text">模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单例子"><span class="toc-number">4.2.</span> <span class="toc-text">简单例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块结构"><span class="toc-number">4.3.</span> <span class="toc-text">模块结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时延"><span class="toc-number">4.4.</span> <span class="toc-text">时延</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结构化描述方式"><span class="toc-number">4.5.</span> <span class="toc-text">结构化描述方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据流描述方式"><span class="toc-number">4.6.</span> <span class="toc-text">数据流描述方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行为描述方式"><span class="toc-number">4.7.</span> <span class="toc-text">行为描述方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.8.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Verilog基本语法"><span class="toc-number">5.</span> <span class="toc-text">Verilog基本语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#标识符"><span class="toc-number">5.1.</span> <span class="toc-text">标识符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关键词"><span class="toc-number">5.2.</span> <span class="toc-text">关键词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#书写规范建议"><span class="toc-number">5.3.</span> <span class="toc-text">书写规范建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注释"><span class="toc-number">5.4.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#值集合"><span class="toc-number">5.5.</span> <span class="toc-text">值集合</span></a></li></ol></li></ol>
+			  </div>
+			
+        <h1 id="前言">前言</h1><p>当前业界的硬件描述语言中主要有VHDL 和Verilog HDL。根据当前ASIC/FPGA设计现有的特点、现状，Verilog HDL 语言已经成为决定的主导语言，使用Verilog HDL，可以统一ASIC/FPGA设计平台，简化流程。</p>
+<h1 id="设计方法学">设计方法学</h1><h2 id="数字电路设计方法">数字电路设计方法</h2><p>当前的数字电路设计从层次上分可分成以下几个层次：</p>
+<ol>
+<li><p>算法级设计：利用高级语言如C语言及其他一些系统分析工具（如MATLAB）对设计从系统的算法级方式进行描述。算法级不需要包含时序信息。</p>
+</li>
+<li><p>RTL级设计：用数据流在寄存器间传输的模式来对设计进行描述。</p>
+</li>
+<li><p>门级：用逻辑级的与、或、非门等门级之间的连接对设计进行描述。</p>
+</li>
+<li><p>开关级：用晶体管和寄存器及他们之间的连线关系来对设计进行描述。</p>
+</li>
+</ol>
+<a id="more"></a>
+<p>算法级是高级的建模，一般对特大型设计或有较复杂的算法时使用，特别是通讯方面的一些系统，通过算法级的建模来保证设计的系统性能。在算法级通过后，再把算法级用RTL级进行描述。门级一般对小型设计可适合。开关级一般是在版图级进行。</p>
+<p>最常使用的是RTL级别的设计，90%以上的数字电路都是采用RTL级别进行设计。</p>
+<h2 id="硬件描述语言">硬件描述语言</h2><p>硬件描述语言HDL（Hardware Description Language ）是一种用形式化方法来描述数字电路和数字逻辑系统的语言。数字逻辑电路设计者可利用这种语言来描述自己的设计思想，然后利用EDA工具进行仿真，再自动综合到门级电路，最后用ASIC或FPGA实现其功能。举个例子，在传统的设计方法中，对2输入的与门，我们可能需到标准器件库中调个74系列的器件出来，但在硬件描述语言中，“&amp; ”就是一个与门的形式描述，“C = A &amp; B”就是一个2输入与门的描述。而“and”就是一个与门器件。<br>硬件描述语言发展至今已有二十多年历史，当今业界的标准中（IEEE标准）主要有VHDL和Verilog HDL 这两种硬件描述语言。</p>
+<h2 id="设计方法学-1">设计方法学</h2><p>当前的ASIC设计有多种设计方法，但一般地采用自顶向下的设计方法。<br>随着技术的发展，一个芯片上往往集成了几十万到几百万个器件，传统的自底向上的设计方法已不太现实。因此，一个设计往往从系统级设计开始，把系统划分成几个大的基本的功能模块，每个功能模块再按一定的规则分成下一个层次的基本单元，如此一直划分下去。<br>通过自顶向下的设计方法，可实现设计的结构化，使一个复杂的系统设计可由多个设计者分工合作；还可以实现层次化的管理。</p>
+<h1 id="Verilog简介">Verilog简介</h1><h2 id="简介">简介</h2><p>Verilog HDL 语言最初是于1983 年由Gateway Design Automation 公司为其模拟器产品开发的硬件建模语言。那时它只是一种专用语言。由于他们的模拟、仿真器产品的广泛使用，Verilog HDL作为一种便于使用且实用的语言逐渐为众多设计者所接受。在一次努力增加语言普及性的活动中，Verilog HDL 语言于1990 年被推向公众领域。Open Verilog International（O V I ）是促进Verilog 发展的国际性组织。1992 年，OVI 决定致力于推广Verilog OVI 标准成为IEEE 标准。这一努力最后获得成功，Verilog 语言于1995 年成为IEEE 标准，称为IEEE Std1364－1995 。完整的标准在Verilog 硬件描述语言参考手册中有详细描述。</p>
+<h2 id="功能">功能</h2><p>Verilog HDL 语言具有下述描述能力：设计的行为特性、设计的数据流特性、设计的结构组成以及包含响应监控和设计验证方面的时延和波形产生机制。所有这些都使用同一种建模语言。此外，Verilog HDL 语言提供了编程语言接口，通过该接口可以在模拟、验证期间从设计外部访问设计，包括模拟的具体控制和运行。<br>需要注意的是Verilog HDL当前主要作为设计使用，大规模的电路设计使用Verilog HDL作为验证语言已经被不太可能，当前的验证语言已经逐渐归一到System Verilog 语言上去。当然，非常小规模的设计可以使用Verilog HDL搭建UT（单元测试）环境进行测试。<br>Verilog HDL 语言不仅定义了语法，而且对每个语法结构都定义了清晰的模拟、仿真语义。因此，用这种语言编写的模型能够使用Verilog 仿真器进行验证。语言从C 编程语言中继承了多种操作符和结构。Verilog HDL 提供了扩展的建模能力，其中许多扩展最初很难理解。但是，Verilog HDL 语言的核心子集非常易于学习和使用，这对大多数建模应用来说已经足够。当然，完整的硬件描述语言足以对从最复杂的芯片到完整的电子系统进行描述。</p>
+<h1 id="Verilog建模概述">Verilog建模概述</h1><p>在数字电路设计中，数字电路可简单归纳为两种要素：<code>线</code>和<code>器件</code>。线是器件<code>管脚之间的物理连线</code>；器件也可简单归纳为<code>组合逻辑器件</code>（如与或非门等）和<code>时序逻辑器件</code>（如寄存器、锁存器、RAM等）。一个数字系统（硬件）就是<strong>多个器件通过一定的连线关系组合在一块</strong>的。因此，Verilog HDL的建模实际上就是如何使用HDL语言对数字电路的两种基本要素的特性及相互之间的关系进行描述的过程。下面通过一些实例，以便对Verilog HDL 的设计建模有个大概的印象。</p>
+<h2 id="模块">模块</h2><p>模块（module）是Verilog 的基本描述单位，用于<code>描述</code>某个<code>设计</code>的<strong>功能或结构及与其他模块通信的外部端口</strong>。<br>模块在概念上可等同一个器件。就如我们调用通用器件（与门、三态门等）或通用宏单元（计数器、ALU、CPU）等，因此，一个模块可在另一个模块中调用。<br>一个电路设计可由多个模块组合而成，因此一个模块的设计只是一个系统设计中的某个层次设计，模块设计可采用多种建模方式。</p>
+<h2 id="简单例子">简单例子</h2><ul>
+<li>加法器：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">module <span class="title">addr</span> <span class="params">(</span><br><span class="line">input [<span class="number">2</span>:<span class="number">0</span>] a,</span><br><span class="line">input [<span class="number">2</span>:<span class="number">0</span>] b,</span><br><span class="line">input <span class="built_in">cin</span>,</span><br><span class="line">output count,</span><br><span class="line">output [<span class="number">2</span>:<span class="number">0</span>] sum）；</span><br><span class="line"></span><br><span class="line">assign &#123;count,sum&#125; = a +b + <span class="built_in">cin</span>;</span><br><span class="line">endmodule</span></span></span><br></pre></td></tr></table></figure>
+<p>该例描述一个3位加法器，从例子可看出整个模块是以module 开始，endmodule 结束。本例子使用Verilog HDL 2001语法结构，输入输出仿在module声明里面。</p>
+<ul>
+<li>比较器</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">module compare （</span><br><span class="line">input [<span class="number">1</span>:<span class="number">0</span>] a, <span class="comment">// declare the input signal ;</span></span><br><span class="line">input [<span class="number">1</span>:<span class="number">0</span>] b; <span class="comment">// declare the input signal ;</span></span><br><span class="line">output equare <span class="comment">// declare the output signal;</span></span><br><span class="line">) ;</span><br><span class="line"></span><br><span class="line">assign equare = (a == b) ? <span class="number">1</span>:<span class="number">0</span> ; <span class="comment">// if a = b , output 1, otherwise 0</span></span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+<h2 id="模块结构">模块结构</h2><p>通过上面的实例可看出，一个设计是由一个个模块（module）构成的。一个模块的设计如下：</p>
+<ol>
+<li><p>模块内容是嵌在module 和endmodule两个语句之间。每个模块实现特定的功能，模块可进行层次的嵌套，因此可以将大型的数字电路设计分割成大小不一的小模块来实现特定的功能，最后通过由顶层模块调用子模块来实现整体功能，这就是Top-Down的设计思想。</p>
+</li>
+<li><p>模块包括接口描述部分和逻辑功能描述部分。这可以把模块与器件相类比。</p>
+</li>
+</ol>
+<p>模块的端口定义部,如上例：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">module <span class="title">addr</span> <span class="params">(</span><br><span class="line">input [<span class="number">2</span>:<span class="number">0</span>] a,</span><br><span class="line">input [<span class="number">2</span>:<span class="number">0</span>] b,</span><br><span class="line">input <span class="built_in">cin</span>,</span><br><span class="line">output count,</span><br><span class="line">output [<span class="number">2</span>:<span class="number">0</span>] sum）；</span></span></span><br></pre></td></tr></table></figure></p>
+<p>其中module 是模块的保留字，addr 是模块的名字，相当于器件名。（）内是该模块的端口声明、输入和输出声明、位宽声明、wire/reg类型声明。</p>
+<p>端口声明定义了该模块的管脚名，是该模块与其他模块通讯的外部接口，相当于器件的pin 。</p>
+<p>输入和输出声明定义了该模块的管脚是输入还是输出。</p>
+<p>位宽声明定义了该模块的管脚的位宽，从高到低进行定义。</p>
+<p>wire/reg类型声明定义了该模块的管脚的属性，一般输入都是wire，建议不显式写出来，直接input [2:0] a这样既可，输出必须显式定义出wire还是reg。</p>
+<p>模块的内容，包括内部信号、调用模块等的声明语句和功能定义语句。</p>
+<p>内部信号需要定义wire/reg类型、声明信号位宽。</p>
+<p>逻辑功能描述部分如： assign d_out = d_en ? din :’bz;</p>
+<p>功能描述用来产生各种逻辑（主要是组合逻辑和时序逻辑，可用多种方法进行描述，具体的用法下面章节有介绍），还可用来实例化一个器件，该器件可以是厂家的器件库也可以是我们自己用HDL设计的模块（相当于在原理图输入时调用一个库元件）。在逻辑功能描述中，主要用到assign 和always 两个语句。</p>
+<ol>
+<li><p>对每个模块都要进行端口定义，并说明输入、输出口，然后对模块的功能进行逻辑描述，当然，对测试模块，可以没有输入输出口。</p>
+</li>
+<li><p>Verilog HDL 的书写格式，一行可以写几个语句，也可以一个语句分几行写。此处建议一行写一个语句，禁止写多个一句，养成良好的代码编写习惯。</p>
+</li>
+<li><p>除endmodule 语句外，每个语句后面需有分号表示该语句结束。</p>
+</li>
+</ol>
+<h2 id="时延">时延</h2><p>信号在电路中传输会有传播延时等，如线延时、器件延时。时延就是对延时特性的HDL描述。<br>举例如下：<br>assign # 2 B = A；<br>表示 B信号在2个时间单位后得到A信号的值。<br>在Verilog HDL中，所有时延都必须根据时间单位进行定义，定义方式为在文件头添加如下语句：<br>`timescale 1ns/100ps<br>其中’timescale 是Verilog HDL 提供的预编译处理命令， 1ns 表示时间单位是1ns ，100ps表示时间精度是100ps。根据该命令，编译工具才可以认知 #2 为2ns。<br>在Verilog HDL 的IEEE标准中没有规定时间单位的缺省值，由各模拟工具确定。</p>
+<p><strong>Tips</strong><br>时延是不可综合的，只在仿真时候使用。</p>
+<h2 id="结构化描述方式">结构化描述方式</h2><p>结构化的建模方式就是通过对电路结构的描述来建模，即通过对器件的调用（HDL概念称为例化），并使用线网来连接各器件的描述方式。这里的器件包括Verilog HDL的内置门如与门and，异或门xor等，也可以是用户的一个设计。结构化的描述方式反映了一个设计的层次结构。</p>
+<p>例：一位全加器</p>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/verilog_hdl.png" alt=""></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">module <span class="title">FA_struct</span> <span class="params">(</span><br><span class="line">input A,</span><br><span class="line">input B,</span><br><span class="line">input Cin,</span><br><span class="line">output Sum,</span><br><span class="line">output Count</span><br><span class="line">)</span></span>;</span><br><span class="line">wire S1, T1, T2, T3;</span><br><span class="line"><span class="function">xor <span class="title">x1</span> <span class="params">(S1, A, B)</span></span>;</span><br><span class="line"><span class="function">xor <span class="title">x2</span> <span class="params">(Sum, S1, Cin)</span></span>;</span><br><span class="line"><span class="function">and <span class="title">A1</span> <span class="params">(T3, A, B )</span></span>;</span><br><span class="line"><span class="function">and <span class="title">A2</span> <span class="params">(T2, B, Cin)</span></span>;</span><br><span class="line"><span class="function">and <span class="title">A3</span> <span class="params">(T1, A, Cin)</span></span>;</span><br><span class="line"><span class="function">or <span class="title">O1</span> <span class="params">(Cout, T1, T2, T3 )</span></span>;</span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+<p>该实例显示了一个全加器由两个异或门、三个与门、一个或门构成。S1、T1、T2、T3则是门与门之间的连线。代码显示了用纯结构的建模方式，其中xor、and、or 是Verilog HDL 内置的门器件和关键字。<br>以 xor x1 (S1,A,B) 该例化语句为例：<br>xor 表明调用一个内置的异或门，器件名称xor ，代码实例化名x1（类似原理图输入方式）。括号内的S1，A，B 表明该器件管脚的实际连接线（信号）的名称 ，其中 A、B是输入，S1是输出。其他同。</p>
+<h2 id="数据流描述方式">数据流描述方式</h2><p>数据流的建模方式就是通过对数据流在设计中的具体行为的描述的来建模。最基本的机制就是用连续赋值语句。在连续赋值语句中，某个值被赋给某个线网变量（信号），语法如下：<br>assign [delay] net_name = expression;<br>如：assign #2 A = B；<br>在数据流描述方式中，还必须借助于HDL提供的一些运算符，如按位逻辑运算符 ：逻辑与（&amp;)，逻辑或（|）等。<br>还是以上面的全加器为例，可用如下的建模方式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">`timescale <span class="number">1</span>ns/<span class="number">100</span><span class="function">ps</span><br><span class="line">module <span class="title">FA_flow</span><span class="params">(</span><br><span class="line">input A,</span><br><span class="line">input B,</span><br><span class="line">input Cin,</span><br><span class="line">output wire Sum,</span><br><span class="line">output wire Count</span><br><span class="line">)</span></span>;</span><br><span class="line">wire S1,T1,T2,T3;</span><br><span class="line">assign <span class="preprocessor">#<span class="number">2</span> S1 = A ^ B;</span></span><br><span class="line">assign <span class="preprocessor">#<span class="number">2</span> Sum = S1 ^ Cin;</span></span><br><span class="line">assign <span class="preprocessor">#<span class="number">2</span> T3 = A &amp; B;</span></span><br><span class="line">assign <span class="preprocessor">#<span class="number">2</span> T1 = A &amp; Cin;</span></span><br><span class="line">assign <span class="preprocessor">#<span class="number">2</span> T2 = B &amp; Cin ;</span></span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+<p>注意在各assign 语句之间，是并行执行的，即各语句的执行与语句之间的顺序无关。如上，当A有个变化时，S1、T3、T1 将同时变化，S1的变化又会造成Sum的变化。</p>
+<h2 id="行为描述方式">行为描述方式</h2><p>行为方式的建模是指采用对信号行为级的描述的方法来建模。在表示方面，类似数据流的建模方式，但一般是always 块语句和assign块语句描述的归为行为建模方式。行为建模方式通常需要借助一些行为级的运算符如加法运算符（+），减法运算符（-）等。<br>以下举个例子，对always 语句的具体应用可看相关章节的介绍，这里，先对行为建模方式有个概念。<br>例：一位全加器的行为建模</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">module <span class="title">FA_BEHAV1</span><span class="params">(</span><br><span class="line">input a,</span><br><span class="line">input b,</span><br><span class="line">input <span class="built_in">cin</span>,</span><br><span class="line">output sum,</span><br><span class="line">output <span class="built_in">cout</span></span><br><span class="line">)</span></span>;</span><br><span class="line">reg sum, <span class="built_in">cout</span>;</span><br><span class="line">reg t1,t2,t3;</span><br><span class="line">always@ ( a or b or <span class="built_in">cin</span> )</span><br><span class="line">	begin</span><br><span class="line">		sum = (a ^ b) ^ <span class="built_in">cin</span> ;</span><br><span class="line">		t1 = a &amp; <span class="built_in">cin</span>;</span><br><span class="line">		t2 = b &amp; <span class="built_in">cin</span> ;</span><br><span class="line">		t3 = a &amp; b;</span><br><span class="line">		<span class="built_in">cout</span> = (t1| t2) | t3;</span><br><span class="line">	end</span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+<p>需要先建立以下概念：</p>
+<ol>
+<li><p>只有寄存器类型的信号才可以在always语句中进行赋值，类型定义通过reg语句实现，但是寄存器类型的信号不一定是真的寄存器，也可能是线逻辑，只有带有时钟的寄存器类型的信号才是真的寄存器，不带时钟的寄存器类型的信号本质是线逻辑。</p>
+</li>
+<li><p>always 语句是一直重复执行，由敏感表（always 语句括号内的变量）中的变量触发。</p>
+</li>
+<li><p>always 语句从0 时刻开始。</p>
+</li>
+<li><p>阻塞赋值“=”在begin 和end 之间的语句是顺序执行，属于串行语句。</p>
+</li>
+<li><p>非阻塞赋“&lt;=”值在begin 和end 之间的语句是并行执行，属于并行执语句。</p>
+</li>
+</ol>
+<h2 id="总结">总结</h2><p>当前数字逻辑规模越来越大，使用结构化描述已经越来越不现实，也没有必要，当前行为描述方式已经占据绝对的主导地位，大家学习的时候知道有这两种方式即可，重点学习行为描述。</p>
+<h1 id="Verilog基本语法">Verilog基本语法</h1><p>介绍Verilog HDL 语言的一些基本要素，包括标识符、注释、格式、数字值集合、两种数据类型、运算符和表达式和一些基本的语句如IF语句等。</p>
+<h2 id="标识符">标识符</h2><p>标识符( identifier）用于定义模块名、端口名、信号名等。Verilog HDL 中的标识符( identifier)可以是任意一组字母、数字、$符号和_(下划线)符号的组合，但标识符的第一个字符必须是字母或者下划线。另外，标识符是区分大小写的。以下是标识符的几个例子：<br><code>Count</code><br><code>COUNT</code> //与Count 不同。<br><code>R56_68</code><br><code>FIVE$</code><br>虽然标识符写法很多，但是推荐写法如下：<br><code>count</code><br><code>fifo_wr</code><br>不建议大小写混合使用，普通内部信号建议全部小写，输入输出PAD建议大写，另外信号命名最好体现信号的含义，简洁、清晰、易懂。</p>
+<h2 id="关键词">关键词</h2><p>Verilog HDL定义了一系列保留字，叫做关键词，附录A 列出了语言中的所有保留字。注意只有小写的关键词才是保留字。例如，标识符<code>always</code> (这是个关键词)与标识符<code>ALWAYS</code>(非关键词)是不同的。</p>
+<h2 id="书写规范建议">书写规范建议</h2><p>以下是一些书写规范的要求，可参考公司的《Verilog 代码书写规范》。</p>
+<ol>
+<li><p>用有意义的有效的名字如 sum 、cpu_addr等。</p>
+</li>
+<li><p>用下划线区分词。</p>
+</li>
+<li><p>采用一些前缀或后缀，如</p>
+</li>
+</ol>
+<ul>
+<li><p>时钟采用clk前缀：clk_50，clk_cpu；</p>
+</li>
+<li><p>低电平采用_n 后缀：enable_n；</p>
+</li>
+</ul>
+<ol>
+<li><p>统一一定的缩写，如全局复位信号rst。</p>
+</li>
+<li><p>同一信号在不同层次保持一致性，如同一时钟信号必须在各模块保持一致。</p>
+</li>
+<li><p>自定义的标识符不能与保留字同名。</p>
+</li>
+<li><p>参数采用大写，如SIZE 。</p>
+</li>
+</ol>
+<h2 id="注释">注释</h2><p>Verilog HDL中有两种注释的方式，一种是以<code>“/*”</code>符号开始，<code>“*/”</code> 结束，在两个符号之间的语句都是注释语句，因此可扩展到多行。如：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">*</span> statement1 ，</span><br><span class="line">statement2，</span><br><span class="line">.. ...</span><br><span class="line">statementn <span class="keyword">*</span>/</span><br></pre></td></tr></table></figure></p>
+<p>以上n个语句都是注释语句。<br>另一种是以//开头的语句，它表示以<code>//</code>开始到本行结束都属于注释语句。<br>建议写法：使用<code>//</code>作为注释。</p>
+<h2 id="值集合">值集合</h2><p>Verilog HDL中规定了四种基本的值类型：</p>
+<ul>
+<li><p>0：逻辑0或“假”；</p>
+</li>
+<li><p>1：逻辑1或“真”；</p>
+</li>
+<li><p>X：未知值；</p>
+</li>
+<li><p>Z：高阻</p>
+</li>
+</ul>
+<p>注意这四种值的解释都内置于语言中。如一个为z的值总是意味着高阻抗，一个为0 的值通常<br>是指逻辑0 。<br>在门的输入或一个表达式中的为<code>“z”</code>的值通常解释成<code>“x”</code>。<br>此外，<code>x</code>值和<code>z</code>值都是不分大小写的，也就是说，值<code>0x1z</code>与值<code>0X1Z</code>相同。<br>Verilog HDL 中的常量是由以上这四类基本值组成的。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/03/07/Map_Reduce/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Python中的map_reduce
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/02/28/actor/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">演员电影评分排序</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+  
+  
+	<! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &weierp;&weierp;&weierp;<br>
+		   喜欢你看不惯我，却不得不和我一起建设特色社会主义
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/wx.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="verilog_hdl" data-title="Verilog小叙(一)" data-url="http://peihao.space/2016/03/06/verilog_hdl/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"chuangwailinjie"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 培豪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<div id="totop" style="position:fixed;bottom:100px;right:30px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>
