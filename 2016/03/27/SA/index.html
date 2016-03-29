@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>模拟退火 | 窗外临街</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="模拟退火算法概述模拟退火算法来源于固体退火原理，将固体加温至充分高，再让其徐徐冷却，加温时，固体内部粒子随温升变为无序状，内能增大，而徐徐冷却时粒子渐趋有序，在每个温度都达到平衡态，最后在常温时达到基态，内能减为最小。根据Metropolis准则，粒子在温度T时趋于平衡的概率为e-ΔE/(kT)，其中E为温度T时的内能，ΔE为其改变量，k为Boltzmann常数。用固体退火模拟组合优化问题，将内能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模拟退火">
+<meta property="og:url" content="http://peihao.space/2016/03/27/SA/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="模拟退火算法概述模拟退火算法来源于固体退火原理，将固体加温至充分高，再让其徐徐冷却，加温时，固体内部粒子随温升变为无序状，内能增大，而徐徐冷却时粒子渐趋有序，在每个温度都达到平衡态，最后在常温时达到基态，内能减为最小。根据Metropolis准则，粒子在温度T时趋于平衡的概率为e-ΔE/(kT)，其中E为温度T时的内能，ΔE为其改变量，k为Boltzmann常数。用固体退火模拟组合优化问题，将内能">
+<meta property="og:image" content="http://images.cnblogs.com/cnblogs_com/emanlee/201107/201107311916278605.jpg">
+<meta property="og:updated_time" content="2016-03-27T13:32:25.791Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="模拟退火">
+<meta name="twitter:description" content="模拟退火算法概述模拟退火算法来源于固体退火原理，将固体加温至充分高，再让其徐徐冷却，加温时，固体内部粒子随温升变为无序状，内能增大，而徐徐冷却时粒子渐趋有序，在每个温度都达到平衡态，最后在常温时达到基态，内能减为最小。根据Metropolis准则，粒子在温度T时趋于平衡的概率为e-ΔE/(kT)，其中E为温度T时的内能，ΔE为其改变量，k为Boltzmann常数。用固体退火模拟组合优化问题，将内能">
+  
+    <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?47c906842634689dc55e7f1660f58105";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="baidu_js_push">
+	<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</div>
+<div class="overlay"> 
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div align="left" style="margin-top:6px;">
+<p style="color:#cccc99;font-size:90%">您好，培豪的第<span id="busuanzi_value_site_uv"></span>个小伙伴</p>
+</div>
+</div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">培豪</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/album">相册</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 12px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 14px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 12px;">JQuery</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Python/" style="font-size: 18px;">Python</a> <a href="/tags/Requests/" style="font-size: 14px;">Requests</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/Verilog-HDL/" style="font-size: 16px;">Verilog HDL</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/hexo优化/" style="font-size: 12px;">hexo优化</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/matplotlib/" style="font-size: 10px;">matplotlib</a> <a href="/tags/noc/" style="font-size: 12px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/re/" style="font-size: 12px;">re</a> <a href="/tags/router/" style="font-size: 10px;">router</a> <a href="/tags/torrent/" style="font-size: 12px;">torrent</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/仿真/" style="font-size: 14px;">仿真</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/编码/" style="font-size: 12px;">编码</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 12px;">随感</a> <a href="/tags/随笔/" style="font-size: 14px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">衣服晒干风在穿，我一个人，很简单，自己放纵自己管…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">培豪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">培豪</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/album">相册</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-SA" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/27/SA/" class="article-date">
+  	<time datetime="2016-03-27T13:35:02.000Z" itemprop="datePublished">2016-03-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      模拟退火
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/算法/">算法</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	      	<!-- Table of Contents -->
+			
+        <h1 id="模拟退火算法概述">模拟退火算法概述</h1><p>模拟退火算法来源于固体退火原理，将固体加温至充分高，再让其徐徐冷却，加温时，固体内部粒子随温升变为无序状，内能增大，而徐徐冷却时粒子渐趋有序，在每个温度都达到平衡态，最后在常温时达到基态，内能减为最小。根据<code>Metropolis</code>准则，粒子在温度T时趋于平衡的概率为<code>e-ΔE/(kT)</code>，其中E为温度T时的内能，ΔE为其改变量，k为<code>Boltzmann</code>常数。用固体退火模拟组合优化问题，将内能E模拟为目标函数值f，温度T演化成控制参数t，即得到解组合优化问题的模拟退火算法：由初始解i和控制参数初值t开始，对当前解重复“产生新解→计算目标函数差→接受或舍弃”的迭代，并逐步衰减t值，算法终止时的当前解即为所得近似最优解，这是基于蒙特卡罗迭代求解法的一种启发式随机搜索过程。退火过程由冷却进度表(Cooling Schedule)控制，包括控制参数的初值t及其衰减因子Δt、每个t值时的迭代次数L和停止条件S。</p>
+<h1 id="流程图">流程图</h1><p><img src="http://images.cnblogs.com/cnblogs_com/emanlee/201107/201107311916278605.jpg" alt="模拟退火"></p>
+<h1 id="代码实现">代码实现</h1><h2 id="伪代码">伪代码</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Simulated-Annealing()    </span><br><span class="line">Create initial solution S    </span><br><span class="line">repeat    </span><br><span class="line">    for i=1 to iteration-length do    </span><br><span class="line">        Generate a random transition from S to Si    </span><br><span class="line">        If ( C(S) &lt;= C(Si) ) then    </span><br><span class="line">            S=Si    </span><br><span class="line">        else if( exp(C(S)-C(Si))/kt &gt; random[0,1) ) then    </span><br><span class="line">            S=Si    </span><br><span class="line">    Reduce Temperature t    </span><br><span class="line">until ( no change in C(S) )    </span><br><span class="line">    </span><br><span class="line">C(S): Cost or Loss function of Solution S</span><br></pre></td></tr></table></figure>
+<h2 id="java实例实现">java实例实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> space.peihao;    </span><br><span class="line">    </span><br><span class="line"><span class="keyword">import</span> java.io.BufferedReader;    </span><br><span class="line"><span class="keyword">import</span> java.io.File;    </span><br><span class="line"><span class="keyword">import</span> java.io.FileReader;    </span><br><span class="line"><span class="keyword">import</span> java.io.IOException;    </span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;    </span><br><span class="line"><span class="keyword">import</span> java.util.Random;    </span><br><span class="line">    </span><br><span class="line"><span class="comment">/**  </span><br><span class="line"> * <span class="doctag">@author</span> Dukie 下午02:22:13 2010  </span><br><span class="line"> *   </span><br><span class="line"> */</span>    </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Anneal</span> </span>&#123;    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span>  <span class="keyword">static</span> <span class="keyword">double</span>[][] city;    </span><br><span class="line">    <span class="keyword">private</span>  <span class="keyword">static</span> <span class="keyword">int</span>[] currPath;    </span><br><span class="line">    <span class="keyword">private</span>  <span class="keyword">static</span> <span class="keyword">int</span>[] bestPath;    </span><br><span class="line">    <span class="keyword">private</span>  <span class="keyword">static</span> <span class="keyword">double</span> shortesDistance;    </span><br><span class="line">    <span class="keyword">private</span>  <span class="keyword">static</span> <span class="keyword">int</span> numOfCity = <span class="number">20</span>;    </span><br><span class="line">    <span class="comment">//trace item    </span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> iterator = <span class="number">0</span>;    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printInfo</span><span class="params">()</span> </span>&#123;    </span><br><span class="line">        System.out.println(<span class="string">"bestPath: "</span> + Arrays.toString(bestPath));    </span><br><span class="line">        System.out.println(<span class="string">"shortest distance: "</span> + shortesDistance);    </span><br><span class="line">        System.out.println(<span class="string">"iterator times: "</span> + iterator);    </span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;    </span><br><span class="line">        city = <span class="keyword">new</span> <span class="keyword">double</span>[numOfCity][numOfCity];    </span><br><span class="line">        currPath = <span class="keyword">new</span> <span class="keyword">int</span>[numOfCity];    </span><br><span class="line">        bestPath = <span class="keyword">new</span> <span class="keyword">int</span>[numOfCity];    </span><br><span class="line">        shortesDistance = <span class="number">0</span>;    </span><br><span class="line">        loadCity();    </span><br><span class="line">        <span class="keyword">int</span> lenth = currPath.length;    </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lenth; i++) &#123;    </span><br><span class="line">            currPath[i] = i;    </span><br><span class="line">        &#125;    </span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">loadCity</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;    </span><br><span class="line">        <span class="comment">//DistanceMatrix.csv" a file stores the distance info.    </span></span><br><span class="line">        File file = <span class="keyword">new</span> File(<span class="string">"E:\\TSP\\DistanceMatrix.csv"</span>);    </span><br><span class="line">        inputGraph(file, city);    </span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inputGraph</span><span class="params">(File file, <span class="keyword">double</span>[][] city)</span> <span class="keyword">throws</span> IOException </span>&#123;    </span><br><span class="line">        BufferedReader in = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(file));    </span><br><span class="line">        String str = <span class="string">""</span>;    </span><br><span class="line">        <span class="keyword">int</span> length = <span class="number">0</span>;    </span><br><span class="line">        <span class="keyword">while</span> ((str = in.readLine()) != <span class="keyword">null</span>) &#123;    </span><br><span class="line">            str = str.replaceAll(<span class="string">", "</span>, <span class="string">","</span>);    </span><br><span class="line">            String[] line = str.split(<span class="string">","</span>);    </span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; numOfCity; j++)    </span><br><span class="line">                <span class="comment">// ten cities    </span></span><br><span class="line">                city[length][j] = Double.parseDouble(line[j]);    </span><br><span class="line">            length++;    </span><br><span class="line">        &#125;    </span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**  </span><br><span class="line">     * key function  </span><br><span class="line">     * <span class="doctag">@throws</span> IOException  </span><br><span class="line">     */</span>    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">anneal</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;    </span><br><span class="line">    </span><br><span class="line">        <span class="keyword">double</span> temperature = <span class="number">10000.0</span>D;    </span><br><span class="line">        <span class="keyword">double</span> deltaDistance = <span class="number">0.0</span>D;    </span><br><span class="line">        <span class="keyword">double</span> coolingRate = <span class="number">0.9999</span>;    </span><br><span class="line">        <span class="keyword">double</span> absoluteTemperature = <span class="number">0.00001</span>;    </span><br><span class="line">    </span><br><span class="line">        init();    </span><br><span class="line">    </span><br><span class="line">        <span class="keyword">double</span> distance = getToatalDistance(currPath);    </span><br><span class="line">    </span><br><span class="line">        <span class="keyword">int</span>[] nextPath;     </span><br><span class="line">        Random random = <span class="keyword">new</span> Random();    </span><br><span class="line">        <span class="keyword">while</span> (temperature &gt; absoluteTemperature) &#123;    </span><br><span class="line">            nextPath = generateNextPath();    </span><br><span class="line">            deltaDistance = getToatalDistance(nextPath) - distance;    </span><br><span class="line">    </span><br><span class="line">            <span class="keyword">if</span> ((deltaDistance &lt; <span class="number">0</span>)    </span><br><span class="line">                    || (distance &gt; <span class="number">0</span> &amp;&amp;     </span><br><span class="line">                          Math.exp(-deltaDistance / temperature) &gt; random.nextDouble())) &#123;    </span><br><span class="line">                currPath = Arrays.copyOf(nextPath, nextPath.length);    </span><br><span class="line">                distance = deltaDistance + distance;    </span><br><span class="line">            &#125;    </span><br><span class="line">    </span><br><span class="line">            temperature *= coolingRate;    </span><br><span class="line">            iterator++;    </span><br><span class="line">            System.out.println(<span class="string">"iterator: "</span> + iterator + <span class="string">" path: "</span> + Arrays.toString(currPath));    </span><br><span class="line">        &#125;    </span><br><span class="line">        shortesDistance = distance;    </span><br><span class="line">        System.arraycopy(currPath, <span class="number">0</span>, bestPath, <span class="number">0</span>, currPath.length);    </span><br><span class="line">    </span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**  </span><br><span class="line">     * calculate total distance  </span><br><span class="line">     * <span class="doctag">@param</span> currPath  </span><br><span class="line">     * <span class="doctag">@return</span>  </span><br><span class="line">     */</span>    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">double</span> <span class="title">getToatalDistance</span><span class="params">(<span class="keyword">int</span>[] currPath)</span> </span>&#123;    </span><br><span class="line">        <span class="keyword">int</span> length = currPath.length;    </span><br><span class="line">        <span class="keyword">double</span> totalDistance = <span class="number">0.0</span>D;    </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++) &#123;    </span><br><span class="line">            totalDistance += city[currPath[i]][currPath[i + <span class="number">1</span>]];    </span><br><span class="line">        &#125;    </span><br><span class="line">        totalDistance += city[currPath[length - <span class="number">1</span>]][<span class="number">0</span>];    </span><br><span class="line">    </span><br><span class="line">        <span class="keyword">return</span> totalDistance;    </span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**  </span><br><span class="line">     * swap two elements in the old array to genreate new array  </span><br><span class="line">     * <span class="doctag">@return</span>  </span><br><span class="line">     */</span>    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] generateNextPath() &#123;    </span><br><span class="line">        <span class="keyword">int</span>[] nextPath = Arrays.copyOf(currPath, currPath.length);    </span><br><span class="line">        Random random = <span class="keyword">new</span> Random();    </span><br><span class="line">        <span class="keyword">int</span> length = nextPath.length;    </span><br><span class="line">        <span class="keyword">int</span> fistIndex = random.nextInt(length - <span class="number">1</span>) + <span class="number">1</span>;    </span><br><span class="line">        <span class="keyword">int</span> secIndex = random.nextInt(length - <span class="number">1</span>) + <span class="number">1</span>;    </span><br><span class="line">        <span class="keyword">while</span> (fistIndex == secIndex) &#123;    </span><br><span class="line">            secIndex = random.nextInt(length - <span class="number">1</span>) + <span class="number">1</span>;    </span><br><span class="line">        &#125;    </span><br><span class="line">        <span class="keyword">int</span> tmp = nextPath[fistIndex];    </span><br><span class="line">        nextPath[fistIndex] = currPath[secIndex];    </span><br><span class="line">        nextPath[secIndex] = tmp;    </span><br><span class="line">    </span><br><span class="line">        <span class="keyword">return</span> nextPath;    </span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码就是为了解决旅行商问题。旅行商按一定的顺序访问N个城市的每个城市,使得每个城市都能被访问且仅能被访问一次,最后回到起点,而使花费的代价最小。本例中从第0个城市开始然后回到原点.</p>
+<h2 id="Tips">Tips</h2><p>模拟退火算法与初始值无关，算法求得的解与初始解状态S(是算法迭代的起点)无关；模拟退火算法具有渐近收敛性，已在理论上被证明是一种以概率l 收敛于全局最优解的全局优化算法；模拟退火算法具有并行性。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/03/28/router_know/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          路由器架构
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/03/24/verilog_date/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">verilog笔记</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+  
+  
+	<! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &weierp;&weierp;&weierp;<br>
+		   得到的是侥幸，失去的是人生
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/wx.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="SA" data-title="模拟退火" data-url="http://peihao.space/2016/03/27/SA/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"chuangwailinjie"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 培豪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<div id="totop" style="position:fixed;bottom:100px;right:30px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>
