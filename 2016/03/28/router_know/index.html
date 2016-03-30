@@ -13,7 +13,9 @@ NoC采用分组交换的方式进行通信，片上网络中各处理核之间�
 <meta property="og:site_name" content="窗外临街">
 <meta property="og:description" content="Noc小记Noc是由Router和Channel组成的网络结构。其中router主要用来控制网络中数据传输，channel是连通片上系统中各处理核之间进行点对点数据传输的通路。
 NoC采用分组交换的方式进行通信，片上网络中各处理核之间通过发送请求和接收相应消息的方式通信。在网络中传输的消息由头（head）、传输数据和尾（tail）组成。投中包含接收方的地址信息，router根据这个地址建立从传输方">
-<meta property="og:updated_time" content="2016-03-29T14:27:47.676Z">
+<meta property="og:image" content="http://peihao.space/img/article/router/fixed-priority.jpg">
+<meta property="og:image" content="http://peihao.space/img/article/adapter-priority.jpg">
+<meta property="og:updated_time" content="2016-03-30T05:38:04.509Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="路由器架构">
 <meta name="twitter:description" content="Noc小记Noc是由Router和Channel组成的网络结构。其中router主要用来控制网络中数据传输，channel是连通片上系统中各处理核之间进行点对点数据传输的通路。
@@ -126,6 +128,8 @@ var _hmt = _hmt || [];
 				        
 							<li><a href="/album">相册</a></li>
 				        
+							<li><a href="/atom.xml">Rss</a></li>
+				        
 						</ul>
 					</nav>
 					<nav class="header-nav">
@@ -142,7 +146,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 12px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 14px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 12px;">JQuery</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Python/" style="font-size: 18px;">Python</a> <a href="/tags/Requests/" style="font-size: 14px;">Requests</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/Verilog-HDL/" style="font-size: 16px;">Verilog HDL</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/hexo优化/" style="font-size: 12px;">hexo优化</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/matplotlib/" style="font-size: 10px;">matplotlib</a> <a href="/tags/noc/" style="font-size: 12px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/re/" style="font-size: 12px;">re</a> <a href="/tags/router/" style="font-size: 10px;">router</a> <a href="/tags/torrent/" style="font-size: 12px;">torrent</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/仿真/" style="font-size: 14px;">仿真</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/编码/" style="font-size: 12px;">编码</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 12px;">随感</a> <a href="/tags/随笔/" style="font-size: 14px;">随笔</a>
+						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 12px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 14px;">Front End</a> <a href="/tags/JQuery/" style="font-size: 12px;">JQuery</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Python/" style="font-size: 18px;">Python</a> <a href="/tags/Requests/" style="font-size: 14px;">Requests</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/Verilog-HDL/" style="font-size: 16px;">Verilog HDL</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/hexo优化/" style="font-size: 12px;">hexo优化</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/matplotlib/" style="font-size: 10px;">matplotlib</a> <a href="/tags/noc/" style="font-size: 12px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/re/" style="font-size: 12px;">re</a> <a href="/tags/router/" style="font-size: 14px;">router</a> <a href="/tags/torrent/" style="font-size: 12px;">torrent</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/仿真/" style="font-size: 14px;">仿真</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/编码/" style="font-size: 12px;">编码</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 12px;">随感</a> <a href="/tags/随笔/" style="font-size: 14px;">随笔</a>
 					</div>
 				</section>
 				
@@ -204,6 +208,8 @@ var _hmt = _hmt || [];
 					<li><a href="/tags/随笔">随笔</a></li>
 		        
 					<li><a href="/album">相册</a></li>
+		        
+					<li><a href="/atom.xml">Rss</a></li>
 		        
 		        <div class="clearfix"></div>
 				</ul>
@@ -284,6 +290,11 @@ var _hmt = _hmt || [];
 <h2 id="on-off">on-off</h2><p>由于基于credit的流控机制需要计数器，开销较大。一种改进的流控机制是on/off 流控机制，它在路由器中设置两个门限值 on 和 off ，当下行路由器中空闲缓存数目大于 off 时，发送1位比特信息通知上行路由器处于 “关” 状态，停止发送数据，当下行路由器的空闲缓存数目大于 on 时，发送l位比特信息通知上行路由器处于 “开” 状态，继续发送数据 。on/off 流控机制仅用l位比特信息来通知上行 路由器是否可以继续发送，而且回传信号次数也较基于 credit 流控机制少，但是它的缺点是由于 on/off 值的设定，不能充分利用缓存资源 。</p>
 <h2 id="handshake">handshake</h2><p>另一种改进的流控机制是基于握手的流控机制，它的工作原理是当上行路由器有数据发送时，先往下行路由器发送一个 req 信号，下行路由器收到 req 请求信号后，判断自己的缓存是否满，并返回一个 ack 应答信号，上行路由器接收的 ack 信号后，根据 ack 的值判断是否要发送数据。该机制虽然简单，但是一个明显的不足之处在于，该流控机制需要2个时钟周期来完成操作，比基于credit 的流控机制多了 1个时钟周期，增加了数据在网络中的传输时延。</p>
 <h1 id="仲裁机制">仲裁机制</h1><p>片上网络能支持数据的并行传输，这必然会引起不同信息之间的竞争冲突，具体到路由器就是多个输入端口的数据请求同一个输出端口离开时，产生的端口竞争，而在虚信道路由器中除了上述竞争外，还存在多个输入虚信道请求同一个输出虚信道的虚信道分配竞争 。目前路由器常用的仲裁机制有固定优先级、动态优先级和轮询仲裁机制。</p>
+<h2 id="固定优先级">固定优先级</h2><p><img src="/img/article/router/fixed-priority.jpg" alt=""></p>
+<p>固定优先级的仲裁机制就是给每条线路分配固定的优先级，如果某条优先级高的线路一直有请求，那么其他优先级低的线路的请求将一直不会有响应。如图所示，端口A中一直有请求，并且他的优先级为3最高，因此他一直被相应，知道在时钟周期3他的请求变为0，才接着响应有请求切优先级最高的B端口，到了时钟周期7端口A又有请求，这时候A又被响应。可以看到尽管C端口一直有请求，但是由于他的优先级比较低，所以一直得不到相应。</p>
+<h2 id="动态优先级">动态优先级</h2><p><img src="/img/article/adapter-priority.jpg" alt="轮询机制"></p>
+<p>动态优先级的仲裁机制与固定优先级的仲裁机制的原理基本相同，不同之处在于每条线路的优先级是动态变化的。每次也是相应优先级最高的请求。</p>
+<p>轮询仲裁机制基本思想是当前仲裁成功的请求在下一时钟周期仲裁中的优先级最低，最高优先级赋予相邻的下一个仲裁请求，这样一次轮询。如图，开始初始化一个仲裁顺序为A-B-C，那么首先选定A端口开始轮询仲裁，由于A端口没有请求，因此直接跳到B，接着到C，接着轮询A，发现A端口有请求，响应A端口。</p>
 
       
     </div>
@@ -292,6 +303,15 @@ var _hmt = _hmt || [];
   
     
 <nav id="article-nav">
+  
+    <a href="/2016/03/29/router-topology/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Noc Topology
+        
+      </div>
+    </a>
   
   
     <a href="/2016/03/27/SA/" id="article-nav-older" class="article-nav-link-wrap">
@@ -303,6 +323,7 @@ var _hmt = _hmt || [];
 
   
   
+
   
 	<! -- 添加捐赠图标 -->
 <div class ="post-donate">
@@ -329,6 +350,19 @@ var _hmt = _hmt || [];
 </div>
 <! -- 添加捐赠图标 -->
 
+
+	
+			<! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<pre><code><center>本文由<b><a href="/index.html" target="_blank" title="培豪">培豪</a></b>创作和发表,采用<b>署名(BY)</b>-<b>非商业性使用(NC)</b>-<b>相同方式共享(SA)</b>国际许可协议进行许可</center>
+
+<center>转载请注明作者及出处,本文作者为<b><a href="/index.html" target="_blank" title="培豪">培豪</a></b>,本文标题为<b><a href="/2016/03/28/router_know/" target="_blank" title="路由器架构">路由器架构</a></b></center>
+
+<center>本文链接为<b><a href="/2016/03/28/router_know/" target="_blank" title="路由器架构">http://peihao.space/2016/03/28/router_know/</a></b>.</center></code></pre>
+</div>
+<! -- 添加版权信息 -->
+		
+		
 </article>
 
 
