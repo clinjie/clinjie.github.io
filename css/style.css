@@ -2382,7 +2382,7 @@ div.copyright {
   padding: 0.3em 0.5em;
   margin: 0 0 1em 0;
   border-bottom: none;
-  background-color: #aad2f0;
+  background-color: #74a474;
   -moz-border-radius: 1em;
   -webkit-border-radius: 1em;
   -webkit-border-radius: 1em;
@@ -2426,7 +2426,7 @@ div.copyright {
   background: -moz--ms-linear-gradient(center top, #aad2f0 5%, #8bc1ed 100%);
   background: -moz-linear-gradient(center top, #aad2f0 5%, #8bc1ed 100%);
 /* filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#aad2f0', endColorstr='#8bc1ed'); */
-  background-color: #aad2f0;
+  background-color: #74a474;
   border: 1px solid #dcdcdc;
   text-shadow: 1px 1px 0px #eee;
 }
@@ -2434,7 +2434,7 @@ div.article-footer-copyright {
   margin-top: 2em;
   padding: 0.8em;
   border: 1px solid #d3d3d3;
-  background-color: #deebf7;
+  background-color: #ffff7a;
 }
 .article-footer-copyright p {
   line-height: 140%;
