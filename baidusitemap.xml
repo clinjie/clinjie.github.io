@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://peihao.space/2016/03/31/NoC-FIFO/</loc>
+    <lastmod>2016-03-31T15:15:27.752Z</lastmod>
+    <data>
+        <display>
+        <title>缓存与XY路由算法</title>
+        <pubTime>2016-03-31T14:23:35.000Z</pubTime>
+        
+        <tag>NoC</tag>
+         
+        <tag>Router</tag>
+         
+         
+           
+             
+              <breadCrumb title="NoC" url="http://peihao.space/categories/NoC/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://peihao.space/2016/03/30/append-copyright/</loc>
     <lastmod>2016-03-31T10:17:54.465Z</lastmod>
     <data>
