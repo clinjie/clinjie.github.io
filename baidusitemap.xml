@@ -4,6 +4,50 @@
 
     
   <url>
+    <loc>http://peihao.space/2016/04/01/matplotlib2/</loc>
+    <lastmod>2016-04-01T15:57:15.444Z</lastmod>
+    <data>
+        <display>
+        <title>Matplotlib快速绘图（2）</title>
+        <pubTime>2016-04-01T15:27:51.000Z</pubTime>
+        
+        <tag>matplotlib</tag>
+         
+         
+           
+             
+              <breadCrumb title="matplotlib" url="http://peihao.space/categories/matplotlib/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+    
+  <url>
+    <loc>http://peihao.space/2016/04/01/Virtual%20Channel/</loc>
+    <lastmod>2016-03-31T16:24:48.629Z</lastmod>
+    <data>
+        <display>
+        <title>Virtual Channel Ruter</title>
+        <pubTime>2016-04-01T04:23:35.000Z</pubTime>
+        
+        <tag>NoC</tag>
+         
+        <tag>Router</tag>
+         
+         
+           
+             
+              <breadCrumb title="NoC" url="http://peihao.space/categories/NoC/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://peihao.space/2016/03/31/NoC-FIFO/</loc>
     <lastmod>2016-03-31T15:15:27.752Z</lastmod>
     <data>
@@ -107,7 +151,6 @@
     </url>
 
     
-    
   <url>
     <loc>http://peihao.space/2016/03/27/SA/</loc>
     <lastmod>2016-03-30T14:02:19.704Z</lastmod>
@@ -209,7 +252,6 @@
     </data>
     </url>
 
-    
     
   <url>
     <loc>http://peihao.space/2016/03/24/verilog_date/</loc>
