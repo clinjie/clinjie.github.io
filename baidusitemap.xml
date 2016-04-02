@@ -4,30 +4,8 @@
 
     
   <url>
-    <loc>http://peihao.space/2016/04/01/matplotlib2/</loc>
-    <lastmod>2016-04-01T15:57:15.444Z</lastmod>
-    <data>
-        <display>
-        <title>Matplotlib快速绘图（2）</title>
-        <pubTime>2016-04-01T15:27:51.000Z</pubTime>
-        
-        <tag>matplotlib</tag>
-         
-         
-           
-             
-              <breadCrumb title="matplotlib" url="http://peihao.space/categories/matplotlib/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-    
-    
-  <url>
     <loc>http://peihao.space/2016/04/01/Virtual%20Channel/</loc>
-    <lastmod>2016-03-31T16:24:48.629Z</lastmod>
+    <lastmod>2016-04-02T15:56:29.595Z</lastmod>
     <data>
         <display>
         <title>Virtual Channel Ruter</title>
@@ -46,6 +24,50 @@
     </data>
     </url>
 
+    
+  <url>
+    <loc>http://peihao.space/2016/01/02/str-bytes/</loc>
+    <lastmod>2016-04-02T13:36:30.242Z</lastmod>
+    <data>
+        <display>
+        <title>Python中的str与bytes</title>
+        <pubTime>2016-01-02T04:23:35.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+        <tag>编码</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://peihao.space/categories/Python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2016/04/01/matplotlib2/</loc>
+    <lastmod>2016-04-01T16:53:35.737Z</lastmod>
+    <data>
+        <display>
+        <title>Matplotlib快速绘图（2）</title>
+        <pubTime>2016-04-01T15:27:51.000Z</pubTime>
+        
+        <tag>matplotlib</tag>
+         
+         
+           
+             
+              <breadCrumb title="matplotlib" url="http://peihao.space/categories/matplotlib/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
     
   <url>
     <loc>http://peihao.space/2016/03/31/NoC-FIFO/</loc>

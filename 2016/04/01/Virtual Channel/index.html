@@ -14,7 +14,8 @@
 <meta property="og:image" content="http://peihao.space/img/article/router/wormhole-router.jpg">
 <meta property="og:image" content="http://peihao.space/img/article/router/5port-virtual_channel.png">
 <meta property="og:image" content="http://peihao.space/img/article/router/VC-trans.png">
-<meta property="og:updated_time" content="2016-03-31T16:24:48.629Z">
+<meta property="og:image" content="http://peihao.space/\img\article\router\vc-2path.png">
+<meta property="og:updated_time" content="2016-04-02T15:56:29.595Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Virtual Channel Ruter">
 <meta name="twitter:description" content="VC与WormHole的对比虚信道路由器通过引入虚信道技术，将一个物理信道分成逻辑上的多个虚信道。多个虚信道对物理信道分时复用，通过对虚信道的合理调度，当网络中发生数据分组阻塞时，阻塞的分组被缓存在某一条虚信道的缓存中，其它分组能够使用其它的虚信道继续进行传输。">
@@ -144,7 +145,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 12px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 14px;">Front End</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JQuery/" style="font-size: 12px;">JQuery</a> <a href="/tags/NoC/" style="font-size: 12px;">NoC</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Python/" style="font-size: 18px;">Python</a> <a href="/tags/Requests/" style="font-size: 14px;">Requests</a> <a href="/tags/Router/" style="font-size: 12px;">Router</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/Verilog-HDL/" style="font-size: 16px;">Verilog HDL</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/front-end/" style="font-size: 10px;">front end</a> <a href="/tags/hexo优化/" style="font-size: 12px;">hexo优化</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/matplotlib/" style="font-size: 12px;">matplotlib</a> <a href="/tags/noc/" style="font-size: 12px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/re/" style="font-size: 12px;">re</a> <a href="/tags/router/" style="font-size: 14px;">router</a> <a href="/tags/torrent/" style="font-size: 12px;">torrent</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/仿真/" style="font-size: 14px;">仿真</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/编码/" style="font-size: 12px;">编码</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 12px;">随感</a> <a href="/tags/随笔/" style="font-size: 14px;">随笔</a>
+						<a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 12px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 14px;">Front End</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JQuery/" style="font-size: 12px;">JQuery</a> <a href="/tags/NoC/" style="font-size: 12px;">NoC</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Python/" style="font-size: 18px;">Python</a> <a href="/tags/Requests/" style="font-size: 14px;">Requests</a> <a href="/tags/Router/" style="font-size: 12px;">Router</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/Verilog-HDL/" style="font-size: 16px;">Verilog HDL</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/front-end/" style="font-size: 10px;">front end</a> <a href="/tags/hexo优化/" style="font-size: 12px;">hexo优化</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/matplotlib/" style="font-size: 12px;">matplotlib</a> <a href="/tags/noc/" style="font-size: 12px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/re/" style="font-size: 12px;">re</a> <a href="/tags/router/" style="font-size: 14px;">router</a> <a href="/tags/torrent/" style="font-size: 12px;">torrent</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/仿真/" style="font-size: 14px;">仿真</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/编码/" style="font-size: 14px;">编码</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 12px;">随感</a> <a href="/tags/随笔/" style="font-size: 14px;">随笔</a>
 					</div>
 				</section>
 				
@@ -278,7 +279,7 @@ var _hmt = _hmt || [];
 			
 			  <div id="toc" class="toc-article">
 			    <strong class="toc-title">文章目录</strong>
-			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#VC与WormHole的对比"><span class="toc-number">1.</span> <span class="toc-text">VC与WormHole的对比</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#VC结构"><span class="toc-number">2.</span> <span class="toc-text">VC结构</span></a></li></ol>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#VC与WormHole的对比"><span class="toc-number">1.</span> <span class="toc-text">VC与WormHole的对比</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#VC结构"><span class="toc-number">2.</span> <span class="toc-text">VC结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#VC的一些缺点"><span class="toc-number">3.</span> <span class="toc-text">VC的一些缺点</span></a></li></ol>
 			  </div>
 			
         <h1 id="VC与WormHole的对比">VC与WormHole的对比</h1><p>虚信道路由器通过引入虚信道技术，将一个物理信道分成逻辑上的多个虚信道。多个虚信道对物理信道分时复用，通过对虚信道的合理调度，当网络中发生数据分组阻塞时，阻塞的分组被缓存在某一条虚信道的缓存中，其它分组能够使用其它的虚信道继续进行传输。<a id="more"></a></p>
@@ -290,12 +291,16 @@ var _hmt = _hmt || [];
 <p>如图是传统的5端口虚信道路由器整体结构。它有5个输入端口与5个输出端口，每个输入端口支持n个虚信道（Virtual Channel，简称VC），每个VC维持一个用于缓存数据的FIFO队列，其中4个端口表示东、南、西、北四个方向，与相邻的4个路由器相连，另外一个表示本地端口，与IP核相连。</p>
 <p>另外还包含计算模块（Routing Computation Unit，简称RC）、虚信道分配（Virtual Channel Allocator，简称VA）模块、开关分配（Switch Allocator，简称SA）模块及交叉开关（Crossbar）。虚信道采用的是虫孔交换机制，同时使用缓冲队列放置在输入端口的交换结构。</p>
 <p>虚信道路由器的工作过程与虫孔路由器基本相同，不同之处在于多了一个虚信道分配操作。当头微片路由计算完成后，这时候由于一个输出端口有多个输出虚信道，该头微片只能占用其中一个，所以需要经过<strong>虚信道分配</strong>为其分配一个空闲的输出虚信道后，<strong>才能进行后面的开关分配和开关传输</strong>。</p>
-<p>另外虚信道路由器通过引入虚信道技术，将一个物理信道分成逻辑上的多个虚信道，多个虚信道对物理信道分时复用，意味着<em>该头微片所在的分组不能时时占用物理信道</em>，也就不能时时占用与该物理信道相连的输出端口，因此该头微片所在分组的其它微片也需要每个时钟周期都参与开关分配，而不能直接使用头微片开关分配的结果，即虚信道路由器中<strong>开关分配</strong>以<em>微片为单位</em>进行，这是另外一个不同点。</p>
+<p>另外虚信道路由器通过引入虚信道技术，将一个物理信道分成逻辑上的多个虚信道，多个虚信道对物理信道分时复用，意味着<em>该头微片所在的分组不能时时占用物理信道</em>，也就不能时时占用与该物理信道相连的输出端口，因此该头微片所在分组的其它微片也需要每个时钟周期都参与开关分配，而不能直接使用头微片开关分配的结果，即虚信道路由器中<strong>开关分配</strong>以<em>微片为单位</em>进行，每个微片因为不能时刻占据对应的输出端口，所以每次都要使用开关分配与其他分组的微片进行仲裁判定,这是另外一个不同点。</p>
 <p><img src="/img/article/router/VC-trans.png" alt=""></p>
 <p>从上面的描述中我们可以看出，虚信道路由器其实也可以分为一条控制路径和一条数据路径。控制路径由路由计算单元（RC）、虚信道分配单元（VA）和开关分配单元（SA）组成。</p>
 <p>与虫孔路由器不同，虚信道路由器的控制路径为该头微片所在的分组预约的是<strong>一个输出端口中的一个输出虚信道</strong>，<em>其它分组微片</em>不能使用<em>该输出虚信道</em>，直到该头微片的整个分组传输完成，但是其它分组微片可以使用剩下的未被占用的输出虚信道。</p>
 <p>数据路径由输入缓存和交叉开关构成，分组微片到来后由输入缓存存储，经过控制路径分配到输出端口后，经交叉开关转发到目的节点。</p>
 <p>同时虚信道路由器的工作是按4级流水方式工作，分别是路由计算（RC）、虚信道分配（VA）、开关分配（SA）和开关传输（ST）。以分组包含4个微片为例，其中路由信息只包含在头微片中，所以头微片VA成功后，体微片和尾微片可以直接使用VA的结果，跳过路由计算和虚信道分配阶段，直接进入开关分配阶段。</p>
+<h1 id="VC的一些缺点">VC的一些缺点</h1><p>传统虚信道路由器按4级流水线的方式工作，一个微片经过传统虚信道路由器需要经过虚信道分配与开关分配两个操作，这导致分配所花费的时延占了微片通过路由器所需总时延的一半。</p>
+<p><img src="\img\article\router\vc-2path.png" alt=""></p>
+<p>一个输入端口有多个输入虚信道，每个输入虚信道都有可能发出一个请求，那么一个输入端口同时就有多个输入虚信道请求。而VA有可能同时为这些输入虚信道请求各自成功分配到相同的一个输出虚信道，接着VA又将这些分配成功的输入虚信道请求送入SA。这时SA的第一阶段仲裁是从这些成功的请求中选择一个，这导致了矛盾，即VA同时分配成功多个输入虚信道请求，而SA又只从这些请求中选择一个，导致了VA工作的浪费。</p>
+<p>传统虚信道路由器的虚信道分配采用两阶段的仲裁结构，其中第二阶段总共有P<em>V个P</em>V:l仲裁器。例如，VC路由器的5个输入端口，每个端口分时复用2个虚拟信道，则每个信道都要与其余（5<em>2-1）个信道竞争相同的输出虚拟信道，而这些虚拟的输出信道共有（5</em>2）个，所以一共有<em>（5</em>2个5<em>2：1）</em>的仲裁器。仲裁器的大小和数目都会随着端口数P或者虚信道数V的变大而急剧增加，因此虚信道分配模块所占路由器资源比重较大。</p>
 
       
       
