@@ -4,12 +4,12 @@
 
     
   <url>
-    <loc>http://peihao.space/2016/04/01/Virtual%20Channel/</loc>
-    <lastmod>2016-04-02T15:56:29.595Z</lastmod>
+    <loc>http://peihao.space/2016/04/03/NoC-router-alg/</loc>
+    <lastmod>2016-04-03T09:20:46.655Z</lastmod>
     <data>
         <display>
-        <title>Virtual Channel Ruter</title>
-        <pubTime>2016-04-01T04:23:35.000Z</pubTime>
+        <title>NoC路由算法</title>
+        <pubTime>2016-04-03T04:23:35.000Z</pubTime>
         
         <tag>NoC</tag>
          
@@ -27,7 +27,7 @@
     
   <url>
     <loc>http://peihao.space/2016/01/02/str-bytes/</loc>
-    <lastmod>2016-04-02T13:36:30.242Z</lastmod>
+    <lastmod>2016-04-02T16:04:22.352Z</lastmod>
     <data>
         <display>
         <title>Python中的str与bytes</title>
@@ -41,6 +41,28 @@
            
              
               <breadCrumb title="Python" url="http://peihao.space/categories/Python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2016/04/01/Virtual%20Channel/</loc>
+    <lastmod>2016-04-02T16:04:06.513Z</lastmod>
+    <data>
+        <display>
+        <title>Virtual Channel Ruter</title>
+        <pubTime>2016-04-01T04:23:35.000Z</pubTime>
+        
+        <tag>NoC</tag>
+         
+        <tag>Router</tag>
+         
+         
+           
+             
+              <breadCrumb title="NoC" url="http://peihao.space/categories/NoC/"/>
           
         </display>
     </data>
