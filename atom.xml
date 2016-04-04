@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peihao.space/"/>
-  <updated>2016-04-03T09:20:46.655Z</updated>
+  <updated>2016-04-04T14:12:05.175Z</updated>
   <id>http://peihao.space/</id>
   
   <author>
@@ -14,6 +14,63 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>router-source-analysis</title>
+    <link href="http://peihao.space/2016/04/04/router-source-analysis001/"/>
+    <id>http://peihao.space/2016/04/04/router-source-analysis001/</id>
+    <published>2016-04-04T12:17:22.000Z</published>
+    <updated>2016-04-04T14:12:05.175Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;constant_value&quot;&gt;constant value&lt;/h1&gt;&lt;p&gt;在分析第一个Verilog HDL Router中的check模块之前，首先在前面声明一下代码中会使用到的常量值：&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// disable error reporting&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_NONE       &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// don&#39;t hold errors&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_NO_HOLD    &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// capture first error only (subsequent errors are blocked) &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_HOLD_FIRST &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// capture all errors &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_HOLD_ALL   &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_LAST `ERROR_CAPTURE_MODE_HOLD_ALL&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// asynchronous reset&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define RESET_TYPE_ASYNC &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// synchronous reset&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define RESET_TYPE_SYNC  &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define RESET_TYPE_LAST `RESET_TYPE_SYNC&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;实现reg&quot;&gt;实现reg&lt;/h1&gt;&lt;p&gt;在Router的check的错误警报模块中，具体实现这一功能的还是寄存器。上面的代码分别定义了一些错误警示以及错误重置的类型。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/*&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;some input output var define ......&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;case&lt;/span&gt;(reset_type)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	`RESET_TYPE_ASYNC:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	  always @(posedge clk, posedge reset)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(reset)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	      q &amp;lt;= reset_value;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	    &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(active)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	      q &amp;lt;= d;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	`RESET_TYPE_SYNC:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	  always @(posedge clk)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(reset)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	      q &amp;lt;= reset_value;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	    &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(active)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	      q &amp;lt;= d;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      endcase &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   endgenerate&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;首先有一个case选择器，选择重置信号的类型是同步还是异步重置。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;async&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;异步类型的重置，会接受在时钟的上升沿会接受两个信号，分别是时序电路中必须的时钟信号，以及重置信号。当是上升沿时reset=1信号触发了事件，将输出结果赋值为想要重置的值，否则保持输出结果保持为输入值不变。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;sync&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;同步类型的时序时间触发参数只有clk时钟参数。当此时的reset信号电平为高，则赋值reset值，否则保持不变。&lt;/p&gt;
+&lt;p&gt;同步与异步类型的区别保证了同步类型的重置信号只有在时钟上升沿时有可能会发生reset值重置，而异步类型只要reset信号为高电平即可触发。&lt;/p&gt;
+&lt;h1 id=&quot;error模块&quot;&gt;error模块&lt;/h1&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;generate&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      if(capture_mode != `ERROR_CAPTURE_MODE_NONE)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	   &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	   wire [0:num_errors-1] errors_s, errors_q;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	   &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	   case(capture_mode)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	     &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	     `ERROR_CAPTURE_MODE_NO_HOLD:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	       begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		  assign errors_s = errors_in;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	       end&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	     &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	     `ERROR_CAPTURE_MODE_HOLD_FIRST:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	       begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			//&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		  assign errors_s = ~|errors_q ? errors_in : errors_q;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	       end&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	     &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	     `ERROR_CAPTURE_MODE_HOLD_ALL:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	       begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		  assign errors_s = errors_q | errors_in;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	       end&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	     &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	   endcase&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;当有错误信息时，获取到捕捉的错误信息类型。根据先前在constant常量文件中定义的信息，error_s变量对应的是上面寄存器中的d变量，表示输入信号。&lt;/p&gt;
+&lt;p&gt;~| 表示或非位运算，做一次或者多次‘或’运算之后，再做一次非运算。有1出0，全0出1。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://imgtec.eetrend.com/sites/imgtec.eetrend.com/files/201408/blog/3177-6309-6.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;上面是Verilog HDL中运算符的优先级顺序。&lt;/p&gt;
+&lt;p&gt;根据捕获到的不同错误类型，将error_s的值对应赋值，分别赋值为:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;errors_s = errors_in&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;直接赋值为error模块的输入值&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;errors_s = ~|errors_q ? errors_in : errors_q&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当errors_q的值==0时，依然赋值为输入值，否则只要errors_q的值&amp;gt;0，有过改变就将它赋给errors_s。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;errors_s = errors_q | errors_in&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;赋值为当前erroes_q与errors_in的逻辑或运算结果。&lt;/p&gt;
+&lt;p&gt;其中errors_q是errors模块的实际输出结果，errors_in是模块的输入，errors_s时中间计算根据错误类型计算的输入值。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;constant_value&quot;&gt;constant value&lt;/h1&gt;&lt;p&gt;在分析第一个Verilog HDL Router中的check模块之前，首先在前面声明一下代码中会使用到的常量值：&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// disable error reporting&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_NONE       &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// don&#39;t hold errors&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_NO_HOLD    &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// capture first error only (subsequent errors are blocked) &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_HOLD_FIRST &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// capture all errors &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_HOLD_ALL   &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_LAST `ERROR_CAPTURE_MODE_HOLD_ALL&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// asynchronous reset&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define RESET_TYPE_ASYNC &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// synchronous reset&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define RESET_TYPE_SYNC  &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define RESET_TYPE_LAST `RESET_TYPE_SYNC&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;实现reg&quot;&gt;实现reg&lt;/h1&gt;&lt;p&gt;在Router的check的错误警报模块中，具体实现这一功能的还是寄存器。上面的代码分别定义了一些错误警示以及错误重置的类型。
+    
+    </summary>
+    
+      <category term="NoC" scheme="http://peihao.space/categories/NoC/"/>
+    
+    
+      <category term="NoC" scheme="http://peihao.space/tags/NoC/"/>
+    
+  </entry>
   
   <entry>
     <title>NoC路由算法</title>
@@ -1684,164 +1741,6 @@
     
     
       <category term="Python" scheme="http://peihao.space/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Verilog小叙(一)</title>
-    <link href="http://peihao.space/2016/03/06/verilog_hdl/"/>
-    <id>http://peihao.space/2016/03/06/verilog_hdl/</id>
-    <published>2016-03-06T14:23:35.000Z</published>
-    <updated>2016-03-09T05:58:28.977Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;&lt;p&gt;当前业界的硬件描述语言中主要有VHDL 和Verilog HDL。根据当前ASIC/FPGA设计现有的特点、现状，Verilog HDL 语言已经成为决定的主导语言，使用Verilog HDL，可以统一ASIC/FPGA设计平台，简化流程。&lt;/p&gt;
-&lt;h1 id=&quot;设计方法学&quot;&gt;设计方法学&lt;/h1&gt;&lt;h2 id=&quot;数字电路设计方法&quot;&gt;数字电路设计方法&lt;/h2&gt;&lt;p&gt;当前的数字电路设计从层次上分可分成以下几个层次：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;算法级设计：利用高级语言如C语言及其他一些系统分析工具（如MATLAB）对设计从系统的算法级方式进行描述。算法级不需要包含时序信息。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;RTL级设计：用数据流在寄存器间传输的模式来对设计进行描述。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;门级：用逻辑级的与、或、非门等门级之间的连接对设计进行描述。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;开关级：用晶体管和寄存器及他们之间的连线关系来对设计进行描述。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;算法级是高级的建模，一般对特大型设计或有较复杂的算法时使用，特别是通讯方面的一些系统，通过算法级的建模来保证设计的系统性能。在算法级通过后，再把算法级用RTL级进行描述。门级一般对小型设计可适合。开关级一般是在版图级进行。&lt;/p&gt;
-&lt;p&gt;最常使用的是RTL级别的设计，90%以上的数字电路都是采用RTL级别进行设计。&lt;/p&gt;
-&lt;h2 id=&quot;硬件描述语言&quot;&gt;硬件描述语言&lt;/h2&gt;&lt;p&gt;硬件描述语言HDL（Hardware Description Language ）是一种用形式化方法来描述数字电路和数字逻辑系统的语言。数字逻辑电路设计者可利用这种语言来描述自己的设计思想，然后利用EDA工具进行仿真，再自动综合到门级电路，最后用ASIC或FPGA实现其功能。举个例子，在传统的设计方法中，对2输入的与门，我们可能需到标准器件库中调个74系列的器件出来，但在硬件描述语言中，“&amp;amp; ”就是一个与门的形式描述，“C = A &amp;amp; B”就是一个2输入与门的描述。而“and”就是一个与门器件。&lt;br&gt;硬件描述语言发展至今已有二十多年历史，当今业界的标准中（IEEE标准）主要有VHDL和Verilog HDL 这两种硬件描述语言。&lt;/p&gt;
-&lt;h2 id=&quot;设计方法学-1&quot;&gt;设计方法学&lt;/h2&gt;&lt;p&gt;当前的ASIC设计有多种设计方法，但一般地采用自顶向下的设计方法。&lt;br&gt;随着技术的发展，一个芯片上往往集成了几十万到几百万个器件，传统的自底向上的设计方法已不太现实。因此，一个设计往往从系统级设计开始，把系统划分成几个大的基本的功能模块，每个功能模块再按一定的规则分成下一个层次的基本单元，如此一直划分下去。&lt;br&gt;通过自顶向下的设计方法，可实现设计的结构化，使一个复杂的系统设计可由多个设计者分工合作；还可以实现层次化的管理。&lt;/p&gt;
-&lt;h1 id=&quot;Verilog简介&quot;&gt;Verilog简介&lt;/h1&gt;&lt;h2 id=&quot;简介&quot;&gt;简介&lt;/h2&gt;&lt;p&gt;Verilog HDL 语言最初是于1983 年由Gateway Design Automation 公司为其模拟器产品开发的硬件建模语言。那时它只是一种专用语言。由于他们的模拟、仿真器产品的广泛使用，Verilog HDL作为一种便于使用且实用的语言逐渐为众多设计者所接受。在一次努力增加语言普及性的活动中，Verilog HDL 语言于1990 年被推向公众领域。Open Verilog International（O V I ）是促进Verilog 发展的国际性组织。1992 年，OVI 决定致力于推广Verilog OVI 标准成为IEEE 标准。这一努力最后获得成功，Verilog 语言于1995 年成为IEEE 标准，称为IEEE Std1364－1995 。完整的标准在Verilog 硬件描述语言参考手册中有详细描述。&lt;/p&gt;
-&lt;h2 id=&quot;功能&quot;&gt;功能&lt;/h2&gt;&lt;p&gt;Verilog HDL 语言具有下述描述能力：设计的行为特性、设计的数据流特性、设计的结构组成以及包含响应监控和设计验证方面的时延和波形产生机制。所有这些都使用同一种建模语言。此外，Verilog HDL 语言提供了编程语言接口，通过该接口可以在模拟、验证期间从设计外部访问设计，包括模拟的具体控制和运行。&lt;br&gt;需要注意的是Verilog HDL当前主要作为设计使用，大规模的电路设计使用Verilog HDL作为验证语言已经被不太可能，当前的验证语言已经逐渐归一到System Verilog 语言上去。当然，非常小规模的设计可以使用Verilog HDL搭建UT（单元测试）环境进行测试。&lt;br&gt;Verilog HDL 语言不仅定义了语法，而且对每个语法结构都定义了清晰的模拟、仿真语义。因此，用这种语言编写的模型能够使用Verilog 仿真器进行验证。语言从C 编程语言中继承了多种操作符和结构。Verilog HDL 提供了扩展的建模能力，其中许多扩展最初很难理解。但是，Verilog HDL 语言的核心子集非常易于学习和使用，这对大多数建模应用来说已经足够。当然，完整的硬件描述语言足以对从最复杂的芯片到完整的电子系统进行描述。&lt;/p&gt;
-&lt;h1 id=&quot;Verilog建模概述&quot;&gt;Verilog建模概述&lt;/h1&gt;&lt;p&gt;在数字电路设计中，数字电路可简单归纳为两种要素：&lt;code&gt;线&lt;/code&gt;和&lt;code&gt;器件&lt;/code&gt;。线是器件&lt;code&gt;管脚之间的物理连线&lt;/code&gt;；器件也可简单归纳为&lt;code&gt;组合逻辑器件&lt;/code&gt;（如与或非门等）和&lt;code&gt;时序逻辑器件&lt;/code&gt;（如寄存器、锁存器、RAM等）。一个数字系统（硬件）就是&lt;strong&gt;多个器件通过一定的连线关系组合在一块&lt;/strong&gt;的。因此，Verilog HDL的建模实际上就是如何使用HDL语言对数字电路的两种基本要素的特性及相互之间的关系进行描述的过程。下面通过一些实例，以便对Verilog HDL 的设计建模有个大概的印象。&lt;/p&gt;
-&lt;h2 id=&quot;模块&quot;&gt;模块&lt;/h2&gt;&lt;p&gt;模块（module）是Verilog 的基本描述单位，用于&lt;code&gt;描述&lt;/code&gt;某个&lt;code&gt;设计&lt;/code&gt;的&lt;strong&gt;功能或结构及与其他模块通信的外部端口&lt;/strong&gt;。&lt;br&gt;模块在概念上可等同一个器件。就如我们调用通用器件（与门、三态门等）或通用宏单元（计数器、ALU、CPU）等，因此，一个模块可在另一个模块中调用。&lt;br&gt;一个电路设计可由多个模块组合而成，因此一个模块的设计只是一个系统设计中的某个层次设计，模块设计可采用多种建模方式。&lt;/p&gt;
-&lt;h2 id=&quot;简单例子&quot;&gt;简单例子&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;加法器：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;module &lt;span class=&quot;title&quot;&gt;addr&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input [&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] a,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input [&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] b,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input &lt;span class=&quot;built_in&quot;&gt;cin&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output count,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output [&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] sum）；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assign &amp;#123;count,sum&amp;#125; = a +b + &lt;span class=&quot;built_in&quot;&gt;cin&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;该例描述一个3位加法器，从例子可看出整个模块是以module 开始，endmodule 结束。本例子使用Verilog HDL 2001语法结构，输入输出仿在module声明里面。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;比较器&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;module compare （&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input [&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] a, &lt;span class=&quot;comment&quot;&gt;// declare the input signal ;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input [&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] b; &lt;span class=&quot;comment&quot;&gt;// declare the input signal ;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output equare &lt;span class=&quot;comment&quot;&gt;// declare the output signal;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;) ;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assign equare = (a == b) ? &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; ; &lt;span class=&quot;comment&quot;&gt;// if a = b , output 1, otherwise 0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;模块结构&quot;&gt;模块结构&lt;/h2&gt;&lt;p&gt;通过上面的实例可看出，一个设计是由一个个模块（module）构成的。一个模块的设计如下：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;模块内容是嵌在module 和endmodule两个语句之间。每个模块实现特定的功能，模块可进行层次的嵌套，因此可以将大型的数字电路设计分割成大小不一的小模块来实现特定的功能，最后通过由顶层模块调用子模块来实现整体功能，这就是Top-Down的设计思想。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;模块包括接口描述部分和逻辑功能描述部分。这可以把模块与器件相类比。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;模块的端口定义部,如上例：&lt;br&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;module &lt;span class=&quot;title&quot;&gt;addr&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input [&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] a,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input [&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] b,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input &lt;span class=&quot;built_in&quot;&gt;cin&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output count,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output [&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] sum）；&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;其中module 是模块的保留字，addr 是模块的名字，相当于器件名。（）内是该模块的端口声明、输入和输出声明、位宽声明、wire/reg类型声明。&lt;/p&gt;
-&lt;p&gt;端口声明定义了该模块的管脚名，是该模块与其他模块通讯的外部接口，相当于器件的pin 。&lt;/p&gt;
-&lt;p&gt;输入和输出声明定义了该模块的管脚是输入还是输出。&lt;/p&gt;
-&lt;p&gt;位宽声明定义了该模块的管脚的位宽，从高到低进行定义。&lt;/p&gt;
-&lt;p&gt;wire/reg类型声明定义了该模块的管脚的属性，一般输入都是wire，建议不显式写出来，直接input [2:0] a这样既可，输出必须显式定义出wire还是reg。&lt;/p&gt;
-&lt;p&gt;模块的内容，包括内部信号、调用模块等的声明语句和功能定义语句。&lt;/p&gt;
-&lt;p&gt;内部信号需要定义wire/reg类型、声明信号位宽。&lt;/p&gt;
-&lt;p&gt;逻辑功能描述部分如： assign d_out = d_en ? din :’bz;&lt;/p&gt;
-&lt;p&gt;功能描述用来产生各种逻辑（主要是组合逻辑和时序逻辑，可用多种方法进行描述，具体的用法下面章节有介绍），还可用来实例化一个器件，该器件可以是厂家的器件库也可以是我们自己用HDL设计的模块（相当于在原理图输入时调用一个库元件）。在逻辑功能描述中，主要用到assign 和always 两个语句。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;对每个模块都要进行端口定义，并说明输入、输出口，然后对模块的功能进行逻辑描述，当然，对测试模块，可以没有输入输出口。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Verilog HDL 的书写格式，一行可以写几个语句，也可以一个语句分几行写。此处建议一行写一个语句，禁止写多个一句，养成良好的代码编写习惯。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;除endmodule 语句外，每个语句后面需有分号表示该语句结束。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;时延&quot;&gt;时延&lt;/h2&gt;&lt;p&gt;信号在电路中传输会有传播延时等，如线延时、器件延时。时延就是对延时特性的HDL描述。&lt;br&gt;举例如下：&lt;br&gt;assign # 2 B = A；&lt;br&gt;表示 B信号在2个时间单位后得到A信号的值。&lt;br&gt;在Verilog HDL中，所有时延都必须根据时间单位进行定义，定义方式为在文件头添加如下语句：&lt;br&gt;`timescale 1ns/100ps&lt;br&gt;其中’timescale 是Verilog HDL 提供的预编译处理命令， 1ns 表示时间单位是1ns ，100ps表示时间精度是100ps。根据该命令，编译工具才可以认知 #2 为2ns。&lt;br&gt;在Verilog HDL 的IEEE标准中没有规定时间单位的缺省值，由各模拟工具确定。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Tips&lt;/strong&gt;&lt;br&gt;时延是不可综合的，只在仿真时候使用。&lt;/p&gt;
-&lt;h2 id=&quot;结构化描述方式&quot;&gt;结构化描述方式&lt;/h2&gt;&lt;p&gt;结构化的建模方式就是通过对电路结构的描述来建模，即通过对器件的调用（HDL概念称为例化），并使用线网来连接各器件的描述方式。这里的器件包括Verilog HDL的内置门如与门and，异或门xor等，也可以是用户的一个设计。结构化的描述方式反映了一个设计的层次结构。&lt;/p&gt;
-&lt;p&gt;例：一位全加器&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/verilog_hdl.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;module &lt;span class=&quot;title&quot;&gt;FA_struct&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input A,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input B,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input Cin,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output Sum,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output Count&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;wire S1, T1, T2, T3;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;xor &lt;span class=&quot;title&quot;&gt;x1&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(S1, A, B)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;xor &lt;span class=&quot;title&quot;&gt;x2&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(Sum, S1, Cin)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;and &lt;span class=&quot;title&quot;&gt;A1&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(T3, A, B )&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;and &lt;span class=&quot;title&quot;&gt;A2&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(T2, B, Cin)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;and &lt;span class=&quot;title&quot;&gt;A3&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(T1, A, Cin)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;or &lt;span class=&quot;title&quot;&gt;O1&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(Cout, T1, T2, T3 )&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;该实例显示了一个全加器由两个异或门、三个与门、一个或门构成。S1、T1、T2、T3则是门与门之间的连线。代码显示了用纯结构的建模方式，其中xor、and、or 是Verilog HDL 内置的门器件和关键字。&lt;br&gt;以 xor x1 (S1,A,B) 该例化语句为例：&lt;br&gt;xor 表明调用一个内置的异或门，器件名称xor ，代码实例化名x1（类似原理图输入方式）。括号内的S1，A，B 表明该器件管脚的实际连接线（信号）的名称 ，其中 A、B是输入，S1是输出。其他同。&lt;/p&gt;
-&lt;h2 id=&quot;数据流描述方式&quot;&gt;数据流描述方式&lt;/h2&gt;&lt;p&gt;数据流的建模方式就是通过对数据流在设计中的具体行为的描述的来建模。最基本的机制就是用连续赋值语句。在连续赋值语句中，某个值被赋给某个线网变量（信号），语法如下：&lt;br&gt;assign [delay] net_name = expression;&lt;br&gt;如：assign #2 A = B；&lt;br&gt;在数据流描述方式中，还必须借助于HDL提供的一些运算符，如按位逻辑运算符 ：逻辑与（&amp;amp;)，逻辑或（|）等。&lt;br&gt;还是以上面的全加器为例，可用如下的建模方式：&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;`timescale &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;ns/&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;function&quot;&gt;ps&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;module &lt;span class=&quot;title&quot;&gt;FA_flow&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input A,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input B,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input Cin,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output wire Sum,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output wire Count&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;wire S1,T1,T2,T3;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assign &lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; S1 = A ^ B;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assign &lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; Sum = S1 ^ Cin;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assign &lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; T3 = A &amp;amp; B;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assign &lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; T1 = A &amp;amp; Cin;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assign &lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; T2 = B &amp;amp; Cin ;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;注意在各assign 语句之间，是并行执行的，即各语句的执行与语句之间的顺序无关。如上，当A有个变化时，S1、T3、T1 将同时变化，S1的变化又会造成Sum的变化。&lt;/p&gt;
-&lt;h2 id=&quot;行为描述方式&quot;&gt;行为描述方式&lt;/h2&gt;&lt;p&gt;行为方式的建模是指采用对信号行为级的描述的方法来建模。在表示方面，类似数据流的建模方式，但一般是always 块语句和assign块语句描述的归为行为建模方式。行为建模方式通常需要借助一些行为级的运算符如加法运算符（+），减法运算符（-）等。&lt;br&gt;以下举个例子，对always 语句的具体应用可看相关章节的介绍，这里，先对行为建模方式有个概念。&lt;br&gt;例：一位全加器的行为建模&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;module &lt;span class=&quot;title&quot;&gt;FA_BEHAV1&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input a,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input b,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input &lt;span class=&quot;built_in&quot;&gt;cin&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output sum,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;reg sum, &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;reg t1,t2,t3;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;always@ ( a or b or &lt;span class=&quot;built_in&quot;&gt;cin&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		sum = (a ^ b) ^ &lt;span class=&quot;built_in&quot;&gt;cin&lt;/span&gt; ;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		t1 = a &amp;amp; &lt;span class=&quot;built_in&quot;&gt;cin&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		t2 = b &amp;amp; &lt;span class=&quot;built_in&quot;&gt;cin&lt;/span&gt; ;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		t3 = a &amp;amp; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt; = (t1| t2) | t3;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	end&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;需要先建立以下概念：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;只有寄存器类型的信号才可以在always语句中进行赋值，类型定义通过reg语句实现，但是寄存器类型的信号不一定是真的寄存器，也可能是线逻辑，只有带有时钟的寄存器类型的信号才是真的寄存器，不带时钟的寄存器类型的信号本质是线逻辑。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;always 语句是一直重复执行，由敏感表（always 语句括号内的变量）中的变量触发。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;always 语句从0 时刻开始。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;阻塞赋值“=”在begin 和end 之间的语句是顺序执行，属于串行语句。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;非阻塞赋“&amp;lt;=”值在begin 和end 之间的语句是并行执行，属于并行执语句。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;&lt;p&gt;当前数字逻辑规模越来越大，使用结构化描述已经越来越不现实，也没有必要，当前行为描述方式已经占据绝对的主导地位，大家学习的时候知道有这两种方式即可，重点学习行为描述。&lt;/p&gt;
-&lt;h1 id=&quot;Verilog基本语法&quot;&gt;Verilog基本语法&lt;/h1&gt;&lt;p&gt;介绍Verilog HDL 语言的一些基本要素，包括标识符、注释、格式、数字值集合、两种数据类型、运算符和表达式和一些基本的语句如IF语句等。&lt;/p&gt;
-&lt;h2 id=&quot;标识符&quot;&gt;标识符&lt;/h2&gt;&lt;p&gt;标识符( identifier）用于定义模块名、端口名、信号名等。Verilog HDL 中的标识符( identifier)可以是任意一组字母、数字、$符号和_(下划线)符号的组合，但标识符的第一个字符必须是字母或者下划线。另外，标识符是区分大小写的。以下是标识符的几个例子：&lt;br&gt;&lt;code&gt;Count&lt;/code&gt;&lt;br&gt;&lt;code&gt;COUNT&lt;/code&gt; //与Count 不同。&lt;br&gt;&lt;code&gt;R56_68&lt;/code&gt;&lt;br&gt;&lt;code&gt;FIVE$&lt;/code&gt;&lt;br&gt;虽然标识符写法很多，但是推荐写法如下：&lt;br&gt;&lt;code&gt;count&lt;/code&gt;&lt;br&gt;&lt;code&gt;fifo_wr&lt;/code&gt;&lt;br&gt;不建议大小写混合使用，普通内部信号建议全部小写，输入输出PAD建议大写，另外信号命名最好体现信号的含义，简洁、清晰、易懂。&lt;/p&gt;
-&lt;h2 id=&quot;关键词&quot;&gt;关键词&lt;/h2&gt;&lt;p&gt;Verilog HDL定义了一系列保留字，叫做关键词，附录A 列出了语言中的所有保留字。注意只有小写的关键词才是保留字。例如，标识符&lt;code&gt;always&lt;/code&gt; (这是个关键词)与标识符&lt;code&gt;ALWAYS&lt;/code&gt;(非关键词)是不同的。&lt;/p&gt;
-&lt;h2 id=&quot;书写规范建议&quot;&gt;书写规范建议&lt;/h2&gt;&lt;p&gt;以下是一些书写规范的要求，可参考公司的《Verilog 代码书写规范》。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;用有意义的有效的名字如 sum 、cpu_addr等。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;用下划线区分词。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;采用一些前缀或后缀，如&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;时钟采用clk前缀：clk_50，clk_cpu；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;低电平采用_n 后缀：enable_n；&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;统一一定的缩写，如全局复位信号rst。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;同一信号在不同层次保持一致性，如同一时钟信号必须在各模块保持一致。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;自定义的标识符不能与保留字同名。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;参数采用大写，如SIZE 。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;注释&quot;&gt;注释&lt;/h2&gt;&lt;p&gt;Verilog HDL中有两种注释的方式，一种是以&lt;code&gt;“/*”&lt;/code&gt;符号开始，&lt;code&gt;“*/”&lt;/code&gt; 结束，在两个符号之间的语句都是注释语句，因此可扩展到多行。如：&lt;br&gt;&lt;figure class=&quot;highlight gherkin&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;/&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt; statement1 ，&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;statement2，&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.. ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;statementn &lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;/&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;以上n个语句都是注释语句。&lt;br&gt;另一种是以//开头的语句，它表示以&lt;code&gt;//&lt;/code&gt;开始到本行结束都属于注释语句。&lt;br&gt;建议写法：使用&lt;code&gt;//&lt;/code&gt;作为注释。&lt;/p&gt;
-&lt;h2 id=&quot;值集合&quot;&gt;值集合&lt;/h2&gt;&lt;p&gt;Verilog HDL中规定了四种基本的值类型：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;0：逻辑0或“假”；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;1：逻辑1或“真”；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;X：未知值；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Z：高阻&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;注意这四种值的解释都内置于语言中。如一个为z的值总是意味着高阻抗，一个为0 的值通常&lt;br&gt;是指逻辑0 。&lt;br&gt;在门的输入或一个表达式中的为&lt;code&gt;“z”&lt;/code&gt;的值通常解释成&lt;code&gt;“x”&lt;/code&gt;。&lt;br&gt;此外，&lt;code&gt;x&lt;/code&gt;值和&lt;code&gt;z&lt;/code&gt;值都是不分大小写的，也就是说，值&lt;code&gt;0x1z&lt;/code&gt;与值&lt;code&gt;0X1Z&lt;/code&gt;相同。&lt;br&gt;Verilog HDL 中的常量是由以上这四类基本值组成的。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;&lt;p&gt;当前业界的硬件描述语言中主要有VHDL 和Verilog HDL。根据当前ASIC/FPGA设计现有的特点、现状，Verilog HDL 语言已经成为决定的主导语言，使用Verilog HDL，可以统一ASIC/FPGA设计平台，简化流程。&lt;/p&gt;
-&lt;h1 id=&quot;设计方法学&quot;&gt;设计方法学&lt;/h1&gt;&lt;h2 id=&quot;数字电路设计方法&quot;&gt;数字电路设计方法&lt;/h2&gt;&lt;p&gt;当前的数字电路设计从层次上分可分成以下几个层次：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;算法级设计：利用高级语言如C语言及其他一些系统分析工具（如MATLAB）对设计从系统的算法级方式进行描述。算法级不需要包含时序信息。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;RTL级设计：用数据流在寄存器间传输的模式来对设计进行描述。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;门级：用逻辑级的与、或、非门等门级之间的连接对设计进行描述。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;开关级：用晶体管和寄存器及他们之间的连线关系来对设计进行描述。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-    
-    </summary>
-    
-      <category term="Verilog" scheme="http://peihao.space/categories/Verilog/"/>
-    
-    
-      <category term="Verilog HDL" scheme="http://peihao.space/tags/Verilog-HDL/"/>
-    
-      <category term="仿真" scheme="http://peihao.space/tags/%E4%BB%BF%E7%9C%9F/"/>
     
   </entry>
   

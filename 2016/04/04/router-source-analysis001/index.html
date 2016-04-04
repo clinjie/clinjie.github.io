@@ -3,25 +3,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Python中的str与bytes | 窗外临街</title>
+  <title>router-source-analysis | 窗外临街</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在Python中，bytes和string是不同的东西。由一系列不可改变的Unicode字符组成的叫string。而一系列不可改变的介于0-255之间的数字被称为bytes对象。 
-unicode是一种编码标准，具体的实现标准可能是utf-8，utf-16，gbk ……
-python 在内部使用两个字节来存储一个unicode，使用unicode对象而不是str的好处，就是unicode方便于跨平">
+  <meta name="description" content="constant value在分析第一个Verilog HDL Router中的check模块之前，首先在前面声明一下代码中会使用到的常量值：
+123456789101112131415161718192021// disable error reporting`define ERROR_CAPTURE_MODE_NONE       0// don&apos;t hold errors`define ER">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python中的str与bytes">
-<meta property="og:url" content="http://peihao.space/2016/01/02/str-bytes/index.html">
+<meta property="og:title" content="router-source-analysis">
+<meta property="og:url" content="http://peihao.space/2016/04/04/router-source-analysis001/index.html">
 <meta property="og:site_name" content="窗外临街">
-<meta property="og:description" content="在Python中，bytes和string是不同的东西。由一系列不可改变的Unicode字符组成的叫string。而一系列不可改变的介于0-255之间的数字被称为bytes对象。 
-unicode是一种编码标准，具体的实现标准可能是utf-8，utf-16，gbk ……
-python 在内部使用两个字节来存储一个unicode，使用unicode对象而不是str的好处，就是unicode方便于跨平">
-<meta property="og:image" content="http://peihao.space/\img\article\bytes-str.png">
-<meta property="og:updated_time" content="2016-04-02T16:04:22.352Z">
+<meta property="og:description" content="constant value在分析第一个Verilog HDL Router中的check模块之前，首先在前面声明一下代码中会使用到的常量值：
+123456789101112131415161718192021// disable error reporting`define ERROR_CAPTURE_MODE_NONE       0// don&apos;t hold errors`define ER">
+<meta property="og:image" content="http://imgtec.eetrend.com/sites/imgtec.eetrend.com/files/201408/blog/3177-6309-6.jpg">
+<meta property="og:updated_time" content="2016-04-04T14:12:05.175Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python中的str与bytes">
-<meta name="twitter:description" content="在Python中，bytes和string是不同的东西。由一系列不可改变的Unicode字符组成的叫string。而一系列不可改变的介于0-255之间的数字被称为bytes对象。 
-unicode是一种编码标准，具体的实现标准可能是utf-8，utf-16，gbk ……
-python 在内部使用两个字节来存储一个unicode，使用unicode对象而不是str的好处，就是unicode方便于跨平">
+<meta name="twitter:title" content="router-source-analysis">
+<meta name="twitter:description" content="constant value在分析第一个Verilog HDL Router中的check模块之前，首先在前面声明一下代码中会使用到的常量值：
+123456789101112131415161718192021// disable error reporting`define ERROR_CAPTURE_MODE_NONE       0// don&apos;t hold errors`define ER">
   
     <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
   
@@ -228,11 +225,11 @@ var _hmt = _hmt || [];
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-str-bytes" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-router-source-analysis001" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/01/02/str-bytes/" class="article-date">
-  	<time datetime="2016-01-02T04:23:35.000Z" itemprop="datePublished">2016-01-02</time>
+      <a href="/2016/04/04/router-source-analysis001/" class="article-date">
+  	<time datetime="2016-04-04T12:17:22.000Z" itemprop="datePublished">2016-04-04</time>
 </a>
     </div>
   
@@ -245,7 +242,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      Python中的str与bytes
+      router-source-analysis
     </h1>
   
 
@@ -254,12 +251,12 @@ var _hmt = _hmt || [];
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编码/">编码</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoC/">NoC</a></li></ul>
 	</div>
 
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Python/">Python</a>
+	<a class="article-category-link" href="/categories/NoC/">NoC</a>
 	</div>
 
 
@@ -280,42 +277,39 @@ var _hmt = _hmt || [];
       
 	      	<!-- Table of Contents -->
 			
-			  <div id="toc" class="toc-article">
-			    <strong class="toc-title">文章目录</strong>
-			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Unicode"><span class="toc-number">1.</span> <span class="toc-text">Unicode</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Py3"><span class="toc-number">2.</span> <span class="toc-text">Py3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常见编码"><span class="toc-number">3.</span> <span class="toc-text">常见编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#decode与encode"><span class="toc-number">4.</span> <span class="toc-text">decode与encode</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#简单的win剪切板操作"><span class="toc-number">5.</span> <span class="toc-text">简单的win剪切板操作</span></a></li></ol>
-			  </div>
-			
-        <p>在Python中，bytes和string是不同的东西。由一系列不可改变的Unicode字符组成的叫string。而一系列不可改变的介于0-255之间的数字被称为bytes对象。 </p>
-<p>unicode是一种编码标准，具体的实现标准可能是utf-8，utf-16，gbk ……</p>
-<p>python 在内部使用两个字节来存储一个unicode，使用unicode对象而不是str的好处，就是unicode方便于跨平台。</p>
-<h1 id="Unicode">Unicode</h1><p>Unicode是计算机可以支持这个星球上的多种语言的秘密武器，在Unicode之前，用的都是ASCII，ASCII吗非常简单，每个英文字符都用7位二进制数的方式存储在计算机内，其范围是32到126.它的实现原理这里也不说了。<a id="more"></a><br>但是ASCII码只能表示95个可打印的字符，后来把ASCII扩展到了8位，这样就能表示223个字符了，虽然这个来表示欧美字母语言已经足够了，但是对于像中文等语系来说就太少了。于是Unicode码诞生了。</p>
-<p>Unicode通过使用一个或者多个字节来表示一个字符，这样就突破了ASCII的限制，这样，Unicode可以表示超过90000个字符了。</p>
-<h1 id="Py3">Py3</h1><p>python3的str等于python2的unicode，也就是在python3处理时，源码相当于全部都是u’’<br>而且python3的str不提供decode（因为概念上unicode就没有带encoding）</p>
-<p>Python 3最重要的新特性大概要算是对文本和二进制数据作了更为清晰的区分。文本总是Unicode，由str类型表示，二进制数据则由bytes类型表示。Python 3不会以任意隐式的方式混用str和bytes，正是这使得两者的区分特别清晰。你不能拼接字符串和字节包，也无法在字节包里搜索字符串（反之亦然），也不能将字符串传入参数为字节包的函数（反之亦然）。</p>
-<h1 id="常见编码">常见编码</h1><ul>
-<li><p>GB2312编码：适用于汉字处理、汉字通信等系统之间的信息交换</p>
-</li>
-<li><p>GBK编码：是汉字编码标准之一，是在 GB2312-80 标准基础上的内码扩展规范，使用了双字节编码</p>
-</li>
-<li><p>ASCII编码：是对英语字符和二进制之间的关系做的统一规定</p>
-</li>
-<li><p>Unicode编码：这是一种世界上所有字符的编码。当然了它没有规定的存储方式。</p>
-</li>
-<li><p>UTF-8编码：是 Unicode Transformation Format - 8 bit 的缩写， UTF-8 是 Unicode 的一种实现方式。它是可变长的编码方式，可以使用 1~4 个字节表示一个字符，可根据不同的符号而变化字节长度。</p>
-</li>
-</ul>
-<h1 id="decode与encode">decode与encode</h1><p>Python内部的字符串一般都是 Unicode编码。代码中字符串的默认编码与代码文件本身的编码是一致的。所以要做一些编码转换通常是要以Unicode作为中间编码进行转换的，即先将其他编码的字符串解码（decode）成 Unicode，再从 Unicode编码（encode）成另一种编码。</p>
+        <h1 id="constant_value">constant value</h1><p>在分析第一个Verilog HDL Router中的check模块之前，首先在前面声明一下代码中会使用到的常量值：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// disable error reporting</span></span><br><span class="line">`define ERROR_CAPTURE_MODE_NONE       <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// don't hold errors</span></span><br><span class="line">`define ERROR_CAPTURE_MODE_NO_HOLD    <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// capture first error only (subsequent errors are blocked) </span></span><br><span class="line">`define ERROR_CAPTURE_MODE_HOLD_FIRST <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// capture all errors </span></span><br><span class="line">`define ERROR_CAPTURE_MODE_HOLD_ALL   <span class="number">3</span></span><br><span class="line"></span><br><span class="line">`define ERROR_CAPTURE_MODE_LAST `ERROR_CAPTURE_MODE_HOLD_ALL</span><br><span class="line"></span><br><span class="line"><span class="comment">// asynchronous reset</span></span><br><span class="line">`define RESET_TYPE_ASYNC <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// synchronous reset</span></span><br><span class="line">`define RESET_TYPE_SYNC  <span class="number">1</span></span><br><span class="line"></span><br><span class="line">`define RESET_TYPE_LAST `RESET_TYPE_SYNC</span><br></pre></td></tr></table></figure>
+<h1 id="实现reg">实现reg</h1><p>在Router的check的错误警报模块中，具体实现这一功能的还是寄存器。上面的代码分别定义了一些错误警示以及错误重置的类型。<a id="more"></a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span><br><span class="line">some input output var define ......</span><br><span class="line">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span>(reset_type)</span><br><span class="line">	</span><br><span class="line">	`RESET_TYPE_ASYNC:</span><br><span class="line">	  always @(posedge clk, posedge reset)</span><br><span class="line">	    <span class="keyword">if</span>(reset)</span><br><span class="line">	      q &lt;= reset_value;</span><br><span class="line">	    <span class="keyword">else</span> <span class="keyword">if</span>(active)</span><br><span class="line">	      q &lt;= d;</span><br><span class="line">	</span><br><span class="line">	`RESET_TYPE_SYNC:</span><br><span class="line">	  always @(posedge clk)</span><br><span class="line">	    <span class="keyword">if</span>(reset)</span><br><span class="line">	      q &lt;= reset_value;</span><br><span class="line">	    <span class="keyword">else</span> <span class="keyword">if</span>(active)</span><br><span class="line">	      q &lt;= d;</span><br><span class="line">	</span><br><span class="line">      endcase </span><br><span class="line">      </span><br><span class="line">   endgenerate</span><br></pre></td></tr></table></figure>
+<p>首先有一个case选择器，选择重置信号的类型是同步还是异步重置。</p>
 <ul>
-<li>decode的作用是将其他编码的字符串转换成Unicode编码，<code>name.decode(“GB2312”)</code>，表示将GB2312编码的字符串name转换成Unicode编码`,也就是将将原来name解码成unicode，字面上理解为将其他字符编码成unicode</li>
-<li>encode的作用是将Unicode编码转换成其他编码的字符串，name.encode(”GB2312“)，表示将GB2312编码的字符串name转换成GB2312编码</li>
+<li>async</li>
 </ul>
-<p>所以在进行编码转换的时候必须先知道 name 是那种编码，然后 decode 成 Unicode 编码，最后在 encode 成需要编码的编码。当然了，如果 name 已经就是 Unicode 编码了，那么就不需要进行 decode 进行解码转换了，直接用 encode 就可以编码成你所需要的编码。</p>
-<p>Tips：对 Unicode 进行编码和对 str 进行编码都是错误的。</p>
-<p><img src="\img\article\bytes-str.png" alt=""></p>
-<p>字符串可以编码成字节包，而字节包可以解码成字符串。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;<span class="string">'€20'</span>.encode(<span class="string">'utf-8'</span>)</span><br><span class="line"><span class="string">b'\xe2\x82\xac20'</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="string">b'\xe2\x82\xac20'</span>.decode(<span class="string">'utf-8'</span>)</span><br><span class="line"><span class="string">'€20'</span></span><br></pre></td></tr></table></figure>
-<h1 id="简单的win剪切板操作">简单的win剪切板操作</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getText</span><span class="params">()</span>:</span></span><br><span class="line">    w.OpenClipboard()</span><br><span class="line">    d = w.GetClipboardData(win32con.CF_TEXT)</span><br><span class="line">    w.CloseClipboard()</span><br><span class="line">    <span class="keyword">return</span> d.decode(<span class="string">'utf-8'</span>,<span class="string">'ignore'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setText</span><span class="params">(aString)</span>:</span></span><br><span class="line">    w.OpenClipboard()</span><br><span class="line">    w.EmptyClipboard()</span><br><span class="line">    w.SetClipboardData(win32con.CF_TEXT,aString)</span><br><span class="line">    w.CloseClipboard()</span><br></pre></td></tr></table></figure>
-<p>上面是定义的两个函数，分别是对剪切板进行读、写操作。遗憾的是，由于剪切板中复杂的编码问题，在win平台下很难有效的对非英文字符进行操作。</p>
+<p>异步类型的重置，会接受在时钟的上升沿会接受两个信号，分别是时序电路中必须的时钟信号，以及重置信号。当是上升沿时reset=1信号触发了事件，将输出结果赋值为想要重置的值，否则保持输出结果保持为输入值不变。</p>
+<ul>
+<li>sync</li>
+</ul>
+<p>同步类型的时序时间触发参数只有clk时钟参数。当此时的reset信号电平为高，则赋值reset值，否则保持不变。</p>
+<p>同步与异步类型的区别保证了同步类型的重置信号只有在时钟上升沿时有可能会发生reset值重置，而异步类型只要reset信号为高电平即可触发。</p>
+<h1 id="error模块">error模块</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">generate</span><br><span class="line">      </span><br><span class="line">      if(capture_mode != `ERROR_CAPTURE_MODE_NONE)</span><br><span class="line">	begin</span><br><span class="line">	   </span><br><span class="line">	   wire [0:num_errors-1] errors_s, errors_q;</span><br><span class="line">	   </span><br><span class="line">	   case(capture_mode)</span><br><span class="line">	     </span><br><span class="line">	     `ERROR_CAPTURE_MODE_NO_HOLD:</span><br><span class="line">	       begin</span><br><span class="line">		  assign errors_s = errors_in;</span><br><span class="line">	       end</span><br><span class="line">	     </span><br><span class="line">	     `ERROR_CAPTURE_MODE_HOLD_FIRST:</span><br><span class="line">	       begin</span><br><span class="line">			//</span><br><span class="line">		  assign errors_s = ~|errors_q ? errors_in : errors_q;</span><br><span class="line">	       end</span><br><span class="line">	     </span><br><span class="line">	     `ERROR_CAPTURE_MODE_HOLD_ALL:</span><br><span class="line">	       begin</span><br><span class="line">		  assign errors_s = errors_q | errors_in;</span><br><span class="line">	       end</span><br><span class="line">	     </span><br><span class="line">	   endcase</span><br></pre></td></tr></table></figure>
+<p>当有错误信息时，获取到捕捉的错误信息类型。根据先前在constant常量文件中定义的信息，error_s变量对应的是上面寄存器中的d变量，表示输入信号。</p>
+<p>~| 表示或非位运算，做一次或者多次‘或’运算之后，再做一次非运算。有1出0，全0出1。</p>
+<p><img src="http://imgtec.eetrend.com/sites/imgtec.eetrend.com/files/201408/blog/3177-6309-6.jpg" alt=""></p>
+<p>上面是Verilog HDL中运算符的优先级顺序。</p>
+<p>根据捕获到的不同错误类型，将error_s的值对应赋值，分别赋值为:</p>
+<ul>
+<li>errors_s = errors_in</li>
+</ul>
+<p>直接赋值为error模块的输入值</p>
+<ul>
+<li>errors_s = ~|errors_q ? errors_in : errors_q</li>
+</ul>
+<p>当errors_q的值==0时，依然赋值为输入值，否则只要errors_q的值&gt;0，有过改变就将它赋给errors_s。</p>
+<ul>
+<li>errors_s = errors_q | errors_in</li>
+</ul>
+<p>赋值为当前erroes_q与errors_in的逻辑或运算结果。</p>
+<p>其中errors_q是errors模块的实际输出结果，errors_in是模块的输入，errors_s时中间计算根据错误类型计算的输入值。</p>
 
       
       
@@ -350,9 +344,9 @@ var _hmt = _hmt || [];
 <div class="article-footer-copyright">
 <center>本文由<b><a href="/index.html" target="_blank" title="培豪">培豪</a></b>创作和发表,采用<b>BY</b>-<b>NC</b>-<b>SA</b>国际许可协议进行许可</center>
 
-<center>转载请注明作者及出处,本文作者为<b><a href="/index.html" target="_blank" title="培豪">培豪</a></b>,本文标题为<b><a href="/2016/01/02/str-bytes/" target="_blank" title="Python中的str与bytes">Python中的str与bytes</a></b></center>
+<center>转载请注明作者及出处,本文作者为<b><a href="/index.html" target="_blank" title="培豪">培豪</a></b>,本文标题为<b><a href="/2016/04/04/router-source-analysis001/" target="_blank" title="router-source-analysis">router-source-analysis</a></b></center>
 
-<center>本文链接为<b><a href="/2016/01/02/str-bytes/" target="_blank" title="Python中的str与bytes">http://peihao.space/2016/01/02/str-bytes/</a></b>.</center>
+<center>本文链接为<b><a href="/2016/04/04/router-source-analysis001/" target="_blank" title="router-source-analysis">http://peihao.space/2016/04/04/router-source-analysis001/</a></b>.</center>
 </div>
 <! -- 添加版权信息 -->
 		
@@ -364,18 +358,9 @@ var _hmt = _hmt || [];
     
 <nav id="article-nav">
   
-    <a href="/2016/01/22/BeautifulSooup/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          抓取豆瓣电影信息
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/01/01/python2/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Python学习(二)</div>
+    <a href="/2016/04/03/NoC-router-alg/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">NoC路由算法</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -406,7 +391,7 @@ var _hmt = _hmt || [];
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="str-bytes" data-title="Python中的str与bytes" data-url="http://peihao.space/2016/01/02/str-bytes/"></div>
+	<div class="ds-thread" data-thread-key="router-source-analysis001" data-title="router-source-analysis" data-url="http://peihao.space/2016/04/04/router-source-analysis001/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
