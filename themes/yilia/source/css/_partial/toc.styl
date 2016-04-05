@@ -1,0 +1,121 @@
+.toc-article
+  background #eee
+  border 1px solid #bbb
+  border-radius 10px
+  margin 1.5em 0 0.3em 1.5em
+  padding 1.2em 1em 0 1em
+  max-width 28%
+.toc-title
+  font-size 120%
+#toc
+  line-height 1em
+  font-size 0.9em
+  float right
+  .toc
+    padding 0
+    margin 1em
+    line-height 1.8em
+    li
+      list-style-type none
+  .toc-child 
+    margin-left 1em
+    #toc.toc-article
+  background color-background
+  border-radius 4px
+  margin 1.6em 0 1.6em 2em
+  line-height 1.5em
+  font-size 0.9em
+  -webkit-border-radius 4px
+
+  h2, ol
+    padding 0 0.4em
+    margin 0
+  h2
+    cursor pointer
+  @media mq-mobile
+    margin 1.6em 0
+    width 100%
+  @media mq-tablet
+    margin 1.6em 0
+    width 100%
+#toc
+  line-height 1.3em
+  font-size 0.8em
+  float right
+  .toc
+    li
+      list-style-type none
+      a
+        &:hover
+          color color-font
+          text-decoration none !important
+  .toc-child 
+    padding-left 1.5em
+#toc.toc-aside
+  display none
+  width 13%
+  position fixed
+  right 2%
+  top 360px
+  line-height 1.5em
+  max-height: 68%
+  overflow: auto
+  font-size 1em
+  color color-heading
+  opacity .6
+  transition opacity 1s ease-out
+  @media mq-mobile
+    width 60%
+    height 40%
+    right 58px 
+    padding 0 20px
+    background #fff
+    overflow auto
+  @media mq-tablet
+    width 60%
+    height 40%
+    right 58px 
+    padding 0 20px
+    background #fff
+    overflow auto
+  h2
+    padding 0.3em 0
+    color color-font
+  &:hover
+    transition opacity .3s ease-out
+    opacity 1
+  a
+    transition color 1s ease-out
+    text-decoration none
+    color color-link
+    &:hover
+      color color-theme
+      transition color .3s ease-out
+
+/*! css3 animate */
+.animated
+  animation-fill-mode both
+  animation-duration 1s
+
+@-webkit-keyframes fadeIn
+  0%
+    opacity 0
+  100%
+    opacity 1
+
+.fadeIn
+  animation-name fadeIn
+
+@keyframes fadeInDown
+  0%
+    opacity 0
+    transform translateY(-20px)
+  100% 
+    opacity 1
+    transform translateY(0)
+
+.fadeOut
+  animation-name fadeOut
+
+.moveMain
+  margin-left 10% !important
