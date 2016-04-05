@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://peihao.space/2016/04/04/router-source-analysis001/</loc>
-    <lastmod>2016-04-04T14:12:05.175Z</lastmod>
+    <lastmod>2016-04-05T13:19:43.967Z</lastmod>
     <data>
         <display>
         <title>router-source-analysis</title>
@@ -22,6 +22,71 @@
     </data>
     </url>
 
+    
+  <url>
+    <loc>http://peihao.space/2016/04/05/gitignore/</loc>
+    <lastmod>2016-04-05T13:18:29.125Z</lastmod>
+    <data>
+        <display>
+        <title>gitignore忽略规则</title>
+        <pubTime>2016-04-05T08:17:22.000Z</pubTime>
+        
+        <tag>Git</tag>
+         
+         
+           
+             
+              <breadCrumb title="Git" url="http://peihao.space/categories/Git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2016/03/16/alter_torrent/</loc>
+    <lastmod>2016-04-05T12:55:46.042Z</lastmod>
+    <data>
+        <display>
+        <title>洗白BT文件</title>
+        <pubTime>2016-03-16T14:23:35.000Z</pubTime>
+        
+        <tag>torrent</tag>
+         
+        <tag>编码</tag>
+         
+         
+           
+             
+              <breadCrumb title="torrent" url="http://peihao.space/categories/torrent/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2016/01/25/spell_check/</loc>
+    <lastmod>2016-04-05T12:54:25.848Z</lastmod>
+    <data>
+        <display>
+        <title>简单的拼写检查</title>
+        <pubTime>2016-01-25T14:28:30.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>贝叶斯</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://peihao.space/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
   <url>
     <loc>http://peihao.space/2016/04/03/NoC-router-alg/</loc>
@@ -108,7 +173,6 @@
     </data>
     </url>
 
-    
     
     
   <url>
@@ -497,28 +561,6 @@
            
              
               <breadCrumb title="Python" url="http://peihao.space/categories/Python/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://peihao.space/2016/03/16/alter_torrent/</loc>
-    <lastmod>2016-03-16T07:15:51.237Z</lastmod>
-    <data>
-        <display>
-        <title>洗白BT文件</title>
-        <pubTime>2016-03-16T14:23:35.000Z</pubTime>
-        
-        <tag>torrent</tag>
-         
-        <tag>编码</tag>
-         
-         
-           
-             
-              <breadCrumb title="torrent" url="http://peihao.space/categories/torrent/"/>
           
         </display>
     </data>
@@ -1108,28 +1150,6 @@
         <tag>python</tag>
          
         <tag>正则表达式</tag>
-         
-         
-           
-             
-              <breadCrumb title="python" url="http://peihao.space/categories/python/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://peihao.space/2016/01/25/spell_check/</loc>
-    <lastmod>2016-02-24T15:02:37.389Z</lastmod>
-    <data>
-        <display>
-        <title>简单的拼写检查</title>
-        <pubTime>2016-01-25T14:28:30.000Z</pubTime>
-        
-        <tag>python</tag>
-         
-        <tag>贝叶斯</tag>
          
          
            
