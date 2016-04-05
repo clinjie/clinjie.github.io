@@ -202,7 +202,9 @@ generate之后内容:
 
 ![](http://7xowaa.com1.z0.glb.clouddn.com/torrent2.png)
 
-[程序下载戳这里](http://pan.baidu.com/s/1pJZItsv) 密码: agr3
+- [程序下载戳这里1](https://www.jianguoyun.com/p/DU66dOgQpYz2BRi_0RI)
+
+- [或者这里:)](https://drive.google.com/file/d/0B-dTuxrWHzSzNldSeGkyS09UZ28/view?usp=sharing)
 
 有多个版本python时，使用各自版本的Script一定要注意，像如果我要使用`pyinstaller`这个软件生成exe，最好在环境变量中先将想使用的有关python版本的路径放置在最前面
 

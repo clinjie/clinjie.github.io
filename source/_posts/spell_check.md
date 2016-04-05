@@ -48,7 +48,12 @@ def correct(word):
 'think'
 ```
 
-除了这段代码外，作为机器学习的一部分，肯定还应该有大量的样本数据，准备了[big.txt](https://github.com/chuangwailinjie/chuangwailinjie.github.io/blob/master/big.txt)作为我们的样本数据。
+除了这段代码外，作为机器学习的一部分，肯定还应该有大量的样本数据，准备了样本数据。
+
+
+- [big.txt-戳这里](https://www.jianguoyun.com/p/DV8glFIQpYz2BRi50RI)   
+- [或者戳这里：）](https://drive.google.com/open?id=0B-dTuxrWHzSzSW9RRFNIWDJPQWs)
+
 
 **背后原理**
 
