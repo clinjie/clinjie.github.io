@@ -11,3 +11,6 @@ themes/landscape/
 .deploy_git/
 package.json
 db.json
+themes/yilia/node_modules/
+themes/yilia/README.md
+themes/yilia/package.json
