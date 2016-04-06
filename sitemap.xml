@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://peihao.space/2016/04/06/Gulp-intro/</loc>
+    
+    <lastmod>2016-04-06T06:15:57.168Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://peihao.space/2016/04/04/router-source-analysis001/</loc>
     
-    <lastmod>2016-04-05T13:19:43.967Z</lastmod>
+    <lastmod>2016-04-06T05:45:08.164Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://peihao.space/2016/04/05/gitignore/</loc>
     
-    <lastmod>2016-04-05T13:18:29.125Z</lastmod>
+    <lastmod>2016-04-06T05:44:44.214Z</lastmod>
     
   </url>
   

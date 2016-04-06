@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peihao.space/"/>
-  <updated>2016-04-05T13:18:29.125Z</updated>
+  <updated>2016-04-06T06:15:57.168Z</updated>
   <id>http://peihao.space/</id>
   
   <author>
@@ -16,11 +16,60 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Gulp介绍</title>
+    <link href="http://peihao.space/2016/04/06/Gulp-intro/"/>
+    <id>http://peihao.space/2016/04/06/Gulp-intro/</id>
+    <published>2016-04-06T06:17:22.000Z</published>
+    <updated>2016-04-06T06:15:57.168Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;介绍&quot;&gt;介绍&lt;/h1&gt;&lt;h2 id=&quot;什么是Gulp&quot;&gt;什么是Gulp&lt;/h2&gt;&lt;p&gt;&lt;code&gt;gulp.js&lt;/code&gt;是一种基于流的，代码优于配置的新一代构建工具.&lt;a href=&quot;https://github.com/gulpjs/gulp/tree/master/docs&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;官方文档&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Gulp&lt;/code&gt;和&lt;code&gt;Grunt&lt;/code&gt;类似。但相比于 Grunt 的频繁的 I/O 操作，Gulp 的流操作，能更快地完成构建&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Gulp特性&quot;&gt;Gulp特性&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;使用方便&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;通过代码优于配置的策略，Gulp可以让简单的任务简单，复杂的任务更可管理。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;构建快速&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;通过流式操作，减少频繁的 IO 操作，更快地构建项目。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;插件高质&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Gulp 有严格的插件指导策略，确保插件能简单高质的工作。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;易于学习&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;少量的API，掌握Gulp可以毫不费力。构建就像流管道一样，轻松加愉快。&lt;/p&gt;
+&lt;h1 id=&quot;Gulp安装&quot;&gt;Gulp安装&lt;/h1&gt;&lt;p&gt;Gulp是基于&lt;code&gt;Node.js&lt;/code&gt;的，故要首先安装 Node.js。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;npm install -g gulp&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;然后按以下清单文件安装&lt;/p&gt;
+&lt;figure class=&quot;highlight nginx&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;gulp&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp-htmlclean&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp-htmlmin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp-imagemin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp-minify-css&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp-uglify&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;方法是同样的,&lt;code&gt;npm install xxx --save&lt;/code&gt;，xxx即为清单列表文件名&lt;/p&gt;
+&lt;p&gt;其中gulp是工程的核心程序，Gulp采用插件方式进行工作，下面的5个文件就是基于Gulp的插件.&lt;a href=&quot;http://gulpjs.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Gulp插件列表&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;使用Gulp优化Hexo&quot;&gt;使用Gulp优化Hexo&lt;/h1&gt;&lt;h2 id=&quot;建立gulpfile-js&quot;&gt;建立gulpfile.js&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; gulp = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;gulp&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//Plugins模块获取&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; minifycss = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;gulp-minify-css&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; uglify = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;gulp-uglify&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; htmlmin = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;gulp-htmlmin&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; htmlclean = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;gulp-htmlclean&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; imagemin = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;gulp-imagemin&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 压缩 public 目录 css文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    gulp.task(&lt;span class=&quot;string&quot;&gt;&#39;minify-css&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; gulp.src(&lt;span class=&quot;string&quot;&gt;&#39;./public/**/*.css&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            .pipe(minifycss())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            .pipe(gulp.dest(&lt;span class=&quot;string&quot;&gt;&#39;./public&#39;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 压缩 public 目录 html文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    gulp.task(&lt;span class=&quot;string&quot;&gt;&#39;minify-html&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; gulp.src(&lt;span class=&quot;string&quot;&gt;&#39;./public/**/*.html&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe(htmlclean())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe(htmlmin(&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;             removeComments: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;             minifyJS: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;             minifyCSS: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;             minifyURLs: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe(gulp.dest(&lt;span class=&quot;string&quot;&gt;&#39;./public&#39;&lt;/span&gt;))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 压缩 public/js 目录 js文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    gulp.task(&lt;span class=&quot;string&quot;&gt;&#39;minify-js&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; gulp.src(&lt;span class=&quot;string&quot;&gt;&#39;./public/**/*.js&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            .pipe(uglify())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            .pipe(gulp.dest(&lt;span class=&quot;string&quot;&gt;&#39;./public&#39;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 压缩图片任务&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 在命令行输入 gulp images 启动此任务&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    gulp.task(&lt;span class=&quot;string&quot;&gt;&#39;images&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 1. 找到图片&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        gulp.src(&lt;span class=&quot;string&quot;&gt;&#39;./photos/*.*&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 2. 压缩图片&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            .pipe(imagemin(&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                progressive: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 3. 另存图片&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            .pipe(gulp.dest(&lt;span class=&quot;string&quot;&gt;&#39;dist/images&#39;&lt;/span&gt;))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 执行 gulp 命令时执行的任务&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    gulp.task(&lt;span class=&quot;string&quot;&gt;&#39;default&#39;&lt;/span&gt;, [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;string&quot;&gt;&#39;minify-html&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;minify-css&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;minify-js&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;images&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ]);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;运行&quot;&gt;运行&lt;/h2&gt;&lt;p&gt;要运行gulp任务，只需切换到存放gulpfile.js文件的目录，然后在终端中执行gulp命令就行了，gulp后面可以加上要执行的任务名，例如gulp task1，如果没有指定任务名，则会执行任务名为default的默认任务。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;介绍&quot;&gt;介绍&lt;/h1&gt;&lt;h2 id=&quot;什么是Gulp&quot;&gt;什么是Gulp&lt;/h2&gt;&lt;p&gt;&lt;code&gt;gulp.js&lt;/code&gt;是一种基于流的，代码优于配置的新一代构建工具.&lt;a href=&quot;https://github.com/gulpjs/gulp/tree/master/docs&quot;&gt;官方文档&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Gulp&lt;/code&gt;和&lt;code&gt;Grunt&lt;/code&gt;类似。但相比于 Grunt 的频繁的 I/O 操作，Gulp 的流操作，能更快地完成构建
+    
+    </summary>
+    
+      <category term="Gulp" scheme="http://peihao.space/categories/Gulp/"/>
+    
+    
+      <category term="Gulp" scheme="http://peihao.space/tags/Gulp/"/>
+    
+  </entry>
+  
+  <entry>
     <title>gitignore忽略规则</title>
     <link href="http://peihao.space/2016/04/05/gitignore/"/>
     <id>http://peihao.space/2016/04/05/gitignore/</id>
     <published>2016-04-05T08:17:22.000Z</published>
-    <updated>2016-04-05T13:18:29.125Z</updated>
+    <updated>2016-04-06T05:44:44.214Z</updated>
     
     <content type="html">&lt;p&gt;.gitignore 配置文件用于配置不需要加入版本管理的文件，配置好该文件可以为我们的版本管理带来很大的便利，以下是个人对于配置 .gitignore 的一些心得。&lt;/p&gt;
 &lt;h1 id=&quot;配置语法&quot;&gt;配置语法&lt;/h1&gt;&lt;ul&gt;
@@ -85,7 +134,7 @@
     <link href="http://peihao.space/2016/04/04/router-source-analysis001/"/>
     <id>http://peihao.space/2016/04/04/router-source-analysis001/</id>
     <published>2016-04-04T12:17:22.000Z</published>
-    <updated>2016-04-05T13:19:43.967Z</updated>
+    <updated>2016-04-06T05:45:08.164Z</updated>
     
     <content type="html">&lt;h1 id=&quot;constant_value&quot;&gt;constant value&lt;/h1&gt;&lt;p&gt;在分析第一个Verilog HDL Router中的check模块之前，首先在前面声明一下代码中会使用到的常量值：&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// disable error reporting&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_NONE       &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// don&#39;t hold errors&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_NO_HOLD    &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// capture first error only (subsequent errors are blocked) &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_HOLD_FIRST &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// capture all errors &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_HOLD_ALL   &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_LAST `ERROR_CAPTURE_MODE_HOLD_ALL&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// asynchronous reset&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define RESET_TYPE_ASYNC &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// synchronous reset&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define RESET_TYPE_SYNC  &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define RESET_TYPE_LAST `RESET_TYPE_SYNC&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -819,6 +868,127 @@
   </entry>
   
   <entry>
+    <title>Matplotlib快速绘图</title>
+    <link href="http://peihao.space/2016/03/17/Matplotlib%E5%BF%AB%E9%80%9F%E7%BB%98%E5%9B%BE/"/>
+    <id>http://peihao.space/2016/03/17/Matplotlib快速绘图/</id>
+    <published>2016-03-17T14:23:35.000Z</published>
+    <updated>2016-03-17T15:12:28.997Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;Matplotlib&quot;&gt;Matplotlib&lt;/h1&gt;&lt;p&gt;&lt;em&gt;matplotlib 是python最著名的绘图库，它提供了一整套和matlab相似的命令API，十分适合交互式地行制图。而且也可以方便地将它作为绘图控件，嵌入GUI应用程序中。&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&quot;优势&quot;&gt;优势&lt;/h2&gt;&lt;p&gt;作为python上最有名气的绘图库:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Matlab的语法&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;python语言&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;latex的画图质量&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;可以使用内嵌的latex引擎绘制的数学公式&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;快速绘图&quot;&gt;快速绘图&lt;/h2&gt;&lt;p&gt;matplotlib实际上是一套面向对象的绘图库，它所绘制的图表中的每个绘图元素，例如线条Line2D、文字Text、刻度等在内存中都有一个对象与之对应。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;为了方便快速绘图matplotlib通过pyplot模块提供了一套和MATLAB类似的绘图API，将众多绘图对象所构成的复杂结构隐藏在这套API内部。我们只需要调用pyplot模块所提供的函数就可以实现快速绘图以及设置图表的各种细节。&lt;/em&gt;pyplot模块虽然用法简单，但不适合在较大的应用程序中使用。&lt;/p&gt;
+&lt;p&gt;为了将面向对象的绘图库包装成只使用函数的调用接口，pyplot模块的内部保存了当前图表以及当前子图等信息。当前的图表和子图可以使用&lt;code&gt;plt.gcf()&lt;/code&gt;和&lt;code&gt;plt.gca()&lt;/code&gt;获得，分别表示&lt;em&gt;“Get Current Figure”&lt;/em&gt;和&lt;em&gt;“Get Current Axes”&lt;/em&gt;。在pyplot模块中，许多函数都是对当前的&lt;code&gt;Figure&lt;/code&gt;或&lt;code&gt;Axes&lt;/code&gt;对象进行处理&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;plt.plot()&lt;/code&gt;实际上会通过plt.gca()获得当前的Axes对象ax，然后再调用ax.plot()方法实现真正的绘图&lt;/p&gt;
+&lt;h1 id=&quot;柱状图&quot;&gt;柱状图&lt;/h1&gt;&lt;h2 id=&quot;横向&quot;&gt;横向&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/img/article/barh.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; plt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.rcdefaults()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; np&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;people = (&lt;span class=&quot;string&quot;&gt;&#39;James&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Durant&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Kobe&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Wade&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Curry&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Magic&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Hardan&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y_pos = np.arange(len(people))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;performance = &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; + &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; * np.random.rand(len(people)) &lt;span class=&quot;comment&quot;&gt;#随机产生len(people)个 [0,1）的数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;error = np.random.rand(len(people))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.barh(y_pos, performance, xerr=error, align=&lt;span class=&quot;string&quot;&gt;&#39;center&#39;&lt;/span&gt;, alpha=&lt;span class=&quot;number&quot;&gt;0.4&lt;/span&gt;)&lt;span class=&quot;comment&quot;&gt;#这里是产生横向柱状图 barh h--horizontal&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.yticks(y_pos, people)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.xlabel(&lt;span class=&quot;string&quot;&gt;&#39;Performance&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.title(&lt;span class=&quot;string&quot;&gt;&#39;How efficient do you want to go today?&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;barh.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;纵向&quot;&gt;纵向&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/img/article/bar.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;people = (&lt;span class=&quot;string&quot;&gt;&#39;James&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Durant&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Kobe&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Wade&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Curry&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Magic&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Hardan&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;x_pos = np.arange(len(people))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;performance = &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; + &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; * np.random.rand(len(people)) &lt;span class=&quot;comment&quot;&gt;#随机产生len(people)个 [0,1）的数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;error = np.random.rand(len(people))/&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.bar(x_pos, performance, xerr=error, align=&lt;span class=&quot;string&quot;&gt;&#39;center&#39;&lt;/span&gt;, alpha=&lt;span class=&quot;number&quot;&gt;0.4&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.xticks(x_pos, people)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.ylabel(&lt;span class=&quot;string&quot;&gt;&#39;Performance&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.title(&lt;span class=&quot;string&quot;&gt;&#39;How efficient do you want to go today?&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;bar.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;解析&quot;&gt;解析&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;plt.rcdefaults()&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;恢复 rc 的默认设置&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;code&gt;barh()&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;主要功能&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;：做一个横向条形图，横向条的矩形大小为: left, left + width, bottom, bottom + height&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bar()&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;主要功能&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;：做一个纵向条形图，纵向条的矩形大小为: left, left + width, bottom, bottom + height&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;：barh ( bottom , width , height =0.8, left =0, ** kwargs )&lt;/p&gt;
+&lt;p&gt;：bar  ( bottom , width , height =0.8, left =0, ** kwargs )&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;返回类型&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;：一个 class 类别，matplotlib.patches.Rectangle实例&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参数说明&lt;br&gt;：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;bottom&lt;/code&gt;: Bars 的垂直位置的底部边缘&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;width&lt;/code&gt;: Bars 的长度&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;可选参数：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;height: bars 的高度&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;left: bars 左边缘 x 轴坐标值&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;color: bars 颜色&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;edgecolor: bars 边缘颜色&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;linewidth: bar 边缘宽度;None 表示默认宽度;0 表示不 i 绘制边缘&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;xerr: 若不为 None,将在 bar 图上生成 errobars&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;yerr: 若不为 None,将在 bar 图上生成 errobars&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;ecolor: 指定 errorbar 颜色&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;capsize: 指定 errorbar 的顶部(cap)长度&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;align: &lt;code&gt;edge&lt;/code&gt; (默认) | &lt;code&gt;center&lt;/code&gt;:&lt;code&gt;edge&lt;/code&gt;以底部为准对齐;&lt;code&gt;center&lt;/code&gt;以 y 轴作为中心&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;log: [False|True] False (默认),若为 True,使用 log 坐标&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;图形填充&quot;&gt;图形填充&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;/img/article/fill.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; np&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; plt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;x = np.linspace(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y = np.sin(&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; * np.pi * x) * np.exp(-&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt; * x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.fill(x, y, &lt;span class=&quot;string&quot;&gt;&#39;c&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.grid(&lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;fill.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;： grid 表示是否显示图轴网格。函数原型 matplotlib.pyplot.grid(b=None, which=’major’, axis=’both’, **kwargs)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;调用形式： &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;grid(self, b=None, which=’major’, axis=’both’, **kwargs)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;主要参数：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;b&lt;/code&gt;： [True|False]或者是布尔数组、或[‘on’,‘off’] 表示网格是否开启&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;which&lt;/code&gt;： [major(默认)|minor|both] 选择主、次网格开启方式&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;axis&lt;/code&gt;： [both(默认)|x|y] 选择使用网格的数轴&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;x = np.linspace(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; * np.pi, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y1 = np.sin(x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y2 = np.sin(&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; * x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.fill(x, y1, &lt;span class=&quot;string&quot;&gt;&#39;b&#39;&lt;/span&gt;, x, y2, &lt;span class=&quot;string&quot;&gt;&#39;c&#39;&lt;/span&gt;, alpha=&lt;span class=&quot;number&quot;&gt;0.7&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;features.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/article/features.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;alpha 表示透明度，0表示全透明，1表示完全不透明。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;Matplotlib&quot;&gt;Matplotlib&lt;/h1&gt;&lt;p&gt;&lt;em&gt;matplotlib 是python最著名的绘图库，它提供了一整套和matlab相似的命令API，十分适合交互式地行制图。而且也可以方便地将它作为绘图控件，嵌入GUI应用程序中。&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&quot;优势&quot;&gt;优势&lt;/h2&gt;&lt;p&gt;作为python上最有名气的绘图库:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Matlab的语法
+    
+    </summary>
+    
+      <category term="Python" scheme="http://peihao.space/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="http://peihao.space/tags/Python/"/>
+    
+      <category term="matplotlib" scheme="http://peihao.space/tags/matplotlib/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Python中的numpy</title>
     <link href="http://peihao.space/2016/03/17/numpy/"/>
     <id>http://peihao.space/2016/03/17/numpy/</id>
@@ -1065,127 +1235,6 @@
       <category term="Numpy" scheme="http://peihao.space/tags/Numpy/"/>
     
       <category term="Python" scheme="http://peihao.space/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Matplotlib快速绘图</title>
-    <link href="http://peihao.space/2016/03/17/Matplotlib%E5%BF%AB%E9%80%9F%E7%BB%98%E5%9B%BE/"/>
-    <id>http://peihao.space/2016/03/17/Matplotlib快速绘图/</id>
-    <published>2016-03-17T14:23:35.000Z</published>
-    <updated>2016-03-17T15:12:28.997Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;Matplotlib&quot;&gt;Matplotlib&lt;/h1&gt;&lt;p&gt;&lt;em&gt;matplotlib 是python最著名的绘图库，它提供了一整套和matlab相似的命令API，十分适合交互式地行制图。而且也可以方便地将它作为绘图控件，嵌入GUI应用程序中。&lt;/em&gt;&lt;/p&gt;
-&lt;h2 id=&quot;优势&quot;&gt;优势&lt;/h2&gt;&lt;p&gt;作为python上最有名气的绘图库:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Matlab的语法&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;python语言&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;latex的画图质量&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;可以使用内嵌的latex引擎绘制的数学公式&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;快速绘图&quot;&gt;快速绘图&lt;/h2&gt;&lt;p&gt;matplotlib实际上是一套面向对象的绘图库，它所绘制的图表中的每个绘图元素，例如线条Line2D、文字Text、刻度等在内存中都有一个对象与之对应。&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;为了方便快速绘图matplotlib通过pyplot模块提供了一套和MATLAB类似的绘图API，将众多绘图对象所构成的复杂结构隐藏在这套API内部。我们只需要调用pyplot模块所提供的函数就可以实现快速绘图以及设置图表的各种细节。&lt;/em&gt;pyplot模块虽然用法简单，但不适合在较大的应用程序中使用。&lt;/p&gt;
-&lt;p&gt;为了将面向对象的绘图库包装成只使用函数的调用接口，pyplot模块的内部保存了当前图表以及当前子图等信息。当前的图表和子图可以使用&lt;code&gt;plt.gcf()&lt;/code&gt;和&lt;code&gt;plt.gca()&lt;/code&gt;获得，分别表示&lt;em&gt;“Get Current Figure”&lt;/em&gt;和&lt;em&gt;“Get Current Axes”&lt;/em&gt;。在pyplot模块中，许多函数都是对当前的&lt;code&gt;Figure&lt;/code&gt;或&lt;code&gt;Axes&lt;/code&gt;对象进行处理&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;plt.plot()&lt;/code&gt;实际上会通过plt.gca()获得当前的Axes对象ax，然后再调用ax.plot()方法实现真正的绘图&lt;/p&gt;
-&lt;h1 id=&quot;柱状图&quot;&gt;柱状图&lt;/h1&gt;&lt;h2 id=&quot;横向&quot;&gt;横向&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/img/article/barh.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; plt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.rcdefaults()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; np&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;people = (&lt;span class=&quot;string&quot;&gt;&#39;James&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Durant&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Kobe&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Wade&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Curry&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Magic&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Hardan&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y_pos = np.arange(len(people))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;performance = &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; + &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; * np.random.rand(len(people)) &lt;span class=&quot;comment&quot;&gt;#随机产生len(people)个 [0,1）的数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;error = np.random.rand(len(people))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.barh(y_pos, performance, xerr=error, align=&lt;span class=&quot;string&quot;&gt;&#39;center&#39;&lt;/span&gt;, alpha=&lt;span class=&quot;number&quot;&gt;0.4&lt;/span&gt;)&lt;span class=&quot;comment&quot;&gt;#这里是产生横向柱状图 barh h--horizontal&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.yticks(y_pos, people)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.xlabel(&lt;span class=&quot;string&quot;&gt;&#39;Performance&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.title(&lt;span class=&quot;string&quot;&gt;&#39;How efficient do you want to go today?&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;barh.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;纵向&quot;&gt;纵向&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/img/article/bar.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;people = (&lt;span class=&quot;string&quot;&gt;&#39;James&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Durant&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Kobe&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Wade&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Curry&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Magic&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Hardan&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;x_pos = np.arange(len(people))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;performance = &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; + &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; * np.random.rand(len(people)) &lt;span class=&quot;comment&quot;&gt;#随机产生len(people)个 [0,1）的数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;error = np.random.rand(len(people))/&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.bar(x_pos, performance, xerr=error, align=&lt;span class=&quot;string&quot;&gt;&#39;center&#39;&lt;/span&gt;, alpha=&lt;span class=&quot;number&quot;&gt;0.4&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.xticks(x_pos, people)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.ylabel(&lt;span class=&quot;string&quot;&gt;&#39;Performance&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.title(&lt;span class=&quot;string&quot;&gt;&#39;How efficient do you want to go today?&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;bar.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;解析&quot;&gt;解析&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;plt.rcdefaults()&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;恢复 rc 的默认设置&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;&lt;code&gt;barh()&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;主要功能&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;：做一个横向条形图，横向条的矩形大小为: left, left + width, bottom, bottom + height&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bar()&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;主要功能&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;：做一个纵向条形图，纵向条的矩形大小为: left, left + width, bottom, bottom + height&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;参数&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;：barh ( bottom , width , height =0.8, left =0, ** kwargs )&lt;/p&gt;
-&lt;p&gt;：bar  ( bottom , width , height =0.8, left =0, ** kwargs )&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;返回类型&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;：一个 class 类别，matplotlib.patches.Rectangle实例&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;参数说明&lt;br&gt;：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;bottom&lt;/code&gt;: Bars 的垂直位置的底部边缘&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;width&lt;/code&gt;: Bars 的长度&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;可选参数：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;height: bars 的高度&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;left: bars 左边缘 x 轴坐标值&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;color: bars 颜色&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;edgecolor: bars 边缘颜色&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;linewidth: bar 边缘宽度;None 表示默认宽度;0 表示不 i 绘制边缘&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;xerr: 若不为 None,将在 bar 图上生成 errobars&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;yerr: 若不为 None,将在 bar 图上生成 errobars&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;ecolor: 指定 errorbar 颜色&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;capsize: 指定 errorbar 的顶部(cap)长度&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;align: &lt;code&gt;edge&lt;/code&gt; (默认) | &lt;code&gt;center&lt;/code&gt;:&lt;code&gt;edge&lt;/code&gt;以底部为准对齐;&lt;code&gt;center&lt;/code&gt;以 y 轴作为中心&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;log: [False|True] False (默认),若为 True,使用 log 坐标&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1 id=&quot;图形填充&quot;&gt;图形填充&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;/img/article/fill.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; np&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; plt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;x = np.linspace(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y = np.sin(&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; * np.pi * x) * np.exp(-&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt; * x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.fill(x, y, &lt;span class=&quot;string&quot;&gt;&#39;c&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.grid(&lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;fill.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;： grid 表示是否显示图轴网格。函数原型 matplotlib.pyplot.grid(b=None, which=’major’, axis=’both’, **kwargs)&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;调用形式： &lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;grid(self, b=None, which=’major’, axis=’both’, **kwargs)&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;主要参数：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;b&lt;/code&gt;： [True|False]或者是布尔数组、或[‘on’,‘off’] 表示网格是否开启&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;which&lt;/code&gt;： [major(默认)|minor|both] 选择主、次网格开启方式&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;axis&lt;/code&gt;： [both(默认)|x|y] 选择使用网格的数轴&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;x = np.linspace(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; * np.pi, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y1 = np.sin(x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y2 = np.sin(&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; * x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.fill(x, y1, &lt;span class=&quot;string&quot;&gt;&#39;b&#39;&lt;/span&gt;, x, y2, &lt;span class=&quot;string&quot;&gt;&#39;c&#39;&lt;/span&gt;, alpha=&lt;span class=&quot;number&quot;&gt;0.7&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;features.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;img src=&quot;/img/article/features.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;：&lt;/p&gt;
-&lt;p&gt;alpha 表示透明度，0表示全透明，1表示完全不透明。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;Matplotlib&quot;&gt;Matplotlib&lt;/h1&gt;&lt;p&gt;&lt;em&gt;matplotlib 是python最著名的绘图库，它提供了一整套和matlab相似的命令API，十分适合交互式地行制图。而且也可以方便地将它作为绘图控件，嵌入GUI应用程序中。&lt;/em&gt;&lt;/p&gt;
-&lt;h2 id=&quot;优势&quot;&gt;优势&lt;/h2&gt;&lt;p&gt;作为python上最有名气的绘图库:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Matlab的语法
-    
-    </summary>
-    
-      <category term="Python" scheme="http://peihao.space/categories/Python/"/>
-    
-    
-      <category term="Python" scheme="http://peihao.space/tags/Python/"/>
-    
-      <category term="matplotlib" scheme="http://peihao.space/tags/matplotlib/"/>
     
   </entry>
   
@@ -1516,194 +1565,6 @@
       &lt;p&gt;好的，接着上篇文章&lt;a href=&quot;/2016/03/08/verilog_hdl2/&quot;&gt;Verilog小叙(二)&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;数据流建模&quot;&gt;数据流建模&lt;/h1&gt;&lt;p&gt;之前的介绍中，我们已经初步了解到数据流描述方式，本节对数据流的建模方式进一步讨论，主要讲述连续赋值语句、阻塞赋值语句、非阻塞赋值语句，并针对一个系统设计频率计数器的实例进行讲解。&lt;/p&gt;
 &lt;h2 id=&quot;连续赋值语句&quot;&gt;连续赋值语句&lt;/h2&gt;&lt;p&gt;数据流的描述是采用连续赋值语句(assign )语句来实现的。语法如下：&lt;br&gt;&lt;code&gt;assign net_type = 表达式；&lt;/code&gt;&lt;br&gt;连续赋值语句用于组合逻辑的建模。 等式左边是wire 类型的变量。等式右边可以是常量、由运算符如逻辑运算符、算术运算符参与的表达。&lt;br&gt;如下几个实例：&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Verilog" scheme="http://peihao.space/categories/Verilog/"/>
-    
-    
-      <category term="Verilog HDL" scheme="http://peihao.space/tags/Verilog-HDL/"/>
-    
-      <category term="仿真" scheme="http://peihao.space/tags/%E4%BB%BF%E7%9C%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Verilog小叙(二)</title>
-    <link href="http://peihao.space/2016/03/08/verilog_hdl2/"/>
-    <id>http://peihao.space/2016/03/08/verilog_hdl2/</id>
-    <published>2016-03-08T14:23:35.000Z</published>
-    <updated>2016-03-22T11:38:38.841Z</updated>
-    
-    <content type="html">&lt;p&gt;好的，接着上篇文章&lt;a href=&quot;/2016/03/06/verilog_hdl/&quot;&gt;Verilog小叙(一)&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;常量&quot;&gt;常量&lt;/h1&gt;&lt;p&gt;Verilog HDL中有三种常量：&lt;br&gt;整型、实型、字符串型。&lt;br&gt;下划线符号“_”可以随意用在整数或实数中，它们就数量本身没有意义。它们能用来提高易读性；唯一的限制是下划线符号不能用作为首字符。&lt;br&gt;下面主要介绍整型和字符串型。&lt;/p&gt;
-&lt;h2 id=&quot;整型&quot;&gt;整型&lt;/h2&gt;&lt;p&gt;整型数可以按如下两种方式书写：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;简单的十进制数格式&lt;/li&gt;
-&lt;li&gt;基数格式&lt;/li&gt;
-&lt;/ol&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h2 id=&quot;简单的十进制格式&quot;&gt;简单的十进制格式&lt;/h2&gt;&lt;p&gt;这种形式的整数定义为带有一个可选的“+”（一元）或“－”（一元）操作符的数字序列。&lt;br&gt;下面是这种简易十进制形式整数的例子。&lt;br&gt;32 十进制数32&lt;br&gt;－15 十进制数－15&lt;/p&gt;
-&lt;h2 id=&quot;基数表示法&quot;&gt;基数表示法&lt;/h2&gt;&lt;p&gt;这种形式的整数格式为：&lt;br&gt;[size ] ‘base value&lt;br&gt;size 定义以位计的常量的位长；&lt;br&gt;base 为o或O（表示八进制），b或B（表示二进制），d或D（表示十进制），h 或H （表示十六进制）之一；&lt;br&gt;value 是基于base 的值的数字序列。值x和z以及十六进制中的a 到f 不区分大小写。&lt;br&gt;下面是一些具体实例：&lt;br&gt;&lt;figure class=&quot;highlight rust&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;o37&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;//5位八进制数（二进制11111）&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;d2&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;//4位十进制数（二进制0011）&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;b1x_01&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;//4位二进制数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;hx&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;//7位x(扩展的x), 即xxxxxxx&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;hz&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;//4位z(扩展的z) , 即zzzz&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;d&lt;/span&gt;-&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;//非法：数值不能为负&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&#39; b &lt;span class=&quot;number&quot;&gt;001&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;//非法：和基数b之间不允许出现空格&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;(&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)&lt;span class=&quot;string&quot;&gt;&#39;b10&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;//非法：位长不能够为表达式&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;注意，x（或z）在十六进制值中代表4位x（或z），在八进制中代表3位x（或z ），在二进制中代表1位x（或z）。&lt;br&gt;基数格式计数形式的数通常为无符号数。这种形式的整型数的长度定义是可选的。如果没有定义一个整数型的长度，数的长度为相应值中定义的位数。下面是两个例子：&lt;br&gt;‘o 7219 3位八进制数&lt;br&gt;‘h AF8 4位十六进制数&lt;/p&gt;
-&lt;p&gt;如果定义的长度比为常量指定的长度长，通常在左边填0补位。但是如果数最左边一位为x 或z，就相应地用x 或z 在左边补位。例如：&lt;br&gt;&lt;code&gt;10&amp;#39;b10&lt;/code&gt;左边添0占位,0000000010&lt;br&gt;&lt;code&gt;10&amp;#39;bx0x1&lt;/code&gt;左边添x占位, xxxxxxx0x1&lt;br&gt;如果长度定义得更小，那么最左边的位相应地被截断。例如：&lt;br&gt;&lt;code&gt;3 &amp;#39; b1001_0011&lt;/code&gt;与&lt;code&gt;3&amp;#39;b011&lt;/code&gt;相等&lt;br&gt;&lt;code&gt;5&amp;#39;H0FFF&lt;/code&gt;与&lt;code&gt;5&amp;#39;H1F&lt;/code&gt;相等&lt;/p&gt;
-&lt;h2 id=&quot;字符串型&quot;&gt;字符串型&lt;/h2&gt;&lt;p&gt;字符串是双引号内的字符序列。字符串不能分成多行书写。&lt;br&gt;例如：&lt;br&gt;&lt;code&gt;&amp;quot;INTERNAL ERROR&amp;quot;&lt;/code&gt;&lt;br&gt;&lt;code&gt;&amp;quot; REACHED－&amp;gt;HERE &amp;quot;&lt;/code&gt;&lt;br&gt;用8位ASCII值表示的字符可看作是无符号整数。因此字符串是8位ASCII 值的序列。为存储字符串&lt;code&gt;“INTERNAL ERROR”&lt;/code&gt;，变量需要8x14位。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;reg [1:8*14] Message;&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;Message = &amp;quot;INTERNAL ERROR&amp;quot;&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1 id=&quot;数据类型&quot;&gt;数据类型&lt;/h1&gt;&lt;p&gt;Verilog HDL 主要包括两种数据类型&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;线网类型(net type) &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;寄存器类型（reg type）&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;线网类型&quot;&gt;线网类型&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/verilog_hdl.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;wire 和 tri 定义&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;线网类型主要有wire 和tri两种&lt;/strong&gt;。线网类型用于对结构化器件之间的物理连线的建模.如器件的管脚，内部器件如与门的输出等。以上面的加法器为例，输入信号A，B是由外部器件所驱动，异或门X1的输出S1是与异或门X2输入脚相连的物理连接线，它由异或门X1所驱动。简单地讲，S1由X1驱动。&lt;br&gt;由于线网类型代表的是物理连接线，因此它不存贮逻辑值。必须由器件所驱动。通常由assign进行赋值。如 assign A = B ^ C；&lt;br&gt;当一个wire 类型的信号没有被驱动时，缺省值为Z（高阻）。&lt;br&gt;信号没有定义数据类型时，缺省为 wire 类型。&lt;br&gt;如上面一位全加器的端口信号 A，B，SUM等，没有定义类型，故缺省为wire 线网类型。&lt;br&gt;&lt;strong&gt;两者区别&lt;/strong&gt;&lt;br&gt;tri主要用于定义三态的线网。&lt;/p&gt;
-&lt;h2 id=&quot;寄存器类型&quot;&gt;寄存器类型&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;定义&lt;br&gt;reg 是最常用的寄存器类型，寄存器类型通常用于对存储单元的描述，如D型触发器、ROM等。存储器类型的信号当在某种触发机制下分配了一个值，在分配下一个值之时保留原值。&lt;br&gt;reg 类型定义语法如下：&lt;/p&gt;
-&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;reg [msb: lsb] reg1, reg2, . . . reg N;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;msb 和lsb 定义了范围，并且均为常数值表达式。范围定义是可选的；如果没有定义范围，缺省值为&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; 位寄存器。例如：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;reg [&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] Sat; &lt;span class=&quot;comment&quot;&gt;// Sat 为4 位寄存器。&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;reg Cnt; &lt;span class=&quot;comment&quot;&gt;//1 位寄存器。&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;reg [&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;] Kisp, Pisp, Lisp ;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//寄存器类型的值可取负数，但若该变量用于表达式的运算中，则按无符号类型处理，如：&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;reg A ；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.....&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;A = -&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;....&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;则A的二进制为&lt;span class=&quot;number&quot;&gt;1111&lt;/span&gt;，在运算中，A总按 无符号数&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;来看待。&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;寄存器类型的存储单元建模举例&lt;br&gt;用寄存器类型来构建两位的D触发器如下：&lt;/p&gt;
-&lt;figure class=&quot;highlight asciidoc&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;reg [1：0] dout ；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;code&quot;&gt;.....&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;always@(posedge clk)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;dout &amp;lt;= din;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;....&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;用寄存器数组类型来建立存储器的模型，如对2个8位的RAM建模如下：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;reg [7：0] mem[0：1] ；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;对存储单元的赋值必须一个个第赋值，如上2个8位的RAM的赋值必须用两条赋值语句：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;code&quot;&gt;.....&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;mem[0] = ’ h 55；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;mem[1] = ’ haa；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;....&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;书写规范建议&lt;br&gt;对数组类型，请按降序方式，如[7：0] ；&lt;br&gt;&lt;strong&gt;Tips:&lt;/strong&gt;&lt;br&gt;reg的类型不一定是寄存器，只有带有时钟的always块才能是寄存器，不带时钟的always块是组合逻辑。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;运算符和表达式&quot;&gt;运算符和表达式&lt;/h2&gt;&lt;p&gt;Verilog HDL中的操作符可以分为下述类型：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;算术操作符&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;关系操作符&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;相等操作符&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;逻辑操作符&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;按位操作符&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;归约操作符&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;移位操作符&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;条件操作符&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;连接和复制操作符&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;下表显示了所有操作符的优先级和名称。操作符从最高优先级（顶行）到最低优先级（底行）排列。同一行中的操作符优先级相同。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/veriloghdl2.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h2 id=&quot;算术运算符&quot;&gt;算术运算符&lt;/h2&gt;&lt;p&gt;在常用的算术运算符主要是 ：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;加法（二元运算符）：“+”；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;减法 （二元运算符）：“-”；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;乘法（二元运算符）：“*”；&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;在算术运算符的使用中，注意如下两个问题：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;算术操作结果的位数长度&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;算术表达式结果的长度由最长的操作数决定。在赋值语句下，算术操作结果的长度由操作符左端目标长度决定。考虑如下实例：&lt;/p&gt;
-&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;reg [&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] arc, bar, crt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;reg [&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] frx;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;. . .&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;arc = bar + crt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;frx = bar + crt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;第一个加的结果长度由bar，crt 和 arc 长度决定，长度为4位。&lt;br&gt;第二个加法操作的长度同样由frx 的长度决定（frx 、bat 和crt 中的最长长度），长度为6位。&lt;br&gt;在第一个赋值中，加法操作的溢出部分被丢弃；而在第二个赋值中，任何溢出的位存储在结&lt;br&gt;果位frx [ 4 ]中。&lt;br&gt;在较大的表达式中，中间结果的长度如何确定？在Verilog HDL 中定义了如下规则：表达式中的所有中间结果应取最大操作数的长度（赋值时，此规则也包括左端目标）。考虑另一个实例：&lt;br&gt;wire [4:1] box, drt;&lt;br&gt;wire [5:1] cfg;&lt;br&gt;wire [6:1] peg;&lt;br&gt;wire [8:1] adt;&lt;br&gt;. . .&lt;br&gt;assign adt = (box + cfg) + (drt + peg) ;&lt;br&gt;表达式右端的操作数最长为6 ，但是将左端包含在内时，最大长度为8 。所以所有的加操作使用8 位进行。例如：box 和cfg 相加的结果长度为8 位。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;有符号数和无符号数在设计中，请先按无符号数进行。&lt;h2 id=&quot;关系运算符&quot;&gt;关系运算符&lt;/h2&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;关系运算符有：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;?&amp;gt;（大于）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;?&amp;lt;（小于）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;?&amp;gt;=（不小于）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;?&amp;lt;=（不大于）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;= = （逻辑相等）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;= （逻辑不等）&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;关系操作符的结果为真（1 ）或假（0 ）。如果操作数中有一位为X 或Z ，那么结果为X 。&lt;br&gt;例：&lt;br&gt;23 &amp;gt; 45&lt;br&gt;结果为假（0 ），而：&lt;br&gt;52 &amp;lt; 8’hxFF&lt;br&gt;结果为x 。&lt;br&gt;如果操作数长度不同，长度较短的操作数在最重要的位方向（左方）添0 补齐。例如：&lt;br&gt;‘b1000 &amp;gt; = ‘b01110&lt;br&gt;等价于：&lt;br&gt;‘b01000 &amp;gt; = ‘b01110&lt;br&gt;结果为假（0 ）。&lt;br&gt;在逻辑相等与不等的比较中，只要一个操作数含有x 或z，比较结果为未知 （x），如：&lt;br&gt;假定：&lt;br&gt;Data = ‘b11x0;&lt;br&gt;Addr = ‘b11x0;&lt;br&gt;那么：&lt;br&gt;Data = = Addr 比较结果不定，也就是说值为x 。&lt;/p&gt;
-&lt;h2 id=&quot;逻辑运算符&quot;&gt;逻辑运算符&lt;/h2&gt;&lt;p&gt;逻辑运算符有：&lt;br&gt;&amp;amp;&amp;amp; (逻辑与)&lt;br&gt;|| (逻辑或)&lt;br&gt;！(逻辑非)&lt;br&gt;用法为：（表达式1） 逻辑运算符 （表达式2） ….&lt;br&gt;这些运算符在逻辑值0（假） 或1（真） 上操作。逻辑运算的结果为0 或1 。例如, 假定：&lt;br&gt;crd = ‘b0; //0 为假&lt;br&gt;dgs = ‘b1; //1 为真&lt;br&gt;那么：&lt;br&gt;crd &amp;amp;&amp;amp; dgs 结果为0 (假)&lt;br&gt;crd || dgs 结果为1 (真)&lt;br&gt;！dgs 结果为0 (假)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;按位逻辑运算符&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;按位运算符有：&lt;br&gt;?~（一元非）：（相当于非门运算）&lt;br&gt;?&amp;amp;（二元与）：（相当于与门运算）&lt;br&gt;?|（二元或）： （相当于或门运算）&lt;br&gt;?^（二元异或）：（相当于异或门运算）&lt;br&gt;?~ ^, ^ ~（二元异或非即同或）：（相当于同或门运算）&lt;br&gt;这些操作符在输入操作数的对应位上按位操作，并产生向量结果。&lt;br&gt;例如，假定,&lt;br&gt;A = ‘b0110;&lt;br&gt;B = ‘b0100;&lt;br&gt;那么：&lt;br&gt;A | B 结果为0110&lt;br&gt;A &amp;amp; B 结果为0100&lt;br&gt;如果操作数长度不相等, 长度较小的操作数在最左侧添0补位。例如,&lt;br&gt;‘b0110 ^ ‘b10000&lt;br&gt;与如下式的操作相同：&lt;br&gt;‘b00110 ^ ‘b10000&lt;br&gt;结果为’b10110。&lt;/p&gt;
-&lt;h2 id=&quot;条件运算符&quot;&gt;条件运算符&lt;/h2&gt;&lt;p&gt;条件操作符根据条件表达式的值选择表达式，形式如下：&lt;br&gt;cond_expr ? expr1 : expr2&lt;br&gt;如果cond_expr 为真(即值为1 )，选择expr1 ；如果cond_expr 为假(值为0 )，选择expr2 。如果cond_expr 为x 或z ，结果将是按以下逻辑expr1 和expr2 按位操作的值： 0 与0 得0 ，1 与1 得1 ，其余情况为x 。&lt;br&gt;如下所示:&lt;br&gt;wire [2:0] student = marks &amp;gt; 18 ? grade_a : grade_c;&lt;br&gt;计算表达式marks &amp;gt; 18; 如果真,grade_a 赋值为student；如果marks &amp;lt; =18, grade_c 赋值为student 。&lt;/p&gt;
-&lt;h2 id=&quot;连接运算符&quot;&gt;连接运算符&lt;/h2&gt;&lt;p&gt;连接操作是将小表达式合并形成大表达式的操作。形式如下：&lt;br&gt;{expr1, expr2, . . .，exprN}&lt;br&gt;实例如下所示：&lt;br&gt;wire [7:0] Dbus;&lt;br&gt;assign Dbus [7:4] = {Dbus [0], Dbus [1], Dbus[2], Dbus[ 3 ]};&lt;br&gt;//以反转的顺序将低端4 位赋给高端4 位。&lt;br&gt;assign Dbus = {Dbus [3:0], Dbus [7:4]};&lt;br&gt;//高4 位与低4 位交换。&lt;br&gt;由于非定长常数的长度未知, 不允许连接非定长常数。例如,下列式子非法：&lt;br&gt;{Dbus,5} //不允许连接操作非定长常数。&lt;/p&gt;
-&lt;h2 id=&quot;条件语句&quot;&gt;条件语句&lt;/h2&gt;&lt;p&gt;if 语句的语法如下：&lt;br&gt;&lt;figure class=&quot;highlight gcode&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;(condition_1)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;procedural_stateme&lt;span class=&quot;label&quot;&gt;nt_1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;else &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;(condition_2)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;procedural_stateme&lt;span class=&quot;label&quot;&gt;nt_2&lt;/span&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;else&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;procedural_stateme&lt;span class=&quot;label&quot;&gt;nt_3&lt;/span&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;如果对condition_1 求值的结果为个&lt;strong&gt;非1&lt;/strong&gt;，那么procedural_statement_1 被执，如果condition_1 的值为0 、x 或z ，那么procedural_statement_1 不执行。如果存在一个else 分支，那么这个分支被执行。&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (sum &amp;lt; &lt;span class=&quot;number&quot;&gt;60&lt;/span&gt;) begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;grade = c;&lt;span class=&quot;comment&quot;&gt;//串行语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;total_c = total _c + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(sum &amp;lt; &lt;span class=&quot;number&quot;&gt;75&lt;/span&gt;)&lt;/span&gt; begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;grade &lt;/span&gt;= b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;total_b = total_b + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;grade = a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;total_a = total_a + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;若为if - if 语句，请使用块语句 begin — end ：&lt;/p&gt;
-&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(clk == &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;) &lt;span class=&quot;function&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(reset== &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;q &lt;/span&gt;= &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;q = d;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;对if语句，除非在时序逻辑中，if 语句需要有else语句。若没有缺省语句，设计将产生一个锁存器，锁存器在asic设计中有诸多的弊端。&lt;br&gt;如下一例：&lt;br&gt;if （t == 1）&lt;br&gt;q = d；&lt;br&gt;没有else 语句，当t为1（真）时，d 被赋值给q，当t为0（假）时，因为没有else 语句，电路保持 q 以前的值，这就形成一个锁存器。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;case语句&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;case 语句是一个多路条件分支形式，其语法如下：&lt;br&gt;&lt;figure class=&quot;highlight ceylon&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;case&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;case&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;_&lt;/span&gt;expr)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;case&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;_&lt;/span&gt;item&lt;span class=&quot;number&quot;&gt;_&lt;/span&gt;expr&amp;#123; ,&lt;span class=&quot;keyword&quot;&gt;case&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;_&lt;/span&gt;item&lt;span class=&quot;number&quot;&gt;_&lt;/span&gt;expr&amp;#125; :procedural&lt;span class=&quot;number&quot;&gt;_&lt;/span&gt;statement&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;. . .&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;. . .&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[&lt;span class=&quot;annotation&quot;&gt;default&lt;/span&gt;:procedural&lt;span class=&quot;number&quot;&gt;_&lt;/span&gt;statement]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endcase&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;case 语句首先对条件表达式case_expr 求值，然后依次对各分支项求值并进行比较，第一个与条件表达式值相匹配的分支中的语句被执行。可以在1 个分支中定义多个分支项；这些值不需要互斥。缺省分支覆盖所有没有被分支表达式覆盖的其他分支。&lt;/p&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;case (HEX)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&#39;b0001 : led = 7&#39;b1111001; // 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&#39;b0010 : led = 7&#39;b0100100; // 2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&#39;b0011 : led = 7&#39;b0110000; // 3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&#39;b0100 : led = 7&#39;b0011001; // 4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&#39;b0101 : led = 7&#39;b0010010; // 5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&#39;b0110 : led = 7&#39;b0000010; // 6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&#39;b0111 : led = 7&#39;b1111000; // 7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&#39;b1000 : led = 7&#39;b0000000; // 8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&#39;b1001 : led = 7&#39;b0010000; // 9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&#39;b1010 : led = 7&#39;b0001000; // a&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&#39;b1011 : led = 7&#39;b0000011; // b&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&#39;b1100 : led = 7&#39;b1000110; // c&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&#39;b1101 : led = 7&#39;b0100001; // d&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&#39;b1110 : led = 7&#39;b0000110; // e&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&#39;b1111 : led = 7&#39;b0001110; // f&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;default : led = 7&#39;b1000000; // 0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endcase&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;case 的缺省项必须写，防止产生锁存器。&lt;/p&gt;
-&lt;p&gt;只有组合逻辑才可能产生锁存器，时序逻辑不会产生锁存器。&lt;/p&gt;
-&lt;h1 id=&quot;结构建模&quot;&gt;结构建模&lt;/h1&gt;&lt;h2 id=&quot;模块定义结构&quot;&gt;模块定义结构&lt;/h2&gt;&lt;p&gt;我们已经了解到，一个设计实际上是由一个个module 组成的。一个模块module 的结构如下：&lt;br&gt;module module_name (&lt;br&gt;port_list&lt;br&gt;) ;&lt;br&gt;Declarations_and_Statements&lt;br&gt;endmodule&lt;br&gt;在结构建模中，描述语句主要是实例化语句，包括对Verilog HDL 内置门如与门（and）异或门（xor）等的例化，如全加器的xor 门的调用；及对其他器件的调用，这里的器件包括FPGA厂家提供的一些宏单元以及设计者已经有的设计。&lt;br&gt;在实际应用中，实例化语句主用指后者，对内置门建议不采纳，而用数据流或行为级方式对基本门电路的描述。&lt;br&gt;端口队列port_list 列出了该模块通过哪些端口与外部模块通信，在Verilog 2001语法中还包括输入输出、wire/reg类型、位宽定义。&lt;/p&gt;
-&lt;h2 id=&quot;模块端口&quot;&gt;模块端口&lt;/h2&gt;&lt;p&gt;模块的端口可以是输入端口、输出端口或双向端口。缺省的端口类型为线网类型（即wire 类型）。输入端口默认为wire类型，不需要定义，输出或双向端口能够声明为wire/reg 型，使用reg必须显式声明，使用wire也强烈建议显式声明。&lt;br&gt;Verilog 2001语法中的输入输出包括端口名、输入输出、wire/reg类型、位宽定义，极大的减少了端口声明占用的代码行数。当前已经非常普及。&lt;br&gt;例子：&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;module &lt;span class=&quot;title&quot;&gt;LED&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//input&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input sys_clk , &lt;span class=&quot;comment&quot;&gt;//system clock;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input sys_rst_n , &lt;span class=&quot;comment&quot;&gt;//system reset, low is active;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//output&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output reg [&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] LED )&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;该例子包括输入、输出、姓名名称、位宽、输出的信号类型。&lt;/p&gt;
-&lt;h2 id=&quot;实例化语句&quot;&gt;实例化语句&lt;/h2&gt;&lt;p&gt;一个模块能够在另外一个模块中被引用，这样就建立了描述的层次。模块实例化语句形式如下：&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;module_name instance_name(port_associations);&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;信号端口可以通过位置或名称关联；&lt;/p&gt;
-&lt;p&gt;但是关联方式不能够混合使用。端口关联形式如下：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;PortName //通过位置。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;.PortName (port_expr) //通过名称。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;建议使用名称进行关联。&lt;/p&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;// instantance RR_CORE&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;RR_CORE U_RR_CORE (&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.rr_en ( rr_en ),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.port_vld ( key ),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.last_sel_port ( last_sel_port ),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.port_win ( port_win )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;port_expr 可以是以下的任何类型：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;标识符（reg 或net ）如 .C（T3），T3为wire型标识符。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;位选择 ，如 .C（D[0]），C端口接到D信号的第0bit 位。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;部分选择 ，如 .Bus （Din[5：4]）。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;上述类型的合并，如 .Addr（{ A1，A2[1：0]}。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;表达式（只适用于输入端口），如 .A （wire Zire = 0 ）。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;建议：&lt;br&gt;在例化的端口映射中请采用名字关联，这样，当被调用的模块管脚改变时不易出错。&lt;/p&gt;
-&lt;h2 id=&quot;悬空端口的处理&quot;&gt;悬空端口的处理&lt;/h2&gt;&lt;p&gt;在我们的实例化中，可能有些管脚没用到，可在映射中采用空白处理，如：&lt;/p&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;DFF U_DFF_0 (&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.q(qs),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.qbar ( ), //管脚悬空&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.data (d ) ,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.preset ( ), // 该管脚悬空&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.clock (ck)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;); //名称对应方式。&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;对输入管脚悬空的，则该管脚输入为高阻 Z，输出管脚被悬空的，该输出管脚废弃不用。&lt;br&gt;建议：&lt;br&gt;大规模电路设计的时候，悬空的端口最好使用XX_nc（wire类型）进行显式声明，提高检视代码的效率。&lt;/p&gt;
-&lt;h2 id=&quot;不同端口长度的处理&quot;&gt;不同端口长度的处理&lt;/h2&gt;&lt;p&gt;当端口和局部端口表达式的长度不同时，端口通过无符号数的右对齐或截断方式进行匹配。&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;module &lt;span class=&quot;title&quot;&gt;Child&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(Pba, Ppy)&lt;/span&gt; &lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input [&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] Pba;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output [&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] Ppy;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;. . .&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;module Top;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;wire [&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;] Bdl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;wire [&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;] Mpr;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;Child &lt;span class=&quot;title&quot;&gt;C1&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(Bdl, Mpr)&lt;/span&gt; &lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;在对Child 模块的实例中，Bdl[2]连接到Pba[ 0 ]，Bdl[1] 连接到Pba[ 1 ]，余下的输入端口Pba[5]、Pba[4]、Pba[2]和Pba[3]悬空，因此为高阻态z 。与之相似，Mpr[6]连接到Ppy[0]，Mpr[5]连接到Ppy[1]，Mpr[4] 连接到Ppy[2]。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/port_cond.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h2 id=&quot;结构化建模具体实例&quot;&gt;结构化建模具体实例&lt;/h2&gt;&lt;p&gt;对一个数字系统的设计，我们采用的是自顶向下的设计方式。可把系统划分成几个功能模块，每个功能模块再划分成下一层的子模块。每个模块的设计对应一个module，一个module 设计成一个verilog HDL 程序文件。因此，对一个系统的顶层模块，我们采用结构化的设计，即顶层模块分别调用了各个功能模块。下面以一个实例（一个频率计数器系统）说明如何用HDL进行系统设计。&lt;br&gt;在该系统中，我们划分成如下三个部分：2输入与门模块，LED显示模块，4位计数器模块。系统的层次描述如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/top_down.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;顶层模块CNT_BCD，文件名CNT_BCD.v，该模块调用了低层模块 AND2、CNT_4b和HEX2LED 。&lt;br&gt;顶层模块CNT_BCD对应的设计文件 CNT_BCD.v 内容为：&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;module CNT_BCD (&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;// ------------ Port declarations --------- //&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input CLK,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input GATE,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input RESET,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output wire [3:0] BCD_A,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output wire [3:0] BCD_B,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output wire [3:0] BCD_C,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output wire [3:0] BCD_D&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;) ;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;// ----------- Signal declarations -------- //&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;wire NET104;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;wire NET124;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;wire NET132;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;wire NET80;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;// -------- Component instantiations -------//&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;CNT_4b U0(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.CLK(CLK),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.ENABLE(GATE),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.FULL(NET80),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.Q(BCD_A),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.RESET(RESET)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;AND2 U6(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.A0(NET104),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.A1(NET124),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;.Y(NET132)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Tips:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;这里的AND2是为了举例说明，在实际设计中，对门级不要重新设计成一个模块，同时对涉及保留字的（不管大小写）相类似的标识符最好不用。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;好的，接着上篇文章&lt;a href=&quot;/2016/03/06/verilog_hdl/&quot;&gt;Verilog小叙(一)&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;常量&quot;&gt;常量&lt;/h1&gt;&lt;p&gt;Verilog HDL中有三种常量：&lt;br&gt;整型、实型、字符串型。&lt;br&gt;下划线符号“_”可以随意用在整数或实数中，它们就数量本身没有意义。它们能用来提高易读性；唯一的限制是下划线符号不能用作为首字符。&lt;br&gt;下面主要介绍整型和字符串型。&lt;/p&gt;
-&lt;h2 id=&quot;整型&quot;&gt;整型&lt;/h2&gt;&lt;p&gt;整型数可以按如下两种方式书写：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;简单的十进制数格式&lt;/li&gt;
-&lt;li&gt;基数格式&lt;/li&gt;
-&lt;/ol&gt;
     
     </summary>
     
