@@ -75,6 +75,8 @@ deploy:
 # Extensions
 Plugins:
 - hexo-generator-feed
+- hexo-generator-baidu-sitemap
+- hexo-generator-sitemap
 
 #Feed Atom
 feed:

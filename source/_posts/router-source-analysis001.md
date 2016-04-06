@@ -1,13 +1,13 @@
 title: router-source-analysis
 date: 2016-04-04 20:17:22
-toc: 
+toc: true
 tags: NoC
 categories: NoC
 ---
 
 # constant value #
 
-在分析第一个Verilog HDL Router中的check模块之前，首先在前面声明一下代码中会使用到的常量值：
+在分析第一个Verilog HDL Router中的check模块之前，首先在前面声明一下代码中会使用到的常量值：<!--more-->
 
 ```C
 // disable error reporting
@@ -35,7 +35,7 @@ categories: NoC
 
 # 实现reg #
 
-在Router的check的错误警报模块中，具体实现这一功能的还是寄存器。上面的代码分别定义了一些错误警示以及错误重置的类型。<!--more-->
+在Router的check的错误警报模块中，具体实现这一功能的还是寄存器。上面的代码分别定义了一些错误警示以及错误重置的类型。
 
 ```C
 /*

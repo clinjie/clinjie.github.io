@@ -6,6 +6,8 @@
 
 - npm install hexo-generator-sitemap
 
+ 
+
 解压到目录之后，需要重新安装hexo-server
 
 `npm install hexo-server --save`
