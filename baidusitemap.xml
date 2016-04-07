@@ -4,6 +4,27 @@
 
     
   <url>
+    <loc>http://peihao.space/2016/04/07/context/</loc>
+    <lastmod>2016-04-07T05:09:49.463Z</lastmod>
+    <data>
+        <display>
+        <title>Android之Context、this</title>
+        <pubTime>2016-04-07T06:17:22.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://peihao.space/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
     <loc>http://peihao.space/2016/04/06/Gulp-intro/</loc>
     <lastmod>2016-04-06T06:15:57.168Z</lastmod>
     <data>
@@ -106,7 +127,6 @@
     </data>
     </url>
 
-    
     
   <url>
     <loc>http://peihao.space/2016/04/03/NoC-router-alg/</loc>
