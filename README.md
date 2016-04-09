@@ -5,4 +5,4 @@
 
 - 备忘日常技术、郁结的足迹 
 
-![](/img/README.png)
+![](http://7xowaa.com1.z0.glb.clouddn.com/README.png)
