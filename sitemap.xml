@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://peihao.space/2015/04/10/verilog-testbench-intro/</loc>
+    
+    <lastmod>2016-04-10T14:15:53.675Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://peihao.space/2015/04/10/verilog-testbench-note/</loc>
+    
+    <lastmod>2016-04-10T14:15:37.839Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://peihao.space/2016/04/10/verilog-timescale/</loc>
+    
+    <lastmod>2016-04-10T09:12:32.741Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://peihao.space/2016/04/09/Ise-wizard/</loc>
     
     <lastmod>2016-04-09T14:51:35.320Z</lastmod>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peihao.space/"/>
-  <updated>2016-04-09T14:51:35.320Z</updated>
+  <updated>2016-04-10T09:12:32.741Z</updated>
   <id>http://peihao.space/</id>
   
   <author>
@@ -14,6 +14,47 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Verilog中的timescale</title>
+    <link href="http://peihao.space/2016/04/10/verilog-timescale/"/>
+    <id>http://peihao.space/2016/04/10/verilog-timescale/</id>
+    <published>2016-04-10T06:17:22.000Z</published>
+    <updated>2016-04-10T09:12:32.741Z</updated>
+    
+    <content type="html">&lt;p&gt;在Verilog HDL 模型中，所有时延都用单位时间表述。使用`timescale&lt;br&gt;编译器指令将时间单位与实际时间相关联。该指令用于定义时延的单位和时延精度。&lt;/p&gt;
+&lt;p&gt;`timescale编译器指令格式为：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;timescale time_unit / time_precision&lt;/code&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;time_unit 单位时间&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;time_precision  时间精度&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;time_unit 和time_precision 由值1、10、和100以及单位s、ms、us、ns、ps和fs组成。&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;`timescale &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;ns/ &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;function&quot;&gt;ps &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;module &lt;span class=&quot;title&quot;&gt;AndFunc&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(Z, A, B)&lt;/span&gt;&lt;/span&gt;; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output Z; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input A, B;  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;and &lt;span class=&quot;preprocessor&quot;&gt;# (&lt;span class=&quot;number&quot;&gt;5.22&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;6.17&lt;/span&gt; ) Al (Z, A, B); &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//规定了上升及下降时延值。 &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;编译器指令定义时延以ns为单位，并且时延精度为 0.1 ns（100 ps）。因此，时延值(#5.22)即代表5.22ns，5.22对应5.2 ns, 时延6.17对应6.2 ns。如果用如下的`timescale程序指令代替上例中的编译器指令,&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;`timescale &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;ns/&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;ns&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;则基础的时间单位为10ns，精度1ns。5.22代表52.2ns，固定到精度上就是52ns。同理，6.17转换为62ns。&lt;/p&gt;
+&lt;p&gt;在编译过程中，timescale指令影响这一编译器指令后面所有模块中的时延值，直至遇到另一timescale指令或resetall指令。当一个设计中的多个模块带有自身的`timescale编译指令时将发生什么？在这种情况下，模拟器总是定位在所有模块的最小时延精度上，并且所有时延都相应地换算为最小时延精度。&lt;/p&gt;
+&lt;p&gt;在verilog中是没有默认timescale的。一个没有指定timescale的verilog模块就有可能错误的继承了前面编译模块的无效timescale参数。所以在verilog的LRM中推荐在每个module的前面指定&lt;code&gt;timescale,并且相
+应的在最后加一个&lt;/code&gt;resetall来确保timescale的局部有效。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在Verilog HDL 模型中，所有时延都用单位时间表述。使用`timescale&lt;br&gt;编译器指令将时间单位与实际时间相关联。该指令用于定义时延的单位和时延精度。&lt;/p&gt;
+&lt;p&gt;`timescale编译器指令格式为：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;timescale time_unit / time_precision&lt;/code&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Verilog" scheme="http://peihao.space/categories/Verilog/"/>
+    
+    
+      <category term="Verilog" scheme="http://peihao.space/tags/Verilog/"/>
+    
+  </entry>
   
   <entry>
     <title>ISE数字设计入门体验</title>
@@ -1070,127 +1111,6 @@
   </entry>
   
   <entry>
-    <title>Matplotlib快速绘图</title>
-    <link href="http://peihao.space/2016/03/17/Matplotlib%E5%BF%AB%E9%80%9F%E7%BB%98%E5%9B%BE/"/>
-    <id>http://peihao.space/2016/03/17/Matplotlib快速绘图/</id>
-    <published>2016-03-17T14:23:35.000Z</published>
-    <updated>2016-03-17T15:12:28.997Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;Matplotlib&quot;&gt;Matplotlib&lt;/h1&gt;&lt;p&gt;&lt;em&gt;matplotlib 是python最著名的绘图库，它提供了一整套和matlab相似的命令API，十分适合交互式地行制图。而且也可以方便地将它作为绘图控件，嵌入GUI应用程序中。&lt;/em&gt;&lt;/p&gt;
-&lt;h2 id=&quot;优势&quot;&gt;优势&lt;/h2&gt;&lt;p&gt;作为python上最有名气的绘图库:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Matlab的语法&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;python语言&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;latex的画图质量&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;可以使用内嵌的latex引擎绘制的数学公式&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;快速绘图&quot;&gt;快速绘图&lt;/h2&gt;&lt;p&gt;matplotlib实际上是一套面向对象的绘图库，它所绘制的图表中的每个绘图元素，例如线条Line2D、文字Text、刻度等在内存中都有一个对象与之对应。&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;为了方便快速绘图matplotlib通过pyplot模块提供了一套和MATLAB类似的绘图API，将众多绘图对象所构成的复杂结构隐藏在这套API内部。我们只需要调用pyplot模块所提供的函数就可以实现快速绘图以及设置图表的各种细节。&lt;/em&gt;pyplot模块虽然用法简单，但不适合在较大的应用程序中使用。&lt;/p&gt;
-&lt;p&gt;为了将面向对象的绘图库包装成只使用函数的调用接口，pyplot模块的内部保存了当前图表以及当前子图等信息。当前的图表和子图可以使用&lt;code&gt;plt.gcf()&lt;/code&gt;和&lt;code&gt;plt.gca()&lt;/code&gt;获得，分别表示&lt;em&gt;“Get Current Figure”&lt;/em&gt;和&lt;em&gt;“Get Current Axes”&lt;/em&gt;。在pyplot模块中，许多函数都是对当前的&lt;code&gt;Figure&lt;/code&gt;或&lt;code&gt;Axes&lt;/code&gt;对象进行处理&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;plt.plot()&lt;/code&gt;实际上会通过plt.gca()获得当前的Axes对象ax，然后再调用ax.plot()方法实现真正的绘图&lt;/p&gt;
-&lt;h1 id=&quot;柱状图&quot;&gt;柱状图&lt;/h1&gt;&lt;h2 id=&quot;横向&quot;&gt;横向&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/img/article/barh.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; plt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.rcdefaults()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; np&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;people = (&lt;span class=&quot;string&quot;&gt;&#39;James&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Durant&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Kobe&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Wade&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Curry&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Magic&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Hardan&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y_pos = np.arange(len(people))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;performance = &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; + &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; * np.random.rand(len(people)) &lt;span class=&quot;comment&quot;&gt;#随机产生len(people)个 [0,1）的数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;error = np.random.rand(len(people))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.barh(y_pos, performance, xerr=error, align=&lt;span class=&quot;string&quot;&gt;&#39;center&#39;&lt;/span&gt;, alpha=&lt;span class=&quot;number&quot;&gt;0.4&lt;/span&gt;)&lt;span class=&quot;comment&quot;&gt;#这里是产生横向柱状图 barh h--horizontal&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.yticks(y_pos, people)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.xlabel(&lt;span class=&quot;string&quot;&gt;&#39;Performance&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.title(&lt;span class=&quot;string&quot;&gt;&#39;How efficient do you want to go today?&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;barh.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;纵向&quot;&gt;纵向&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/img/article/bar.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;people = (&lt;span class=&quot;string&quot;&gt;&#39;James&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Durant&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Kobe&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Wade&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Curry&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Magic&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Hardan&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;x_pos = np.arange(len(people))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;performance = &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; + &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; * np.random.rand(len(people)) &lt;span class=&quot;comment&quot;&gt;#随机产生len(people)个 [0,1）的数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;error = np.random.rand(len(people))/&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.bar(x_pos, performance, xerr=error, align=&lt;span class=&quot;string&quot;&gt;&#39;center&#39;&lt;/span&gt;, alpha=&lt;span class=&quot;number&quot;&gt;0.4&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.xticks(x_pos, people)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.ylabel(&lt;span class=&quot;string&quot;&gt;&#39;Performance&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.title(&lt;span class=&quot;string&quot;&gt;&#39;How efficient do you want to go today?&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;bar.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;解析&quot;&gt;解析&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;plt.rcdefaults()&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;恢复 rc 的默认设置&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;&lt;code&gt;barh()&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;主要功能&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;：做一个横向条形图，横向条的矩形大小为: left, left + width, bottom, bottom + height&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bar()&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;主要功能&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;：做一个纵向条形图，纵向条的矩形大小为: left, left + width, bottom, bottom + height&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;参数&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;：barh ( bottom , width , height =0.8, left =0, ** kwargs )&lt;/p&gt;
-&lt;p&gt;：bar  ( bottom , width , height =0.8, left =0, ** kwargs )&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;返回类型&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;：一个 class 类别，matplotlib.patches.Rectangle实例&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;参数说明&lt;br&gt;：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;bottom&lt;/code&gt;: Bars 的垂直位置的底部边缘&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;width&lt;/code&gt;: Bars 的长度&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;可选参数：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;height: bars 的高度&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;left: bars 左边缘 x 轴坐标值&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;color: bars 颜色&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;edgecolor: bars 边缘颜色&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;linewidth: bar 边缘宽度;None 表示默认宽度;0 表示不 i 绘制边缘&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;xerr: 若不为 None,将在 bar 图上生成 errobars&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;yerr: 若不为 None,将在 bar 图上生成 errobars&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;ecolor: 指定 errorbar 颜色&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;capsize: 指定 errorbar 的顶部(cap)长度&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;align: &lt;code&gt;edge&lt;/code&gt; (默认) | &lt;code&gt;center&lt;/code&gt;:&lt;code&gt;edge&lt;/code&gt;以底部为准对齐;&lt;code&gt;center&lt;/code&gt;以 y 轴作为中心&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;log: [False|True] False (默认),若为 True,使用 log 坐标&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1 id=&quot;图形填充&quot;&gt;图形填充&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;/img/article/fill.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; np&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; plt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;x = np.linspace(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y = np.sin(&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; * np.pi * x) * np.exp(-&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt; * x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.fill(x, y, &lt;span class=&quot;string&quot;&gt;&#39;c&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.grid(&lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;fill.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;： grid 表示是否显示图轴网格。函数原型 matplotlib.pyplot.grid(b=None, which=’major’, axis=’both’, **kwargs)&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;调用形式： &lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;grid(self, b=None, which=’major’, axis=’both’, **kwargs)&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;主要参数：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;b&lt;/code&gt;： [True|False]或者是布尔数组、或[‘on’,‘off’] 表示网格是否开启&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;which&lt;/code&gt;： [major(默认)|minor|both] 选择主、次网格开启方式&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;axis&lt;/code&gt;： [both(默认)|x|y] 选择使用网格的数轴&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;x = np.linspace(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; * np.pi, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y1 = np.sin(x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y2 = np.sin(&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; * x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.fill(x, y1, &lt;span class=&quot;string&quot;&gt;&#39;b&#39;&lt;/span&gt;, x, y2, &lt;span class=&quot;string&quot;&gt;&#39;c&#39;&lt;/span&gt;, alpha=&lt;span class=&quot;number&quot;&gt;0.7&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;features.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;img src=&quot;/img/article/features.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;：&lt;/p&gt;
-&lt;p&gt;alpha 表示透明度，0表示全透明，1表示完全不透明。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;Matplotlib&quot;&gt;Matplotlib&lt;/h1&gt;&lt;p&gt;&lt;em&gt;matplotlib 是python最著名的绘图库，它提供了一整套和matlab相似的命令API，十分适合交互式地行制图。而且也可以方便地将它作为绘图控件，嵌入GUI应用程序中。&lt;/em&gt;&lt;/p&gt;
-&lt;h2 id=&quot;优势&quot;&gt;优势&lt;/h2&gt;&lt;p&gt;作为python上最有名气的绘图库:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Matlab的语法
-    
-    </summary>
-    
-      <category term="Python" scheme="http://peihao.space/categories/Python/"/>
-    
-    
-      <category term="Python" scheme="http://peihao.space/tags/Python/"/>
-    
-      <category term="matplotlib" scheme="http://peihao.space/tags/matplotlib/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Python中的numpy</title>
     <link href="http://peihao.space/2016/03/17/numpy/"/>
     <id>http://peihao.space/2016/03/17/numpy/</id>
@@ -1441,134 +1361,123 @@
   </entry>
   
   <entry>
-    <title>洗白BT文件</title>
-    <link href="http://peihao.space/2016/03/16/alter_torrent/"/>
-    <id>http://peihao.space/2016/03/16/alter_torrent/</id>
-    <published>2016-03-16T14:23:35.000Z</published>
-    <updated>2016-04-05T12:55:46.042Z</updated>
+    <title>Matplotlib快速绘图</title>
+    <link href="http://peihao.space/2016/03/17/Matplotlib%E5%BF%AB%E9%80%9F%E7%BB%98%E5%9B%BE/"/>
+    <id>http://peihao.space/2016/03/17/Matplotlib快速绘图/</id>
+    <published>2016-03-17T14:23:35.000Z</published>
+    <updated>2016-03-17T15:12:28.997Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;img src=&quot;http://www.bt.com.au/images/homepage/panotile001.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;写在前面&quot;&gt;写在前面&lt;/h1&gt;&lt;p&gt;接着上篇文章，&lt;a href=&quot;/2016/03/14/torrent/&quot;&gt;torrent文件编码&lt;/a&gt;.在&lt;code&gt;torrent文件编码&lt;/code&gt;这篇文章的开始我就说过，种子文件对于青年男士有着巨大的诱惑力。我也不例外，由于国内文化教育方面抓的比较紧，所以某些领域的文件信息无法通过种子文件离线下载、进入高速通道。这个实现的原理很简单，直接通过扫描种子文件的tracker、服务器地址显然不可取，那就遍历&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;torrent包含的文件名吧，这些文件往往会有很多露骨的字眼，净网行动进行了这么多年，文化教育领域对付这一套显然很有心得。&lt;/p&gt;
-&lt;p&gt;下面我们就先看一下torrent文件包含的文件吧，当然不是通过BT下载器：）&lt;/p&gt;
-&lt;h1 id=&quot;libtorrent&quot;&gt;libtorrent&lt;/h1&gt;&lt;p&gt;不造轮子，从我做起。网络上已经有大牛们制作的torrent库，其中最流行的应该就是libtorrent。  &lt;/p&gt;
-&lt;p&gt;&lt;em&gt;LibTorrent 是一个C++ 语言的 BitTorrent 开发库，支持 Linux/Unix 系统。旨在提供高性能和良好代码风格的 BT 开发包。该开发包与其他包不同的是，它直接通过网络堆栈抓取文件页，因此性能是官方客户端的三倍。&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;libtorrent的python版本：&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Building the libtorrent python bindings will produce a shared library (DLL) which is a python module that can be imported in a python program.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;libtorrent API的中文翻译&lt;a href=&quot;http://ksharpdabu.ctfile.com/file/18920987&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;戳这里&lt;/a&gt;,当然没有python版本的API文件，不过既然已经安装了libtorrent的python binding，熟悉C++的API也是必做的一步。有条件的筒子们还是建议去读英文版的API吧&lt;a href=&quot;http://www.libtorrent.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Here&lt;/a&gt;，虽然我也不知道为什么这样推荐。&lt;/p&gt;
-&lt;h1 id=&quot;torrent_info&quot;&gt;torrent_info&lt;/h1&gt;&lt;p&gt;上篇文章已经介绍了torrent文件包含的基本结构，一般来讲，简单的torrent文件有以下内容:&lt;/p&gt;
+    <content type="html">&lt;h1 id=&quot;Matplotlib&quot;&gt;Matplotlib&lt;/h1&gt;&lt;p&gt;&lt;em&gt;matplotlib 是python最著名的绘图库，它提供了一整套和matlab相似的命令API，十分适合交互式地行制图。而且也可以方便地将它作为绘图控件，嵌入GUI应用程序中。&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&quot;优势&quot;&gt;优势&lt;/h2&gt;&lt;p&gt;作为python上最有名气的绘图库:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;info&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;包含文件的信息files、torrent显示的文件名name、发行商publisher-url。注意这里torrent文件名并不是那个我们可以简单通过重命名定义的name，而是torrent指向的那个大的文件或者文件夹名。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;comment&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;种子文件的注释&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;encoding&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;目前一般为utf-8&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;creation date&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;该关键字对应的值存放的是种子文件创建的时间&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;announce-list&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;存放的是备用Tracker的URL&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;created by&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;值存放生成种子文件的BT客户端软件的信息，如客户端名、版本号&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;nodes&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;包含一系列ip和相应端口的列表，是用于连接DHT初始node。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;announce&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Tracker的URL&lt;/p&gt;
-&lt;p&gt;其中我们最常用的信息就是&lt;code&gt;info&lt;/code&gt;字段，里面包含我们需要的大部分信息。&lt;/p&gt;
-&lt;p&gt;种子文件分为单文件种子以及多文件种子：&lt;/p&gt;
-&lt;h2 id=&quot;单文件&quot;&gt;单文件&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;name&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;要下载的文件名字&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;length&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;要下载文件的大小（单位为byte）&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;piece length&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;要下载文件按照piece length指定大小分片，此处指明单个分片大小。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;pieces&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;存储每个分片的SHA1值(每个SHA1的hash长度为20byte)&lt;/p&gt;
-&lt;h2 id=&quot;多文件&quot;&gt;多文件&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;files  &lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;表示该torrent为多文件形式，每个文件都是dictionary类型数据表示。 &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;name&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;表示多个文件存储在以name命名的文件夹。 &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;length&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;要下载文件的大小（单位为byte） &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;path&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;指出要下载文件存储相对于name字段表示的文件夹的位置。    &lt;/p&gt;
-&lt;p&gt;假设name为dir1，此时： &lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;如果path值为file1.rmvb，表示file1.rmvb的存储路径为dir1\file1.rmvb  &lt;/p&gt;
+&lt;li&gt;Matlab的语法&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;python语言&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;如果path值为dir2\file1.rmvb，表示file1.rmvb的存储路径为dir1\dir2\file1.rmvb&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;latex的画图质量&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;可以使用内嵌的latex引擎绘制的数学公式&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;快速绘图&quot;&gt;快速绘图&lt;/h2&gt;&lt;p&gt;matplotlib实际上是一套面向对象的绘图库，它所绘制的图表中的每个绘图元素，例如线条Line2D、文字Text、刻度等在内存中都有一个对象与之对应。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;为了方便快速绘图matplotlib通过pyplot模块提供了一套和MATLAB类似的绘图API，将众多绘图对象所构成的复杂结构隐藏在这套API内部。我们只需要调用pyplot模块所提供的函数就可以实现快速绘图以及设置图表的各种细节。&lt;/em&gt;pyplot模块虽然用法简单，但不适合在较大的应用程序中使用。&lt;/p&gt;
+&lt;p&gt;为了将面向对象的绘图库包装成只使用函数的调用接口，pyplot模块的内部保存了当前图表以及当前子图等信息。当前的图表和子图可以使用&lt;code&gt;plt.gcf()&lt;/code&gt;和&lt;code&gt;plt.gca()&lt;/code&gt;获得，分别表示&lt;em&gt;“Get Current Figure”&lt;/em&gt;和&lt;em&gt;“Get Current Axes”&lt;/em&gt;。在pyplot模块中，许多函数都是对当前的&lt;code&gt;Figure&lt;/code&gt;或&lt;code&gt;Axes&lt;/code&gt;对象进行处理&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;plt.plot()&lt;/code&gt;实际上会通过plt.gca()获得当前的Axes对象ax，然后再调用ax.plot()方法实现真正的绘图&lt;/p&gt;
+&lt;h1 id=&quot;柱状图&quot;&gt;柱状图&lt;/h1&gt;&lt;h2 id=&quot;横向&quot;&gt;横向&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/img/article/barh.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; plt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.rcdefaults()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; np&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;people = (&lt;span class=&quot;string&quot;&gt;&#39;James&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Durant&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Kobe&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Wade&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Curry&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Magic&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Hardan&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y_pos = np.arange(len(people))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;performance = &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; + &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; * np.random.rand(len(people)) &lt;span class=&quot;comment&quot;&gt;#随机产生len(people)个 [0,1）的数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;error = np.random.rand(len(people))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.barh(y_pos, performance, xerr=error, align=&lt;span class=&quot;string&quot;&gt;&#39;center&#39;&lt;/span&gt;, alpha=&lt;span class=&quot;number&quot;&gt;0.4&lt;/span&gt;)&lt;span class=&quot;comment&quot;&gt;#这里是产生横向柱状图 barh h--horizontal&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.yticks(y_pos, people)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.xlabel(&lt;span class=&quot;string&quot;&gt;&#39;Performance&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.title(&lt;span class=&quot;string&quot;&gt;&#39;How efficient do you want to go today?&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;barh.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;纵向&quot;&gt;纵向&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/img/article/bar.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;people = (&lt;span class=&quot;string&quot;&gt;&#39;James&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Durant&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Kobe&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Wade&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Curry&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Magic&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;Hardan&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;x_pos = np.arange(len(people))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;performance = &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; + &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; * np.random.rand(len(people)) &lt;span class=&quot;comment&quot;&gt;#随机产生len(people)个 [0,1）的数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;error = np.random.rand(len(people))/&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.bar(x_pos, performance, xerr=error, align=&lt;span class=&quot;string&quot;&gt;&#39;center&#39;&lt;/span&gt;, alpha=&lt;span class=&quot;number&quot;&gt;0.4&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.xticks(x_pos, people)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.ylabel(&lt;span class=&quot;string&quot;&gt;&#39;Performance&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.title(&lt;span class=&quot;string&quot;&gt;&#39;How efficient do you want to go today?&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;bar.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;解析&quot;&gt;解析&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;plt.rcdefaults()&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;恢复 rc 的默认设置&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;code&gt;barh()&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;主要功能&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;：做一个横向条形图，横向条的矩形大小为: left, left + width, bottom, bottom + height&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bar()&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;主要功能&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;：做一个纵向条形图，纵向条的矩形大小为: left, left + width, bottom, bottom + height&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;：barh ( bottom , width , height =0.8, left =0, ** kwargs )&lt;/p&gt;
+&lt;p&gt;：bar  ( bottom , width , height =0.8, left =0, ** kwargs )&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;返回类型&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;：一个 class 类别，matplotlib.patches.Rectangle实例&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参数说明&lt;br&gt;：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;bottom&lt;/code&gt;: Bars 的垂直位置的底部边缘&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;width&lt;/code&gt;: Bars 的长度&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;ul&gt;
-&lt;li&gt;piece length&lt;/li&gt;
+&lt;li&gt;可选参数：&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;要下载文件安装piece length指定大小分片，此处指明单个分片大小。 &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;pieces&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;存储每个分片的SHA1值（每个SHA1的hash长度为20字节）&lt;/p&gt;
-&lt;p&gt;下面是子啊python下使用libtorrent库对torrent文件的操作:&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# -*- coding: utf-8 -*-&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; libtorrent &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; lt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;bt=lt.torrent_info(filepath)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;bt.files()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#返回一个包含文件的列表&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;bt.nodes()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#返回DHT初始node&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;bt.name()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#返回torrent文件名&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;bt.pieces()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#分片SHA1值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h1 id=&quot;洗白&quot;&gt;洗白&lt;/h1&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;s= lt.bdecode(open(filepath, &lt;span class=&quot;string&quot;&gt;&#39;rb&#39;&lt;/span&gt;).read())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#通过对应的解码算法获取torrent文件的内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 修改说明文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; s:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; len(re.findall(&lt;span class=&quot;string&quot;&gt;&#39;comment.*?&#39;&lt;/span&gt;,item)):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        s[item]=str(s[item].__hash__())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#修改torrent文件名，保持了原来的文件格式&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;alertFileName&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(dic)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; i &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; dic:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; len(re.findall(&lt;span class=&quot;string&quot;&gt;&#39;(name).*?&#39;&lt;/span&gt;,i)):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; dic[i].find(&lt;span class=&quot;string&quot;&gt;&#39;.&#39;&lt;/span&gt;)&amp;lt;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                        dic[i]=&lt;span class=&quot;string&quot;&gt;&#39;[peihao.space]&#39;&lt;/span&gt;+str(&lt;span class=&quot;string&quot;&gt;b&#39;x&#39;&lt;/span&gt;)+str(path.__hash__())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; :&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                tem=dic[i].split(&lt;span class=&quot;string&quot;&gt;&#39;.&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                tem[len(tem)-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]=(re.findall(&lt;span class=&quot;string&quot;&gt;&#39;(\w+).*?&#39;&lt;/span&gt;,tem[len(tem)-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]))[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                dic[i]=&lt;span class=&quot;string&quot;&gt;&#39;[peihao.space]&#39;&lt;/span&gt;+str(&lt;span class=&quot;string&quot;&gt;b&#39;a&#39;&lt;/span&gt;)+str(tem[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;].__hash__())+&lt;span class=&quot;string&quot;&gt;&quot;.&quot;&lt;/span&gt;+tem[len(tem)-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#判断种子文件是否是多文件结构&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;isMultiFiles&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(dict)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; i &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; dict[&lt;span class=&quot;string&quot;&gt;&#39;info&#39;&lt;/span&gt;]:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; i==&lt;span class=&quot;string&quot;&gt;&#39;files&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;False&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#深度修改所有包含文件的名字 并保持原有文件格式&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;deepSetFilesName&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(dict)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; dict:&lt;span class=&quot;comment&quot;&gt;#item是一个个包含文件信息的序列&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; info &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; item:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; len(re.findall(&lt;span class=&quot;string&quot;&gt;&#39;(path).*?&#39;&lt;/span&gt;,info)):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; i &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; range(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,len(item[info])):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    path=item[info][i]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; path.find(&lt;span class=&quot;string&quot;&gt;&#39;.&#39;&lt;/span&gt;)&amp;lt;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                        item[info][i]=&lt;span class=&quot;string&quot;&gt;&#39;[peihao.space]&#39;&lt;/span&gt;+str(&lt;span class=&quot;string&quot;&gt;b&#39;x&#39;&lt;/span&gt;)+str(path.__hash__())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; :&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                        tem=path.split(&lt;span class=&quot;string&quot;&gt;&#39;.&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                        tem[len(tem)-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]=(re.findall(&lt;span class=&quot;string&quot;&gt;&#39;(\w+).*?&#39;&lt;/span&gt;,tem[len(tem)-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]))[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                        item[info][i]=&lt;span class=&quot;string&quot;&gt;&#39;[peihao.space]&#39;&lt;/span&gt;+str(&lt;span class=&quot;string&quot;&gt;b&#39;a&#39;&lt;/span&gt;)+str(tem[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;].__hash__())+&lt;span class=&quot;string&quot;&gt;&quot;.&quot;&lt;/span&gt;+tem[len(tem)-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 种子转磁力链&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;bt2mag&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(name)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    bt=lt.torrent_info(name)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;magnet:?xt=urn:btih:%s&amp;amp;dn=%s&quot;&lt;/span&gt; % (bt.info_hash(), bt.name())&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h1 id=&quot;效果&quot;&gt;效果&lt;/h1&gt;&lt;p&gt;将生成的种子洗白程序用Tk造了一个壳子，效果如下&lt;/p&gt;
-&lt;p&gt;原来的torrent内容:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/torrent1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;generate之后内容:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/torrent2.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://www.jianguoyun.com/p/DU66dOgQpYz2BRi_0RI&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;程序下载戳这里1&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;height: bars 的高度&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://drive.google.com/file/d/0B-dTuxrWHzSzNldSeGkyS09UZ28/view?usp=sharing&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;或者这里:)&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;left: bars 左边缘 x 轴坐标值&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p&gt;color: bars 颜色&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;edgecolor: bars 边缘颜色&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;linewidth: bar 边缘宽度;None 表示默认宽度;0 表示不 i 绘制边缘&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;xerr: 若不为 None,将在 bar 图上生成 errobars&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;yerr: 若不为 None,将在 bar 图上生成 errobars&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;ecolor: 指定 errorbar 颜色&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;capsize: 指定 errorbar 的顶部(cap)长度&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;align: &lt;code&gt;edge&lt;/code&gt; (默认) | &lt;code&gt;center&lt;/code&gt;:&lt;code&gt;edge&lt;/code&gt;以底部为准对齐;&lt;code&gt;center&lt;/code&gt;以 y 轴作为中心&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;log: [False|True] False (默认),若为 True,使用 log 坐标&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;图形填充&quot;&gt;图形填充&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;/img/article/fill.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; np&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; plt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;x = np.linspace(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y = np.sin(&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; * np.pi * x) * np.exp(-&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt; * x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.fill(x, y, &lt;span class=&quot;string&quot;&gt;&#39;c&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.grid(&lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;fill.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;： grid 表示是否显示图轴网格。函数原型 matplotlib.pyplot.grid(b=None, which=’major’, axis=’both’, **kwargs)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;调用形式： &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;有多个版本python时，使用各自版本的Script一定要注意，像如果我要使用&lt;code&gt;pyinstaller&lt;/code&gt;这个软件生成exe，最好在环境变量中先将想使用的有关python版本的路径放置在最前面&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;pyinstaller -i=favicon.ico -F -w torrent.py&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;因为这里不止要保证pyinstaller的版本正确（可以用 绝对路径/pyinstaller.exe确认），隐式的python版本没办法显式设定，所以把在环境变量中的路径先更新，使用完之后在还原即可。&lt;/p&gt;
+&lt;p&gt;grid(self, b=None, which=’major’, axis=’both’, **kwargs)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;主要参数：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;b&lt;/code&gt;： [True|False]或者是布尔数组、或[‘on’,‘off’] 表示网格是否开启&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;which&lt;/code&gt;： [major(默认)|minor|both] 选择主、次网格开启方式&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;axis&lt;/code&gt;： [both(默认)|x|y] 选择使用网格的数轴&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;x = np.linspace(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; * np.pi, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y1 = np.sin(x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y2 = np.sin(&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; * x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.fill(x, y1, &lt;span class=&quot;string&quot;&gt;&#39;b&#39;&lt;/span&gt;, x, y2, &lt;span class=&quot;string&quot;&gt;&#39;c&#39;&lt;/span&gt;, alpha=&lt;span class=&quot;number&quot;&gt;0.7&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plt.savefig(&lt;span class=&quot;string&quot;&gt;&quot;features.png&quot;&lt;/span&gt;,format=&lt;span class=&quot;string&quot;&gt;&quot;png&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/article/features.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;alpha 表示透明度，0表示全透明，1表示完全不透明。&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;p&gt;&lt;img src=&quot;http://www.bt.com.au/images/homepage/panotile001.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;写在前面&quot;&gt;写在前面&lt;/h1&gt;&lt;p&gt;接着上篇文章，&lt;a href=&quot;/2016/03/14/torrent/&quot;&gt;torrent文件编码&lt;/a&gt;.在&lt;code&gt;torrent文件编码&lt;/code&gt;这篇文章的开始我就说过，种子文件对于青年男士有着巨大的诱惑力。我也不例外，由于国内文化教育方面抓的比较紧，所以某些领域的文件信息无法通过种子文件离线下载、进入高速通道。这个实现的原理很简单，直接通过扫描种子文件的tracker、服务器地址显然不可取，那就遍历
+      &lt;h1 id=&quot;Matplotlib&quot;&gt;Matplotlib&lt;/h1&gt;&lt;p&gt;&lt;em&gt;matplotlib 是python最著名的绘图库，它提供了一整套和matlab相似的命令API，十分适合交互式地行制图。而且也可以方便地将它作为绘图控件，嵌入GUI应用程序中。&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&quot;优势&quot;&gt;优势&lt;/h2&gt;&lt;p&gt;作为python上最有名气的绘图库:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Matlab的语法
     
     </summary>
     
-      <category term="torrent" scheme="http://peihao.space/categories/torrent/"/>
+      <category term="Python" scheme="http://peihao.space/categories/Python/"/>
     
     
-      <category term="torrent" scheme="http://peihao.space/tags/torrent/"/>
+      <category term="Python" scheme="http://peihao.space/tags/Python/"/>
     
-      <category term="编码" scheme="http://peihao.space/tags/%E7%BC%96%E7%A0%81/"/>
+      <category term="matplotlib" scheme="http://peihao.space/tags/matplotlib/"/>
     
   </entry>
   
