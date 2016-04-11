@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>基于ISE的实现 | 窗外临街</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="所谓实现（Implement）是将综合输出的逻辑网表翻译成所选器件的底层模块与硬件原语，将设计映射到器件结构上，进行布局布线，达到在选定器件上实现设计的目的。实现主要分为3个步骤：翻译（Translate）逻辑网表，映射（Map）到器件单元与布局布线（Place &amp;amp; Route）。翻译的主要作用是将综合输出的逻辑网表翻译为Xilinx特定器件的底层结构和硬件原语（具体的原语详见第3章中的原">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于ISE的实现">
+<meta property="og:url" content="http://peihao.space/2015/04/12/ise-implements/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="所谓实现（Implement）是将综合输出的逻辑网表翻译成所选器件的底层模块与硬件原语，将设计映射到器件结构上，进行布局布线，达到在选定器件上实现设计的目的。实现主要分为3个步骤：翻译（Translate）逻辑网表，映射（Map）到器件单元与布局布线（Place &amp;amp; Route）。翻译的主要作用是将综合输出的逻辑网表翻译为Xilinx特定器件的底层结构和硬件原语（具体的原语详见第3章中的原">
+<meta property="og:updated_time" content="2016-04-11T13:26:33.698Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于ISE的实现">
+<meta name="twitter:description" content="所谓实现（Implement）是将综合输出的逻辑网表翻译成所选器件的底层模块与硬件原语，将设计映射到器件结构上，进行布局布线，达到在选定器件上实现设计的目的。实现主要分为3个步骤：翻译（Translate）逻辑网表，映射（Map）到器件单元与布局布线（Place &amp;amp; Route）。翻译的主要作用是将综合输出的逻辑网表翻译为Xilinx特定器件的底层结构和硬件原语（具体的原语详见第3章中的原">
+  
+    <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a706fa9fd732d608b9ad7e589d371545";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="baidu_js_push">
+	<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</div>
+<div class="overlay"> 
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div align="left" style="margin-top:6px;">
+<p style="color:#cccc99;font-size:90%">您好，培豪的第<span id="busuanzi_value_site_pv"></span>个小伙伴</p>
+</div>
+</div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">培豪</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/album">相册</a></li>
+				        
+							<li><a href="/atom.xml">Rss</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 11.43px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 12.86px;">Front End</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Gulp/" style="font-size: 10px;">Gulp</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/ISE/" style="font-size: 10px;">ISE</a> <a href="/tags/JQuery/" style="font-size: 11.43px;">JQuery</a> <a href="/tags/NoC/" style="font-size: 14.29px;">NoC</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Python/" style="font-size: 18.57px;">Python</a> <a href="/tags/Requests/" style="font-size: 12.86px;">Requests</a> <a href="/tags/Router/" style="font-size: 12.86px;">Router</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/Verilog/" style="font-size: 17.14px;">Verilog</a> <a href="/tags/Verilog-HDL/" style="font-size: 15.71px;">Verilog HDL</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/front-end/" style="font-size: 10px;">front end</a> <a href="/tags/hexo优化/" style="font-size: 11.43px;">hexo优化</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/matplotlib/" style="font-size: 11.43px;">matplotlib</a> <a href="/tags/noc/" style="font-size: 11.43px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/re/" style="font-size: 11.43px;">re</a> <a href="/tags/router/" style="font-size: 12.86px;">router</a> <a href="/tags/torrent/" style="font-size: 11.43px;">torrent</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/仿真/" style="font-size: 12.86px;">仿真</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/编码/" style="font-size: 12.86px;">编码</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 11.43px;">随感</a> <a href="/tags/随笔/" style="font-size: 14.29px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">衣服晒干风在穿，我一个人，很简单，自己放纵自己管…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">培豪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">培豪</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/album">相册</a></li>
+		        
+					<li><a href="/atom.xml">Rss</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-ise-implements" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/04/12/ise-implements/" class="article-date">
+  	<time datetime="2015-04-12T06:17:22.000Z" itemprop="datePublished">2015-04-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      基于ISE的实现
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Verilog/">Verilog</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Verilog/">Verilog</a>
+	</div>
+
+
+
+		
+		<div class="bookicon"></div>
+		<div class="article-hit">
+		<span id="busuanzi_container_page_pv">
+  Hits <span id="busuanzi_value_page_pv"></span>次</span>
+	</div>
+	
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	      	<!-- Table of Contents -->
+			
+			  <div id="toc" class="toc-article">
+			    <strong class="toc-title">文章目录</strong>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#翻译过程"><span class="toc-number">1.</span> <span class="toc-text">翻译过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#映射过程"><span class="toc-number">2.</span> <span class="toc-text">映射过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#布局和布线过程"><span class="toc-number">3.</span> <span class="toc-text">布局和布线过程</span></a></li></ol>
+			  </div>
+			
+        <p>所谓实现（Implement）是将综合输出的逻辑网表翻译成所选器件的底层模块与硬件原语，将设计映射到器件结构上，进行布局布线，达到在选定器件上实现设计的目的。实现主要分为3个步骤：翻译（Translate）逻辑网表，映射（Map）到器件单元与布局布线（Place &amp; Route）。翻译的主要作用是将综合输出的逻辑网表翻译为Xilinx特定器件的底层结构和硬件原语（具体的原语详见第3章中的原语介绍）。映射的主要作用是将设计映射到具体型号的器件上（LUT、FF、Carry等）。布局布线步骤调用Xilinx布局布线器，根据用户约束和物理约束，对设计模块进行实际的布局，并根据设计连接，对布局后的模块进行布线，产生FPGA/CPLD配置文件。 </p>
+<h1 id="翻译过程">翻译过程</h1><p>在翻译过程中，设计文件和约束文件将被合并生成NGD（原始类型数据库）输出文件和BLD文件，其中NGD文件包含了当前设计的全部逻辑描述，BLD文件是转换的运行和结果报告。实现工具可以导入EDN、EDF、EDIF、SEDIF格式的设计文件，以及UCF（用户约束文件）、NCF（网表约束文件）、NMC（物理宏库文件）、NGC（含有约束信息的网表）格式的约束文件。翻译项目包括3个命令：</p>
+<ul>
+<li>[Translation Report]用以显示翻译步骤的报告；<a id="more"></a></li>
+<li><p>[Floorplan Design]用以启动Xilinx布局规划器（Floorplanner）进行手动布局，提高布局器效率；</p>
+</li>
+<li><p>[Generate Post-Translate Simulation Model]用以产生翻译步骤后仿真模型，由于该仿真模型不包含实际布线时延，所以有时省略此仿真步骤。</p>
+</li>
+</ul>
+<h1 id="映射过程">映射过程</h1><p>在映射过程中，由转换流程生成的NGD文件将被映射为目标器件的特定物理逻辑单元，并保存在NCD（展开的物理设计数据库）文件中。映射的输入文件包括NGD、NMC、NCD和MFP（映射布局规划器）文件，输出文件包括NCD、PCF（物理约束文件）、NGM和MRP（映射报告）文件。其中MRP文件是通过Floorplanner生成的布局约束文件，NCD文件包含当前设计的物理映射信息，PCF文件包含当前设计的物理约束信息，NGM文件与当前设计的静态时序分析有关，MRP文件是映射的运行报告，主要包括映射的命令行参数、目标设计占用的逻辑资源、映射过程中出现的错误和告警、优化过程中删除的逻辑等内容。映射项目包括如下命令：</p>
+<ul>
+<li><p>[Map Report]用以显示映射步骤的报告；</p>
+</li>
+<li><p>[Generate Post-Map Static Timing]产生映射静态时序分析报告，启动时序分析器（Timing Analyzer）分析映射后静态时序；</p>
+</li>
+<li><p>[Manually Place &amp; Route （FPGA Editor）]用以启动FPGA底层编辑器进行手动布局布线，指导Xilinx自动布局布线器，解决布局布线异常，提高布局布线效率；</p>
+</li>
+<li><p>[Generate Post-Map Simulation Model]用以产生映射步 骤后仿真模型，由于该仿真模型不包含实际布线时延，所以有时也省略此仿真步骤。 </p>
+</li>
+</ul>
+<h1 id="布局和布线过程">布局和布线过程</h1><p>布局和布线（Place &amp; Route）：通过读取当前设计的NCD文件，布局布线将映射后生成的物理逻辑单元在目标系统中放置和连线，并提取相应的时间参数。布局布线的输入文件包括NCD和PCF模板文件，输出文件包括NCD、DLY（延时文件）、PAD和PAR文件。在布局布线的输出文件中，NCD包含当前设计的全部物理实现信息，DLY文件包含当前设计的网络延时信息，PAD文件包含当前设计的输入输出（I/O）管脚配置信息，PAR文件主要包括布局布线的命令行参数、布局布线中出现的错误和告警、目标占用的资源、未布线网络、网络时序信息等内容。布局布线步骤的命令与工具非常多：</p>
+<ul>
+<li><p>[Place &amp; Route Report]用以显示布局布线报告；</p>
+</li>
+<li><p>[Asynchronous Delay Report]用以显示异步实现报告；</p>
+</li>
+<li><p>[Pad Report]用以显示管脚锁定报告；</p>
+</li>
+<li><p>[Guide Results Report]用以显示布局布线指导报告，该报告仅在使用布局布线指导文件NCD文件后才产生；</p>
+</li>
+<li><p>[Generate Post-Place &amp; Route Static Timing]包含了进行布局布线后静态时序分析的一系列命令，可以启动Timing Analyzer分析布局布线后的静态时序；</p>
+</li>
+<li><p>[View/Edit Place Design（Floorplanner）]和[View/Edit Place Design（FPGA Editor）]用以启动Floorplanner和FPGA Editor完成FPGA布局布线的结果分析、编辑，手动更改布局布线结果，产生布局布线指导与约束文件，辅助Xilinx自动布局布线器，提高布局布线效率并解决布局布线中的问题；</p>
+</li>
+<li><p>[Analyze Power（XPower）]用以启动功耗仿真器分析设计功耗；</p>
+</li>
+<li><p>[Generate Post-Place &amp; Route Simulation Model]用以产生布局布线后仿真模型，该仿真模型包含的时延信息最全，不仅包含门延时，还包含了实际布线延时。该仿真步骤必须进行，以确保设计功能与FPGA实际运行结果一致；</p>
+</li>
+<li><p>[Generate IBIS Model]用以产生IBIS仿真模型，辅助PCB布板的仿真与设计；</p>
+</li>
+<li><p>[Multi Pass Place &amp; Route]用以进行多周期反复布线；</p>
+</li>
+<li><p>[Back-annotate Pin Locations]用以反标管脚锁定信息</p>
+</li>
+</ul>
+<p>经过综合后，在过程管理区双击“Implement Design”选项，就可以完成实现.经过实现后能够得到精确的资源占用情况。 </p>
+
+      
+      
+	<! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &weierp;&weierp;&weierp;<br>
+		   得到的是侥幸，失去的是人生
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/wx.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+
+	
+			<! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+本文由<b><a href="/index.html" target="_blank" title="培豪">培豪</a></b>创作和发表,采用<b>BY</b>-<b>NC</b>-<b>SA</b>国际许可协议进行许可
+
+转载请注明作者及出处,本文作者为<b><a href="/index.html" target="_blank" title="培豪">培豪</a></b>,本文标题为<b><a href="/2015/04/12/ise-implements/" target="_blank" title="基于ISE的实现">基于ISE的实现</a></b>
+
+本文链接为<b><a href="/2015/04/12/ise-implements/" target="_blank" title="基于ISE的实现">http://peihao.space/2015/04/12/ise-implements/</a></b>.
+</div>
+<! -- 添加版权信息 -->
+		
+    </div>
+    
+  </div>
+
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/06/05/some-css-selector/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          一些CSS选择器
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/04/12/ise-synthesize/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">基于Xilinx的Synthesize</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+  
+		
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="ise-implements" data-title="基于ISE的实现" data-url="http://peihao.space/2015/04/12/ise-implements/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"chuangwailinjie"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 培豪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<div id="totop" style="position:fixed;bottom:100px;right:30px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>

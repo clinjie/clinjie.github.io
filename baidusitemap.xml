@@ -4,12 +4,72 @@
 
     
   <url>
-    <loc>http://peihao.space/2015/04/10/verilog-testbench-intro/</loc>
-    <lastmod>2016-04-10T14:15:53.675Z</lastmod>
+    <loc>http://peihao.space/2016/04/11/verilog-testbench-intro/</loc>
+    <lastmod>2016-04-11T13:27:10.955Z</lastmod>
     <data>
         <display>
         <title>Verilog的testbench入门</title>
-        <pubTime>2015-04-10T06:17:22.000Z</pubTime>
+        <pubTime>2016-04-11T06:17:22.000Z</pubTime>
+        
+        <tag>Verilog</tag>
+         
+         
+           
+             
+              <breadCrumb title="Verilog" url="http://peihao.space/categories/Verilog/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2015/04/12/ise-implements/</loc>
+    <lastmod>2016-04-11T13:26:33.698Z</lastmod>
+    <data>
+        <display>
+        <title>基于ISE的实现</title>
+        <pubTime>2015-04-12T06:17:22.000Z</pubTime>
+        
+        <tag>Verilog</tag>
+         
+         
+           
+             
+              <breadCrumb title="Verilog" url="http://peihao.space/categories/Verilog/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2015/04/12/ise-synthesize/</loc>
+    <lastmod>2016-04-11T13:26:24.249Z</lastmod>
+    <data>
+        <display>
+        <title>基于Xilinx的Synthesize</title>
+        <pubTime>2015-04-12T06:17:22.000Z</pubTime>
+        
+        <tag>Verilog</tag>
+         
+         
+           
+             
+              <breadCrumb title="Verilog" url="http://peihao.space/categories/Verilog/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2015/04/12/verilog-setvalue/</loc>
+    <lastmod>2016-04-11T10:00:07.948Z</lastmod>
+    <data>
+        <display>
+        <title>verilog过程块与赋值</title>
+        <pubTime>2015-04-12T06:17:22.000Z</pubTime>
         
         <tag>Verilog</tag>
          
@@ -25,11 +85,31 @@
     
   <url>
     <loc>http://peihao.space/2015/04/10/verilog-testbench-note/</loc>
-    <lastmod>2016-04-10T14:15:37.839Z</lastmod>
+    <lastmod>2016-04-11T09:00:04.089Z</lastmod>
     <data>
         <display>
         <title>Verilog的testbench笔记</title>
         <pubTime>2015-04-10T11:17:22.000Z</pubTime>
+        
+        <tag>Verilog</tag>
+         
+         
+           
+             
+              <breadCrumb title="Verilog" url="http://peihao.space/categories/Verilog/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2015/04/11/verilog-testbench-001/</loc>
+    <lastmod>2016-04-11T08:03:33.681Z</lastmod>
+    <data>
+        <display>
+        <title>testbench实例</title>
+        <pubTime>2015-04-11T06:17:22.000Z</pubTime>
         
         <tag>Verilog</tag>
          
