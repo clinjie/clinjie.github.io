@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://peihao.space/2016/04/13/verilog-testbench-note/</loc>
+    
+    <lastmod>2016-04-13T13:12:20.203Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://peihao.space/2015/04/14/router-source-file-architecture-packet-source/</loc>
+    
+    <lastmod>2016-04-13T08:21:02.699Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://peihao.space/2016/04/13/%E5%B0%8F%E8%AE%B03/</loc>
+    
+    <lastmod>2016-04-13T07:54:57.543Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://peihao.space/2016/04/12/verilog-testbench-001/</loc>
     
     <lastmod>2016-04-12T14:03:48.398Z</lastmod>
@@ -12,20 +33,6 @@
     <loc>http://peihao.space/2015/04/14/router-source-file-architecture-Filt_sink/</loc>
     
     <lastmod>2016-04-12T14:02:43.243Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://peihao.space/2015/04/14/router-source-file-architecture-packet-source/</loc>
-    
-    <lastmod>2016-04-12T14:02:38.582Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://peihao.space/2015/04/10/verilog-testbench-note/</loc>
-    
-    <lastmod>2016-04-12T14:01:55.549Z</lastmod>
     
   </url>
   
@@ -89,13 +96,6 @@
     <loc>http://peihao.space/2016/04/09/Ise-wizard/</loc>
     
     <lastmod>2016-04-09T14:51:35.320Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://peihao.space/2016/04/08/%E5%B0%8F%E8%AE%B03/</loc>
-    
-    <lastmod>2016-04-08T15:19:58.924Z</lastmod>
     
   </url>
   

@@ -243,6 +243,86 @@ var _hmt = _hmt || [];
 </nav>
       <div class="body-wrap">
   
+    <article id="post-ise-synthesize" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/04/12/ise-synthesize/" class="article-date">
+  	<time datetime="2015-04-12T06:17:22.000Z" itemprop="datePublished">2015-04-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/12/ise-synthesize/">基于Xilinx的Synthesize</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>所谓综合，就是讲HDL语言、原理图等设计输入翻译成由与、或、非们和RAM、触发器登记本逻辑单元的逻辑连接（即网表）。并根据目标和要求（约束条件）优化生成的逻辑连接。</p>
+<h1 id="ISE-XST">ISE-XST</h1><p>XST是Xilinx公司自己的综合（Synthsize）工具。当我们完成输入、仿真以及管脚分配之后就可以进行综合和实现。</p>
+<p>双击Synthesize-XST，就可以完成综合。一般而言，会有三种结果：</p>
+<ul>
+<li><p>仿真完成</p>
+</li>
+<li><p>Warn警告</p>
+</li>
+<li><p>ERROR错误</p>
+</li>
+</ul>
+<p>Warn会在Synthesize-XST出现黄色警示，而Error有红色标识。</p>
+<p>综合完成之后可以通过使用XST的<code>View RTLSchematics</code>工具查看RTL级结构图。</p>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/adder-RTL.png" alt=""><br>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Verilog/">Verilog</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Verilog/">Verilog</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/04/12/ise-synthesize/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
     <article id="post-ise-implements" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -295,74 +375,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2015/04/12/ise-implements/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-verilog-testbench-note" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/04/10/verilog-testbench-note/" class="article-date">
-  	<time datetime="2015-04-10T11:17:22.000Z" itemprop="datePublished">2015-04-10</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/04/10/verilog-testbench-note/">Verilog的testbench笔记</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="并行块">并行块</h1><p>在测试中经常会用到    <code>fork...join</code>块。使用并行块能表示以同一个时间起点算起的多个时间的运行，并行的执行复杂的过程结构，如循环或任务。</p>
-<h2 id="eg">eg</h2>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Verilog/">Verilog</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Verilog/">Verilog</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/04/10/verilog-testbench-note/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

@@ -243,6 +243,79 @@ var _hmt = _hmt || [];
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Template" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/12/13/Template/" class="article-date">
+  	<time datetime="2015-12-13T13:35:02.000Z" itemprop="datePublished">2015-12-13</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/13/Template/">Pycharm模板</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>Step1</li>
+</ul>
+<p>进入<em>File-&gt;settings-&gt;Editor-&gt;File and Code Templates-&gt;Python Script</em></p>
+<ul>
+<li>Step2</li>
+</ul>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/随感/">随感</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/生活/">生活</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/12/13/Template/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
     <article id="post-小记-2" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -559,17 +632,17 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="packet-source源码结构">packet-source源码结构</h1><p>packet_source模块主要负责与数据包打交道，下属的分模块比较多。</p>
+        <h1 id="packet-source源码结构">packet-source源码结构</h1><p>packet_source模块主要负责与数据包打交道，在这里数据包由伪随机数据包模拟,下属的分模块比较多。</p>
 <ul>
 <li>waiting_packet_countq</li>
 <li>ready_packet_countq</li>
-<li>cho</li>
-<li>fci</li>
-<li>flit_validq</li>
-<li>flit_headq</li>
-<li>flit_tailq</li>
-<li>flit_sel_ovcq</li>
-<li>fcs</li>
+<li>cho  channel ouput输出信道</li>
+<li>fci  flow control input  输入端流量控制</li>
+<li>flit_validq  微片验证</li>
+<li>flit_headq 头微片寄存器</li>
+<li>flit_tailq 尾微片寄存器</li>
+<li>flit_sel_ovcq 虚拟信道微片选择</li>
+<li>fcs  VC flow control state虚拟信道流量控制状态</li>
 <li>allocatedq
       
       
@@ -745,86 +818,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2015/04/12/verilog-setvalue/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-ise-synthesize" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/04/12/ise-synthesize/" class="article-date">
-  	<time datetime="2015-04-12T06:17:22.000Z" itemprop="datePublished">2015-04-12</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/04/12/ise-synthesize/">基于Xilinx的Synthesize</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>所谓综合，就是讲HDL语言、原理图等设计输入翻译成由与、或、非们和RAM、触发器登记本逻辑单元的逻辑连接（即网表）。并根据目标和要求（约束条件）优化生成的逻辑连接。</p>
-<h1 id="ISE-XST">ISE-XST</h1><p>XST是Xilinx公司自己的综合（Synthsize）工具。当我们完成输入、仿真以及管脚分配之后就可以进行综合和实现。</p>
-<p>双击Synthesize-XST，就可以完成综合。一般而言，会有三种结果：</p>
-<ul>
-<li><p>仿真完成</p>
-</li>
-<li><p>Warn警告</p>
-</li>
-<li><p>ERROR错误</p>
-</li>
-</ul>
-<p>Warn会在Synthesize-XST出现黄色警示，而Error有红色标识。</p>
-<p>综合完成之后可以通过使用XST的<code>View RTLSchematics</code>工具查看RTL级结构图。</p>
-<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/adder-RTL.png" alt=""><br>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Verilog/">Verilog</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Verilog/">Verilog</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/04/12/ise-synthesize/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

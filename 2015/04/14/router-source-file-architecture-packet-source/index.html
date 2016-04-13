@@ -5,50 +5,38 @@
   
   <title>Router源代码架构--packet_source | 窗外临街</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="packet-source源码结构packet_source模块主要负责与数据包打交道，下属的分模块比较多。
+  <meta name="description" content="packet-source源码结构packet_source模块主要负责与数据包打交道，在这里数据包由伪随机数据包模拟,下属的分模块比较多。
 
 waiting_packet_countq
 ready_packet_countq
-cho
-fci
-flit_validq
-flit_headq
-flit_tailq
-flit_sel_ovcq
-fcs
-allocatedq">
+cho  channel ouput输出信道
+fci  flow control input  输入端流量控制
+flit_validq  微片验证
+flit_headq 头">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Router源代码架构--packet_source">
 <meta property="og:url" content="http://peihao.space/2015/04/14/router-source-file-architecture-packet-source/index.html">
 <meta property="og:site_name" content="窗外临街">
-<meta property="og:description" content="packet-source源码结构packet_source模块主要负责与数据包打交道，下属的分模块比较多。
+<meta property="og:description" content="packet-source源码结构packet_source模块主要负责与数据包打交道，在这里数据包由伪随机数据包模拟,下属的分模块比较多。
 
 waiting_packet_countq
 ready_packet_countq
-cho
-fci
-flit_validq
-flit_headq
-flit_tailq
-flit_sel_ovcq
-fcs
-allocatedq">
+cho  channel ouput输出信道
+fci  flow control input  输入端流量控制
+flit_validq  微片验证
+flit_headq 头">
 <meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/packet_source01.png">
-<meta property="og:updated_time" content="2016-04-12T14:02:38.582Z">
+<meta property="og:updated_time" content="2016-04-13T08:21:02.699Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Router源代码架构--packet_source">
-<meta name="twitter:description" content="packet-source源码结构packet_source模块主要负责与数据包打交道，下属的分模块比较多。
+<meta name="twitter:description" content="packet-source源码结构packet_source模块主要负责与数据包打交道，在这里数据包由伪随机数据包模拟,下属的分模块比较多。
 
 waiting_packet_countq
 ready_packet_countq
-cho
-fci
-flit_validq
-flit_headq
-flit_tailq
-flit_sel_ovcq
-fcs
-allocatedq">
+cho  channel ouput输出信道
+fci  flow control input  输入端流量控制
+flit_validq  微片验证
+flit_headq 头">
   
     <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
   
@@ -333,21 +321,21 @@ var _hmt = _hmt || [];
 			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#packet-source源码结构"><span class="toc-number">1.</span> <span class="toc-text">packet-source源码结构</span></a></li></ol>
 			  </div>
 			
-        <h1 id="packet-source源码结构">packet-source源码结构</h1><p>packet_source模块主要负责与数据包打交道，下属的分模块比较多。</p>
+        <h1 id="packet-source源码结构">packet-source源码结构</h1><p>packet_source模块主要负责与数据包打交道，在这里数据包由伪随机数据包模拟,下属的分模块比较多。</p>
 <ul>
 <li>waiting_packet_countq</li>
 <li>ready_packet_countq</li>
-<li>cho</li>
-<li>fci</li>
-<li>flit_validq</li>
-<li>flit_headq</li>
-<li>flit_tailq</li>
-<li>flit_sel_ovcq</li>
-<li>fcs</li>
-<li>allocatedq<a id="more"></a></li>
-<li>full_sel</li>
-<li>elig_sel</li>
-<li>flit_pendingq</li>
+<li>cho  channel ouput输出信道</li>
+<li>fci  flow control input  输入端流量控制</li>
+<li>flit_validq  微片验证</li>
+<li>flit_headq 头微片寄存器</li>
+<li>flit_tailq 尾微片寄存器</li>
+<li>flit_sel_ovcq 虚拟信道微片选择</li>
+<li>fcs  VC flow control state虚拟信道流量控制状态</li>
+<li>allocatedq<a id="more"></a>已分配寄存器</li>
+<li>full_sel 选择满的虚拟信道</li>
+<li>elig_sel 选择合适的虚拟信道</li>
+<li>flit_pendingq  微片填充</li>
 <li>sel_mc_orc_mmult</li>
 <li>sel_mc_mmult</li>
 <li>sel_orc_mc_init</li>
