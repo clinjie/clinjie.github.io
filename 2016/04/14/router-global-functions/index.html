@@ -3,40 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>电脑定时睡眠 | 窗外临街</title>
+  <title>Verilog的testbench笔记 | 窗外临街</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="原理实际上实现的原理相当简单，python可以通过os模块的system函数执行相应平台提供的系统API函数，在win平台下，有很多cmd命令行可供我们调用，有两种方式实现:
-
-通过at指令在指定时间为系统天剑一项作业
-
-计算指定时间与当前时间的差值，然后暂歇等待执行
-
-
-经过测试，at指令在某些环境下面并不能够正常执行，所以我选择了方法2.">
+  <meta name="description" content="记录下Router这个工程的几个全局函数.
+clogb12345678function integer clogb(input integer argument);   integer 		     i;   begin      clogb = 0;      for(i = argument - 1; i &amp;gt; 0; i = i &amp;gt;&amp;gt; 1)		clogb = clogb + 1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="电脑定时睡眠">
-<meta property="og:url" content="http://peihao.space/2016/02/28/电脑定时睡眠/index.html">
+<meta property="og:title" content="Verilog的testbench笔记">
+<meta property="og:url" content="http://peihao.space/2016/04/14/router-global-functions/index.html">
 <meta property="og:site_name" content="窗外临街">
-<meta property="og:description" content="原理实际上实现的原理相当简单，python可以通过os模块的system函数执行相应平台提供的系统API函数，在win平台下，有很多cmd命令行可供我们调用，有两种方式实现:
-
-通过at指令在指定时间为系统天剑一项作业
-
-计算指定时间与当前时间的差值，然后暂歇等待执行
-
-
-经过测试，at指令在某些环境下面并不能够正常执行，所以我选择了方法2.">
-<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/poweroff.png">
-<meta property="og:updated_time" content="2016-02-28T14:21:40.672Z">
+<meta property="og:description" content="记录下Router这个工程的几个全局函数.
+clogb12345678function integer clogb(input integer argument);   integer 		     i;   begin      clogb = 0;      for(i = argument - 1; i &amp;gt; 0; i = i &amp;gt;&amp;gt; 1)		clogb = clogb + 1">
+<meta property="og:updated_time" content="2016-04-14T13:01:32.299Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="电脑定时睡眠">
-<meta name="twitter:description" content="原理实际上实现的原理相当简单，python可以通过os模块的system函数执行相应平台提供的系统API函数，在win平台下，有很多cmd命令行可供我们调用，有两种方式实现:
-
-通过at指令在指定时间为系统天剑一项作业
-
-计算指定时间与当前时间的差值，然后暂歇等待执行
-
-
-经过测试，at指令在某些环境下面并不能够正常执行，所以我选择了方法2.">
+<meta name="twitter:title" content="Verilog的testbench笔记">
+<meta name="twitter:description" content="记录下Router这个工程的几个全局函数.
+clogb12345678function integer clogb(input integer argument);   integer 		     i;   begin      clogb = 0;      for(i = argument - 1; i &amp;gt; 0; i = i &amp;gt;&amp;gt; 1)		clogb = clogb + 1">
   
     <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
   
@@ -264,11 +245,11 @@ var _hmt = _hmt || [];
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-电脑定时睡眠" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-router-global-functions" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/02/28/电脑定时睡眠/" class="article-date">
-  	<time datetime="2016-02-28T13:51:24.000Z" itemprop="datePublished">2016-02-28</time>
+      <a href="/2016/04/14/router-global-functions/" class="article-date">
+  	<time datetime="2016-04-14T11:17:22.000Z" itemprop="datePublished">2016-04-14</time>
 </a>
     </div>
   
@@ -281,7 +262,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      电脑定时睡眠
+      Verilog的testbench笔记
     </h1>
   
 
@@ -290,12 +271,12 @@ var _hmt = _hmt || [];
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实用/">实用</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Verilog/">Verilog</a></li></ul>
 	</div>
 
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/python/">python</a>
+	<a class="article-category-link" href="/categories/Verilog/">Verilog</a>
 	</div>
 
 
@@ -318,40 +299,31 @@ var _hmt = _hmt || [];
 			
 			  <div id="toc" class="toc-article">
 			    <strong class="toc-title">文章目录</strong>
-			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原理"><span class="toc-number">1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现"><span class="toc-number">2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相关"><span class="toc-number">3.</span> <span class="toc-text">相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开启关闭休眠模式"><span class="toc-number">3.1.</span> <span class="toc-text">开启关闭休眠模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关命令"><span class="toc-number">3.2.</span> <span class="toc-text">相关命令</span></a></li></ol></li></ol>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#clogb"><span class="toc-number">1.</span> <span class="toc-text">clogb</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#croot"><span class="toc-number">2.</span> <span class="toc-text">croot</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pop_count"><span class="toc-number">3.</span> <span class="toc-text">pop_count</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#suffix_length"><span class="toc-number">4.</span> <span class="toc-text">suffix_length</span></a></li></ol>
 			  </div>
 			
-        <h1 id="原理">原理</h1><p>实际上实现的原理相当简单，python可以通过os模块的system函数执行相应平台提供的系统API函数，在win平台下，有很多cmd命令行可供我们调用，有两种方式实现:</p>
-<ol>
-<li><p>通过at指令在指定时间为系统天剑一项作业</p>
-</li>
-<li><p>计算指定时间与当前时间的差值，然后暂歇等待执行</p>
-</li>
-</ol>
-<p>经过测试，at指令在某些环境下面并不能够正常执行，所以我选择了方法2.</p>
+        <p>记录下Router这个工程的几个全局函数.</p>
+<h1 id="clogb">clogb</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">function integer <span class="title">clogb</span><span class="params">(input integer argument)</span></span>;</span><br><span class="line">   integer 		     i;</span><br><span class="line">   begin</span><br><span class="line">      clogb = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span>(i = argument - <span class="number">1</span>; i &gt; <span class="number">0</span>; i = i &gt;&gt; <span class="number">1</span>)</span><br><span class="line">		clogb = clogb + <span class="number">1</span>;</span><br><span class="line">   end</span><br><span class="line">endfunction</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h1 id="实现">实现</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">rh=int(time.strftime(<span class="string">"%H"</span>,time.localtime()))</span><br><span class="line">rm=int(time.strftime(<span class="string">"%M"</span>,time.localtime()))</span><br><span class="line">print(<span class="string">'当前时间:'</span>+str(rh)+<span class="string">':'</span>+str(rm))</span><br><span class="line">cmd=<span class="string">"cmd.exe /k shutdown -s -t 0"</span></span><br><span class="line">c1=<span class="keyword">True</span></span><br><span class="line"><span class="keyword">while</span> c1:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        h=int(input(<span class="string">"Please input the hour:"</span>))</span><br><span class="line">        <span class="keyword">if</span> h&gt;=<span class="number">0</span> <span class="keyword">and</span> h&lt;=<span class="number">23</span>:</span><br><span class="line">            c1=<span class="keyword">False</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">c2=<span class="keyword">True</span></span><br><span class="line"><span class="keyword">while</span> c2:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        m=int(input(<span class="string">"Please input the minute:"</span>))</span><br><span class="line">        <span class="keyword">if</span> m&gt;=<span class="number">0</span> <span class="keyword">and</span> m&lt;=<span class="number">59</span>:</span><br><span class="line">            c2=<span class="keyword">False</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">c3=<span class="keyword">True</span></span><br><span class="line"><span class="keyword">while</span> c3:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        print(<span class="string">'Please input the Mode:'</span>)</span><br><span class="line">        print(<span class="string">'1: 睡眠  2：注销'</span>)</span><br><span class="line">        print(<span class="string">'3: 关机'</span>)</span><br><span class="line">        m=int(input(<span class="string">"Please input the Mode:"</span>))</span><br><span class="line">        c3=<span class="keyword">False</span></span><br><span class="line">        <span class="keyword">if</span> m==<span class="number">3</span>:</span><br><span class="line">            cmd=<span class="string">"cmd.exe /k shutdown -s -t 0"</span></span><br><span class="line">        <span class="keyword">elif</span> m==<span class="number">1</span>:</span><br><span class="line">            cmd=<span class="string">"cmd.exe /k rundll32.exe powrprof.dll,SetSuspendState"</span></span><br><span class="line">        <span class="keyword">elif</span> m==<span class="number">2</span>:</span><br><span class="line">            cmd=<span class="string">"cmd.exe /k shutdown -l -t 0"</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            c3=<span class="keyword">True</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line"><span class="keyword">if</span> h==rh:</span><br><span class="line">    <span class="keyword">if</span> m&lt;=rm:</span><br><span class="line">        os.system(cmd)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        time.sleep((m-rm)*<span class="number">60</span>)</span><br><span class="line">        time.sleep(<span class="number">5</span>)</span><br><span class="line">        os.system(cmd)</span><br><span class="line"><span class="keyword">elif</span> h&gt;rh:</span><br><span class="line">    tem1=(h-rh-<span class="number">1</span>)*<span class="number">3600</span>+(<span class="number">60</span>-rm+m)*<span class="number">60</span></span><br><span class="line">    time.sleep(tem1)</span><br><span class="line">    time.sleep(<span class="number">5</span>)</span><br><span class="line">    os.system(cmd)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    tem2=(<span class="number">23</span>-rh+h)*<span class="number">3600</span>+(<span class="number">60</span>-rm+m)*<span class="number">60</span></span><br><span class="line">    time.sleep(tem2)</span><br><span class="line">    time.sleep(<span class="number">5</span>)</span><br><span class="line">    os.system(cmd)</span><br></pre></td></tr></table></figure>
-<h1 id="相关">相关</h1><p>程序提供了3种模式，分别是定时关机、定时注销、定时睡眠。指定这三种模式的初衷也是因为防止我晚上在床上通过Ipad使用电脑电影资源时间上的无节制。</p>
-<p>Windows下有两种相似的模式，睡眠与休眠，这两种模式的区别大家可以在专业的百科网站上面获取。正常情况下，这两种模式不能在同一时间使用，电脑性能较高的情况下，建议优先使用睡眠功能，恢复的时间更短。</p>
-<h2 id="开启关闭休眠模式">开启关闭休眠模式</h2><ol>
-<li><p>on    powercfg  -h on</p>
-</li>
-<li><p>off   powercfg  -h off</p>
-</li>
-</ol>
-<h2 id="相关命令">相关命令</h2><ul>
-<li><p>rundll32.exe powrprof.dll,SetSuspendState  &lt;睡眠（关闭休眠时）&gt;</p>
-</li>
-<li><p>shutdown -l       &lt;注销&gt;</p>
-</li>
-<li><p>shutdown -h       &lt;休眠&gt;</p>
-</li>
-<li><p>shutdown -s       &lt;关机&gt;</p>
-</li>
-<li><p>shutdown -t       &lt;设置倒计时&gt;</p>
-</li>
+<p>函数的逻辑相当简单，计算二进制参数能够右移的数目，换算成十进制，就是计算能够除2多少次。这个逻辑大家都不回陌生，就是对数函数。以2为底的对数函数。</p>
+<p>例如： res=clog(8)</p>
+<p>参数为8，结果为3.显而易见，这个函数是典型的向上取整。</p>
+<h1 id="croot">croot</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">function integer <span class="title">croot</span><span class="params">(input integer argument, input integer base)</span></span>;</span><br><span class="line">   integer i;</span><br><span class="line">   integer j;</span><br><span class="line">   begin</span><br><span class="line">      croot = <span class="number">0</span>;</span><br><span class="line">      i = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">while</span>(i &lt; argument)</span><br><span class="line">		begin</span><br><span class="line">		   croot = croot + <span class="number">1</span>;</span><br><span class="line">		   i = <span class="number">1</span>;</span><br><span class="line">		   <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; base; j = j + <span class="number">1</span>)</span><br><span class="line">		     i = i * croot;</span><br><span class="line">		end</span><br><span class="line">   end</span><br><span class="line">endfunction</span><br></pre></td></tr></table></figure>
+<p>函数有两个参数，一个是传入的需要计算的参数<code>argument</code>，另外则是<code>base</code>基数。整个函数的逻辑就是base个<code>croot</code>相乘，看是否能够大于argument。croot逐次增加，直到满足要求。同样的，函数也是向上取整</p>
+<ul>
+<li>argument:10~16 base:2</li>
 </ul>
-<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/poweroff.png" alt=""></p>
+<p>croot=4</p>
+<ul>
+<li>argument:9~27 base:3</li>
+</ul>
+<p>croot=3</p>
+<p>显然，函数的逻辑是将argument开base根.</p>
+<h1 id="pop_count">pop_count</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">function integer <span class="title">pop_count</span><span class="params">(input integer argument)</span></span>;</span><br><span class="line">   integer i;</span><br><span class="line">   begin</span><br><span class="line">      pop_count = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span>(i = argument; i &gt; <span class="number">0</span>; i = i &gt;&gt; <span class="number">1</span>)</span><br><span class="line">		pop_count = pop_count + (i &amp; <span class="number">1</span>);</span><br><span class="line">   end</span><br><span class="line">endfunction</span><br></pre></td></tr></table></figure>
+<p>判断参数最低位是否为1，然后将参数右移，继续判断，判定正确则加1.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>:<span class="number">1</span></span><br><span class="line"><span class="number">2</span>:<span class="number">1</span></span><br><span class="line"><span class="number">3</span>:<span class="number">2</span></span><br><span class="line"><span class="number">4</span>:<span class="number">1</span></span><br><span class="line"><span class="number">5</span>:<span class="number">2</span></span><br><span class="line"><span class="number">6</span>:<span class="number">2</span></span><br><span class="line"><span class="number">7</span>:<span class="number">3</span></span><br><span class="line"><span class="number">8</span>:<span class="number">1</span></span><br><span class="line"><span class="number">9</span>:<span class="number">2</span></span><br><span class="line"><span class="number">10</span>:<span class="number">2</span></span><br><span class="line"><span class="number">11</span>:<span class="number">3</span></span><br><span class="line"><span class="number">12</span>:<span class="number">2</span></span><br><span class="line"><span class="number">13</span>:<span class="number">3</span></span><br><span class="line"><span class="number">14</span>:<span class="number">3</span></span><br><span class="line"><span class="number">15</span>:<span class="number">4</span></span><br></pre></td></tr></table></figure>
+<h1 id="suffix_length">suffix_length</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">function integer <span class="title">suffix_length</span><span class="params">(input integer value1, input integer value2)</span></span>;</span><br><span class="line">   integer v1, v2;</span><br><span class="line">   begin</span><br><span class="line">      v1 = value1;</span><br><span class="line">      v2 = value2;</span><br><span class="line">      suffix_length = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">while</span>(v1 != v2)</span><br><span class="line">		begin</span><br><span class="line">		   suffix_length = suffix_length + <span class="number">1</span>;</span><br><span class="line">		   v1 = v1 &gt;&gt; <span class="number">1</span>;</span><br><span class="line">		   v2 = v2 &gt;&gt; <span class="number">1</span>;</span><br><span class="line">		end</span><br><span class="line">   end</span><br><span class="line">endfunction</span><br></pre></td></tr></table></figure>
+<p>计算两个传入的参数从最低位开始到最高位有多少位数不相同。</p>
 
       
       
@@ -388,9 +360,9 @@ var _hmt = _hmt || [];
 
 <p>非商业转载请注明作者及出处。商业转载请联系作者本人。</p>
  
- <p>本文标题为: <a href="http://peihao.space/2016/02/28/电脑定时睡眠/">电脑定时睡眠</a> </p>
+ <p>本文标题为: <a href="http://peihao.space/2016/04/14/router-global-functions/">Verilog的testbench笔记</a> </p>
  
- <p>本文链接为：<a href="http://peihao.space/2016/02/28/电脑定时睡眠/">http://peihao.space/2016/02/28/电脑定时睡眠/</a></p>
+ <p>本文链接为：<a href="http://peihao.space/2016/04/14/router-global-functions/">http://peihao.space/2016/04/14/router-global-functions/</a></p>
 </div>
 <! -- 添加版权信息 -->
 		
@@ -402,18 +374,9 @@ var _hmt = _hmt || [];
     
 <nav id="article-nav">
   
-    <a href="/2016/02/28/actor/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          演员电影评分排序
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/02/28/163news/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">网易新闻爬取</div>
+    <a href="/2016/04/13/verilog-testbench-note/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Verilog的testbench笔记</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -444,7 +407,7 @@ var _hmt = _hmt || [];
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="电脑定时睡眠" data-title="电脑定时睡眠" data-url="http://peihao.space/2016/02/28/电脑定时睡眠/"></div>
+	<div class="ds-thread" data-thread-key="router-global-functions" data-title="Verilog的testbench笔记" data-url="http://peihao.space/2016/04/14/router-global-functions/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

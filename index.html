@@ -243,6 +243,74 @@ var _hmt = _hmt || [];
 </nav>
       <div class="body-wrap">
   
+    <article id="post-router-global-functions" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/14/router-global-functions/" class="article-date">
+  	<time datetime="2016-04-14T11:17:22.000Z" itemprop="datePublished">2016-04-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/14/router-global-functions/">Verilog的testbench笔记</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>记录下Router这个工程的几个全局函数.</p>
+<h1 id="clogb">clogb</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">function integer <span class="title">clogb</span><span class="params">(input integer argument)</span></span>;</span><br><span class="line">   integer 		     i;</span><br><span class="line">   begin</span><br><span class="line">      clogb = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span>(i = argument - <span class="number">1</span>; i &gt; <span class="number">0</span>; i = i &gt;&gt; <span class="number">1</span>)</span><br><span class="line">		clogb = clogb + <span class="number">1</span>;</span><br><span class="line">   end</span><br><span class="line">endfunction</span><br></pre></td></tr></table></figure>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Verilog/">Verilog</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Verilog/">Verilog</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/04/14/router-global-functions/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
     <article id="post-verilog-testbench-note" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -722,74 +790,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2016/04/09/Ise-wizard/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-context" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/04/07/context/" class="article-date">
-  	<time datetime="2016-04-07T06:17:22.000Z" itemprop="datePublished">2016-04-07</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/07/context/">Android之Context、this</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Context">Context</h1><p>context不是函数而是一个类。如果不太了解面向对象，可以把“类”看做一种数据类型，就像int，不过类型为“类”的数据（称为对象）可能储存远比int多的信息，比如这里的类型为Context的对象就储存关于程序、窗口的一些资源。</p>
-<p>有些函数调用时需要一个Context参数，比如Toast.makeText，因为函数需要知道是在哪个界面中显示的Toast。<br>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/04/07/context/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
