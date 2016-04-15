@@ -243,6 +243,86 @@ var _hmt = _hmt || [];
 </nav>
       <div class="body-wrap">
   
+    <article id="post-router-source-file-architecture-Filt_sink" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/15/router-source-file-architecture-Filt_sink/" class="article-date">
+  	<time datetime="2016-04-15T14:17:22.000Z" itemprop="datePublished">2016-04-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/15/router-source-file-architecture-Filt_sink/">Router源代码架构--Filt_sink</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Filt_sink源码结构">Filt_sink源码结构</h1><p><img src="http://7xowaa.com1.z0.glb.clouddn.com/flit-sink01.png" alt=""></p>
+<p>先来讲flit_sink，也就是汇聚节点（网关）的微片控制模块。整个大模块下分4个相对小的模块结构。</p>
+<ul>
+<li>chi-rtr_channel_input</li>
+</ul>
+<p>接收端信道接口   input channel interface</p>
+<ul>
+<li>gnt_ivc_arb</li>
+</ul>
+<p>通用仲裁，指出哪一个虚拟信道 generic arbiter</p>
+<ul>
+<li>fb</li>
+</ul>
+<p>微片缓冲 flit buffer<br>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Verilog/">Verilog</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Verilog/">Verilog</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/04/15/router-source-file-architecture-Filt_sink/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
     <article id="post-router-global-functions" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -716,80 +796,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2016/04/10/verilog-timescale/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-Ise-wizard" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/04/09/Ise-wizard/" class="article-date">
-  	<time datetime="2016-04-09T15:17:22.000Z" itemprop="datePublished">2016-04-09</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/09/Ise-wizard/">ISE数字设计入门体验</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="ISE数字设计">ISE数字设计</h1><p><img src="\img\article\ise\3bit-counter.png" alt=""></p>
-<p>一个典型的使用ISE设计的数字系统一般包含以下步骤:</p>
-<ul>
-<li><p>工程的建立</p>
-</li>
-<li><p>模块设计</p>
-</li>
-<li><p>设计综合和查看综合结果</p>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ISE/">ISE</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/ISE/">ISE</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/04/09/Ise-wizard/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
