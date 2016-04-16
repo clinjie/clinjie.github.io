@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peihao.space/"/>
-  <updated>2016-04-15T15:11:02.747Z</updated>
+  <updated>2016-04-16T15:57:36.842Z</updated>
   <id>http://peihao.space/</id>
   
   <author>
@@ -14,6 +14,51 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Gray Code</title>
+    <link href="http://peihao.space/2016/04/16/Gray-code/"/>
+    <id>http://peihao.space/2016/04/16/Gray-code/</id>
+    <published>2016-04-16T14:17:22.000Z</published>
+    <updated>2016-04-16T15:57:36.842Z</updated>
+    
+    <content type="html">&lt;p&gt;The gray code is a binary numeral system where two successive values differ in only one bit.&lt;/p&gt;
+&lt;p&gt;Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.&lt;/p&gt;
+&lt;p&gt;For example, given n = 2, return [0,1,3,2]. Its gray code sequence is:&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;00&lt;/span&gt; - &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;01&lt;/span&gt; - &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;11&lt;/span&gt; - &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; - &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;Note:&lt;br&gt;For a given n, a gray code sequence is not uniquely defined.&lt;/p&gt;
+&lt;p&gt;For example, [0,2,3,1] is also a valid gray code sequence according to the above definition.&lt;/p&gt;
+&lt;p&gt;For now, the judge is able to judge based on one instance of gray code sequence. Sorry about that.&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; Solution &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; List&amp;lt;Integer&amp;gt; grayCode(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; n) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		List &lt;span class=&quot;built_in&quot;&gt;list&lt;/span&gt;=&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; LinkedList&amp;lt;&amp;gt;();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; length=&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&amp;lt;&amp;lt;n;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;length;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        	&lt;span class=&quot;built_in&quot;&gt;list&lt;/span&gt;.add(i^(i&amp;gt;&amp;gt;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;list&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;格雷码的是特点是：&lt;br&gt;相邻两数的格雷码，仅仅有一位二进制发生变化。&lt;br&gt;而且在其范围内的最小值和最大值，也仅仅有一位二进制发生变化。&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;000&lt;/span&gt;^&lt;span class=&quot;number&quot;&gt;000&lt;/span&gt;--&amp;gt;&lt;span class=&quot;number&quot;&gt;000&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;001&lt;/span&gt;^&lt;span class=&quot;number&quot;&gt;000&lt;/span&gt;--&amp;gt;&lt;span class=&quot;number&quot;&gt;001&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;010&lt;/span&gt;^&lt;span class=&quot;number&quot;&gt;001&lt;/span&gt;--&amp;gt;&lt;span class=&quot;number&quot;&gt;011&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;011&lt;/span&gt;^&lt;span class=&quot;number&quot;&gt;001&lt;/span&gt;--&amp;gt;&lt;span class=&quot;number&quot;&gt;010&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;^&lt;span class=&quot;number&quot;&gt;010&lt;/span&gt;--&amp;gt;&lt;span class=&quot;number&quot;&gt;110&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;101&lt;/span&gt;^&lt;span class=&quot;number&quot;&gt;010&lt;/span&gt;--&amp;gt;&lt;span class=&quot;number&quot;&gt;111&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;110&lt;/span&gt;^&lt;span class=&quot;number&quot;&gt;011&lt;/span&gt;--&amp;gt;&lt;span class=&quot;number&quot;&gt;101&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;111&lt;/span&gt;^&lt;span class=&quot;number&quot;&gt;011&lt;/span&gt;--&amp;gt;&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;每两个数字作为一组，每组之间都只会差一个数字，即最后一位，第一个是0，第二个是1.组内的两个数字与之异或的数字是相同的，所以保证了组内变换后两个数字一定会有差别，而且只会有一位差别.&lt;/p&gt;
+&lt;p&gt;组与组之间靠近的两个数字，后面一个将前面一个数字最右方连续的1全部置为0，然后在连续1前面一位置为1，而与他们异或的格式也很是类似。全都相对于本身右移一位，结果两两异或，数字相同的（1与1、0与0）结果为0，只在原本自身相对变化的两位出现交替，后面一个数字比前面一个数字在最前方多了一个1.&lt;/p&gt;
+&lt;p&gt;这样组内、组间都与前面数字差一位，保证了Gray Code的间隔都为1，而最大的数字与最小的数字也只差一位，因为异或的特性，使后面部分都变为了0.&lt;/p&gt;
+&lt;p&gt;递归生成码表&lt;/p&gt;
+&lt;p&gt;这种方法基于格雷码是反射码的事实，利用递归的如下规则来构造：&lt;br&gt;1位格雷码有两个码字&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;(n+1)位格雷码中的前2n个码字等于n位格雷码的码字，按顺序书写，加前缀0&lt;/li&gt;
+&lt;li&gt;(n+1)位格雷码中的后2n个码字等于n位格雷码的码字，按逆序书写，加前缀1&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;The gray code is a binary numeral system where two successive values differ in only one bit.&lt;/p&gt;
+&lt;p&gt;Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.&lt;/p&gt;
+&lt;p&gt;For example, given n = 2, return [0,1,3,2]. Its gray code sequence is:&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;00&lt;/span&gt; - &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;01&lt;/span&gt; - &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;11&lt;/span&gt; - &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; - &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="algorithm" scheme="http://peihao.space/categories/algorithm/"/>
+    
+    
+      <category term="algorithm" scheme="http://peihao.space/tags/algorithm/"/>
+    
+  </entry>
   
   <entry>
     <title>Router源代码架构--Filt_sink</title>
@@ -1145,41 +1190,6 @@
     
       &lt;p&gt;&lt;img src=&quot;/img/article/router/wormhole-router.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;如图是5端口虫孔路由器的结构，由5个输入端口、路由计算单元、开关分配单元、交叉开关和5个输出端口构成，其中4个端口与东、南、西、北4个方向的相邻路由器相连，剩下的是本地端口和IP核相连。虫孔路由器采用的是虫孔交换机制，同时使用缓存队列放置在输入端口的交换结构，输入缓存采用FIFO结构，缓存深度D表示输入缓存能够容纳的微片数目。
-    
-    </summary>
-    
-      <category term="router" scheme="http://peihao.space/categories/router/"/>
-    
-    
-      <category term="router" scheme="http://peihao.space/tags/router/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Noc Topology</title>
-    <link href="http://peihao.space/2016/03/29/router-topology/"/>
-    <id>http://peihao.space/2016/03/29/router-topology/</id>
-    <published>2016-03-29T13:35:02.000Z</published>
-    <updated>2016-03-30T14:02:16.669Z</updated>
-    
-    <content type="html">&lt;p&gt;NoC的拓扑结构就是指NoC中各个节点的连接方式。通常NoC拓扑结构分为两类，一类是直接型网络拓扑，另一类是间接性网络拓扑。&lt;/p&gt;
-&lt;h1 id=&quot;直接型&quot;&gt;直接型&lt;/h1&gt;&lt;p&gt;在直接网络中，节点处理器（IP）直接地通过网络彼此连接。常见的直接型拓扑包括网状拓扑（Mesh）、花式拓扑（Torus）等。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;2D_Mesh&quot;&gt;2D Mesh&lt;/h2&gt;&lt;hr&gt;
-&lt;p&gt;2D Mesh结构是一种最简单，最直观的拓扑结构，如图。每个节点连接一个资源和四个相邻的路由器，每个资源通过一个网络接口（Net-Interface NI）连接着一个路由器。其中的资源可以是一个处理器核，内存，一个用户自定义硬件模块或者其他任何可以插入插槽并且可以和网络接口相配的IP（intellectual property）模块。路由器和路由器之间，路由器和资源之间是由一对输入和输出通道连接。通道是由两条单向的点对点总线组成。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/img/article/router/2D-Mesh.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;2D Mesh结构规则简单，但是边沿和定点位置节点的相对闭塞性，会极大的影响网络性能。&lt;/p&gt;
-&lt;h2 id=&quot;2D_Torus&quot;&gt;2D Torus&lt;/h2&gt;&lt;hr&gt;
-&lt;p&gt;&lt;img src=&quot;/img/article/router/2D-Torus.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;2D Torus结构可以看成是对2D Mesh的一种扩展，即在边界的节点上增加了一条长的环路。因此，网络中所有的节点的度都为4，对于一个n*n的Torus网络，其中m、n为每个维度的节点数，若m==n，则称为规则的Torus。&lt;/p&gt;
-&lt;p&gt;2D Torus拓扑在物理形式上与2D Mesh相似，但由于其存在很多环路，所以在路由算法和路由仲裁方面都要复杂的多。2D Torus拓扑的各个路由节点都是规则的，每个路由的节点结构都一样，所以扩展性也要比2D Mesh提高很多。&lt;/p&gt;
-&lt;h1 id=&quot;间接性&quot;&gt;间接性&lt;/h1&gt;&lt;p&gt;在间接性网络中，节点处理器通过一个（或者更多个）的中间开关节点相互连接。间接型拓扑包括蝶形拓扑、Banyan、Fat-Tree拓扑等。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/img/article/router/Fat-Tree.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;NoC的拓扑结构就是指NoC中各个节点的连接方式。通常NoC拓扑结构分为两类，一类是直接型网络拓扑，另一类是间接性网络拓扑。&lt;/p&gt;
-&lt;h1 id=&quot;直接型&quot;&gt;直接型&lt;/h1&gt;&lt;p&gt;在直接网络中，节点处理器（IP）直接地通过网络彼此连接。常见的直接型拓扑包括网状拓扑（Mesh）、花式拓扑（Torus）等。&lt;br&gt;
     
     </summary>
     
