@@ -243,6 +243,156 @@ var _hmt = _hmt || [];
 </nav>
       <div class="body-wrap">
   
+    <article id="post-python_wx" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/26/python_wx/" class="article-date">
+  	<time datetime="2016-01-26T10:28:30.000Z" itemprop="datePublished">2016-01-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/26/python_wx/">Python查看微信删除好友</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="查看被删的微信好友">查看被删的微信好友</h1><p><img src="http://p3.image.hiapk.com/uploads/allimg/160107/0932512E2-0.jpg" alt=""></p>
+<p>原理就是新建群组,如果加不进来就是被删好友了(不要在群组里讲话,别人是看不见的)</p>
+<p>用的是微信网页版的接口</p>
+<p>查询结果可能会引起一些心理上的不适,请小心使用 :)</p>
+<p>还有些小问题:</p>
+<p>结果好像有疏漏一小部分,原因不明..</p>
+<p>最终会遗留下一个只有自己的群组,需要手工删一下</p>
+<p>没试过被拉黑的情况</p>
+<p>转自 <a href="https://github.com/0x5e/wechat-deleted-friends" title="github">https://github.com/0x5e/wechat-deleted-friends</a></p>
+<h1 id="用法:">用法:</h1><p>启动终端Terminal</p>
+<p>$ python code.py</p>
+<p>原作者是是py2.x平台下编写，所以不能直接在py3.x平台下直接使用，本文的代码是适配py3.4之后，提升了程序稳定性，并增加查看被拉黑名单功能</p>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微信/">微信</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/python/">python</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/01/26/python_wx/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
+    <article id="post-python_lambda" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/26/python_lambda/" class="article-date">
+  	<time datetime="2016-01-26T09:28:30.000Z" itemprop="datePublished">2016-01-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/26/python_lambda/">Lambda</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Python的Lambda函数">Python的Lambda函数</h1><p>lambda函数也叫匿名函数，即，函数没有具体的名称。先来看一个最简单例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x**<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> f(<span class="number">5</span>)</span><br><span class="line"><span class="comment">#结果是125</span></span><br></pre></td></tr></table></figure>
+<p>Python中使用lambda的话，写成这样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">g = lambda x : x**<span class="number">3</span></span><br><span class="line"><span class="function">print <span class="title">g</span><span class="params">(<span class="number">5</span>)</span></span><br><span class="line"><span class="preprocessor">#同样的结果  <span class="number">125</span></span></span></span><br></pre></td></tr></table></figure>
+<p>lambda表达式在很多编程语言都有对应的实现。比如C#：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">var</span> g = x =&gt; x**<span class="number">2</span></span><br><span class="line">Console.<span class="function"><span class="title">WriteLine</span><span class="params">(g(<span class="number">4</span>)</span></span>)</span><br></pre></td></tr></table></figure>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lambda/">lambda</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/python/">python</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/01/26/python_lambda/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
     <article id="post-spell_check" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -665,143 +815,6 @@ var _hmt = _hmt || [];
 	</div>
 
 
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-re" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/12/24/re/" class="article-date">
-  	<time datetime="2015-12-24T08:36:28.000Z" itemprop="datePublished">2015-12-24</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/24/re/">正则表达式简单应用</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>re即regular expression，正则表达式，关于正则表达式的通用知识可以浏览我的<a href="http://blog.csdn.net/peihaozhu/article/details/50297249">csdn blog</a>。通过正则表达式，我们可以很轻松的过滤获取到需要的信息，然后对这些信息进行操作。</p>
-<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/chatu_re.jpg" alt=""></p>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/正则表达式/">正则表达式</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/python/">python</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/12/24/re/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-shadowsocks" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/12/23/shadowsocks/" class="article-date">
-  	<time datetime="2015-12-23T08:36:28.000Z" itemprop="datePublished">2015-12-23</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/23/shadowsocks/">科学上网</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="shadowsocks">shadowsocks</h1><hr>
-<p>Shadowsocks（中文名称：影梭）是一个安全的socks5代理，用于保护网络流量，是一个开源项目。通过客户端以指定的密码、加密方式和端口连接服务器，成功连接到服务器后，客户端在用户的电脑上构建一个本地socks5代理。使用时将流量分到本地socks5代理，客户端将自动加密并转发流量到服务器，服务器以同样的加密方式将流量回传给客户端，以此实现代理上网。</p>
-<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/chatu_ss.jpg" alt=""></p>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/网络/">网络</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/12/23/shadowsocks/#more">more >></a>
-        </p>
       
       <div class="clearfix"></div>
     </div>

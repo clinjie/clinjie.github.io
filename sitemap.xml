@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://peihao.space/2016/04/18/ise-synthesize/</loc>
+    
+    <lastmod>2016-04-18T13:06:11.753Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://peihao.space/2016/04/18/verilog-setvalue/</loc>
+    
+    <lastmod>2016-04-18T13:05:56.736Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://peihao.space/2016/04/17/22/</loc>
     
     <lastmod>2016-04-17T12:42:56.443Z</lastmod>
@@ -89,20 +103,6 @@
     <loc>http://peihao.space/2015/04/12/ise-implements/</loc>
     
     <lastmod>2016-04-11T13:26:33.698Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://peihao.space/2015/04/12/ise-synthesize/</loc>
-    
-    <lastmod>2016-04-11T13:26:24.249Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://peihao.space/2015/04/12/verilog-setvalue/</loc>
-    
-    <lastmod>2016-04-11T10:00:07.948Z</lastmod>
     
   </url>
   

@@ -243,6 +243,141 @@ var _hmt = _hmt || [];
 </nav>
       <div class="body-wrap">
   
+    <article id="post-router-source-analysis001" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/04/router-source-analysis001/" class="article-date">
+  	<time datetime="2016-04-04T12:17:22.000Z" itemprop="datePublished">2016-04-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/04/router-source-analysis001/">router-source-analysis</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="constant_value">constant value</h1><p>在分析第一个Verilog HDL Router中的check模块之前，首先在前面声明一下代码中会使用到的常量值：
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoC/">NoC</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/NoC/">NoC</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/04/04/router-source-analysis001/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
+    <article id="post-NoC-router-alg" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/03/NoC-router-alg/" class="article-date">
+  	<time datetime="2016-04-03T04:23:35.000Z" itemprop="datePublished">2016-04-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/03/NoC-router-alg/">NoC路由算法</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>NoC的图谱结构必须保证每个节点可以发送数据包到其他节点。当没有完善的拓扑结构的时候，路由算法决定数据包从原地址开始选择那一条路径到目的地址。所以，有效的数据算法对NoC网路性能的好坏是至关重要的。</p>
+<p>路由算法可以按照不同的标准分为不同的几类。比如说源路由
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoC/">NoC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Router/">Router</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/NoC/">NoC</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/04/03/NoC-router-alg/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
     <article id="post-matplotlib2" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -632,146 +767,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2016/03/29/router-topology/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-router_know" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/28/router_know/" class="article-date">
-  	<time datetime="2016-03-28T13:35:02.000Z" itemprop="datePublished">2016-03-28</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/28/router_know/">路由器架构</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Noc小记">Noc小记</h1><p>Noc是由Router和Channel组成的网络结构。其中router主要用来控制网络中数据传输，channel是连通片上系统中各处理核之间进行点对点数据传输的通路。</p>
-<p>NoC采用分组交换的方式进行通信，片上网络中各处理核之间通过发送请求和接收相应消息的方式通信。在网络中传输的消息由头（head）、传输数据和尾（tail）组成。投中包含接收方的地址信息，router根据这个地址建立从传输方到达接收方的传输路径。传输数据即通信中核间要传输的信息。尾用来表示一个消息传输完毕。由于一个完整的传输数据往往包含的数据量很大，这样对片上网络的通信效率不利，于是我们将传输数据分割成更小的数据段，在对数据段添加头和尾构成数据包。</p>
-<p>一般的Router有以下单元组成：</p>
-<ul>
-<li><p>计算单元</p>
-</li>
-<li><p>分配单元</p>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/router/">router</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/router/">router</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/03/28/router_know/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-SA" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/27/SA/" class="article-date">
-  	<time datetime="2016-03-27T13:35:02.000Z" itemprop="datePublished">2016-03-27</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/27/SA/">模拟退火</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="模拟退火算法概述">模拟退火算法概述</h1><p>模拟退火算法来源于固体退火原理，将固体加温至充分高，再让其徐徐冷却，加温时，固体内部粒子随温升变为无序状，内能增大，而徐徐冷却时粒子渐趋有序，在每个温度都达到平衡态，最后在常温时达到基态，内能减为最小。根据<code>Metropolis</code>准则，粒子在温度T时趋于平衡的概率为<code>e-ΔE/(kT)</code>，其中E为温度T时的内能，ΔE为其改变量，k为<code>Boltzmann</code>常数。
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/算法/">算法</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/03/27/SA/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

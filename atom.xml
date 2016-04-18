@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peihao.space/"/>
-  <updated>2016-04-17T12:42:56.443Z</updated>
+  <updated>2016-04-18T13:05:56.736Z</updated>
   <id>http://peihao.space/</id>
   
   <author>
@@ -14,6 +14,207 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>verilog过程块与赋值</title>
+    <link href="http://peihao.space/2016/04/18/verilog-setvalue/"/>
+    <id>http://peihao.space/2016/04/18/verilog-setvalue/</id>
+    <published>2016-04-18T06:17:22.000Z</published>
+    <updated>2016-04-18T13:05:56.736Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;过程块&quot;&gt;过程块&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;always过程块&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;模板：&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;always @(&amp;lt;敏感信号表达式&amp;gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//过程赋值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//if语句	&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//case语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//while、repeat、for语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//task、function调用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;当敏感信号表达式的值改变时候，就执行一遍块内语句。同时always过程块是不能够嵌套使用的。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;关键字&lt;/strong&gt;&lt;code&gt;posedge&lt;/code&gt;与&lt;code&gt;negedge&lt;/code&gt;关键字分别是上升沿以及下降沿&lt;/p&gt;
+&lt;p&gt;例如：同步时序电路的时钟信号为clk，clear为异步清零信号。敏感信号可写为：&lt;/p&gt;
+&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//上升沿触发，高电平清0有效&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clear)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//上升沿触发，低电平清0有效&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;negedge&lt;/span&gt; clear)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;例如当&lt;code&gt;negedge clear&lt;/code&gt;表示当&lt;code&gt;clear==0&lt;/code&gt;时&lt;/p&gt;
+&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;negedge&lt;/span&gt; clear)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;!&lt;/span&gt;clear)&lt;span class=&quot;comment&quot;&gt;//当clear==0时候，always会由事件驱动&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			qout&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			qout&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;in;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ol&gt;
+&lt;li&gt;initial过程块&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;initial模板：&lt;/p&gt;
+&lt;figure class=&quot;highlight erlang&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;initial&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	语句&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	语句&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	......&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;对变量和存贮器初始化&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;initial&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	reg1=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(addr=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;addr&amp;lt;size;addr=addr+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		memory[addr]=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;initial语句主要面向功能模拟，通常不具有可综合性。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;模拟0时刻开始执行，只执行一次&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;同一模块内的多个initial过程块，模拟0时刻开始并行执行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;initial与always语句一样，是不能嵌套使用的。即在initial语句中不能再次嵌套initial语句块。&lt;/p&gt;
+&lt;h1 id=&quot;连续赋值&quot;&gt;连续赋值&lt;/h1&gt;&lt;p&gt;用连续赋值语句表达的是： &lt;code&gt;assign val=newval;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;任何一个输入的改变都将立即导致输出更新；&lt;/p&gt;
+&lt;figure class=&quot;highlight stata&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;module orand(&lt;span class=&quot;keyword&quot;&gt;out&lt;/span&gt;,a,b,c,&lt;span class=&quot;keyword&quot;&gt;d&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;e&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;input&lt;/span&gt; a,b,c,&lt;span class=&quot;keyword&quot;&gt;d&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;e&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	output &lt;span class=&quot;keyword&quot;&gt;out&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	assign &lt;span class=&quot;keyword&quot;&gt;out&lt;/span&gt;=3&amp;amp;(a|b)&amp;amp;(c|&lt;span class=&quot;keyword&quot;&gt;d&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;过程赋值语句&quot;&gt;过程赋值语句&lt;/h1&gt;&lt;p&gt;过程赋值语句常用于对reg变量进行赋值。一般分为两种，&lt;em&gt;阻塞赋值&lt;/em&gt;与&lt;em&gt;非阻塞赋值&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&quot;阻塞与非阻塞赋值&quot;&gt;阻塞与非阻塞赋值&lt;/h2&gt;&lt;p&gt;赋值的类型选择取决于建模的逻辑类型。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;在时序块的RTL代码中使用&lt;em&gt;非阻塞赋值&lt;/em&gt;&lt;code&gt;&amp;lt;=&lt;/code&gt;。非阻塞赋值在块结束后才完成赋值操作。此赋值方式可以避免在仿真出现魔仙和竞争现象。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在组合的RTL代码中使用&lt;em&gt;阻塞赋值&lt;/em&gt;&lt;code&gt;=&lt;/code&gt;。使用阻塞赋值方式对一个变量进行赋值时，此变量的值在赋值语句执行完后才能之后就立即改变。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;compare&quot;&gt;compare&lt;/h2&gt;&lt;p&gt;使用非阻塞赋值方式进行赋值时，各个赋值语句同步执行；因此通常在一个时钟沿对临时变量进行赋值，而在另一个时钟沿对其进行采样。因为在相同的时钟沿采样赋值，采样的还是原来的值，赋值操作是在块结束时进行。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;阻塞赋值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下面模块会综合成为触发器&lt;/p&gt;
+&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; block(clk,a,b);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;input&lt;/span&gt; clk,a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;output&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;typename&quot;&gt;reg&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		y&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		b&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;y;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;非阻塞赋值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下面的模块会综合成两个触发器&lt;/p&gt;
+&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; block(clk,a,b);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;input&lt;/span&gt; clk,a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;output&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;typename&quot;&gt;reg&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		y&lt;span class=&quot;keyword&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		b&lt;span class=&quot;keyword&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;y;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&quot;\img\article\ise\block-unblock-setvalue.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;上图左侧是阻塞赋值的综合结果，右侧则为非阻塞赋值。相比左侧，右侧的例子会造成一个时钟周期的延迟。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;过程块&quot;&gt;过程块&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;always过程块&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;模板：&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;always @(&amp;lt;敏感信号表达式&amp;gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//过程赋值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//if语句	&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//case语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//while、repeat、for语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//task、function调用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;当敏感信号表达式的值改变时候，就执行一遍块内语句。同时always过程块是不能够嵌套使用的。
+    
+    </summary>
+    
+      <category term="Verilog" scheme="http://peihao.space/categories/Verilog/"/>
+    
+    
+      <category term="Verilog" scheme="http://peihao.space/tags/Verilog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于Xilinx的Synthesize</title>
+    <link href="http://peihao.space/2016/04/18/ise-synthesize/"/>
+    <id>http://peihao.space/2016/04/18/ise-synthesize/</id>
+    <published>2016-04-18T06:17:22.000Z</published>
+    <updated>2016-04-18T13:06:11.753Z</updated>
+    
+    <content type="html">&lt;p&gt;所谓综合，就是讲HDL语言、原理图等设计输入翻译成由与、或、非们和RAM、触发器登记本逻辑单元的逻辑连接（即网表）。并根据目标和要求（约束条件）优化生成的逻辑连接。&lt;/p&gt;
+&lt;h1 id=&quot;ISE-XST&quot;&gt;ISE-XST&lt;/h1&gt;&lt;p&gt;XST是Xilinx公司自己的综合（Synthsize）工具。当我们完成输入、仿真以及管脚分配之后就可以进行综合和实现。&lt;/p&gt;
+&lt;p&gt;双击Synthesize-XST，就可以完成综合。一般而言，会有三种结果：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;仿真完成&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Warn警告&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;ERROR错误&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Warn会在Synthesize-XST出现黄色警示，而Error有红色标识。&lt;/p&gt;
+&lt;p&gt;综合完成之后可以通过使用XST的&lt;code&gt;View RTLSchematics&lt;/code&gt;工具查看RTL级结构图。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/adder-RTL.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;Synthesize_Proprtties&quot;&gt;Synthesize Proprtties&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;[Optimization Goal]：优化的目标。该参数决定了综合工具对设计进行优化时，是以面积还是以速度作为优先原则。面积优先原则可以节省器件内部的逻辑资源，即尽可能地采用串行逻辑结构，但这是以牺牲速度为代价的。而速度优先原则保证了器件的整体工作速度，即尽可能地采用并行逻辑结构，但这样将会浪费器件内部大量的逻辑资源，因此，它是以牺牲逻辑资源为代价的。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Optimization Effort]：优化器努力程度。这里有[normal]和[high]两种选择方式。对于[normal]，优化器对逻辑设计仅仅进行普通的优化处理，其结果可能并不是最好的，但是综合和优化流程执行地较快。如果选择[high]，优化器对逻辑设计进行反复的优化处理和分析，并能生成最理想的综合和优化结果，在对高性能和最终的设计通常采用这种模式；当然在综合和优化时，需要的时间较长。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Use Synthesis Constraints File]：使用综合约束文件。如果选择了该选项，那么综合约束文件XCF有效。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Synthesis Constraints File]：综合约束文件。该选项用于指定XST综合约束文件XCF的路径。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Global Optimization Goal]：全局优化目标。可以选择的属性包括有[AllClockNets]、[Inpad To Outpad]、[Offest In Before]、[Offest Out After]、[Maximm Delay]。该参数仅对FPGA器件有效，可用于选择所设定的寄存器之间、输入引脚到寄存器之间、寄存器到输出引脚之间，或者是输入引脚到输出引脚之间逻辑的优化策略。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Generate RTL Schematic]：生成寄存器传输级视图文件。该参数用于将综合结果生成RTL视图。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Write Timing Constraints]：写时序约束。该参数仅对FPGA有效，用来设置是否将HDL源代码中用于控制综合的时序约束传给NGC网表文件，该文件用于布局和布线。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;HDL语言选项&quot;&gt;HDL语言选项&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;[FSM Encoding Algorithm]：有限状态机编码算法。该参数用于指定有限状态机的编码方式。选项有[Auto]、[One-Hot]、[Compact]、[Sequential]、[Gray]、[Johnson]、[User]、[Speed1]、[None]编码方式，默认为[Auto]编码方式。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Safe Implementation]：将添加安全模式约束来实现有限状态机，将添加额外的逻辑将状态机从无效状态调转到有效状态，否则只能复位来实现，有[Yes]、[No]两种选择，默认为[No]。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Case Implementation Sytle]：条件语句实现类型。该参数用于控制XST综合工具解释和推论Verilog的条件语句。其中选项有[None]、[Full]、[Parallel]、[Full-Parallel]，默认为[None]。 对于这四种选项，区别如下：（1）[None]，XST将保留程序中条件语句的原型，不进行任何处理；（2）[Full]，XST认为条件语句是完整的，避免锁存器的产生；（3）[Parallel]，XST认为在条件语句中不能产生分支，并且不使用优先级编码器；（4）[Full-Parallel]，XST认为条件语句是完整的，并且在内部没有分支，不使用锁存器和优先级编码器。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[RAM Extraction]：存储器扩展。该参数仅对FPGA有效，用于使能和禁止RAM宏接口。默认为允许使用RAM宏接口。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[RAM Style]：RAM实现类型。该参数仅对FPGA有效，用于选择是采用块RAM还是分布式RAM来作为RAM的实现类型。默认为 [Auto]。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[ROM Extraction]：只读存储器扩展。该参数仅对FPGA有效，用于使能和禁止只读存储器ROM宏接口。默认为允许使用ROM宏接口。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[ROM Style]：ROM实现类型。该参数仅对FPGA有效，用于选择是采用块RAM还是分布式RAM来作为ROM的实现和推论类型。默认为[Auto]。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Mux Extraction]：多路复用器扩展。该参数用于使能和禁止多路复用器的宏接口。根据某些内定的算法，对于每个已识别的多路复用/选择器，XST能够创建一个宏，并进行逻辑的优化。可以选择[Yes]、[No]和[Force]中的任何一种，默认为[Yes]。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Mux Style]：多路复用实现类型。该参数用于胃宏生成器选择实现和推论多路复用/选择器的宏类型。可以选择[Auto]、[MUXF]和[MUXCY]中的任何一种，默认为[Auto]。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Decoder Extraction]：译码器扩展。该参数用于使能和禁止译码器宏接口，默认为允许使用该接口。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Priority Encoder Extraction]：优先级译码器扩展。该参数用于指定是否使用带有优先级的编码器宏单元。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Shift Register Extraction]：移位寄存器扩展。该参数仅对FPGA有效，用于指定是否使用移位寄存器宏单元。默认为使能。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Logical Shifter Extraction]：逻辑移位寄存器扩展。该参数仅对FPGA有效，用于指定是否使用逻辑移位寄存器宏单元。默认为使能。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[XOR Collapsing]：异或逻辑合并方式。该参数仅对FPGA有效，用于指定是否将级联的异或逻辑单元合并成一个大的异或宏逻辑结构。默认为使能。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Resource Sharing]：资源共享。该参数用于指定在XST综合时，是否允许复用一些运算处理模块，如加法器、减法器、加/减法器和乘法器。默认为使能。如果综合工具的选择是以速度为优先原则的，那么就不考虑资源共享。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Multiplier Style]：乘法器实现类型。该参数仅对FPGA有效，用于指定宏生成器使用乘法器宏单元的方式。选项有[Auto]、Block]、[LUT]和[Pipe_LUT]。默认为[Auto]。选择的乘法器实现类型和所选择的器件有关。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;特殊选项&quot;&gt;特殊选项&lt;/h1&gt;&lt;p&gt;Xilinx特殊选项用于将用户逻辑适配到Xilinx芯片的特殊结构中，不仅能节省资源，还能提高设计的工作频率&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;[Add I/O Buffers]：插入I/O缓冲器。该参数用于控制对所综合的模块是否自动插入I/O缓冲器。默认为自动插入。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Max Fanout]：最大扇出数。该参数用于指定信号和网线的最大扇出数。这里扇出数的选择与设计的性能有直接的关系，需要用户合理选择。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Register Duplication]：寄存器复制。该参数用于控制是否允许寄存器的复制。对于高扇出和时序不能满足要求的寄存器进行复制，可以减少缓冲器输出的数目以及逻辑级数，改变时序的某些特性，提高设计的工作频率。默认为允许寄存器复制。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Equivalent Register Removal]：等效寄存器删除。该参数用于指定是否把寄存器传输级功能等效的寄存器删除，这样可以减少寄存器资源的使用。如果某个寄存器是用Xilinx的硬件原语指定的，那么就不会被删除。默认为使能。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Register Balancing]：寄存器配平。该参数仅对FPGA有效，用于指定是否允许平衡寄存器。可选项有[No]、[Yes]、    [Forward]和[Backward]。采用寄存器配平技术，可以改善某些设计的时序条件。其中，[Forward]为前移寄存器配平，[Backward]为后移寄存器配平。采用寄存器配平后，所用到的寄存器数就会相应地增减。默认为寄存器不配平。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Move First Flip-Flop Stage]：移动前级寄存器。该参数仅对FPGA有效，用于控制在进行寄存器配平时，是否允许移动前级寄存器。如果[Register Balancing]的设置为[No]，那么该参数的设置无效。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Move Last Flip-Flop Stage]：移动后级寄存器。该参数仅对FPGA有效，用于控制在进行寄存器配平时，是否允许移动后级寄存器。如果[Register Balancing]的设置为[No]，那么该参数的设置无效。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Pack I/O Registers into IOBs]：I/O寄存器置于输入输出块。该参数仅对FPGA有效，用于控制是否将逻辑设计中的寄存器用IOB内部寄存器实现。在Xilinx系列FPGA的IOB中分别有输入和输出寄存器。如果将设计中的第一级寄存器或最后一级寄存器用IOB内部寄存器实现，那么就可以缩短IO引脚到寄存器之间的路径，这通常可以缩短大约1~2ns的传输时延。默认为[Auto]。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Slice Packing]：优化Slice结构。该参数仅对FPGA有效，用于控制是否将关键路径的查找表逻辑尽量配置在同一个Slice或者CLB模块中，由此来缩短LUT之间的布线。这一功能对于提高设计的工作频率、改善时序特性是非常有用的。 默认为允许优化Slice结构。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[Optimize Instantiated Primitives]：优化已例化的原语。该参数控制是否需要优化在HDL代码中已例化的原语。默认为不优化。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;以上三个部分分别用于设置综合的全局目标和整体策略、HDL硬件语法规则以及Xilinx特有的结构属性。&lt;/strong&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;所谓综合，就是讲HDL语言、原理图等设计输入翻译成由与、或、非们和RAM、触发器登记本逻辑单元的逻辑连接（即网表）。并根据目标和要求（约束条件）优化生成的逻辑连接。&lt;/p&gt;
+&lt;h1 id=&quot;ISE-XST&quot;&gt;ISE-XST&lt;/h1&gt;&lt;p&gt;XST是Xilinx公司自己的综合（Synthsize）工具。当我们完成输入、仿真以及管脚分配之后就可以进行综合和实现。&lt;/p&gt;
+&lt;p&gt;双击Synthesize-XST，就可以完成综合。一般而言，会有三种结果：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;仿真完成&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Warn警告&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;ERROR错误&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Warn会在Synthesize-XST出现黄色警示，而Error有红色标识。&lt;/p&gt;
+&lt;p&gt;综合完成之后可以通过使用XST的&lt;code&gt;View RTLSchematics&lt;/code&gt;工具查看RTL级结构图。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/adder-RTL.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Verilog" scheme="http://peihao.space/categories/Verilog/"/>
+    
+    
+      <category term="Verilog" scheme="http://peihao.space/tags/Verilog/"/>
+    
+  </entry>
   
   <entry>
     <title>雌雄同体</title>
@@ -1092,93 +1293,6 @@
       <category term="NoC" scheme="http://peihao.space/tags/NoC/"/>
     
       <category term="Router" scheme="http://peihao.space/tags/Router/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>缓存与XY路由算法</title>
-    <link href="http://peihao.space/2016/03/31/NoC-FIFO/"/>
-    <id>http://peihao.space/2016/03/31/NoC-FIFO/</id>
-    <published>2016-03-31T14:23:35.000Z</published>
-    <updated>2016-03-31T15:15:27.752Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;FIFO形式&quot;&gt;FIFO形式&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;/img/article/router/router-architecture.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;上图是一副常规的NoC Router结构图。FC指Flow Control流控机制，数据交换逻辑将开关分配单元仲裁结果进行链接，也就是将输入端口的FIFO与它请求的输出端口链接行程传输通道。FIFO，缓存，或者说当前的缓存主要使用的技术就是FIFO，first in first out的队&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;列缓冲。&lt;/p&gt;
-&lt;p&gt;魂村是片上网络路由器中必不可少的单元，用于存储数据。目前的路由器中缓存与交叉开关存在3中相对位置关系：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;缓存队列在交叉开关的前面&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;位于输入端口中，同时输出端口无缓存&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;缓存队列在交叉开关的后面&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;位于输出端口中，输入端口无缓存&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;缓存队列在交叉开关的前后两方&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;输入/输出端口都有缓存队列&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/img/article/router/NoC-FIFO-tri_loc.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;当前的片上网络路由器多半使用的就是第一种结构，即FIFO放置在输入端口内的交换结构。到达的数据分组首先存储在输入缓存中，然后经过路由计算、调度算法决定输入缓存中的数据分组如何通过交叉开关传送到输出端口，即缓存功能在交叉开关传输之前。&lt;/p&gt;
-&lt;p&gt;这种结构对于构建大容量的交换结构十分经济，可扩展性好，但是当不同的输入端口的缓存队列都有微片要传递到同一个输出端口时，在一个时间段内，这种交换结构只允许一个被调度输出，另外的会处于阻塞状态。&lt;/p&gt;
-&lt;p&gt;第二个是缓存队列放置在输出端口的交换结构。数据到达输入端口先通过交叉开关传输到相应的输出端口的缓存队列中进行排队，即缓存功能在交叉开关传输之后。这种结构避免了由交换开关内部冲突引发的延迟，可以方便地提供吞吐量、速率以及时延等方面的服务质量保障，但是要求交叉开关具有很高的传输带宽，如果出现N个输入端口同时竞争同一个输出端口时，输出缓存需要一次性完成N次写入，交叉开关内部就需要一个加速比为N的交换结构，因此，这种结构复杂且不易扩展。&lt;/p&gt;
-&lt;p&gt;最后显示的是在交叉开关的输入和输出端口都具有缓存队列的结构。该结构是上述两种结构的一种折衷，通过适当的加速，可以避免交换开关拥塞引发的延迟，但是调度过程中需要同时考虑输入调度与输出调度，而且新加的缓存增加了路由器资源，因此该结构过于复杂。&lt;/p&gt;
-&lt;h1 id=&quot;简单的XY路由算法&quot;&gt;简单的XY路由算法&lt;/h1&gt;&lt;p&gt;路由算法确定数据分组在网络中按照何种路径从源节点传输到目的节点。通常简答的路由器采用的都是XY维序路由算法，该算法是一种确定性路由算法，只要给定源地址与目的地址，就能唯一确定条路由路径。它将网络中所有路由器都用一个2维坐标（X,Y）表示，分组中的地址信息也是用2维坐标（X,Y）表示。&lt;/p&gt;
-&lt;p&gt;设当前路由器的坐标为（cur_x,cur_y），分组中目的地址为（dst_x,dst_y）。如果cur_x&lt;dst_x，则将数据分组向东转发；如果cur_x&gt;dst_x，则将数据包向西转发；如果cur_x=dst_x and cur_y&lt;dst_y，则将数据分组向北转发；如果cur_x=dst_x and=&quot;&quot; cur_y=&quot;&quot;&gt;dst_y则将数据分组向南转发；如果cur_x=dst_x and cur_y=dst_y，那么说明数据分组到达了目的地。&lt;/dst_y，则将数据分组向北转发；如果cur_x=dst_x&gt;&lt;/dst_x，则将数据分组向东转发；如果cur_x&gt;&lt;/p&gt;
-&lt;p&gt;目的路由器就通过本地端口将数据分组发往与之相连的处理单元。这样分组总是先沿X轴方向走完，才沿Y轴方向传输。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;FIFO形式&quot;&gt;FIFO形式&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;/img/article/router/router-architecture.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;上图是一副常规的NoC Router结构图。FC指Flow Control流控机制，数据交换逻辑将开关分配单元仲裁结果进行链接，也就是将输入端口的FIFO与它请求的输出端口链接行程传输通道。FIFO，缓存，或者说当前的缓存主要使用的技术就是FIFO，first in first out的队
-    
-    </summary>
-    
-      <category term="NoC" scheme="http://peihao.space/categories/NoC/"/>
-    
-    
-      <category term="NoC" scheme="http://peihao.space/tags/NoC/"/>
-    
-      <category term="Router" scheme="http://peihao.space/tags/Router/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo-文章版权追加</title>
-    <link href="http://peihao.space/2016/03/30/append-copyright/"/>
-    <id>http://peihao.space/2016/03/30/append-copyright/</id>
-    <published>2016-03-30T14:23:35.000Z</published>
-    <updated>2016-03-31T10:17:54.465Z</updated>
-    
-    <content type="html">&lt;p&gt;目前，网络中出现了一些不和谐因素，某些网站多次剽窃Hexo博友的原创文章。在对这些侵犯博友权益的网站提出谴责的同时，聪明的各位Geek们应该如何增强版权意识呢.&lt;/p&gt;
-&lt;p&gt;最简单的办法就是在自己的部落格文章里添加水印，即使这些网站通过爬虫私自收录我们的文章，读者也能在文章中轻易的发现原作者。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;由于这种办法容易影响读者的阅读体验，我采用的是在每篇文章下面增加版权声明，将本篇文章的信息、初次刊登网站、作者信息追加进文章里面。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/img/article/append-copyright.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;article结构&quot;&gt;article结构&lt;/h1&gt;&lt;p&gt;cd到&lt;code&gt;your_theme\layout\_partial\&lt;/code&gt;下，访问&lt;code&gt;article.ejs&lt;/code&gt;，在合适的位置添加&lt;/p&gt;
-&lt;figure class=&quot;highlight gcode&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;&lt;span class=&quot;preprocessor&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;(!index)&lt;/span&gt; &amp;#123; &lt;span class=&quot;preprocessor&quot;&gt;%&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&amp;lt;&lt;span class=&quot;preprocessor&quot;&gt;%&lt;/span&gt;- partial&lt;span class=&quot;comment&quot;&gt;(&#39;declare&#39;)&lt;/span&gt; &lt;span class=&quot;preprocessor&quot;&gt;%&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;lt;&lt;span class=&quot;preprocessor&quot;&gt;%&lt;/span&gt; &amp;#125; &lt;span class=&quot;preprocessor&quot;&gt;%&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;将会在非目录页面下执行名为&lt;code&gt;declare&lt;/code&gt;的脚本。&lt;/p&gt;
-&lt;h1 id=&quot;具体显示内容&quot;&gt;具体显示内容&lt;/h1&gt;&lt;p&gt;还是在&lt;code&gt;your_theme\layout\_partial\&lt;/code&gt;下面，创建一个名为&lt;code&gt;declare.ejs&lt;/code&gt;的文件，在里面填写&lt;/p&gt;
-&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;!&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;--&lt;/span&gt; 添加版权信息 &lt;span class=&quot;attribute&quot;&gt;--&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;div&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;article-footer-copyright&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;center&lt;/span&gt;&amp;gt;&lt;/span&gt;本文由&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;b&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;&amp;lt;%= config.root %&amp;gt;index.html&quot;&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;target&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;_blank&quot;&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;title&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;&amp;lt;%= config.author %&amp;gt;&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;%=&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;config.author&lt;/span&gt; %&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;a&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;b&lt;/span&gt;&amp;gt;&lt;/span&gt;创作和发表,采用&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;b&lt;/span&gt;&amp;gt;&lt;/span&gt;BY&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;b&lt;/span&gt;&amp;gt;&lt;/span&gt;-&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;b&lt;/span&gt;&amp;gt;&lt;/span&gt;NC&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;b&lt;/span&gt;&amp;gt;&lt;/span&gt;-&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;b&lt;/span&gt;&amp;gt;&lt;/span&gt;SA&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;b&lt;/span&gt;&amp;gt;&lt;/span&gt;国际许可协议进行许可&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;center&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;center&lt;/span&gt;&amp;gt;&lt;/span&gt;转载请注明作者及出处,本文作者为&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;b&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;&amp;lt;%= config.root %&amp;gt;index.html&quot;&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;target&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;_blank&quot;&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;title&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;&amp;lt;%= config.author %&amp;gt;&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;%=&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;config.author&lt;/span&gt; %&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;a&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;b&lt;/span&gt;&amp;gt;&lt;/span&gt;,本文标题为&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;b&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;&amp;lt;%- config.root %&amp;gt;&amp;lt;%- post.path %&amp;gt;&quot;&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;target&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;_blank&quot;&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;title&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;&amp;lt;%= post.title %&amp;gt;&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;%=&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;post.title&lt;/span&gt; %&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;a&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;b&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;center&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;center&lt;/span&gt;&amp;gt;&lt;/span&gt;本文链接为&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;b&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;&amp;lt;%- config.root %&amp;gt;&amp;lt;%- post.path %&amp;gt;&quot;&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;target&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;_blank&quot;&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;title&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;&amp;lt;%= post.title %&amp;gt;&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;%-&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;config.url&lt;/span&gt; %&amp;gt;&lt;/span&gt;/&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;%-&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;post.path&lt;/span&gt; %&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;a&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;b&lt;/span&gt;&amp;gt;&lt;/span&gt;.&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;center&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;!&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;--&lt;/span&gt; 添加版权信息 &lt;span class=&quot;attribute&quot;&gt;--&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;当然，你也可以自己DIY，修改显示的文字。&lt;/p&gt;
-&lt;h1 id=&quot;修改CSS样式&quot;&gt;修改CSS样式&lt;/h1&gt;&lt;p&gt;编写类对应的CSS代码&lt;/p&gt;
-&lt;p&gt;cd到&lt;code&gt;your_theme\source\css\_partial&lt;/code&gt;下面，创建&lt;code&gt;copyright.styl&lt;/code&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight css&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;.article-footer-copyright&lt;/span&gt; &lt;span class=&quot;rules&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;border-top&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;1px&lt;/span&gt; solid &lt;span class=&quot;hexcolor&quot;&gt;#d3d3d3&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;margin&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;10px&lt;/span&gt; auto&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;padding-left&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;2em&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;width&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;80%&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;.article-footer-copyright&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;span&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;.copyright&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;abbr&lt;/span&gt; &lt;span class=&quot;rules&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;color&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;hexcolor&quot;&gt;#3d3d3d&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.copyright&lt;/span&gt; &lt;span class=&quot;rules&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;font-weight&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; bold&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;color&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;hexcolor&quot;&gt;#fcb297&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;padding&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;0.3em&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0.5em&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;margin&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1em&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;border-bottom&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; none&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;background-color&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;hexcolor&quot;&gt;#74a474&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;-moz-border-radius&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;1em&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;-webkit-border-radius&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;1em&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;-webkit-border-radius&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;1em&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;border-radius&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;1em&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;-moz-box-shadow&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; inset &lt;span class=&quot;number&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;hexcolor&quot;&gt;#eee&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;-webkit-box-shadow&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; inset &lt;span class=&quot;number&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;hexcolor&quot;&gt;#eee&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;-webkit-box-shadow&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; inset &lt;span class=&quot;number&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;hexcolor&quot;&gt;#eee&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;box-shadow&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; inset &lt;span class=&quot;number&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;hexcolor&quot;&gt;#eee&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;background&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;function&quot;&gt;-webkit-gradient&lt;/span&gt;(linear, left top, left bottom, &lt;span class=&quot;function&quot;&gt;color-stop&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;0.05&lt;/span&gt;, &lt;span class=&quot;hexcolor&quot;&gt;#aad2f0&lt;/span&gt;), &lt;span class=&quot;function&quot;&gt;color-stop&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;hexcolor&quot;&gt;#8bc1ed&lt;/span&gt;))&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;background&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;function&quot;&gt;-webkit-gradient&lt;/span&gt;(linear, left top, left bottom, &lt;span class=&quot;function&quot;&gt;color-stop&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;0.05&lt;/span&gt;, &lt;span class=&quot;hexcolor&quot;&gt;#aad2f0&lt;/span&gt;), &lt;span class=&quot;function&quot;&gt;color-stop&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;hexcolor&quot;&gt;#8bc1ed&lt;/span&gt;))&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;background&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;function&quot;&gt;-webkit-gradient&lt;/span&gt;(linear, left top, left bottom, &lt;span class=&quot;function&quot;&gt;color-stop&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;0.05&lt;/span&gt;, &lt;span class=&quot;hexcolor&quot;&gt;#aad2f0&lt;/span&gt;), &lt;span class=&quot;function&quot;&gt;color-stop&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;hexcolor&quot;&gt;#8bc1ed&lt;/span&gt;))&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;background&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;function&quot;&gt;-webkit-gradient&lt;/span&gt;(linear, left top, left bottom, &lt;span class=&quot;function&quot;&gt;color-stop&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;0.05&lt;/span&gt;, &lt;span class=&quot;hexcolor&quot;&gt;#aad2f0&lt;/span&gt;), &lt;span class=&quot;function&quot;&gt;color-stop&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;hexcolor&quot;&gt;#8bc1ed&lt;/span&gt;))&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;background&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;function&quot;&gt;-moz--webkit-linear-gradient&lt;/span&gt;(center top, &lt;span class=&quot;hexcolor&quot;&gt;#aad2f0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5%&lt;/span&gt;, &lt;span class=&quot;hexcolor&quot;&gt;#8bc1ed&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;100%&lt;/span&gt;)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;background&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;function&quot;&gt;-moz--moz-linear-gradient&lt;/span&gt;(center top, &lt;span class=&quot;hexcolor&quot;&gt;#aad2f0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5%&lt;/span&gt;, &lt;span class=&quot;hexcolor&quot;&gt;#8bc1ed&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;100%&lt;/span&gt;)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;background&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;function&quot;&gt;-moz--ms-linear-gradient&lt;/span&gt;(center top, &lt;span class=&quot;hexcolor&quot;&gt;#aad2f0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5%&lt;/span&gt;, &lt;span class=&quot;hexcolor&quot;&gt;#8bc1ed&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;100%&lt;/span&gt;)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;background&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;function&quot;&gt;-moz-linear-gradient&lt;/span&gt;(center top, &lt;span class=&quot;hexcolor&quot;&gt;#aad2f0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5%&lt;/span&gt;, &lt;span class=&quot;hexcolor&quot;&gt;#8bc1ed&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;100%&lt;/span&gt;)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/* filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=&#39;#aad2f0&#39;, endColorstr=&#39;#8bc1ed&#39;); */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;background-color&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;hexcolor&quot;&gt;#74a474&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;border&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;1px&lt;/span&gt; solid &lt;span class=&quot;hexcolor&quot;&gt;#dcdcdc&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;text-shadow&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;hexcolor&quot;&gt;#eee&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.article-footer-copyright&lt;/span&gt; &lt;span class=&quot;rules&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;margin-top&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;2em&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;padding&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;0.8em&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;border&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;1px&lt;/span&gt; solid &lt;span class=&quot;hexcolor&quot;&gt;#d3d3d3&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;background-color&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;hexcolor&quot;&gt;#ffffcc&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;.article-footer-copyright&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;rules&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;line-height&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;140%&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;margin&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;10px&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;rule&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;font-size&lt;/span&gt;:&lt;span class=&quot;value&quot;&gt; &lt;span class=&quot;number&quot;&gt;100%&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;可以根据喜好修改格式。最后别忘了&lt;code&gt;@import &amp;#39;_partial/copyright&lt;/code&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;目前，网络中出现了一些不和谐因素，某些网站多次剽窃Hexo博友的原创文章。在对这些侵犯博友权益的网站提出谴责的同时，聪明的各位Geek们应该如何增强版权意识呢.&lt;/p&gt;
-&lt;p&gt;最简单的办法就是在自己的部落格文章里添加水印，即使这些网站通过爬虫私自收录我们的文章，读者也能在文章中轻易的发现原作者。
-    
-    </summary>
-    
-      <category term="前端" scheme="http://peihao.space/categories/%E5%89%8D%E7%AB%AF/"/>
-    
-    
-      <category term="Hexo" scheme="http://peihao.space/tags/Hexo/"/>
-    
-      <category term="front end" scheme="http://peihao.space/tags/front-end/"/>
     
   </entry>
   
