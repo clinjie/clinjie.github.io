@@ -1,5 +1,5 @@
 title: verilog过程块与赋值
-date: 2015-04-12 14:17:22
+date: 2016-04-18 14:17:22
 toc: true
 tags: Verilog
 categories: Verilog
