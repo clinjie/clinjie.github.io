@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://peihao.space/album/edit.json</loc>
+    
+    <lastmod>2016-04-19T15:16:27.892Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://peihao.space/2016/04/18/ise-synthesize/</loc>
     
     <lastmod>2016-04-18T13:06:11.753Z</lastmod>
@@ -117,13 +124,6 @@
     <loc>http://peihao.space/2016/04/09/Ise-wizard/</loc>
     
     <lastmod>2016-04-09T14:51:35.320Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://peihao.space/album/edit.json</loc>
-    
-    <lastmod>2016-04-07T14:22:39.257Z</lastmod>
     
   </url>
   
