@@ -7,7 +7,7 @@ tags:
 - BeautifulSoup
 categories: python
 ---
-![](http://7xowaa.com1.z0.glb.clouddn.com/csdn_content.jpg)
+![](http://7xowaa.com1.z0.glb.clouddn.com/csdn_content.jpg?imageView/2/w/520/q/100)
 
 # 前言 #
 前些天在逛论坛的时候突然发现了一篇文章，标题是通过编程自动化提高自己博客访问量的。我想了下，突然感觉可以用学过的Python的简单知识来实现这一目的。主要原理就是BeautifulSoup+urllib的组合,通过BS解析网页，获取目录，然后深入，获取文章的url，通过urllib.request模块尝试连接CSDN的服务器。说干就干
@@ -403,3 +403,111 @@ if __name__=='__main__':
 各个模块相互合作，实现功能.
 
 ![](http://7xowaa.com1.z0.glb.clouddn.com/pyqt_csdn2.jpg)
+
+# 通过Requests、Xpath改写 #
+
+这是后来补上的.
+
+
+在我完成这篇文章之前的部分的时候，还是对python刚入门，使用了比较经典的一些网络模块。后来通过一些实例练习，接触到了一些简洁、优雅的模块，通过这些模块继续完善。
+
+## Grab类 ##
+
+```python
+class Grab():
+    url = ''
+    soup = None
+    #读取当前网页的源代码数据返回
+    def GetPage(self, url):
+        self.url = url
+        try:page=requests.get(url, headers={'User-Agent' : "Magic Browser"})
+        except:return
+        tem = page.text
+        if not tem:
+            print('GetPage failed!')
+            sys.exit()
+        return tem
+
+    def ExtractInfo(self,buf):
+        dom=etree.HTML(buf)
+        links=dom.xpath('//h1/span[@class="link_title"]/a/@href')
+        titles=dom.xpath('//h1/span[@class="link_title"]/a/text()')
+        for i in range(0,len(links)):links[i]='http://blog.csdn.net'+links[i]
+        for i in range(0,len(titles)):titles[i]=titles[i].strip()
+        return links,titles
+
+    def GetPageUrl(self,buf):
+        pages = set()
+        dom=etree.HTML(buf)
+        pageinfo=(dom.xpath('//div[@id="papelist"]/span/text()'))[0]
+        pagecount=int((re.findall('共(.*?)页',pageinfo))[0])
+        for i in range(1,pagecount+1):
+            pages.add('http://blog.csdn.net/'+username+'/article/list/'+str(i))
+        return pages
+
+
+    def GetCurViewerPoint(self,buf):
+        self.soup = BeautifulSoup(buf,'html.parser')
+        pointobj = self.soup.find(attrs={'class':'link_view'})
+        title = self.soup.find(attrs={'class':'link_title'})
+        return title.get_text().strip()+'  '+pointobj.get_text()
+```
+
+
+- Request模块
+
+在[上网认证](http://peihao.space/2016/02/24/Internet_authentication/)这篇文章有过大概的介绍。模块通过提供极其简单的方法名称接口，隐藏了复杂的网络工作，大大简化了代码。
+
+- Xpath
+
+[Xpath介绍](http://peihao.space/2016/02/28/xpath%E7%AC%94%E8%AE%B0/)Xpath不是一个模块，而是活跃在众多平台的一种工具，也可以称她是一种语言。通过对网页源代码解析，内部构建路径，轻松获取想要的内容。在BeautifulSoup太沉重复杂、又不想使用正则的情况下，是一种很棒的解决方案。
+
+## MyThread类 ##
+
+```python
+class MyThread(QtCore.QThread):
+    sinOut = pyqtSignal(int,str,set)
+    articles = set()
+    global username
+    def __init__(self):
+        super(MyThread,self).__init__()
+        self.times=''
+
+    def setVal(self,username,times):
+        self.times=times
+
+    def run(self):
+        #发射信号
+        grab = Grab()
+        #获取各个目录页面信息
+        buf = grab.GetPage('http://blog.csdn.net/'+username)
+        pages = grab.GetPageUrl(buf)
+
+        content = set()
+        links = []
+        titles = []
+        for page in pages:
+            buf = grab.GetPage(page)
+            link,title = grab.ExtractInfo(buf)
+            links+=link
+            titles+=title
+        titles=zip(links,titles)
+        for link in links:
+            self.articles.add(link)
+        for title in titles:
+            tem = title[0]+'  '+title[1]
+            content.add(tem)
+
+        self.sinOut.emit(1,'',content)
+        sumRes = len(self.articles)*int(self.times)
+        cur = 1
+        for i in range(0,int(self.times)):
+            for url in self.articles:
+                buf=grab.GetPage(url)
+                self.sinOut.emit(2,str(cur/sumRes*100),content)
+                self.sinOut.emit(3,grab.GetCurViewerPoint(buf),content)
+                cur+=1
+                time.sleep(0.1)
+```
+
+经过测试，去掉`time.sleep(seconds)`推迟线程调用之后，会出现网络模块报错，可能是服务器对爬虫的限制。
