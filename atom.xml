@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peihao.space/"/>
-  <updated>2016-04-21T11:32:55.396Z</updated>
+  <updated>2016-04-22T15:26:23.471Z</updated>
   <id>http://peihao.space/</id>
   
   <author>
@@ -14,6 +14,124 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>DP介绍</title>
+    <link href="http://peihao.space/2016/04/22/DP-intro/"/>
+    <id>http://peihao.space/2016/04/22/DP-intro/</id>
+    <published>2016-04-22T09:17:22.000Z</published>
+    <updated>2016-04-22T15:26:23.471Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;动态规划(dynamic programming)是运筹学的一个分支，是求解决策过程(decision process)最优化的数学方法。20世纪50年代初美国数学家R.E.Bellman等人在研究多阶段决策过程(multistep decision process)的优化问题时，提出了著名的最优化原理(principle of optimality)，把多阶段过程转化为一系列单阶段问题，利用各阶段之间的关系，逐个求解，创立了解决这类过程优化问题的新方法——动态规划&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;动态规划算法通常基于一个递推公式和n个初始状态。当前子问题的解将由前子问题的解推出。使用动态规划来解题只需要多项式时间复杂度。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;基本思想&quot;&gt;基本思想&lt;/h1&gt;&lt;p&gt;动态规划算法通常用于求解具有某种最优性质的问题。在这类问题中，可能会有许多可行解。每一个解都对应于一个值，我们希望找到具有最优值的解。与分治法类似，基本思想也是将待求解问题分解成若干个子问题，先求解子问题，然后从这些子问题的解得到原问题的解。&lt;/p&gt;
+&lt;p&gt;与分治法不同的是，适合于用动态规划求解的问题，经分解得到子问题往往不是互相独立的。若用分治法来解这类问题，则分解得到的子问题数目太多，有些子问题被重复计算了很多次。如果我们能够保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算。可以用一个表来记录所有已解的子问题的答案。不管该子问题以后是否被用到，只要它被计算过，就将结果记录下来，方便之后使用。这就是动态规划法的基本思路。&lt;/p&gt;
+&lt;p&gt;动态规划程序设计是对解最优化问题的一种途径、一种方法，而不是一种特殊算法。不像搜索或数值计算那样，具有一个标准的数学表达式和明确清晰的解题方法。动态规划程序设计往往是针对一种最优化问题，由于各种问题的性质不同，确定最优解的条件也互不相同，因而动态规划的设计方法对不同的问题，有各具特色的解题方法，而不存在一种万能的动态规划算法，可以解决各类最优化问题。&lt;/p&gt;
+&lt;h1 id=&quot;适用条件&quot;&gt;适用条件&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;最优化原理（最优子结构性质） &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;最优化原理可这样阐述：一个最优化策略具有这样的性质，不论过去状态和决策如何，对前面的决策所形成的状态而言，余下的诸决策必须构成最优策略。简而言之，一个最优化策略的子策略总是最优的。一个问题满足最优化原理又称其具有最优子结构性质。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;无后效性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;将各阶段按照一定的次序排列好之后，对于某个给定的阶段状态，它以前各阶段的状态无法直接影响它未来的决策，而只能通过当前的这个状态。换句话说，每个状态都是过去历史的一个完整总结。这就是无后向性，又称为无后效性。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;子问题的重叠性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;动态规划将原来具有指数级时间复杂度的搜索算法改进成了具有多项式时间复杂度的算法。其中的关键在于解决冗余，这是动态规划算法的根本目的。动态规划实质上是一种以空间换时间的技术，它在实现的过程中，不得不存储产生过程中的各种状态，所以它的空间复杂度要大于其它的算法。&lt;/p&gt;
+&lt;h1 id=&quot;经典问题&quot;&gt;经典问题&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;有面值为1元、3元和5元的硬币若干枚，如何用最少的硬币凑够x元？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我们最先想到的算法一般是贪婪算法，每次减去能够减掉的最大数值，最后得出结果。&lt;/p&gt;
+&lt;p&gt;当然这在上面问题这种问题上是成立的，因为有面值是基数&lt;em&gt;1元&lt;/em&gt;，这显然不能代表普遍性。当提供的面值是2、3、5时，要求x=11，我们发现直接粗暴地套用贪婪原理并不奏效，&lt;code&gt;x-5-5=1&lt;/code&gt;，此时无法进行下一步，需要提供回溯。&lt;/p&gt;
+&lt;p&gt;所以说，在有些时候这类问题可以通过贪婪算法解决，但是大部分情况，我们无法直接获得想要的结果。&lt;/p&gt;
+&lt;p&gt;很明显，这个问题可以分解为:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;求解凑齐&lt;code&gt;x-1&lt;/code&gt;数值的硬币枚数+1&lt;/p&gt;
+&lt;p&gt;求解凑齐&lt;code&gt;x-3&lt;/code&gt;数值的硬币枚数+1&lt;/p&gt;
+&lt;p&gt;求解凑齐&lt;code&gt;x-5&lt;/code&gt;数值的硬币枚数+1&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;最终的结果就是这三种情况的最小值，而这三种情况又可以继续分别分解。解决的路径跟递归很相似，但是相当容易套圈~&lt;/p&gt;
+&lt;p&gt;所以我们开始尝试顺人类认知的从小数值递推到x.&lt;/p&gt;
+&lt;p&gt;现在我们在开始看上一部分&lt;strong&gt;DP适用条件&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;最优化原理&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;无后效性&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;子问题的重叠性&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;第一个条件显而易见的符合，第二个条件，当我们求出&lt;code&gt;x-1&lt;/code&gt;、&lt;code&gt;x-3&lt;/code&gt;、&lt;code&gt;x-5&lt;/code&gt;这些结果之后，这些步骤的最终结果只是为了能够得到x的最优解，求解之后跟&lt;code&gt;x+1&lt;/code&gt;、&lt;code&gt;x+3&lt;/code&gt;后续再无瓜葛，这就符合了无后效性。第三个条件，从我开始分解这道问题的时候就能够得出结论。&lt;/p&gt;
+&lt;h1 id=&quot;解决&quot;&gt;解决&lt;/h1&gt;&lt;h2 id=&quot;术语介绍&quot;&gt;术语介绍&lt;/h2&gt;&lt;p&gt;按照DP的知识，有下面几个重要的术语：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;阶段：把所给求解问题的过程恰当地分成若干个相互联系的阶段，以便于求解，过程不同，阶段数就可能不同．描述阶段的变量称为阶段变量。在多数情况下，阶段变量是离散的，用k表示。此外，也有阶段变量是连续的情形。如果过程可以在任何时刻作出决策，且在任意两个不同的时刻之间允许有无穷多个决策时，阶段变量就是连续的&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;状态：状态表示每个阶段开始面临的自然状况或客观条件，它不以人们的主观意志为转移，也称为不可控因素。在上面的例子中状态就是某阶段的出发位置，它既是该阶段某路的起点，同时又是前一阶段某支路的终点。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;决策：一个阶段的状态给定以后，从该状态演变到下一阶段某个状态的一种选择（行动）称为决策。在最优控制中，也称为控制。在许多问题中，决策可以自然而然地表示为一个数或一组数。不同的决策对应着不同的数值。描述决策的变量称决策变量，因状态满足无后效性，故在每个阶段选择决策时只需考虑当前的状态而无须考虑过程的历史。决策变量的范围称为允许决策集合&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;策略：由每个阶段的决策组成的序列称为策略。对于每一个实际的多阶段决策过程，可供选取的策略有一定的范围限制，这个范围称为允许策略集合。允许策略集合中达到最优效果的策略称为最优策略。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;状态转移方程：给定k阶段状态变量x(k)的值后，如果这一阶段的决策变量一经确定，第k+1阶段的状态变量x(k+1)也就完全确定，即x(k+1)的值随x(k)和第k阶段的决策u(k)的值变化而变化，那么可以把这一关系看成(x(k)，u(k))与x(k+1)确定的对应关系，用x(k+1)=Tk(x(k),u(k))表示。这是从k阶段到k+1阶段的状态转移规律，也就是状态转移方程。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;状态&quot;&gt;状态&lt;/h2&gt;&lt;p&gt;上面在Encyclopedia上提到的解读可能比较抽象，状态就是问题分解得到子问题的当前解。&lt;/p&gt;
+&lt;p&gt;具体到这个例子，就是当&lt;code&gt;x=[0、1、2、3、4、5、6、7、8、9、...x-1、x]&lt;/code&gt;这些问题的解。&lt;/p&gt;
+&lt;p&gt;我们通过基础的数据结构数组S表示子问题解，也就是原来问题的状态。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;s[0]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;求解需要多少枚硬币可以凑齐0元，显然，s[0]=0&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;s[1]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;需要多少枚硬币可以凑齐1元，s[1]=1，需要1枚1元硬币&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;s[2]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;需要多少枚硬币可以凑齐2元，s[2]=s[2-1]+1=s[1]+1=2。需要上面子问题状态再加上1枚1元硬币&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;s[3]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;需要多少枚硬币可以凑齐3元，此时的情况就比较复杂了。我们有两种选择，当然是基于原来的状态求出。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;以s[2]的状态基础在加一枚1元硬币。s[3]=s[3-1]+1&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;以s[0]的状态再加一枚3元硬币。s[3]=s[3-3]+1&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;现在的问题就是如何确定所有选择。从前面的疾苦==记录可以看出，我都是有意识的在下标上做文章，故意将&lt;code&gt;s[0]===s[3-3]&lt;/code&gt;，这就是关键。每次我们获取当前状态，不是要从紧邻的上一个状态递推，而是根据提供给我们的硬币数值得到可能凑到当前数值的情况。&lt;/p&gt;
+&lt;p&gt;2元再加一枚1元硬币是如此，0元再加一枚3元硬币也是如此。当要求解s[5]的时候情况更加多变。候选变成了&lt;code&gt;[s[4]+1,s[2]+1,s[0]+1]&lt;/code&gt;。每个子问题的求解都要尝试可能的求解路径状态。&lt;/p&gt;
+&lt;p&gt;4+1是一种情况，2+3、0+5是另外的情况。&lt;/p&gt;
+&lt;p&gt;那么s[3]的结果是哪一个呢，根据问题需要求解最小的硬币枚数，显然结果是&lt;code&gt;Min(s[2]+1,s[0]+1)&lt;/code&gt;，是s[3]=1，需要1枚三元硬币&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;s[4]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;需要多少枚硬币可以凑齐4元，&lt;code&gt;s[4]=Min(s[3]+1,s[1]+1)&lt;/code&gt;，s[4]=2,需要一枚3元硬币的基础上再加一枚1元硬币。&lt;/p&gt;
+&lt;p&gt;上面在s[3]的求解过程中，实际上已经脱出了该问题的状态转移方程。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;s[x]=Min(s[x-j]+1)&lt;/code&gt;，其中j是提供的硬币面值。&lt;/p&gt;
+&lt;h2 id=&quot;实现&quot;&gt;实现&lt;/h2&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;x=input(&lt;span class=&quot;string&quot;&gt;&#39;plz input the value of x&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;s=np.arange(int(x))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;x_coins=(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; range(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,x-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; i &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; x_coins:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; item&amp;gt;=i &lt;span class=&quot;keyword&quot;&gt;and&lt;/span&gt; s[item-i]+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&amp;lt;s[item]:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			s[item]=s[item-i]+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(s)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;动态规划(dynamic programming)是运筹学的一个分支，是求解决策过程(decision process)最优化的数学方法。20世纪50年代初美国数学家R.E.Bellman等人在研究多阶段决策过程(multistep decision process)的优化问题时，提出了著名的最优化原理(principle of optimality)，把多阶段过程转化为一系列单阶段问题，利用各阶段之间的关系，逐个求解，创立了解决这类过程优化问题的新方法——动态规划&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;动态规划算法通常基于一个递推公式和n个初始状态。当前子问题的解将由前子问题的解推出。使用动态规划来解题只需要多项式时间复杂度。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="algorithm" scheme="http://peihao.space/categories/algorithm/"/>
+    
+    
+      <category term="algorithm" scheme="http://peihao.space/tags/algorithm/"/>
+    
+  </entry>
   
   <entry>
     <title>Android Sdk获取更新</title>
@@ -1274,62 +1392,6 @@
     
     
       <category term="NoC" scheme="http://peihao.space/tags/NoC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>NoC路由算法</title>
-    <link href="http://peihao.space/2016/04/03/NoC-router-alg/"/>
-    <id>http://peihao.space/2016/04/03/NoC-router-alg/</id>
-    <published>2016-04-03T04:23:35.000Z</published>
-    <updated>2016-04-03T09:20:46.655Z</updated>
-    
-    <content type="html">&lt;p&gt;NoC的图谱结构必须保证每个节点可以发送数据包到其他节点。当没有完善的拓扑结构的时候，路由算法决定数据包从原地址开始选择那一条路径到目的地址。所以，有效的数据算法对NoC网路性能的好坏是至关重要的。&lt;/p&gt;
-&lt;p&gt;路由算法可以按照不同的标准分为不同的几类。比如说源路由&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;（SOurce Routing）和分布式路由（Distrubuted Routing），确定路由（Deterministic Routng）和自适应路由（Adaptive Routing）。&lt;/p&gt;
-&lt;h1 id=&quot;确定路由（Deterministic_Routing）&quot;&gt;确定路由（Deterministic Routing）&lt;/h1&gt;&lt;p&gt;确定路由是一种常见的路由，它的路由路径只与起点地址和终点地址有关，给定起点和终点地址，路由路径就被确定了，与当前的网络状态无关。而在确定路由中，使用最多的就是维序路由（Dimension-Ordered Routing）,因为他有着非常简单易实现的路由逻辑。&lt;/p&gt;
-&lt;p&gt;在维序路由中，每个数据包一次只在一个维上路由，当在这个维上到达了恰当的坐标之后，才按由低维到高维的顺序在另外的维上路由。因为数据包是按照着严格的单调的维数变化的顺序在通道内路由，所以维序路由也是没有&lt;code&gt;死锁&lt;/code&gt;的。按照在不同拓扑结构的网络中路由，维序路由包括了2D Mesh中的XY路由和在超立方体（HyperCube）中的E-cube路由。&lt;/p&gt;
-&lt;h2 id=&quot;XY路由&quot;&gt;XY路由&lt;/h2&gt;&lt;p&gt;关于XY路由算法的具体原理方法，我已经在&lt;a href=&quot;/2016/03/31/NoC-FIFO/&quot;&gt;缓存与XY路由算法&lt;/a&gt;一文中有过详细介绍。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;\img\article\router\xy-judge.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;具体举例来说，一个源地址（1，2），目的地址（3，4）的微片，采用XY路由算法的路径是不会改变的。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;(1,2)-&amp;gt;(2,2)-&amp;gt;(3,2)-&amp;gt;(3,4)-(3,4)&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&quot;E-cube_路由&quot;&gt;E-cube 路由&lt;/h2&gt;&lt;p&gt;E-cube路由和XY路由很相似，都是先在一个方向（维）上路由，然后再在其它方向（维）上路由。具体来说，前面提到了在n维立方体中，每个节点是用一个nbit的二进制编号表示的。每个节点n条输出的通道，其中第i条通道就对应的第i维。在E-cube路由算法中，数据包的头部携带了目的节点的地址 d。当n维立方体中的一个节点v收到一个数据包时·，E-cube路由算法计算路由向量c=d xor v（xor是逻辑运算符号异或）。如果c=0，说明数据包已经到达了目的地，则传给IP核。否则数据包被送往第k纬的输出通道，其中k是c里面最右面或者最左边的‘1’的那一维度。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;举例来说，一个由s=Ol10产生的数据包要传向目的地为d=l101的节点。首先计算路由向量cl=d xor s=1101 xor 0110=1011。取最右边的不为零的一位为k，则k=l，说明这是的数据包将会被送往第1维上的通道。然后到达了vl=011l。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;再计算路由向量c2=d xor v1=1101 xor 0111=1010，得出k=2，然后送到第2维的通道上。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;随即到达v2=0101，再一次计算c3=d xor v2=1101 xor 0101=1000,得出k=4，接着把数据包送到第4维的通道上。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;最后到达了目的地d=llOl。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;最终，得出的路由过程是：&lt;code&gt;011O一＞011l一＞0101一＞1101&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;从上面的路由过程可以看出，虽然E-cube路由与XY路由是在不同维数的网络中路由，但是它们都有很相似的共同点：即一次只在一个方向（维数）上路由，直到在该方向（维数）上当到达了与目的地址相同的节点，再按照单调的顺序改变方向在其它维上路由，XY路由是由X方向改变到Y方向的顺序，E-cube路由是从低维到高维（或者从高维到低维）的顺序。而这正是维序路由算法的典型特征。&lt;/p&gt;
-&lt;h1 id=&quot;自适应路由（Adaptive_Routing）&quot;&gt;自适应路由（Adaptive Routing）&lt;/h1&gt;&lt;p&gt;确定路由优点是，路由算法简单，在网络低拥塞环境下能获得较低延迟。但是由于其不能响应动态的网络状态变化，所以当网络拥塞增加时，性能迅速降低。&lt;/p&gt;
-&lt;p&gt;所谓的自适应路由，就是指数据包的路由路径不只与起点地址和终点地址有关，还要考虑网络的状态。也就是说，有同一对起／终点的地址的数据包，在不同的网络状态下，它们的路由路径也可能不同。&lt;/p&gt;
-&lt;p&gt;自适应路由的优点是采用自适应路由的路径，避免了网络拥塞，可以得到更高的网络带宽饱和值；但是它的路由逻辑较复杂，在网络低拥寨的情况下开销较大，而且还存在死锁问题。&lt;/p&gt;
-&lt;p&gt;在片上网络中，由于路由器结构所限，一般都采用的是比较简单的自适应算法，如带有一定自适应性的维序路由。所以，下面将着重介绍一下这种算法。&lt;/p&gt;
-&lt;h2 id=&quot;自适应性的维序路由&quot;&gt;自适应性的维序路由&lt;/h2&gt;&lt;p&gt;一般的维序路由是在维序路由中，每个数据包一次只在一个维上路由，当在这个维上到达了恰当的坐标之后，才按由低维到高维的顺序在另外的维上路由。&lt;/p&gt;
-&lt;p&gt;而这里带有一定自适应性的维序路由则是，当数据包沿某一维（如X方向），从最低维到最高维路由的过程中发生阻塞的时候，即向另一维（Y方向）发出传送请求，如果请求得到应答则向该方向传送数据，否则又转回X方向请求，如此循环，直到请求得到应答。同时规定，不允许数据向远离目的节点的方向运动，所以这种带有一定自适应性的维序路由也是没有&lt;code&gt;死锁&lt;/code&gt;的。&lt;/p&gt;
-&lt;p&gt;下面以4×4的2DMesh网络中的带有一定自适应性的XY路由为例，具体解释一下这种算法的路由过程。&lt;/p&gt;
-&lt;p&gt;假设一个数据包路由的起点为（1,4），终点为（4,1）。如果按照一般的XY路由的话，它的路由路径应该是&lt;code&gt;（1,4）一＞（2,4)一＞（3,4）一＞（4,4）一＞（4,3）一＞（4,2）一＞（4,1）&lt;/code&gt;。这时如果假设数据包在节点（3,4）发生了阻塞，不能继续向（4,4）发送。如果按照原来的XY路由，数据包就不能在往下发送，被阻塞在了（3，4）中。这时如果采用的是带有一定适应性的XY路由，在向节点（4,4)发送传送请求没有被允许之后，则它就会向Y维方向上的（3,3）节点发送传送请求，被允许之后，数据包就被发往节点（3,3）了。到达（3,3）后，又会先向X维方向上的（4,3)发送请求。就这样最终的路由路径为&lt;code&gt;（1,4）一＞（2,4）一＞（3,4）一＞（3,3）一＞（4,3）一＞（4,2)一＞（4,1）&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;\img\article\router\adaptive-routing.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;从上面的路由路径可以看出，带有一定自适应性的XY路由和一般的XY路由的差别就是在某个节点发生阻塞之后，它可以不按照先X维再Y维的顺序路由，而可以是向另一个维发送数据包。这样就可以从一定程度上缓解网络的拥塞&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;NoC的图谱结构必须保证每个节点可以发送数据包到其他节点。当没有完善的拓扑结构的时候，路由算法决定数据包从原地址开始选择那一条路径到目的地址。所以，有效的数据算法对NoC网路性能的好坏是至关重要的。&lt;/p&gt;
-&lt;p&gt;路由算法可以按照不同的标准分为不同的几类。比如说源路由
-    
-    </summary>
-    
-      <category term="NoC" scheme="http://peihao.space/categories/NoC/"/>
-    
-    
-      <category term="NoC" scheme="http://peihao.space/tags/NoC/"/>
-    
-      <category term="Router" scheme="http://peihao.space/tags/Router/"/>
     
   </entry>
   
