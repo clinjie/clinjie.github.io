@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peihao.space/"/>
-  <updated>2016-04-22T15:26:23.471Z</updated>
+  <updated>2016-04-23T13:25:47.796Z</updated>
   <id>http://peihao.space/</id>
   
   <author>
@@ -14,6 +14,91 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>DP介绍-最长递增子序列</title>
+    <link href="http://peihao.space/2016/04/23/DP-intro-001/"/>
+    <id>http://peihao.space/2016/04/23/DP-intro-001/</id>
+    <published>2016-04-23T09:17:22.000Z</published>
+    <updated>2016-04-23T13:25:47.796Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;最长递增子序列系列是DP动态规划中简单、经典的入门题目。类似最长非递减子序列、导弹拦截问题、最长公共子序列问题等等。这在我们逐渐了解、认知动态规划的过程中可以给我们提高很大的帮助。&lt;/p&gt;
+&lt;p&gt;设有由n个不相同的整数组成的数列，记为:a[0]、a[1]、……、a[n-1]且a(i)&amp;lt;&amp;gt;a(j) (i&amp;lt;&amp;gt;j)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;例如&lt;code&gt;{2,3,4,5,6,343,5,36,45,64,56,564}&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;若存在i1&amp;lt;i2&amp;lt;i3&amp;lt; … &amp;lt; ie 且有a[i1]&amp;lt;a[i2]&amp;lt; … &amp;lt;a[ie]则称为长度为e的递增子序列序列。如上例中3，18，23，24就是一个长度为4的递增序列，同时也有3，7，10，12，16，24长度为6的递增序列&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;问题的引出与思路&quot;&gt;问题的引出与思路&lt;/h1&gt;&lt;p&gt;要解决这个问题，按我们正常人的习惯性思维没我们往往会通过在下标从小到大逐渐增加，一步步的计算前n个数值（子数组，子序列最后的一个数值必须是a[n-1]）中的最长递增子序列，所以前n数值最长子序列未必会比前n-1最长子序列结果要大，这是需要我们注意的。&lt;/p&gt;
+&lt;p&gt;换句话说。我们需要在前n-1个数值中循环找出比第n个数值小、且成递增规律的序列。假如当前的数值比上个子序列的最后一个数值都要大，那么就可以直接在上个子问题结果的基础上加1。当然，这不是要我们局限于紧邻的上个子问题，而是前面所有子问题都要对比，然后将这些结果再取最大值。实际上，值已经引出了状态转移方程。&lt;/p&gt;
+&lt;p&gt;显然，这些子问题相互重叠、每次的结果都会影响下一个子数组结果，但是前面子数组的结果不会在改变。&lt;/p&gt;
+&lt;p&gt;现在想想上篇文章&lt;a href=&quot;http://peihao.space/2016/04/22/DP-intro/&quot;&gt;DP动态规划简介&lt;/a&gt;中提出的DP动态规划的三大条件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;最优化原理（最优子结构性质） &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;最优化原理可这样阐述：一个最优化策略具有这样的性质，不论过去状态和决策如何，对前面的决策所形成的状态而言，余下的诸决策必须构成最优策略。简而言之，一个最优化策略的子策略总是最优的。一个问题满足最优化原理又称其具有最优子结构性质。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;无后效性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;将各阶段按照一定的次序排列好之后，对于某个给定的阶段状态，它以前各阶段的状态无法直接影响它未来的决策，而只能通过当前的这个状态。换句话说，每个状态都是过去历史的一个完整总结。这就是无后向性，又称为无后效性。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;子问题的重叠性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;动态规划将原来具有指数级时间复杂度的搜索算法改进成了具有多项式时间复杂度的算法。其中的关键在于解决冗余，这是动态规划算法的根本目的。动态规划实质上是一种以空间换时间的技术，它在实现的过程中，不得不存储产生过程中的各种状态，所以它的空间复杂度要大于其它的算法。&lt;/p&gt;
+&lt;p&gt;在这个问题中都得到了完善的支撑，而且这个思想也很适合解决这个系列的问题，高效、简便。&lt;/p&gt;
+&lt;h1 id=&quot;解决过程&quot;&gt;解决过程&lt;/h1&gt;&lt;p&gt;我们使用一些列变量记录前n个子序列的结果。再具体的实现中，我们通常使用数组数据结构记录。数组&lt;code&gt;opt[length]&lt;/code&gt;中&lt;code&gt;opt[i]&lt;/code&gt;记录原始数据中前&lt;code&gt;i+1&lt;/code&gt;个数值（子数组）的最长递增子序列长度数值。&lt;/p&gt;
+&lt;p&gt;就以前面&lt;code&gt;seq={2,3,4,5,6,343,5,36,45,64,56,564}&lt;/code&gt;提过的数据来看：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;opt[0]:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;opt[0]代表的是原始数据中前1个数值的最长递增长度值，只有一个数值，显然seq[0]=2就是目前这个子问题的path，opt[0]=1。用上篇文章提到的术语，当前子问题的状态就是&lt;code&gt;opt[0]=1&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;opt[1]:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;opt[1]代表的是原始数据中前2个数值的最长递增长度值，&lt;code&gt;seq[1]&amp;gt;seq[0]&lt;/code&gt;，所以根据前面托出的状态转移方程，可以得出&lt;code&gt;opt[1]=opt[0]+1=2&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;opt[2]:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;opt[2]代表的是原始数据中前3个数值的最长递增长度值，&lt;code&gt;seq[2]&amp;gt;seq[1]&lt;/code&gt;，由于前面序列的连续递增，所以根据前面托出的状态转移方程，可以得出&lt;code&gt;opt[2]=opt[1]+1=3&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;opt[3]:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;opt[3]代表的是原始数据中前4个数值的最长递增长度值，&lt;code&gt;seq[3]&amp;gt;seq[2]&lt;/code&gt;，由于前面序列的连续递增，所以根据前面托出的状态转移方程，可以得出&lt;code&gt;opt[3]=opt[2]+1=4&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;opt[4]:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;opt[4]代表的是原始数据中前5个数值的最长递增长度值，&lt;code&gt;seq[4]&amp;gt;seq[3]&lt;/code&gt;，由于前面序列的连续递增，所以根据前面托出的状态转移方程，可以得出&lt;code&gt;opt[4]=opt[3]+1=5&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;opt[5]:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;opt[5]代表的是原始数据中前6个数值的最长递增长度值，&lt;code&gt;seq[5]&amp;gt;seq[4]&lt;/code&gt;，由于前面序列的连续递增，所以根据前面托出的状态转移方程，可以得出&lt;code&gt;opt[5]=opt[4]+1=6&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;opt[6]:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;opt[6]代表的是原始数据中前7个数值的最长递增长度值，&lt;code&gt;seq[6]&amp;lt;seq[5]&lt;/code&gt;，突如其来的变化让我们突然没了思绪。跳过seq[5]怎么样？&lt;code&gt;seq[6]&amp;lt;seq[4]&lt;/code&gt;，不行，再跳过直接到&lt;code&gt;seq[2]&lt;/code&gt;，现在因为&lt;code&gt;seq[6]&amp;gt;seq[2]&lt;/code&gt;，由于前面序列的连续递增，根据前面托出的状态转移方程，可以得出&lt;code&gt;opt[6]=opt[2]+1=4&lt;/code&gt;.这些逻辑很容易理解。但是如果前面的数据源并不是连续递增的，我们还是应该老老实实的遍历、比照大小得出结果。&lt;/p&gt;
+&lt;h1 id=&quot;实现&quot;&gt;实现&lt;/h1&gt;&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; seq[] = &amp;#123;&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;343&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;36&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;45&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;64&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;56&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;564&lt;/span&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; length=&lt;span class=&quot;keyword&quot;&gt;sizeof&lt;/span&gt;(seq)/&lt;span class=&quot;keyword&quot;&gt;sizeof&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; opt[length]=&amp;#123;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; path[length]=&amp;#123;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i, j, maxa = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,maxb=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i&amp;lt;length; i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        opt[i] = &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//计算子序列状态，path是为了还原最长子序列的辅助数组&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(i=&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;i&amp;lt;length;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(j=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;j&amp;lt;i;j++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(seq[i]&amp;gt;seq[j]&amp;amp;&amp;amp;opt[j]+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&amp;gt;opt[i])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            opt[i]=opt[j]+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            path[i]=j;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;length;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(maxa&amp;lt;opt[i])&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            maxa=opt[i];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            maxb=i;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//还原递增最长子序列&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(j=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,i=maxb;i&amp;gt;=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        opt[maxa-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;-j]=seq[i];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        i=path[i];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(++j==maxa)&lt;span class=&quot;keyword&quot;&gt;break&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;maxa;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&amp;lt;&amp;lt;opt[i]&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&#39; &#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;最长递增子序列系列是DP动态规划中简单、经典的入门题目。类似最长非递减子序列、导弹拦截问题、最长公共子序列问题等等。这在我们逐渐了解、认知动态规划的过程中可以给我们提高很大的帮助。&lt;/p&gt;
+&lt;p&gt;设有由n个不相同的整数组成的数列，记为:a[0]、a[1]、……、a[n-1]且a(i)&amp;lt;&amp;gt;a(j) (i&amp;lt;&amp;gt;j)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;例如&lt;code&gt;{2,3,4,5,6,343,5,36,45,64,56,564}&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;若存在i1&amp;lt;i2&amp;lt;i3&amp;lt; … &amp;lt; ie 且有a[i1]&amp;lt;a[i2]&amp;lt; … &amp;lt;a[ie]则称为长度为e的递增子序列序列。如上例中3，18，23，24就是一个长度为4的递增序列，同时也有3，7，10，12，16，24长度为6的递增序列&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="algorithm" scheme="http://peihao.space/categories/algorithm/"/>
+    
+    
+      <category term="algorithm" scheme="http://peihao.space/tags/algorithm/"/>
+    
+  </entry>
   
   <entry>
     <title>DP介绍</title>
@@ -1337,61 +1422,6 @@
     
     
       <category term="Git" scheme="http://peihao.space/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>router-source-analysis</title>
-    <link href="http://peihao.space/2016/04/04/router-source-analysis001/"/>
-    <id>http://peihao.space/2016/04/04/router-source-analysis001/</id>
-    <published>2016-04-04T12:17:22.000Z</published>
-    <updated>2016-04-06T05:45:08.164Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;constant_value&quot;&gt;constant value&lt;/h1&gt;&lt;p&gt;在分析第一个Verilog HDL Router中的check模块之前，首先在前面声明一下代码中会使用到的常量值：&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// disable error reporting&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_NONE       &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// don&#39;t hold errors&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_NO_HOLD    &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// capture first error only (subsequent errors are blocked) &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_HOLD_FIRST &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// capture all errors &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_HOLD_ALL   &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define ERROR_CAPTURE_MODE_LAST `ERROR_CAPTURE_MODE_HOLD_ALL&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// asynchronous reset&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define RESET_TYPE_ASYNC &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// synchronous reset&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define RESET_TYPE_SYNC  &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`define RESET_TYPE_LAST `RESET_TYPE_SYNC&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h1 id=&quot;实现reg&quot;&gt;实现reg&lt;/h1&gt;&lt;p&gt;在Router的check的错误警报模块中，具体实现这一功能的还是寄存器。上面的代码分别定义了一些错误警示以及错误重置的类型。&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/*&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;some input output var define ......&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;case&lt;/span&gt;(reset_type)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	`RESET_TYPE_ASYNC:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	  always @(posedge clk, posedge reset)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(reset)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	      q &amp;lt;= reset_value;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	    &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(active)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	      q &amp;lt;= d;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	`RESET_TYPE_SYNC:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	  always @(posedge clk)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(reset)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	      q &amp;lt;= reset_value;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	    &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(active)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	      q &amp;lt;= d;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      endcase &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   endgenerate&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;首先有一个case选择器，选择重置信号的类型是同步还是异步重置。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;async&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;异步类型的重置，会接受在时钟的上升沿会接受两个信号，分别是时序电路中必须的时钟信号，以及重置信号。当是上升沿时reset=1信号触发了事件，将输出结果赋值为想要重置的值，否则保持输出结果保持为输入值不变。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;sync&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;同步类型的时序时间触发参数只有clk时钟参数。当此时的reset信号电平为高，则赋值reset值，否则保持不变。&lt;/p&gt;
-&lt;p&gt;同步与异步类型的区别保证了同步类型的重置信号只有在时钟上升沿时有可能会发生reset值重置，而异步类型只要reset信号为高电平即可触发。&lt;/p&gt;
-&lt;h1 id=&quot;error模块&quot;&gt;error模块&lt;/h1&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;generate&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      if(capture_mode != `ERROR_CAPTURE_MODE_NONE)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	   &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	   wire [0:num_errors-1] errors_s, errors_q;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	   &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	   case(capture_mode)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	     &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	     `ERROR_CAPTURE_MODE_NO_HOLD:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	       begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		  assign errors_s = errors_in;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	       end&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	     &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	     `ERROR_CAPTURE_MODE_HOLD_FIRST:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	       begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			//&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		  assign errors_s = ~|errors_q ? errors_in : errors_q;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	       end&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	     &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	     `ERROR_CAPTURE_MODE_HOLD_ALL:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	       begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		  assign errors_s = errors_q | errors_in;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	       end&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	     &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	   endcase&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;当有错误信息时，获取到捕捉的错误信息类型。根据先前在constant常量文件中定义的信息，error_s变量对应的是上面寄存器中的d变量，表示输入信号。&lt;/p&gt;
-&lt;p&gt;~| 表示或非位运算，做一次或者多次‘或’运算之后，再做一次非运算。有1出0，全0出1。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://imgtec.eetrend.com/sites/imgtec.eetrend.com/files/201408/blog/3177-6309-6.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;上面是Verilog HDL中运算符的优先级顺序。&lt;/p&gt;
-&lt;p&gt;根据捕获到的不同错误类型，将error_s的值对应赋值，分别赋值为:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;errors_s = errors_in&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;直接赋值为error模块的输入值&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;errors_s = ~|errors_q ? errors_in : errors_q&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;当errors_q的值==0时，依然赋值为输入值，否则只要errors_q的值&amp;gt;0，有过改变就将它赋给errors_s。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;errors_s = errors_q | errors_in&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;赋值为当前erroes_q与errors_in的逻辑或运算结果。&lt;/p&gt;
-&lt;p&gt;其中errors_q是errors模块的实际输出结果，errors_in是模块的输入，errors_s时中间计算根据错误类型计算的输入值。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;constant_value&quot;&gt;constant value&lt;/h1&gt;&lt;p&gt;在分析第一个Verilog HDL Router中的check模块之前，首先在前面声明一下代码中会使用到的常量值：
-    
-    </summary>
-    
-      <category term="NoC" scheme="http://peihao.space/categories/NoC/"/>
-    
-    
-      <category term="NoC" scheme="http://peihao.space/tags/NoC/"/>
     
   </entry>
   

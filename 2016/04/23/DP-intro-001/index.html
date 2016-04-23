@@ -3,25 +3,33 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Python学习(三) | 窗外临街</title>
+  <title>DP介绍-最长递增子序列 | 窗外临街</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="接着我的上篇文章，Python学习(二).
+  <meta name="description" content="最长递增子序列系列是DP动态规划中简单、经典的入门题目。类似最长非递减子序列、导弹拦截问题、最长公共子序列问题等等。这在我们逐渐了解、认知动态规划的过程中可以给我们提高很大的帮助。
+设有由n个不相同的整数组成的数列，记为:a[0]、a[1]、……、a[n-1]且a(i)&amp;lt;&amp;gt;a(j) (i&amp;lt;&amp;gt;j)
 
-扩展PythonPython可以实现一切，但是有时候显然会感觉到比较缓慢（相对于C、C++甚至Java等语言），在某些科学模拟程序、图形渲染方面。使用python也许就不是一个好的选择，使用python的目的就是易用、高效的开发速度，但是相应的运行速度会降低。">
+例如{2,3,4,5,6,343,5,36,45,64,56,564}
+
+若">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python学习(三)">
-<meta property="og:url" content="http://peihao.space/2016/02/01/python3/index.html">
+<meta property="og:title" content="DP介绍-最长递增子序列">
+<meta property="og:url" content="http://peihao.space/2016/04/23/DP-intro-001/index.html">
 <meta property="og:site_name" content="窗外临街">
-<meta property="og:description" content="接着我的上篇文章，Python学习(二).
+<meta property="og:description" content="最长递增子序列系列是DP动态规划中简单、经典的入门题目。类似最长非递减子序列、导弹拦截问题、最长公共子序列问题等等。这在我们逐渐了解、认知动态规划的过程中可以给我们提高很大的帮助。
+设有由n个不相同的整数组成的数列，记为:a[0]、a[1]、……、a[n-1]且a(i)&amp;lt;&amp;gt;a(j) (i&amp;lt;&amp;gt;j)
 
-扩展PythonPython可以实现一切，但是有时候显然会感觉到比较缓慢（相对于C、C++甚至Java等语言），在某些科学模拟程序、图形渲染方面。使用python也许就不是一个好的选择，使用python的目的就是易用、高效的开发速度，但是相应的运行速度会降低。">
-<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/python3.jpg">
-<meta property="og:updated_time" content="2016-02-24T15:02:01.740Z">
+例如{2,3,4,5,6,343,5,36,45,64,56,564}
+
+若">
+<meta property="og:updated_time" content="2016-04-23T13:25:47.796Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python学习(三)">
-<meta name="twitter:description" content="接着我的上篇文章，Python学习(二).
+<meta name="twitter:title" content="DP介绍-最长递增子序列">
+<meta name="twitter:description" content="最长递增子序列系列是DP动态规划中简单、经典的入门题目。类似最长非递减子序列、导弹拦截问题、最长公共子序列问题等等。这在我们逐渐了解、认知动态规划的过程中可以给我们提高很大的帮助。
+设有由n个不相同的整数组成的数列，记为:a[0]、a[1]、……、a[n-1]且a(i)&amp;lt;&amp;gt;a(j) (i&amp;lt;&amp;gt;j)
 
-扩展PythonPython可以实现一切，但是有时候显然会感觉到比较缓慢（相对于C、C++甚至Java等语言），在某些科学模拟程序、图形渲染方面。使用python也许就不是一个好的选择，使用python的目的就是易用、高效的开发速度，但是相应的运行速度会降低。">
+例如{2,3,4,5,6,343,5,36,45,64,56,564}
+
+若">
   
     <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
   
@@ -249,11 +257,11 @@ var _hmt = _hmt || [];
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-python3" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-DP-intro-001" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/02/01/python3/" class="article-date">
-  	<time datetime="2016-02-01T06:39:55.000Z" itemprop="datePublished">2016-02-01</time>
+      <a href="/2016/04/23/DP-intro-001/" class="article-date">
+  	<time datetime="2016-04-23T09:17:22.000Z" itemprop="datePublished">2016-04-23</time>
 </a>
     </div>
   
@@ -266,7 +274,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      Python学习(三)
+      DP介绍-最长递增子序列
     </h1>
   
 
@@ -275,12 +283,12 @@ var _hmt = _hmt || [];
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
 	</div>
 
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/python/">python</a>
+	<a class="article-category-link" href="/categories/algorithm/">algorithm</a>
 	</div>
 
 
@@ -301,55 +309,68 @@ var _hmt = _hmt || [];
       
 	      	<!-- Table of Contents -->
 			
-        <p>接着我的上篇文章，<a href="/2016/01/01/python2/">Python学习(二)</a>.</p>
-<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/python3.jpg" alt=""></p>
-<h2 id="扩展Python">扩展Python</h2><p>Python可以实现一切，但是有时候显然会感觉到比较缓慢（相对于C、C++甚至Java等语言），在某些科学模拟程序、图形渲染方面。使用python也许就不是一个好的选择，使用python的目的就是易用、高效的开发速度，但是相应的运行速度会降低。  </p>
+			  <div id="toc" class="toc-article">
+			    <strong class="toc-title">文章目录</strong>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#问题的引出与思路"><span class="toc-number">1.</span> <span class="toc-text">问题的引出与思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解决过程"><span class="toc-number">2.</span> <span class="toc-text">解决过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现"><span class="toc-number">3.</span> <span class="toc-text">实现</span></a></li></ol>
+			  </div>
+			
+        <blockquote>
+<p>最长递增子序列系列是DP动态规划中简单、经典的入门题目。类似最长非递减子序列、导弹拦截问题、最长公共子序列问题等等。这在我们逐渐了解、认知动态规划的过程中可以给我们提高很大的帮助。</p>
+<p>设有由n个不相同的整数组成的数列，记为:a[0]、a[1]、……、a[n-1]且a(i)&lt;&gt;a(j) (i&lt;&gt;j)</p>
+</blockquote>
+<p>例如<code>{2,3,4,5,6,343,5,36,45,64,56,564}</code></p>
+<blockquote>
+<p>若存在i1&lt;i2&lt;i3&lt; … &lt; ie 且有a[i1]&lt;a[i2]&lt; … &lt;a[ie]则称为长度为e的递增子序列序列。如上例中3，18，23，24就是一个长度为4的递增序列，同时也有3，7，10，12，16，24长度为6的递增序列</p>
+</blockquote>
 <a id="more"></a>
-<p>当我们需要额外的速度的情况时候，最好的解决方案肯定不是整个开发过程都使用C语言或其他相对低级的语言，而是推荐以下的方法，使用这些方法能够满足很多工业强度上的速度要求:</p>
+<h1 id="问题的引出与思路">问题的引出与思路</h1><p>要解决这个问题，按我们正常人的习惯性思维没我们往往会通过在下标从小到大逐渐增加，一步步的计算前n个数值（子数组，子序列最后的一个数值必须是a[n-1]）中的最长递增子序列，所以前n数值最长子序列未必会比前n-1最长子序列结果要大，这是需要我们注意的。</p>
+<p>换句话说。我们需要在前n-1个数值中循环找出比第n个数值小、且成递增规律的序列。假如当前的数值比上个子序列的最后一个数值都要大，那么就可以直接在上个子问题结果的基础上加1。当然，这不是要我们局限于紧邻的上个子问题，而是前面所有子问题都要对比，然后将这些结果再取最大值。实际上，值已经引出了状态转移方程。</p>
+<p>显然，这些子问题相互重叠、每次的结果都会影响下一个子数组结果，但是前面子数组的结果不会在改变。</p>
+<p>现在想想上篇文章<a href="http://peihao.space/2016/04/22/DP-intro/">DP动态规划简介</a>中提出的DP动态规划的三大条件：</p>
 <ul>
-<li><p>在Python中开发一个原型程序（prototype）</p>
-</li>
-<li><p>分析程序并且找到平静</p>
-</li>
-<li><p>用C语言或其他作为扩展重写出现瓶颈的代码</p>
-</li>
+<li>最优化原理（最优子结构性质） </li>
 </ul>
-<hr>
-<p><strong>一些简单的途径</strong></p>
-<p>如果曾经使用过Jython和IronPython，你就会发现用这两种方式来扩展Pyhton是相当方便的。Jython对应Java，IronPython对应C#和其他.Net语言，可以直接访问对应的底层类和标准库。</p>
-<p>目前的主流情况下，除了C语言，扩展比较多的就是Java语言，这里我就简单的尝试一下。</p>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">JythonTest</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">greting</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		System.<span class="keyword">out</span>.println(<span class="string">'Hello,Jython'</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>将文件JythonTest.java编译成.class二进制代码，放置到当前工作目录下或者放到配置的Java CLASSPATH中的某处，启动Jython<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span><span class="constant">CLASSPATH</span>=<span class="constant">JythonTest</span>.<span class="keyword">class</span> jython</span><br></pre></td></tr></table></figure></p>
-<p>直接导入类<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;</span>&gt;import <span class="constant">JythonTest</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt;test=<span class="constant">JythonTest</span>()</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt;test.greeting()</span><br><span class="line"><span class="constant">Hello</span>,<span class="constant">Jython</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>编写C语言扩展</strong><br>扩展Python通常就是指扩展CPython，它使用C语言实现的额标准Python版本.SWIG是简单包装和接口生成器的缩写。它是一个能用几种语言的工具，一方面，可以通过它使用C语言或者C++编写扩展代码，另一方面，他会自动包装那些代码，以便能在一些高级语言中使用（Perl、Ruby、Java、Python）。如果决定将系统的一部分使用C语言扩展编写，而不是直接在Python中实现的话，使用C语言扩展库也能在其他语言中使用。</p>
-<ol>
-<li><p>C语言源文件palindrome.c</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//palindrome.c</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">is_palindrome</span><span class="params">(<span class="keyword">char</span> *text)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,n=<span class="built_in">strlen</span>(text);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;=n/<span class="number">2</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(text[i]!=text[n-i-<span class="number">1</span>])</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>相应的C语言头文件palindrome.h</p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* File: palindrome.h */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">is_palindrome</span><span class="params">(<span class="keyword">char</span> *text)</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用swig模块写一个描述文件palindrome.i</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* File: palindrome.i */</span></span><br><span class="line">%module palindrome</span><br><span class="line"></span><br><span class="line">%&#123;</span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> SWIG_FILE_WITH_INIT</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">"palindrome.h"</span></span></span><br><span class="line">%&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">is_palindrome</span><span class="params">(<span class="keyword">char</span> *text)</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>为了建python模块，利用-python参数执行swig</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">swig </span>-python palindrome.i</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>执行完命令后生成两个不同的文件：palindrome_wrap.c和palindrome.py。</p>
-<p>自动生成文件名的原则：生成的c文件名与写的c文件名有关（例如写的c文件名为example.c则生成example_wrap.c）；生成的python文件即.i文件中%module后面的名字。</p>
-<ol>
-<li>利用distutils生成动态库<br>python自带一个distutils工具，可以用它来创建python的扩展模块。使用它也很简单，只需要先定义一个配置文件，通常是命名为setup.py<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span><br><span class="line">setup.py</span><br><span class="line">"""</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">from</span> distutils.core <span class="keyword">import</span> setup, Extension</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">palindrome_module = Extension(<span class="string">'_palindrome'</span>,</span><br><span class="line">                           sources=[<span class="string">'palindrome_wrap.c'</span>, <span class="string">'palindrome.c'</span>],</span><br><span class="line">                           )</span><br><span class="line"> </span><br><span class="line">setup (name = <span class="string">'palindrome'</span>,</span><br><span class="line">       version = <span class="string">'0.1'</span>,</span><br><span class="line">       author      = <span class="string">"SWIG Docs"</span>,</span><br><span class="line">       description = <span class="string">"""Simple swig example from docs"""</span>,</span><br><span class="line">       ext_modules = [palindrome_module],</span><br><span class="line">       py_modules = [<span class="string">"palindrome"</span>],</span><br><span class="line">       )</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>pic：头文件和源文件都是palindrome.*，那么setup.py脚本中Extension的参数必须为“_palindrome”</p>
-<ol>
-<li>编译<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup<span class="class">.py</span> build</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>会在本目录下build/lib*/下生成_palindrome.pyd模块，可以直接使用，例如<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;</span>&gt;import palindrome</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt;print palindrome.is_palindrome(<span class="string">"sssttsss"</span>)</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure></p>
-<p>可以把动态模块直接生成当前目录下<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup<span class="class">.py</span> build_ext --inplace</span><br></pre></td></tr></table></figure></p>
-
+<p>最优化原理可这样阐述：一个最优化策略具有这样的性质，不论过去状态和决策如何，对前面的决策所形成的状态而言，余下的诸决策必须构成最优策略。简而言之，一个最优化策略的子策略总是最优的。一个问题满足最优化原理又称其具有最优子结构性质。</p>
+<ul>
+<li>无后效性</li>
+</ul>
+<p>将各阶段按照一定的次序排列好之后，对于某个给定的阶段状态，它以前各阶段的状态无法直接影响它未来的决策，而只能通过当前的这个状态。换句话说，每个状态都是过去历史的一个完整总结。这就是无后向性，又称为无后效性。</p>
+<ul>
+<li>子问题的重叠性</li>
+</ul>
+<p>动态规划将原来具有指数级时间复杂度的搜索算法改进成了具有多项式时间复杂度的算法。其中的关键在于解决冗余，这是动态规划算法的根本目的。动态规划实质上是一种以空间换时间的技术，它在实现的过程中，不得不存储产生过程中的各种状态，所以它的空间复杂度要大于其它的算法。</p>
+<p>在这个问题中都得到了完善的支撑，而且这个思想也很适合解决这个系列的问题，高效、简便。</p>
+<h1 id="解决过程">解决过程</h1><p>我们使用一些列变量记录前n个子序列的结果。再具体的实现中，我们通常使用数组数据结构记录。数组<code>opt[length]</code>中<code>opt[i]</code>记录原始数据中前<code>i+1</code>个数值（子数组）的最长递增子序列长度数值。</p>
+<p>就以前面<code>seq={2,3,4,5,6,343,5,36,45,64,56,564}</code>提过的数据来看：</p>
+<ul>
+<li>opt[0]:</li>
+</ul>
+<p>opt[0]代表的是原始数据中前1个数值的最长递增长度值，只有一个数值，显然seq[0]=2就是目前这个子问题的path，opt[0]=1。用上篇文章提到的术语，当前子问题的状态就是<code>opt[0]=1</code></p>
+<ul>
+<li>opt[1]:</li>
+</ul>
+<p>opt[1]代表的是原始数据中前2个数值的最长递增长度值，<code>seq[1]&gt;seq[0]</code>，所以根据前面托出的状态转移方程，可以得出<code>opt[1]=opt[0]+1=2</code>.</p>
+<ul>
+<li>opt[2]:</li>
+</ul>
+<p>opt[2]代表的是原始数据中前3个数值的最长递增长度值，<code>seq[2]&gt;seq[1]</code>，由于前面序列的连续递增，所以根据前面托出的状态转移方程，可以得出<code>opt[2]=opt[1]+1=3</code>.</p>
+<ul>
+<li>opt[3]:</li>
+</ul>
+<p>opt[3]代表的是原始数据中前4个数值的最长递增长度值，<code>seq[3]&gt;seq[2]</code>，由于前面序列的连续递增，所以根据前面托出的状态转移方程，可以得出<code>opt[3]=opt[2]+1=4</code>.</p>
+<ul>
+<li>opt[4]:</li>
+</ul>
+<p>opt[4]代表的是原始数据中前5个数值的最长递增长度值，<code>seq[4]&gt;seq[3]</code>，由于前面序列的连续递增，所以根据前面托出的状态转移方程，可以得出<code>opt[4]=opt[3]+1=5</code>.</p>
+<ul>
+<li>opt[5]:</li>
+</ul>
+<p>opt[5]代表的是原始数据中前6个数值的最长递增长度值，<code>seq[5]&gt;seq[4]</code>，由于前面序列的连续递增，所以根据前面托出的状态转移方程，可以得出<code>opt[5]=opt[4]+1=6</code>.</p>
+<ul>
+<li>opt[6]:</li>
+</ul>
+<p>opt[6]代表的是原始数据中前7个数值的最长递增长度值，<code>seq[6]&lt;seq[5]</code>，突如其来的变化让我们突然没了思绪。跳过seq[5]怎么样？<code>seq[6]&lt;seq[4]</code>，不行，再跳过直接到<code>seq[2]</code>，现在因为<code>seq[6]&gt;seq[2]</code>，由于前面序列的连续递增，根据前面托出的状态转移方程，可以得出<code>opt[6]=opt[2]+1=4</code>.这些逻辑很容易理解。但是如果前面的数据源并不是连续递增的，我们还是应该老老实实的遍历、比照大小得出结果。</p>
+<h1 id="实现">实现</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> seq[] = &#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">343</span>,<span class="number">5</span>,<span class="number">36</span>,<span class="number">45</span>,<span class="number">64</span>,<span class="number">56</span>,<span class="number">564</span>&#125;;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> length=<span class="keyword">sizeof</span>(seq)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">    <span class="keyword">int</span> opt[length]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> path[length]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> i, j, maxa = <span class="number">0</span>,maxb=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;length; i++)</span><br><span class="line">        opt[i] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//计算子序列状态，path是为了还原最长子序列的辅助数组</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;length;i++)</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;i;j++)</span><br><span class="line">        <span class="keyword">if</span>(seq[i]&gt;seq[j]&amp;&amp;opt[j]+<span class="number">1</span>&gt;opt[i])</span><br><span class="line">        &#123;</span><br><span class="line">            opt[i]=opt[j]+<span class="number">1</span>;</span><br><span class="line">            path[i]=j;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;length;i++)</span><br><span class="line">        <span class="keyword">if</span>(maxa&lt;opt[i])&#123;</span><br><span class="line">            maxa=opt[i];</span><br><span class="line">            maxb=i;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//还原递增最长子序列</span></span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>,i=maxb;i&gt;=<span class="number">0</span>;)&#123;</span><br><span class="line">        opt[maxa-<span class="number">1</span>-j]=seq[i];</span><br><span class="line">        i=path[i];</span><br><span class="line">        <span class="keyword">if</span>(++j==maxa)<span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;maxa;i++)</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;opt[i]&lt;&lt;<span class="string">' '</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
       
 	<! -- 添加捐赠图标 -->
@@ -385,9 +406,9 @@ var _hmt = _hmt || [];
 
 <p>非商业转载请注明作者及出处。商业转载请联系作者本人。</p>
  
- <p>本文标题为: <a href="http://peihao.space/2016/02/01/python3/">Python学习(三)</a> </p>
+ <p>本文标题为: <a href="http://peihao.space/2016/04/23/DP-intro-001/">DP介绍-最长递增子序列</a> </p>
  
- <p>本文链接为：<a href="http://peihao.space/2016/02/01/python3/">http://peihao.space/2016/02/01/python3/</a></p>
+ <p>本文链接为：<a href="http://peihao.space/2016/04/23/DP-intro-001/">http://peihao.space/2016/04/23/DP-intro-001/</a></p>
 </div>
 <! -- 添加版权信息 -->
 		
@@ -399,18 +420,9 @@ var _hmt = _hmt || [];
     
 <nav id="article-nav">
   
-    <a href="/2016/02/03/csdn_viewer/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          CSDN访问量作弊器
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/01/30/QR/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">二维码与Python</div>
+    <a href="/2016/04/22/DP-intro/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">DP介绍</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -441,7 +453,7 @@ var _hmt = _hmt || [];
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="python3" data-title="Python学习(三)" data-url="http://peihao.space/2016/02/01/python3/"></div>
+	<div class="ds-thread" data-thread-key="DP-intro-001" data-title="DP介绍-最长递增子序列" data-url="http://peihao.space/2016/04/23/DP-intro-001/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
