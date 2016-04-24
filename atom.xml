@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peihao.space/"/>
-  <updated>2016-04-23T13:25:47.796Z</updated>
+  <updated>2016-04-24T14:40:32.854Z</updated>
   <id>http://peihao.space/</id>
   
   <author>
@@ -14,6 +14,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>x</title>
+    <link href="http://peihao.space/2016/04/24/note/"/>
+    <id>http://peihao.space/2016/04/24/note/</id>
+    <published>2016-04-24T14:17:22.000Z</published>
+    <updated>2016-04-24T14:40:32.854Z</updated>
+    
+    <content type="html">&lt;p&gt;也是日了狗了，整天被别人的事情占满，Fuck.爆炸&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;也是日了狗了，整天被别人的事情占满，Fuck.爆炸&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://peihao.space/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="随笔" scheme="http://peihao.space/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
   
   <entry>
     <title>DP介绍-最长递增子序列</title>
@@ -309,7 +333,7 @@
     <link href="http://peihao.space/2016/04/20/tumblr/"/>
     <id>http://peihao.space/2016/04/20/tumblr/</id>
     <published>2016-04-20T14:17:22.000Z</published>
-    <updated>2016-04-21T06:05:16.760Z</updated>
+    <updated>2016-04-24T13:20:49.400Z</updated>
     
     <content type="html">&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/tumblr.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;本篇文章是&lt;a href=&quot;http://peihao.space/2016/03/16/alter_torrent/&quot;&gt;洗白种子文件&lt;/a&gt;的兄弟篇，也是为了安利一个宅男宅女极好的网站–&lt;a href=&quot;https://www.tumblr.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;汤不热&lt;/a&gt;.&lt;/p&gt;
@@ -318,9 +342,9 @@
 &lt;p&gt;tumblr是纯粹基于兴趣的社交网站，产品形态好用只是一个方面，更重要的是，可以只关注自己感兴趣的人和博客，而且不必为了维持真实好友关系和自己被期望的网络形象而去做一些自己不想做的事（比如逃避家长监控）&lt;/p&gt;
 &lt;p&gt;好了，不装x，目前国内青年使用Tumblr频率最高的动机不是为了寻觅上面叹为观止的写真、艺术创造，而是为了解决青春期荷尔蒙沉淀过多问题。Tumblr上面有大量的喜闻乐见的po主，他们经常更新自己的站点，包括一颗赛艇的pic和video。而且，最重要的，到目前为止，GFW还没有明确的将网站放到黑名单…&lt;/p&gt;
 &lt;p&gt;当你有了Tumblr博主账号之后，你可以轻松的访问获取他发布的每一条资源分享。然而可能因为服务器的缘故，国内请求受限，速度很慢，好吧，编程改变世界.|&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; re&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; requests&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Res=list()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Res1=list()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;outputfile = open(&lt;span class=&quot;string&quot;&gt;&#39;result.txt&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;w&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;blogname=input(&lt;span class=&quot;string&quot;&gt;&#39;plz input the username:&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(keys)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; key &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; keys:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        baseurl = &lt;span class=&quot;string&quot;&gt;&#39;http://&#39;&lt;/span&gt;+blogname.strip()+&lt;span class=&quot;string&quot;&gt;&#39;.tumblr.com/api/read?type=&#39;&lt;/span&gt;+key+&lt;span class=&quot;string&quot;&gt;&#39;&amp;amp;num=50&amp;amp;start=&#39;&lt;/span&gt;    &lt;span class=&quot;comment&quot;&gt;#pic&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        start = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;   &lt;span class=&quot;comment&quot;&gt;#start from num zero&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            url = baseurl + str(start)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            pagecontent = requests.get(url).text&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; key==&lt;span class=&quot;string&quot;&gt;&#39;photo&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                result=re.findall(&lt;span class=&quot;string&quot;&gt;&#39;&amp;lt;photo-url .*?&amp;gt;(.*?)&amp;lt;/photo-url&amp;gt;&#39;&lt;/span&gt;,pagecontent)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; result:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    Res.append(item)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                result=re.findall(&lt;span class=&quot;string&quot;&gt;&#39;source src=&quot;(.*?)&quot;&#39;&lt;/span&gt;,pagecontent)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; result:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    Res1.append(item)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (len(result) &amp;lt; &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;break&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                start += &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;func((&lt;span class=&quot;string&quot;&gt;&#39;video&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;photo&#39;&lt;/span&gt;))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; Res:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; Res:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        outputfile.writelines(item+&lt;span class=&quot;string&quot;&gt;&#39;\n&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; Res1:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; Res1:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        outputfile.writelines(item+&lt;span class=&quot;string&quot;&gt;&#39;\n&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;outputfile.close()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#dbdnsjzbebhsuiwbdbdjsnd       guoyua&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; re&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; requests&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; lxml &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; etree&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Res=set()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Res1=set()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;blogname=input(&lt;span class=&quot;string&quot;&gt;&#39;plz input the username:&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(keys)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    dom=etree.HTML(requests.get(&lt;span class=&quot;string&quot;&gt;&#39;http://&#39;&lt;/span&gt;+blogname+&lt;span class=&quot;string&quot;&gt;&#39;.tumblr.com/&#39;&lt;/span&gt;).text)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    title=(dom.xpath(&lt;span class=&quot;string&quot;&gt;&#39;//title/text()&#39;&lt;/span&gt;))[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; outputfile&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    outputfile= open(title+&lt;span class=&quot;string&quot;&gt;&#39;-result.txt&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;w&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; key &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; keys:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        baseurl = &lt;span class=&quot;string&quot;&gt;&#39;http://&#39;&lt;/span&gt;+blogname.strip()+&lt;span class=&quot;string&quot;&gt;&#39;.tumblr.com/api/read?type=&#39;&lt;/span&gt;+key+&lt;span class=&quot;string&quot;&gt;&#39;&amp;amp;num=50&amp;amp;start=&#39;&lt;/span&gt;    &lt;span class=&quot;comment&quot;&gt;#pic&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        start = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;   &lt;span class=&quot;comment&quot;&gt;#start from num zero&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            url = baseurl + str(start)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            pagecontent = requests.get(url).text&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; key==&lt;span class=&quot;string&quot;&gt;&#39;photo&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                result=re.findall(&lt;span class=&quot;string&quot;&gt;&#39;&amp;lt;photo-url .*?&amp;gt;(.*?)&amp;lt;/photo-url&amp;gt;&#39;&lt;/span&gt;,pagecontent)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; result:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    Res.add(item)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                result=re.findall(&lt;span class=&quot;string&quot;&gt;&#39;source src=&quot;(.*?)&quot;&#39;&lt;/span&gt;,pagecontent)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; result:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    Res1.add(item)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (len(result) &amp;lt; &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;break&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                start += &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;func((&lt;span class=&quot;string&quot;&gt;&#39;video&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;photo&#39;&lt;/span&gt;))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; Res:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; Res:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        outputfile.writelines(item+&lt;span class=&quot;string&quot;&gt;&#39;\n&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; Res1:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; Res1:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        outputfile.writelines(item+&lt;span class=&quot;string&quot;&gt;&#39;\n&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;outputfile.close()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;运行上面的代码，输入正确的站主name，就可以在当前目录下的&lt;code&gt;result.txt&lt;/code&gt;文件写入所有的pic和video。&lt;/p&gt;
-&lt;p&gt;听过实验，pic会有很多的重复内容，因为会返回原图的不同尺寸url，这里我没有对他进行排重获取高分辨率，因为我懒。不会告诉你在代码最后一行不小心留下了潘多拉魔盒.&lt;/p&gt;
+&lt;p&gt;听过实验，pic会有很多的重复内容，因为会返回原图的不同尺寸url，这里我没有对他进行排重获取高分辨率，因为我懒。&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://www.jianguoyun.com/p/DbSPNO0QpYz2BRi1qhM&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;下载戳我&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/tumblr2.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 </content>
@@ -1357,71 +1381,6 @@
     
     
       <category term="Gulp" scheme="http://peihao.space/tags/Gulp/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>gitignore忽略规则</title>
-    <link href="http://peihao.space/2016/04/05/gitignore/"/>
-    <id>http://peihao.space/2016/04/05/gitignore/</id>
-    <published>2016-04-05T08:17:22.000Z</published>
-    <updated>2016-04-06T05:44:44.214Z</updated>
-    
-    <content type="html">&lt;p&gt;.gitignore 配置文件用于配置不需要加入版本管理的文件，配置好该文件可以为我们的版本管理带来很大的便利，以下是个人对于配置 .gitignore 的一些心得。&lt;/p&gt;
-&lt;h1 id=&quot;配置语法&quot;&gt;配置语法&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;以斜杠“/”开头表示目录；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;以星号“*”通配多个字符；&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;以问号“?”通配单个字符&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;以方括号“[]”包含单个字符的匹配列表；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;以叹号“!”表示是跟踪（不忽略）某个文件或目录。；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;#此为注释 – 将被 Git 忽略&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[ ^abc]：代表必须不是a,b,c中任一字符&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[abc]：代表a,b,c中任一字符即可&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;{ab,bb,cx}：代表ab,bb,cx中任一类型即可&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;{!ab}：必须不是此类型    &lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;　　&lt;/p&gt;
-&lt;p&gt;此外，git 对于 .ignore 配置文件是按行从上到下进行规则匹配的，意味着如果前面的规则匹配的范围更大，则后面的规则将不会生效；&lt;/p&gt;
-&lt;h1 id=&quot;示例&quot;&gt;示例&lt;/h1&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;fd1/*&lt;/code&gt;&lt;br&gt;说明：忽略目录 fd1 下的全部内容；注意，不管是根目录下的 /fd1/ 目录，还是某个子目录 /child/fd1/ 目录，都会被忽略；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;/fd1/*&lt;/code&gt;&lt;br&gt;说明：忽略根目录下的 /fd1/ 目录的全部内容；&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;3.&lt;br&gt;&lt;figure class=&quot;highlight diff&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;/*&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;change&quot;&gt;!.gitignore&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;change&quot;&gt;!/fw/bin/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;change&quot;&gt;!/fw/sf/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;4.&lt;/p&gt;
-&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;*.a       #忽略所有 .a 结尾的文件&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;!lib.a    #但 lib.a 除外&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;/TODO     #仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;build/    #忽略 build/ 目录下的所有文件&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;doc/*.txt #会忽略 doc/notes.txt 但不包括 doc/server/arch.txt&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;说明：忽略全部内容，但是不忽略 .gitignore 文件、根目录下的 /fw/bin/ 和 /fw/sf/ 目录&lt;/p&gt;
-&lt;h1 id=&quot;Tip&quot;&gt;Tip&lt;/h1&gt;&lt;p&gt;规则很简单，但是有时候在项目开发过程中，突然心血来潮想把某些目录或文件加入忽略规则，按照上述方法定义后发现并未生效。原因是.gitignore只能忽略那些原来没有被track（跟踪过）的文件，如果某些文件已经被纳入了版本管理中，则修改.gitignore是无效的。那么解决方法就是先把本地缓存删除（改变成未track状态），然后再提交。&lt;/p&gt;
-&lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git rm -r --cached &lt;span class=&quot;class&quot;&gt;.gitignore&lt;/span&gt; #从版本库中删除文件，但不从硬盘删除&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git add &lt;span class=&quot;class&quot;&gt;.gitignore&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git commit -m &lt;span class=&quot;string&quot;&gt;&#39;update .gitignore&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;或者直接&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;git rm &amp;lt;file&amp;gt;  #从版本库中删除文件，同时在硬盘中剔除&lt;/code&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;.gitignore 配置文件用于配置不需要加入版本管理的文件，配置好该文件可以为我们的版本管理带来很大的便利，以下是个人对于配置 .gitignore 的一些心得。&lt;/p&gt;
-&lt;h1 id=&quot;配置语法&quot;&gt;配置语法&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;以斜杠“/”开头表示目录；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;以星号“*”通配多个字符；&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Git" scheme="http://peihao.space/categories/Git/"/>
-    
-    
-      <category term="Git" scheme="http://peihao.space/tags/Git/"/>
     
   </entry>
   
