@@ -23,11 +23,15 @@ tumblr是纯粹基于兴趣的社交网站，产品形态好用只是一个方�
 ```python
 import re
 import requests
-Res=list()
-Res1=list()
-outputfile = open('result.txt','w')
+from lxml import etree
+Res=set()
+Res1=set()
 blogname=input('plz input the username:')
 def func(keys):
+    dom=etree.HTML(requests.get('http://'+blogname+'.tumblr.com/').text)
+    title=(dom.xpath('//title/text()'))[0]
+    global outputfile
+    outputfile= open(title+'-result.txt','w')
     for key in keys:
         baseurl = 'http://'+blogname.strip()+'.tumblr.com/api/read?type='+key+'&num=50&start='    #pic
         start = 0   #start from num zero
@@ -37,11 +41,11 @@ def func(keys):
             if key=='photo':
                 result=re.findall('<photo-url .*?>(.*?)</photo-url>',pagecontent)
                 for item in result:
-                    Res.append(item)
+                    Res.add(item)
             else:
                 result=re.findall('source src="(.*?)"',pagecontent)
                 for item in result:
-                    Res1.append(item)
+                    Res1.add(item)
             if (len(result) < 50):
                 break
             else:
@@ -54,14 +58,12 @@ if Res1:
     for item in Res1:
         outputfile.writelines(item+'\n')
 outputfile.close()
-
-#dbdnsjzbebhsuiwbdbdjsnd       guoyua
 ```
 
 运行上面的代码，输入正确的站主name，就可以在当前目录下的`result.txt`文件写入所有的pic和video。
 
 
-听过实验，pic会有很多的重复内容，因为会返回原图的不同尺寸url，这里我没有对他进行排重获取高分辨率，因为我懒。不会告诉你在代码最后一行不小心留下了潘多拉魔盒.
+听过实验，pic会有很多的重复内容，因为会返回原图的不同尺寸url，这里我没有对他进行排重获取高分辨率，因为我懒。
 
 [下载戳我](https://www.jianguoyun.com/p/DbSPNO0QpYz2BRi1qhM)
 
