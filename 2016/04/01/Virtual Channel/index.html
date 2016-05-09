@@ -11,11 +11,11 @@
 <meta property="og:url" content="http://peihao.space/2016/04/01/Virtual Channel/index.html">
 <meta property="og:site_name" content="窗外临街">
 <meta property="og:description" content="VC与WormHole的对比虚信道路由器通过引入虚信道技术，将一个物理信道分成逻辑上的多个虚信道。多个虚信道对物理信道分时复用，通过对虚信道的合理调度，当网络中发生数据分组阻塞时，阻塞的分组被缓存在某一条虚信道的缓存中，其它分组能够使用其它的虚信道继续进行传输。">
-<meta property="og:image" content="http://peihao.space/img/article/router/wormhole-router.jpg">
+<meta property="og:image" content="http://peihao.space/img/article/router/vc-wh.png">
 <meta property="og:image" content="http://peihao.space/img/article/router/5port-virtual_channel.png">
 <meta property="og:image" content="http://peihao.space/img/article/router/VC-trans.png">
 <meta property="og:image" content="http://peihao.space/\img\article\router\vc-2path.png">
-<meta property="og:updated_time" content="2016-04-02T16:04:06.513Z">
+<meta property="og:updated_time" content="2016-05-04T08:23:06.752Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Virtual Channel Ruter">
 <meta name="twitter:description" content="VC与WormHole的对比虚信道路由器通过引入虚信道技术，将一个物理信道分成逻辑上的多个虚信道。多个虚信道对物理信道分时复用，通过对虚信道的合理调度，当网络中发生数据分组阻塞时，阻塞的分组被缓存在某一条虚信道的缓存中，其它分组能够使用其它的虚信道继续进行传输。">
@@ -305,7 +305,7 @@ var _hmt = _hmt || [];
 			
         <h1 id="VC与WormHole的对比">VC与WormHole的对比</h1><p>虚信道路由器通过引入虚信道技术，将一个物理信道分成逻辑上的多个虚信道。多个虚信道对物理信道分时复用，通过对虚信道的合理调度，当网络中发生数据分组阻塞时，阻塞的分组被缓存在某一条虚信道的缓存中，其它分组能够使用其它的虚信道继续进行传输。<a id="more"></a></p>
 <p>虚信道路由器是对基本虫孔路由器的改进，它解决了虫孔路由器的阻塞问题，能够提高物理信道的利用率，显著增加片上网络的性能。虚信道路由器需要为每条虚信道提供一个独立的缓存空间，虚信道数目增加一条，路由器的缓存空间需要相应增加一倍。</p>
-<p><img src="/img/article/router/wormhole-router.jpg" alt=""></p>
+<p><img src="/img/article/router/vc-wh.png" alt=""></p>
 <p>上图左侧是基本虫孔路由器出现的阻塞问题。路由器1中的分组A要去往路由器3的南输入端口，需要经过路由器l的东输出端口（即路由器2的西输入端口）离开，而路由器2的西输入端口被分组B占用，分组A不能使用，被阻塞在路由器l，尽管路由器3的南输入端口是空闲的，但是分组A将无法到达。</p>
 <p>上图右侧是使用虚信道架构的路由器结构传输，可以是双虚信道或多虚信道，分组A将会通过红色的通道到达路由器3。</p>
 <h1 id="VC结构">VC结构</h1><p><img src="/img/article/router/5port-virtual_channel.png" alt=""></p>
