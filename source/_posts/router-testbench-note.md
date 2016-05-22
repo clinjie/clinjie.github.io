@@ -18,10 +18,9 @@ categories: Verilog
 <!--more-->
 
 ```
-`default_nettype none
-
-module testbench
-  ();
+`timescale 1ns / 1ps
+module top
+  (clk, reset, count_en,router_address, run,error,clk_en,count_in_flits, count_out_flits,in_flits,out_flits,in_creds);
    
 `include "c_functions.v"
 `include "c_constants.v"
@@ -29,58 +28,62 @@ module testbench
 `include "vcr_constants.v"
 `include "parameters.v"
    
-   parameter Tclk = 2; //时钟周期
-   parameter initial_seed = 0; //初始种子
+   
+ /*时钟与初始值设置*/
+ 
+   parameter Tclk = 2;
+   parameter initial_seed = 0;
    
    // maximum number of packets to generate (-1 = no limit)
-   parameter max_packet_count = -1;  //生成的包最大数目，-1为不限制
+	//生成的最大数据包数目 ，值为-1时为无限制
+   parameter max_packet_count = -1;
    
-   // packet injection rate (percentage of cycles)
-   parameter packet_rate = 25;   //包的注入速率  每个/每周期
+   //数据包注入速率（周期百分比）
+   parameter packet_rate = 25;
    
-   // flit consumption rate (percentage of cycles)
-   parameter consume_rate = 50;   //微片使用速率/每周期
+   // 微片消耗速率（周期百分比）
+   parameter consume_rate = 50;
    
-   // width of packet count register
-   parameter packet_count_reg_width = 32;  //记录包数目寄存器的宽度
+   // 记录包数目寄存器的宽度
+   parameter packet_count_reg_width = 32;
    
-   // channel latency in cycles
-   parameter channel_latency = 1;  //每周期的信道延迟
+   // 周期间的信道延迟
+   parameter channel_latency = 1;
    
-   // only inject traffic at the node ports
-   parameter inject_node_ports_only = 1;  //是否只在在节点端口注入
+   //是否只在在节点端口注入
+   parameter inject_node_ports_only = 1;
    
-   // warmup time in cycles
-   parameter warmup_time = 100;  //周期间的预热时间
+   //周期间的预热时间
+   parameter warmup_time = 100;
    
-   // measurement interval in cycles
-   parameter measure_time = 10000;  //周期间的测量间隔
+   //周期间的测量间隔
+   parameter measure_time = 10000;
    
-   // select packet length mode (0: uniform random, 1: bimodal)
-   parameter packet_length_mode = 0;  //选择包长度模式   0：均匀随机 1： 双峰
+   //选择包长度模式   0：均匀随机 1： 双峰
+   parameter packet_length_mode = 0;
    
    
-   // width required to select individual resource class
-   localparam resource_class_idx_width = clogb(num_resource_classes);  //选择一个资源种类需要的寄存器宽度
+   //选择一个资源种类需要的寄存器宽度
+   localparam resource_class_idx_width = clogb(num_resource_classes);
    
-   // total number of packet classes  
-   localparam num_packet_classes = num_message_classes * num_resource_classes; //包的种类数目
+   //包的种类数目
+   localparam num_packet_classes = num_message_classes * num_resource_classes;
    
-   // number of VCs
-   localparam num_vcs = num_packet_classes * num_vcs_per_class;  //虚拟信道数目
+   //虚拟信道数目
+   localparam num_vcs = num_packet_classes * num_vcs_per_class;
    
-   // width required to select individual VC
-   localparam vc_idx_width = clogb(num_vcs);   //选择一个虚拟信道需要的寄存器宽度
+   //选择一个虚拟信道需要的寄存器宽度
+   localparam vc_idx_width = clogb(num_vcs);
    
-   // total number of routers  
-   localparam num_routers //num_nodes已经是总共的数目了，但是如果除每个路由器分配的不能整除的话，就需要+1
-     = (num_nodes + num_nodes_per_router - 1) / num_nodes_per_router;  //总的路由器数目
+   //总的路由器数目
+   localparam num_routers
+     = (num_nodes + num_nodes_per_router - 1) / num_nodes_per_router;
    
-   // number of routers in each dimension
-   localparam num_routers_per_dim = croot(num_routers, num_dimensions);   //单位面积路由器的数目
+   //单位纬度路由器的数目
+   localparam num_routers_per_dim = croot(num_routers, num_dimensions);
    
-   // width required to select individual router in a dimension
-   localparam dim_addr_width = clogb(num_routers_per_dim);    //在单位面积选择一个路由器需要的寄存器宽度
+   //在单位面积选择一个路由器需要的寄存器宽度
+   localparam dim_addr_width = clogb(num_routers_per_dim);
    
    // width required to select individual router in entire network
    localparam router_addr_width = num_dimensions * dim_addr_width;   //在整个网络中选择一个路由器需要的寄存器宽度
@@ -104,7 +107,7 @@ module testbench
        (num_routers_per_dim - 1) :
        -1;
    
-   // number of input and output ports on router   //路由器的输入输出端口数目  input=output=num_ports
+   // number of input and output ports on router   //路由器的输入输出端口数目  num_port=input+output+locals
    localparam num_ports
      = num_dimensions * num_neighbors_per_dim + num_nodes_per_router;
    
@@ -154,10 +157,38 @@ module testbench
    // number of pipeline stages in the channels  //信道的流水线级数
    localparam num_channel_stages = channel_latency - 1;
    
-   reg clk;
-   reg reset;
+   /*Module parameters setting*/
    
-   wire [0:num_ports*channel_width-1] channel_in_ip;  //接收端的接受信道
+   /*input*/
+   input clk;//时钟信号
+   input reset;//重置信号
+	input count_en;//是否进行计数
+   input [0:router_addr_width-1] 		router_address;  //路由器地址
+   input run;//是否开始进行路由
+	input clk_en;//时钟准许信号
+   //input [0:num_ports*flow_ctrl_width-1] flow_ctrl_in_op; 
+   //input [0:num_ports*flow_ctrl_width-1] flow_ctrl_out_ip;
+   /*input*/
+   
+   /*output*/
+   output error;
+   wire error;  //packet_source 错误
+	
+	//记录的接收微片数目，发送的微片数目
+	output [0:31] count_in_flits, count_out_flits;
+	wire [0:31] count_in_flits_s, count_in_flits_q;
+	
+	//基于信用的流控变量
+	output [0:31] in_creds;
+	wire [0:31] in_creds;
+	
+	//总共生成的  接收微片、发送微片  in_flits>=count_in_flits  out_flits>=count_out_flits
+	output [0:31] in_flits,out_flits;
+	wire [0:31] in_flits,out_flits;
+   /*output*/
+   
+   
+	wire [0:num_ports*channel_width-1] channel_in_ip;  //接收端的接受信道
    wire [0:num_ports*flow_ctrl_width-1] flow_ctrl_out_ip;  //接收端的输出流量控制
    wire [0:num_ports-1] 		flit_valid_in_ip;  //接收端接受微片验证
    wire [0:num_ports-1] 		cred_valid_out_ip;  //接收端发送信用验证
@@ -168,40 +199,36 @@ module testbench
    wire [0:num_ports-1] 		cred_valid_in_op;  //发送端接受信用验证
    
    wire [0:num_ports-1] 		ps_error_ip;  //packet_source 错误
-   
-   reg [0:router_addr_width-1] 		router_address;  //路由器地址
-   
-   reg 					run;
-   
-
-/*
-
-*/
-
-   genvar 				ip;
-      
+	
+   //---------------------------------------------------------------------------
+   // input ports
+   //---------------------------------------------------------------------------
+   //模拟输入端的一些行为  由于本程序是对单个router实例操作，这里就是模拟其他通信节点转发的微片以及本子生成微片
    generate
-      
-      for(ip = 0; ip < num_ports; ip = ip + 1) //接收端端口从0开始
-	     begin:ips
-	   
-    	   wire [0:flow_ctrl_width-1] flow_ctrl_out;  //当前接受端口的输出流量控制
-    	   assign flow_ctrl_out = flow_ctrl_out_ip[ip*flow_ctrl_width:
-    						   (ip+1)*flow_ctrl_width-1];  //flow_ctrl_out_ip里面存放的是所有端口的输出流量控制
-    	   
-    	   assign cred_valid_out_ip[ip] = flow_ctrl_out[0];  //当前接受端口的输出流量控制第一位存放的就是信用验证
-	   
-    	   if(inject_node_ports_only && (ip < (num_ports-num_nodes_per_router)))//当前接收端口号<（总接收端口数-每个路由器管理的节点数目）剩余可分配给其他的数目
-    	     begin
-    		
-          		assign channel_in_ip[ip*channel_width:(ip+1)*channel_width-1]  //接收端输入信道值=000000
-          		  = {channel_width{1'b0}};
-          		assign flit_valid_in_ip[ip] = 1'b0;  //  接收端接收微片验证值=0
-          		
-          		assign ps_error_ip[ip] = 1'b0;  //接收端包报错=0
-    		
-    	     end
-    	   else
+	   genvar 	ip;
+	   for(ip = 0; ip < num_ports; ip = ip + 1) //接收端端口从0开始
+			 begin:ips
+		   
+			//-------------------------------------------------------------------
+			// input controller
+			//-------------------------------------------------------------------
+		   
+			   wire [0:flow_ctrl_width-1] flow_ctrl_out;  //当前接收端口的输出流量控制
+			   assign flow_ctrl_out = flow_ctrl_out_ip[ip*flow_ctrl_width:
+								   (ip+1)*flow_ctrl_width-1];  //flow_ctrl_out_ip里面存放的是所有端口的输出流量控制
+									//flow_ctrl_out_ip  输入端的输出流控信息（向上游路由器发送的流控信息）   
+			   assign cred_valid_out_ip[ip] = flow_ctrl_out[0];  //当前接受端口的输出流量控制第一位存放的就是信用验证
+		   
+			   if(inject_node_ports_only && (ip < (num_ports-num_nodes_per_router)))//当前接收端口号<（总端口数-每个路由器管理的节点数，即除了本地节点外的总的端口数目）剩余可分配给其他的数目
+				 begin//除了本地节点外的所有端口都按照此进行，其他节点转发到本router的处理
+				
+					assign channel_in_ip[ip*channel_width:(ip+1)*channel_width-1]  //接收端输入信道值=000000
+					  = {channel_width{1'b0}};
+					assign flit_valid_in_ip[ip] = 1'b0;  //  接收端接收微片验证值=0
+					
+					assign ps_error_ip[ip] = 1'b0;  //接收端包报错=0
+				 end
+				else //本地资源处理  在本地节点随机产生分组数据
     	     begin
 		
           		wire [0:flow_ctrl_width-1] flow_ctrl_dly;  //如果当前接收端口号码>每个路由器管理的节点数目  也就是前面接收端口占完了
@@ -220,7 +247,7 @@ module testbench
           		wire 			   flit_valid;
           		
           		wire 			   ps_error;
-          		
+          		//伪随机在本地节点生成指定数量的数据分组
           		packet_source
           		  #(.initial_seed(initial_seed+ip),  //初始种子
           		    .max_packet_count(max_packet_count),  //生成的最大的包数目，-1为无限制
@@ -233,16 +260,16 @@ module testbench
           		    .num_resource_classes(num_resource_classes),  //选择资源的种类 比如 最小的、自适应的
           		    .num_vcs_per_class(num_vcs_per_class),  //每一类的虚拟信道数目
           		    .num_nodes(num_nodes),  //节点数目
-          		    .num_dimensions(num_dimensions),  //面积
+          		    .num_dimensions(num_dimensions),  //维序数目
           		    .num_nodes_per_router(num_nodes_per_router),  //每个路由器分管的节点数
-          		    .packet_format(packet_format), //数据包格式
-          		    .flow_ctrl_type(flow_ctrl_type),  //流量控制类别
-          		    .flow_ctrl_bypass(flow_ctrl_bypass),  //使输入流控信号绕过（忽略）输出虚拟信道状态跟踪逻辑
-          		    .max_payload_length(max_payload_length),  //最大负载长度
-          		    .min_payload_length(min_payload_length),  //最小负载长度
+          		    .packet_format(packet_format), //数据包编码格式
+          		    .flow_ctrl_type(flow_ctrl_type),  //流量控制类别 实际上只有基于credit的流控是支持的
+          		    .flow_ctrl_bypass(flow_ctrl_bypass),  //credit是在credit到达的时候立即更新还是在下一个时钟周期更新，直接影响关键路径的延迟
+          		    .max_payload_length(max_payload_length),  //数据包分组最大的微片负载数目
+          		    .min_payload_length(min_payload_length),  //数据包分组最小的微片负载数目
           		    .enable_link_pm(enable_link_pm),  //是否启用链路功率管理
           		    .flit_data_width(flit_data_width),
-          		    .routing_type(routing_type),
+          		    .routing_type(routing_type),//选择路由逻辑 只支持一维或多维的维序路由
           		    .dim_order(dim_order),
           		    .fb_mgmt_type(fb_mgmt_type), //微片缓存管理模式
           		    .disable_static_reservations(disable_static_reservations),  //动态缓存管理相关
@@ -290,20 +317,15 @@ module testbench
           		
           		assign flit_valid_in_ip[ip] = flit_valid_dly;
           		
-          	end   //出现接收数据包数目比静态可分配端口数目多的
+          	end
 	     end
       
    endgenerate
+ 
 
-
-   /*接收端包括缓冲、接收工作完成*/
-
-
-   /*单路由器路由工作开始*/
-   
-   
-   wire 				    rtr_error;
-   
+wire 				    rtr_error;
+//根据拓扑结构、路由器结构、数据包源目的地址完成分组的routing logic、virtual channel allocate、switch allocate、switch  crossbar
+//一个完整的路由实例
    router_wrap
      #(.topology(topology),    //拓扑结构
        .buffer_size(buffer_size),  //缓存数量
@@ -311,21 +333,21 @@ module testbench
        .num_resource_classes(num_resource_classes),  //资源种类数目
        .num_vcs_per_class(num_vcs_per_class),  //每类的虚拟信道
        .num_nodes(num_nodes),  //总的节点数目
-       .num_dimensions(num_dimensions),  //面积
+       .num_dimensions(num_dimensions),  //维序数目
        .num_nodes_per_router(num_nodes_per_router),  //每个路由器分管的节点数目
-       .packet_format(packet_format),  //包的格式
-       .flow_ctrl_type(flow_ctrl_type), //流量控制类别
-       .flow_ctrl_bypass(flow_ctrl_bypass),  
-       .max_payload_length(max_payload_length),  //最大负载长度
-       .min_payload_length(min_payload_length),   //最低负载长度
-       .router_type(router_type),  //路由器类别
-       .enable_link_pm(enable_link_pm),  //是否启用链路功率管理
+       .packet_format(packet_format),  //包的编码格式
+       .flow_ctrl_type(flow_ctrl_type), //流量控制类别  这里只支持基于credit的
+       .flow_ctrl_bypass(flow_ctrl_bypass),  //credit是在credit到达的时候立即更新还是在下一个时钟周期更新，直接影响关键路径的延迟
+       .max_payload_length(max_payload_length),  //最大负载的微片数目
+       .min_payload_length(min_payload_length),   //最低负载的微片数目
+       .router_type(router_type),  //路由器类别 是将VC与开关分配分开还是结合虚信道与开关分配的类型
+       .enable_link_pm(enable_link_pm),  //是否启用链路功率管理 如果启用，可以使下游的router的接收逻辑能够clock_gated
        .flit_data_width(flit_data_width),  //微片数据宽度
-       .error_capture_mode(error_capture_mode),  //抓取的错误模式
-       .restrict_turns(restrict_turns),  //转向限制
+       .error_capture_mode(error_capture_mode),  //开启、配置路由器中的错误检测逻辑
+       .restrict_turns(restrict_turns),  //基于路由转向限制的综合优化
        .predecode_lar_info(predecode_lar_info),  //前缀解析信息
-       .routing_type(routing_type),  //路由种类
-       .dim_order(dim_order),  //选择面积遍历顺序
+       .routing_type(routing_type),  //路由算法种类  只支持一维多维的维序路由
+       .dim_order(dim_order),  //选择维序的遍历顺序
        .input_stage_can_hold(input_stage_can_hold),   //将输入寄存器作为部分的微片缓存use input register as part of the flit buffer
        .fb_regfile_type(fb_regfile_type),  //选择微片缓存寄存器文件类别的实现变种
        .fb_mgmt_type(fb_mgmt_type),  //微片缓存管理模式
@@ -349,22 +371,18 @@ module testbench
       .reset(reset),
       .router_address(router_address),
       .channel_in_ip(channel_in_ip),
-      .flow_ctrl_out_ip(flow_ctrl_out_ip),  //输出
-      .channel_out_op(channel_out_op),  //输出
-      .flow_ctrl_in_op(flow_ctrl_in_op),
+      .flow_ctrl_out_ip(flow_ctrl_out_ip),  //输出  路由器逻辑完成后更新的返回到接收端的流控信息
+      .channel_out_op(channel_out_op),  //输出 输出时的信道 channel_out_op=link_ctrl+flow_ctrl+flit_data
+      .flow_ctrl_in_op(flow_ctrl_in_op), //输入参数  输出端接收到的下游路由器发送的流控信息
       .error(rtr_error)); //输出
    
    
       /*单路由器内部工作完成*/
-
-
-
-
-      /*simple reference model for a single router一个路由器的简单参考模型*/
-
-
-   wire 				      rchk_error;
+	  
+wire 				      rchk_error;
    
+	
+	//模块可以注释掉
    router_checker   
      #(.buffer_size(buffer_size), //缓冲大小
        .num_message_classes(num_message_classes),   //消息类别数目  request、reply
@@ -390,12 +408,14 @@ module testbench
       .channel_in_ip(channel_in_ip),  //input 输入信道
       .channel_out_op(channel_out_op),  //input  输出信道
       .error(rchk_error));  //output 错误
-   
+	
    
    wire [0:num_ports-1] 		      fs_error_op;
    
    genvar 				      op;
    
+	//模拟输出端口作用  由于本程序是对单个router实例操作，这里模拟发送到其余通信节点路由器以及本子资源节点
+	
    generate
       
       for(op = 0; op < num_ports; op = op + 1)
@@ -411,7 +431,7 @@ module testbench
 	   
 	   assign flit_valid_out_op[op] = flit_ctrl_out[0];
 	   
-	   wire [0:channel_width-1] channel_dly;   //信道延迟
+	   wire [0:channel_width-1] channel_dly;
 	   c_shift_reg
 	     #(.width(channel_width),
 	       .depth(num_channel_stages),
@@ -493,7 +513,7 @@ module testbench
       .d(in_flits_s),
       .q(in_flits_q));
    
-   wire [0:31] in_flits;
+   
    assign in_flits = in_flits_s;
    
    wire [0:31] in_creds_s, in_creds_q;
@@ -508,7 +528,6 @@ module testbench
       .d(in_creds_s),
       .q(in_creds_q));
    
-   wire [0:31] in_creds;
    assign in_creds = in_creds_q;
    
    wire [0:31] out_flits_s, out_flits_q;
@@ -523,7 +542,6 @@ module testbench
       .d(out_flits_s),
       .q(out_flits_q));
    
-   wire [0:31] out_flits;
    assign out_flits = out_flits_s;
    
    wire [0:31] out_creds_s, out_creds_q;
@@ -541,9 +559,8 @@ module testbench
    wire [0:31] out_creds;
    assign out_creds = out_creds_q;
    
-   reg 	       count_en;
    
-   wire [0:31] count_in_flits_s, count_in_flits_q;
+   
    assign count_in_flits_s
      = count_en ?
        count_in_flits_q + pop_count(flit_valid_in_ip) :
@@ -578,17 +595,9 @@ module testbench
    
    wire [0:31] count_out_flits;
    assign count_out_flits = count_out_flits_s;
-   
-   reg 	       clk_en;
-   
-   always
-   begin
-      clk <= clk_en;
-      #(Tclk/2);
-      clk <= 1'b0;
-      #(Tclk/2);
-   end
-   
+	
+	assign error=rtr_error|tb_error;
+  
    always @(posedge clk)
      begin
 	if(rtr_error)
@@ -603,85 +612,5 @@ module testbench
 	  end
      end
    
-   integer cycles;
-   integer d;
-   
-   initial
-   begin
-      
-      for(d = 0; d < num_dimensions; d = d + 1)
-      	begin
-      	   router_address[d*dim_addr_width +: dim_addr_width]
-      	     = num_routers_per_dim / 2;
-      	end
-      
-      reset = 1'b0;
-      clk_en = 1'b0;
-      run = 1'b0;
-      count_en = 1'b0;
-      cycles = 0;
-      
-      #(Tclk);
-      
-      #(Tclk/2);
-      
-      reset = 1'b1;
-      
-      #(Tclk);
-      
-      reset = 1'b0;
-      
-      #(Tclk);
-      
-      clk_en = 1'b1;
-      
-      #(Tclk/2);
-      
-      $display("warming up...");
-      
-      run = 1'b1;
-
-      while(cycles < warmup_time)
-	begin
-	   cycles = cycles + 1;
-	   #(Tclk);
-	end
-      
-      $display("measuring...");
-      
-      count_en = 1'b1;
-      
-      while(cycles < warmup_time + measure_time)
-	begin
-	   cycles = cycles + 1;
-	   #(Tclk);
-	end
-      
-      count_en = 1'b0;
-      
-      $display("measured %d cycles", measure_time);
-      
-      $display("%d flits in, %d flits out", count_in_flits, count_out_flits);
-      
-      $display("cooling down...");
-      
-      run = 1'b0;
-      
-      while((in_flits > out_flits) || (in_flits > in_creds))
-	begin
-	   cycles = cycles + 1;
-	   #(Tclk);
-	end
-      
-      #(Tclk*10);
-      
-      $display("simulation ended after %d cycles", cycles);
-      
-      $display("%d flits received, %d flits sent", in_flits, out_flits);
-      
-      $finish;
-      
-   end
-   
-endmodule
+ endmodule
 ```
