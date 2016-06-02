@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peihao.space/"/>
-  <updated>2016-04-28T15:44:40.930Z</updated>
+  <updated>2016-05-23T15:26:03.480Z</updated>
   <id>http://peihao.space/</id>
   
   <author>
@@ -14,6 +14,219 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>（ZT）Verilog</title>
+    <link href="http://peihao.space/2016/05/23/about-verilog-newnote/"/>
+    <id>http://peihao.space/2016/05/23/about-verilog-newnote/</id>
+    <published>2016-05-23T08:59:35.000Z</published>
+    <updated>2016-05-23T15:26:03.480Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;转自 &lt;a href=&quot;http://www.sitongweilai.com/u/%E4%B8%80%E6%9C%88%E7%9A%84%E8%90%A7%E9%82%A6/Blog.aspx&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;sitongweilai&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;很多刚学Verilog HDL （硬件描述语言）的朋友肯定会对阻塞赋值和非阻塞赋值比较疑惑，那我们就一起来抛开这层迷雾吧。&lt;/p&gt;
+&lt;p&gt;首先我们要理解两种变量类型 Net Type（连线型）和 Register Type （寄存器型）。（有些参考书上有分为3种类型，这个无关紧要）&lt;/p&gt;
+&lt;p&gt;Net Type（连线型），从名字上理解就是“导线”呗，导线的这头和导线的另一头始终是直接连通的，这头是什么值，那头就是什么值，所以输出随着输入随时变化的。连线型中 wire 最常见。&lt;/p&gt;
+&lt;p&gt;Register Type（寄存器型），寄存器就不像普通导线了，它可以把值给存住，你只要给它赋一次值，它都会存住那个值，直到你给它赋一个新的值它才会改变。寄存器型中 reg 最常见。&lt;/p&gt;
+&lt;p&gt;最常用到的是 wire 和 reg 这两种类型，其他的对我们初学者来说一般很少用到，可以暂时跳过，以后慢慢学下去自然会理解。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;注意：wire型变量如果没有赋予初始值，默认初始值为高阻态“Z”。&lt;/p&gt;
+&lt;p&gt;reg  型变量如果没有赋予初始值，默认初始值为不定态“X”。&lt;/p&gt;
+&lt;p&gt;在理解这两种基本的数据类型之后，我们来看看verilog语言中的赋值语句。verilog语言中的赋值语句有两种，一种是持续赋值语句（assign语句），另一种是过程赋值语句（always语句）。&lt;/p&gt;
+&lt;p&gt; 持续赋值语句（assign语句）主要用于对wire型变量的赋值，因为wire（线型）的值不能存住，需要一直给值，所以需要用持续赋值。&lt;/p&gt;
+&lt;p&gt;例如：assign c = a + b;    只要a和b有任意变化，都可以立即反映到c上，也就是说c的值是根据a，b的值随时变化的。&lt;/p&gt;
+&lt;p&gt; 过程赋值语句（always语句）主要用于reg 型变量的赋值 ，因为always语句被执行是需要满足触发条件的，所以always过程块里面的内容不是每时每刻都被执行，因此需要将被赋值的对象定义成寄存器类型，以便这个值能被保持住。&lt;/p&gt;
+&lt;p&gt;过程赋值又分为 阻塞赋值 “=”  和 非阻塞赋值 “&amp;lt;=” 两种。这里的非阻塞赋值符号 “&amp;lt;=” 与 “小于等于” 符号相同，他们在不同的语境下表示不同含义，要注意区分，例如在“if-else”等判断语句中，一般都表示为“小于等于”。&lt;/p&gt;
+&lt;p&gt;接下来对这两种赋值作具体讲解…&lt;/p&gt;
+&lt;p&gt; ① 阻塞赋值 “=“ 。 阻塞赋值和我们平时理解的赋值差不多，不用太多解释，就是按照语句的顺序，一句句往下顺序执行。一个赋值语句执行完，然后执行下一个赋值语句。&lt;/p&gt;
+&lt;p&gt; ② 非阻塞赋值 “&amp;lt;=” 。非阻塞赋值就比较特别了，在同一个always过程块中，非阻塞赋值语句都是同时并发执行的，并且在过程块结束时才执行赋值操作。也就是说，在同一个always过程块中，非阻塞赋值语句被执行没有先后顺序，在过程快结束时，大家一起被赋值。&lt;/p&gt;
+&lt;p&gt; 给大家举一个具体的例子：&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;function&quot;&gt;module &lt;span class=&quot;title&quot;&gt;test&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(clk, a1, a2, b1, b2, c1, c2)&lt;/span&gt;&lt;/span&gt;; &lt;span class=&quot;comment&quot;&gt;// test为module名称，括号内的是端口列表，包含所有输入输出的变量名称&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; input clk, a1, a2;           &lt;span class=&quot;comment&quot;&gt;// 定义输入变量，这里没有定义位宽，默认为1位宽度&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; output b1, b2, c1, c2;    &lt;span class=&quot;comment&quot;&gt;// 定义输出变量，这里没有定义位宽，默认为1位宽度&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; reg b1 = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; , b2 = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, c1 = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; , c2 = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;   &lt;span class=&quot;comment&quot;&gt;// 注意！因为这些变量将会在always过程块中被赋值，所以必须定义成 reg 型    &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 注意！这里省略了对输入信号clk, a1, a2 的类型定义，它们默认为1位的wire 型（因为输入信号是随时要变化，所以必须用wire型）              &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;always @ (posedge clk)   &lt;span class=&quot;comment&quot;&gt;// always 用 clk 上升沿触发&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        b1 = a1;       &lt;span class=&quot;comment&quot;&gt;// 这里采用的是阻塞赋值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        c1 = b1;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    end&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;always @ (posedge clk)  &lt;span class=&quot;comment&quot;&gt;// always 用 clk 上升沿触发&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        b2 &amp;lt;= a2;    &lt;span class=&quot;comment&quot;&gt;// 这里采用的是非阻塞赋值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        c2 &amp;lt;= b2;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    end   &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule     &lt;span class=&quot;comment&quot;&gt;// endmodule 别忘了，与 module 成对使用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt; 我们只需给输入信号赋值，输出信号根据输入信号的变化而变化。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;转自 &lt;a href=&quot;http://www.sitongweilai.com/u/%E4%B8%80%E6%9C%88%E7%9A%84%E8%90%A7%E9%82%A6/Blog.aspx&quot;&gt;sitongweilai&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;很多刚学Verilog HDL （硬件描述语言）的朋友肯定会对阻塞赋值和非阻塞赋值比较疑惑，那我们就一起来抛开这层迷雾吧。&lt;/p&gt;
+&lt;p&gt;首先我们要理解两种变量类型 Net Type（连线型）和 Register Type （寄存器型）。（有些参考书上有分为3种类型，这个无关紧要）&lt;/p&gt;
+&lt;p&gt;Net Type（连线型），从名字上理解就是“导线”呗，导线的这头和导线的另一头始终是直接连通的，这头是什么值，那头就是什么值，所以输出随着输入随时变化的。连线型中 wire 最常见。&lt;/p&gt;
+&lt;p&gt;Register Type（寄存器型），寄存器就不像普通导线了，它可以把值给存住，你只要给它赋一次值，它都会存住那个值，直到你给它赋一个新的值它才会改变。寄存器型中 reg 最常见。&lt;/p&gt;
+&lt;p&gt;最常用到的是 wire 和 reg 这两种类型，其他的对我们初学者来说一般很少用到，可以暂时跳过，以后慢慢学下去自然会理解。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="verilog" scheme="http://peihao.space/categories/verilog/"/>
+    
+    
+      <category term="verilog" scheme="http://peihao.space/tags/verilog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Android全局变量</title>
+    <link href="http://peihao.space/2016/05/21/android-application/"/>
+    <id>http://peihao.space/2016/05/21/android-application/</id>
+    <published>2016-05-21T08:59:35.000Z</published>
+    <updated>2016-05-21T16:45:45.119Z</updated>
+    
+    <content type="html">&lt;p&gt;帮别人做一个小玩意儿时候遇到的问题，需要常常在不同activity、service之间传递一个数据变量。最前考虑的是入门时使用的&lt;code&gt;Bundle&lt;/code&gt;对象。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Bundle类用作携带数据，它类似于Map，用于存放key-value名值对形式的值。相对于Map，它提供了各种常用类型的putXxx()/getXxx()方法，如:&lt;br&gt;&lt;code&gt;putString()/getString()和putInt()/getInt()&lt;/code&gt;，putXxx()用于往Bundle对象放入数据，getXxx()方法用于从Bundle对象里获取数据。Bundle的内部实际上是使用了HashMap类型的变量来存放putXxx()方法放入的值.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;使用方法:&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Bundle bundle = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Bundle();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;app.setB(name);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;bundle.putString(&lt;span class=&quot;string&quot;&gt;&quot;username&quot;&lt;/span&gt;, name);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;it.putExtra(&lt;span class=&quot;string&quot;&gt;&quot;bundle&quot;&lt;/span&gt;, bundle);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;在Activity跳转之前，将已经存储数据的Bundle对象绑定到Intent对象上，然后在跳转之后的Activity界面内：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Intent intent = getIntent();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Bundle bundle = intent.getBundleExtra(&lt;span class=&quot;string&quot;&gt;&quot;bundle&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;String name = bundle.getString(&lt;span class=&quot;string&quot;&gt;&quot;username&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;获取存储的数据。&lt;/p&gt;
+&lt;p&gt;后来想到了应该会与全局的变量可以使用吧，毕竟Application域是在整个app运行间都在的。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Step1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;applicationData&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Application&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; String username;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;getB&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.username;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setB&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String c)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.username= c;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;annotation&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        username = &lt;span class=&quot;string&quot;&gt;&quot;undefined&quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;super&lt;/span&gt;.onCreate();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;新建继承自Application类，然后根据自己需要存储获取的数据自行修改setter/getter方法。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Step2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在程序清单&lt;code&gt;manifests&lt;/code&gt;文件内，将&lt;code&gt;android:name&lt;/code&gt;的值修改或增添为前面新建的继承Application的类名称：&lt;/p&gt;
+&lt;figure class=&quot;highlight applescript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;&lt;span class=&quot;type&quot;&gt;application&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:&lt;span class=&quot;property&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;applicationData&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;Step3&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;applicationData app;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//直接从程序运行中获取Application实例，此时app会自动调用applicationData的onCreate函数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;app=(applicationData)getApplication();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;app.setB(&lt;span class=&quot;string&quot;&gt;&quot;input you will set&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;String value=app.getB();&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;帮别人做一个小玩意儿时候遇到的问题，需要常常在不同activity、service之间传递一个数据变量。最前考虑的是入门时使用的&lt;code&gt;Bundle&lt;/code&gt;对象。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Bundle类用作携带数据，它类似于Map，用于存放key-value名值对形式的值。相对于Map，它提供了各种常用类型的putXxx()/getXxx()方法，如:&lt;br&gt;&lt;code&gt;putString()/getString()和putInt()/getInt()&lt;/code&gt;，putXxx()用于往Bundle对象放入数据，getXxx()方法用于从Bundle对象里获取数据。Bundle的内部实际上是使用了HashMap类型的变量来存放putXxx()方法放入的值.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;使用方法:&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Bundle bundle = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Bundle();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;app.setB(name);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;bundle.putString(&lt;span class=&quot;string&quot;&gt;&quot;username&quot;&lt;/span&gt;, name);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;it.putExtra(&lt;span class=&quot;string&quot;&gt;&quot;bundle&quot;&lt;/span&gt;, bundle);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="adnroid" scheme="http://peihao.space/categories/adnroid/"/>
+    
+    
+      <category term="android" scheme="http://peihao.space/tags/android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Android中SQLite基础操作</title>
+    <link href="http://peihao.space/2016/05/20/android-sqlite-rawsql/"/>
+    <id>http://peihao.space/2016/05/20/android-sqlite-rawsql/</id>
+    <published>2016-05-20T08:59:35.000Z</published>
+    <updated>2016-05-21T16:45:16.009Z</updated>
+    
+    <content type="html">&lt;p&gt;记录基本的android使用SQLite方法：&lt;/p&gt;
+&lt;p&gt;目前比较主流的方法是，使用继承自&lt;code&gt;SQLiteOpenHelper&lt;/code&gt;类的对象创建数据库并管理数据库版本。&lt;/p&gt;
+&lt;p&gt;当创建实例之后，除了自动运行构造函数，这个继承自&lt;code&gt;SQLiteOpenHelper&lt;/code&gt;的类还会自动调用onCreate方法。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(SQLiteDatabase db)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        db.execSQL(&lt;span class=&quot;string&quot;&gt;&quot;create table if not exists tb_user&quot;&lt;/span&gt; +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;string&quot;&gt;&quot;(_id integer primary key autoincrement,&quot;&lt;/span&gt; +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;string&quot;&gt;&quot;username varchar(20),&quot;&lt;/span&gt; +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;string&quot;&gt;&quot;password varchar(20))&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        db.execSQL(&lt;span class=&quot;string&quot;&gt;&quot;create table if not exists tb_userInfo&quot;&lt;/span&gt; +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;string&quot;&gt;&quot;(_id integer primary key autoincrement,&quot;&lt;/span&gt; +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;string&quot;&gt;&quot;username varchar(20),&quot;&lt;/span&gt; +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;string&quot;&gt;&quot;suggestions text)&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        db.execSQL(&lt;span class=&quot;string&quot;&gt;&quot;insert into tb_user(username, password) values(&#39;chuangwailinjie&#39;, &#39;123456&#39;)&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        db.execSQL(&lt;span class=&quot;string&quot;&gt;&quot;insert into tb_user(username, password) values(&#39;peihao&#39;, &#39;1234567&#39;)&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;通过SQLiteDatabase对象可以直接执行相应的SQL语句。上面的例子就是创建了两个表，同时在表tb_user中插入了两条信息。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对SQLite数据库的读操作：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dbhelper= &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DbHelper(serInfo.&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;userInfo&quot;&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;SQLiteDatabase db=dbhelper.getReadableDatabase();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Cursor cursor = db.rawQuery(&lt;span class=&quot;string&quot;&gt;&quot;select suggestions from tb_userInfo WHERE username=?&quot;&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; String[]&amp;#123;username&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (cursor.moveToFirst() == &lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;//为空的Cursor  也就是没有返回结果，找不到&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    tv_suggestions.setText(&lt;span class=&quot;string&quot;&gt;&quot;undefined&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    cursor.moveToFirst();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    tv_suggestions.setText(cursor.getString(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    cursor.close();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;db.close();&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;对SQLite数据库的写操作：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;SQLiteDatabase Db=dbhelper.getWritableDatabase();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Db.execSQL(&lt;span class=&quot;string&quot;&gt;&quot;insert into tb_user(username, password) values(?,?)&quot;&lt;/span&gt;, &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Object[]&amp;#123;name,password &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Db.close();&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;记录基本的android使用SQLite方法：&lt;/p&gt;
+&lt;p&gt;目前比较主流的方法是，使用继承自&lt;code&gt;SQLiteOpenHelper&lt;/code&gt;类的对象创建数据库并管理数据库版本。&lt;/p&gt;
+&lt;p&gt;当创建实例之后，除了自动运行构造函数，这个继承自&lt;code&gt;SQLiteOpenHelper&lt;/code&gt;的类还会自动调用onCreate方法。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(SQLiteDatabase db)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        db.execSQL(&lt;span class=&quot;string&quot;&gt;&quot;create table if not exists tb_user&quot;&lt;/span&gt; +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;string&quot;&gt;&quot;(_id integer primary key autoincrement,&quot;&lt;/span&gt; +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;string&quot;&gt;&quot;username varchar(20),&quot;&lt;/span&gt; +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;string&quot;&gt;&quot;password varchar(20))&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        db.execSQL(&lt;span class=&quot;string&quot;&gt;&quot;create table if not exists tb_userInfo&quot;&lt;/span&gt; +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;string&quot;&gt;&quot;(_id integer primary key autoincrement,&quot;&lt;/span&gt; +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;string&quot;&gt;&quot;username varchar(20),&quot;&lt;/span&gt; +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;string&quot;&gt;&quot;suggestions text)&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        db.execSQL(&lt;span class=&quot;string&quot;&gt;&quot;insert into tb_user(username, password) values(&#39;chuangwailinjie&#39;, &#39;123456&#39;)&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        db.execSQL(&lt;span class=&quot;string&quot;&gt;&quot;insert into tb_user(username, password) values(&#39;peihao&#39;, &#39;1234567&#39;)&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="adnroid" scheme="http://peihao.space/categories/adnroid/"/>
+    
+    
+      <category term="android" scheme="http://peihao.space/tags/android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>VS连接Sql Server</title>
+    <link href="http://peihao.space/2016/05/18/vs%E8%BF%9E%E6%8E%A5sqlserver/"/>
+    <id>http://peihao.space/2016/05/18/vs连接sqlserver/</id>
+    <published>2016-05-18T08:59:35.000Z</published>
+    <updated>2016-05-18T11:56:02.148Z</updated>
+    
+    <content type="html">&lt;p&gt;最近在帮同学搞一个小项目时遇到的关于VS2013连接微软公司的DBS SqlServer遇到的问题，这里mark以下，防止以后遗忘。&lt;/p&gt;
+&lt;p&gt;当我尝试调试这个半成品的时候，出现了下面的问题。&lt;/p&gt;
+&lt;p&gt;上面提示VS在于SQL Server建立连接时出现了问题，无法正确找到服务器，所以与数据服务器建立连接也就无从谈起了。&lt;/p&gt;
+&lt;p&gt;在services.msc程序中确保SQL Server的支撑服务已经正常启动，再次尝试，依旧如此。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;&lt;img src=&quot;\img\article\vs-ss.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在asp.net项目中的&lt;code&gt;Web.config&lt;/code&gt;文件中：&lt;/p&gt;
+&lt;figure class=&quot;highlight xml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;configuration&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;appSettings&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;key&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;ConnectionString&quot;&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;value&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;workstation id=.;integrated security=SSPI;data source=MSSQLSERVER;initial catalog=BookShop&quot;&lt;/span&gt;/&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;appSettings&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;connectionStrings&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;db_NetShopConnectionString1&quot;&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;connectionString&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;workstation id=.;integrated security=SSPI;data source=MSSQLSERVER;initial catalog=BookShop&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;attribute&quot;&gt;providerName&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;System.Data.SqlClient&quot;&lt;/span&gt; /&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;connectionStrings&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;system.web&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;compilation&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;debug&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;true&quot;&lt;/span&gt;/&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;authentication&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;mode&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;Forms&quot;&lt;/span&gt;/&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;system.web&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;configuration&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;code&gt;integrated security&lt;/code&gt;标准的值有3种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;True的时候，连接语句前面的 UserID, PW 是不起作用的，即采用windows身份验证模式。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;False或省略该项的时候，按照 UserID, PW 来连接。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;sspi ，差不多相当于 True，建议用这个代替 True。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;initial catalog与database在这个Web.config中的连接字符串中的作用是一致的。&lt;/p&gt;
+&lt;p&gt;一个一个排查下去，既然已经设置为windows身份验证模式不需要设置用户、密码，可以看到只剩下&lt;code&gt;data source&lt;/code&gt;这个属性还没有排查。data source设置的值为SQL Server的实例名称，根据在论坛上搜索的信息，不同版本的SQL Server实例名有差别。&lt;/p&gt;
+&lt;p&gt;在SQL Server中新建查询&lt;br&gt;&lt;figure class=&quot;highlight autoit&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;select&lt;/span&gt; @&lt;span class=&quot;constant&quot;&gt;@SERVERNAME&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;返回的结果一般是数据库实例名称，也是计算机名。但是更改代码之后，错误依旧。&lt;/p&gt;
+&lt;p&gt;之后依次根据服务中的SQL Server括号中实例名等等都无效。&lt;/p&gt;
+&lt;p&gt;最后在国外的论坛中找到结果：尝试使用(local)、127.0.0.1就可以正常使用。&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;string&lt;/span&gt; myStr = ConfigurationManager.AppSettings[&lt;span class=&quot;string&quot;&gt;&quot;ConnectionString&quot;&lt;/span&gt;].ToString();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;SqlConnection myConn = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; SqlConnection(myStr);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近在帮同学搞一个小项目时遇到的关于VS2013连接微软公司的DBS SqlServer遇到的问题，这里mark以下，防止以后遗忘。&lt;/p&gt;
+&lt;p&gt;当我尝试调试这个半成品的时候，出现了下面的问题。&lt;/p&gt;
+&lt;p&gt;上面提示VS在于SQL Server建立连接时出现了问题，无法正确找到服务器，所以与数据服务器建立连接也就无从谈起了。&lt;/p&gt;
+&lt;p&gt;在services.msc程序中确保SQL Server的支撑服务已经正常启动，再次尝试，依旧如此。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="C#" scheme="http://peihao.space/categories/C/"/>
+    
+    
+      <category term="C#" scheme="http://peihao.space/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>属于你的文件</title>
+    <link href="http://peihao.space/2016/05/18/xdy/"/>
+    <id>http://peihao.space/2016/05/18/xdy/</id>
+    <published>2016-05-18T08:59:35.000Z</published>
+    <updated>2016-05-22T13:27:51.062Z</updated>
+    
+    <content type="html">&lt;p&gt;六层空间的叠叠瓦瓦，11月8小时的温柔似玉&lt;/p&gt;
+&lt;p&gt;念念忘忘的油纸伞片，27度6分钟的暖暖如花&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;六层空间的叠叠瓦瓦，11月8小时的温柔似玉&lt;/p&gt;
+&lt;p&gt;念念忘忘的油纸伞片，27度6分钟的暖暖如花&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="随感" scheme="http://peihao.space/categories/%E9%9A%8F%E6%84%9F/"/>
+    
+    
+      <category term="随感" scheme="http://peihao.space/tags/%E9%9A%8F%E6%84%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>（ZT）机器学习与数据挖掘</title>
@@ -536,6 +749,84 @@
   </entry>
   
   <entry>
+    <title>verilog过程块与赋值</title>
+    <link href="http://peihao.space/2016/04/18/verilog-setvalue/"/>
+    <id>http://peihao.space/2016/04/18/verilog-setvalue/</id>
+    <published>2016-04-18T06:17:22.000Z</published>
+    <updated>2016-04-18T13:05:56.736Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;过程块&quot;&gt;过程块&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;always过程块&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;模板：&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;always @(&amp;lt;敏感信号表达式&amp;gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//过程赋值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//if语句	&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//case语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//while、repeat、for语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//task、function调用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;当敏感信号表达式的值改变时候，就执行一遍块内语句。同时always过程块是不能够嵌套使用的。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;关键字&lt;/strong&gt;&lt;code&gt;posedge&lt;/code&gt;与&lt;code&gt;negedge&lt;/code&gt;关键字分别是上升沿以及下降沿&lt;/p&gt;
+&lt;p&gt;例如：同步时序电路的时钟信号为clk，clear为异步清零信号。敏感信号可写为：&lt;/p&gt;
+&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//上升沿触发，高电平清0有效&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clear)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//上升沿触发，低电平清0有效&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;negedge&lt;/span&gt; clear)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;例如当&lt;code&gt;negedge clear&lt;/code&gt;表示当&lt;code&gt;clear==0&lt;/code&gt;时&lt;/p&gt;
+&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;negedge&lt;/span&gt; clear)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;!&lt;/span&gt;clear)&lt;span class=&quot;comment&quot;&gt;//当clear==0时候，always会由事件驱动&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			qout&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			qout&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;in;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ol&gt;
+&lt;li&gt;initial过程块&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;initial模板：&lt;/p&gt;
+&lt;figure class=&quot;highlight erlang&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;initial&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	语句&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	语句&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	......&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;对变量和存贮器初始化&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;initial&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	reg1=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(addr=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;addr&amp;lt;size;addr=addr+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		memory[addr]=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;initial语句主要面向功能模拟，通常不具有可综合性。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;模拟0时刻开始执行，只执行一次&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;同一模块内的多个initial过程块，模拟0时刻开始并行执行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;initial与always语句一样，是不能嵌套使用的。即在initial语句中不能再次嵌套initial语句块。&lt;/p&gt;
+&lt;h1 id=&quot;连续赋值&quot;&gt;连续赋值&lt;/h1&gt;&lt;p&gt;用连续赋值语句表达的是： &lt;code&gt;assign val=newval;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;任何一个输入的改变都将立即导致输出更新；&lt;/p&gt;
+&lt;figure class=&quot;highlight stata&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;module orand(&lt;span class=&quot;keyword&quot;&gt;out&lt;/span&gt;,a,b,c,&lt;span class=&quot;keyword&quot;&gt;d&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;e&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;input&lt;/span&gt; a,b,c,&lt;span class=&quot;keyword&quot;&gt;d&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;e&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	output &lt;span class=&quot;keyword&quot;&gt;out&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	assign &lt;span class=&quot;keyword&quot;&gt;out&lt;/span&gt;=3&amp;amp;(a|b)&amp;amp;(c|&lt;span class=&quot;keyword&quot;&gt;d&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;过程赋值语句&quot;&gt;过程赋值语句&lt;/h1&gt;&lt;p&gt;过程赋值语句常用于对reg变量进行赋值。一般分为两种，&lt;em&gt;阻塞赋值&lt;/em&gt;与&lt;em&gt;非阻塞赋值&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&quot;阻塞与非阻塞赋值&quot;&gt;阻塞与非阻塞赋值&lt;/h2&gt;&lt;p&gt;赋值的类型选择取决于建模的逻辑类型。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;在时序块的RTL代码中使用&lt;em&gt;非阻塞赋值&lt;/em&gt;&lt;code&gt;&amp;lt;=&lt;/code&gt;。非阻塞赋值在块结束后才完成赋值操作。此赋值方式可以避免在仿真出现魔仙和竞争现象。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在组合的RTL代码中使用&lt;em&gt;阻塞赋值&lt;/em&gt;&lt;code&gt;=&lt;/code&gt;。使用阻塞赋值方式对一个变量进行赋值时，此变量的值在赋值语句执行完后才能之后就立即改变。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;compare&quot;&gt;compare&lt;/h2&gt;&lt;p&gt;使用非阻塞赋值方式进行赋值时，各个赋值语句同步执行；因此通常在一个时钟沿对临时变量进行赋值，而在另一个时钟沿对其进行采样。因为在相同的时钟沿采样赋值，采样的还是原来的值，赋值操作是在块结束时进行。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;阻塞赋值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下面模块会综合成为触发器&lt;/p&gt;
+&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; block(clk,a,b);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;input&lt;/span&gt; clk,a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;output&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;typename&quot;&gt;reg&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		y&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		b&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;y;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;非阻塞赋值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下面的模块会综合成两个触发器&lt;/p&gt;
+&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; block(clk,a,b);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;input&lt;/span&gt; clk,a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;output&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;typename&quot;&gt;reg&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		y&lt;span class=&quot;keyword&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		b&lt;span class=&quot;keyword&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;y;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&quot;\img\article\ise\block-unblock-setvalue.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;上图左侧是阻塞赋值的综合结果，右侧则为非阻塞赋值。相比左侧，右侧的例子会造成一个时钟周期的延迟。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;过程块&quot;&gt;过程块&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;always过程块&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;模板：&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;always @(&amp;lt;敏感信号表达式&amp;gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//过程赋值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//if语句	&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//case语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//while、repeat、for语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//task、function调用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;当敏感信号表达式的值改变时候，就执行一遍块内语句。同时always过程块是不能够嵌套使用的。
+    
+    </summary>
+    
+      <category term="Verilog" scheme="http://peihao.space/categories/Verilog/"/>
+    
+    
+      <category term="Verilog" scheme="http://peihao.space/tags/Verilog/"/>
+    
+  </entry>
+  
+  <entry>
     <title>基于Xilinx的Synthesize</title>
     <link href="http://peihao.space/2016/04/18/ise-synthesize/"/>
     <id>http://peihao.space/2016/04/18/ise-synthesize/</id>
@@ -648,84 +939,6 @@
 &lt;p&gt;Warn会在Synthesize-XST出现黄色警示，而Error有红色标识。&lt;/p&gt;
 &lt;p&gt;综合完成之后可以通过使用XST的&lt;code&gt;View RTLSchematics&lt;/code&gt;工具查看RTL级结构图。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/adder-RTL.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Verilog" scheme="http://peihao.space/categories/Verilog/"/>
-    
-    
-      <category term="Verilog" scheme="http://peihao.space/tags/Verilog/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>verilog过程块与赋值</title>
-    <link href="http://peihao.space/2016/04/18/verilog-setvalue/"/>
-    <id>http://peihao.space/2016/04/18/verilog-setvalue/</id>
-    <published>2016-04-18T06:17:22.000Z</published>
-    <updated>2016-04-18T13:05:56.736Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;过程块&quot;&gt;过程块&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;always过程块&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;模板：&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;always @(&amp;lt;敏感信号表达式&amp;gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//过程赋值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//if语句	&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//case语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//while、repeat、for语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//task、function调用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;当敏感信号表达式的值改变时候，就执行一遍块内语句。同时always过程块是不能够嵌套使用的。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;关键字&lt;/strong&gt;&lt;code&gt;posedge&lt;/code&gt;与&lt;code&gt;negedge&lt;/code&gt;关键字分别是上升沿以及下降沿&lt;/p&gt;
-&lt;p&gt;例如：同步时序电路的时钟信号为clk，clear为异步清零信号。敏感信号可写为：&lt;/p&gt;
-&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//上升沿触发，高电平清0有效&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clear)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//上升沿触发，低电平清0有效&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;negedge&lt;/span&gt; clear)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;例如当&lt;code&gt;negedge clear&lt;/code&gt;表示当&lt;code&gt;clear==0&lt;/code&gt;时&lt;/p&gt;
-&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;negedge&lt;/span&gt; clear)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;!&lt;/span&gt;clear)&lt;span class=&quot;comment&quot;&gt;//当clear==0时候，always会由事件驱动&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			qout&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			qout&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;in;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ol&gt;
-&lt;li&gt;initial过程块&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;initial模板：&lt;/p&gt;
-&lt;figure class=&quot;highlight erlang&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;initial&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	语句&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	语句&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	......&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;对变量和存贮器初始化&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;initial&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	reg1=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(addr=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;addr&amp;lt;size;addr=addr+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		memory[addr]=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;initial语句主要面向功能模拟，通常不具有可综合性。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;模拟0时刻开始执行，只执行一次&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;同一模块内的多个initial过程块，模拟0时刻开始并行执行。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;initial与always语句一样，是不能嵌套使用的。即在initial语句中不能再次嵌套initial语句块。&lt;/p&gt;
-&lt;h1 id=&quot;连续赋值&quot;&gt;连续赋值&lt;/h1&gt;&lt;p&gt;用连续赋值语句表达的是： &lt;code&gt;assign val=newval;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;任何一个输入的改变都将立即导致输出更新；&lt;/p&gt;
-&lt;figure class=&quot;highlight stata&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;module orand(&lt;span class=&quot;keyword&quot;&gt;out&lt;/span&gt;,a,b,c,&lt;span class=&quot;keyword&quot;&gt;d&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;e&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;input&lt;/span&gt; a,b,c,&lt;span class=&quot;keyword&quot;&gt;d&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;e&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	output &lt;span class=&quot;keyword&quot;&gt;out&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	assign &lt;span class=&quot;keyword&quot;&gt;out&lt;/span&gt;=3&amp;amp;(a|b)&amp;amp;(c|&lt;span class=&quot;keyword&quot;&gt;d&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h1 id=&quot;过程赋值语句&quot;&gt;过程赋值语句&lt;/h1&gt;&lt;p&gt;过程赋值语句常用于对reg变量进行赋值。一般分为两种，&lt;em&gt;阻塞赋值&lt;/em&gt;与&lt;em&gt;非阻塞赋值&lt;/em&gt;&lt;/p&gt;
-&lt;h2 id=&quot;阻塞与非阻塞赋值&quot;&gt;阻塞与非阻塞赋值&lt;/h2&gt;&lt;p&gt;赋值的类型选择取决于建模的逻辑类型。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;在时序块的RTL代码中使用&lt;em&gt;非阻塞赋值&lt;/em&gt;&lt;code&gt;&amp;lt;=&lt;/code&gt;。非阻塞赋值在块结束后才完成赋值操作。此赋值方式可以避免在仿真出现魔仙和竞争现象。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;在组合的RTL代码中使用&lt;em&gt;阻塞赋值&lt;/em&gt;&lt;code&gt;=&lt;/code&gt;。使用阻塞赋值方式对一个变量进行赋值时，此变量的值在赋值语句执行完后才能之后就立即改变。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;compare&quot;&gt;compare&lt;/h2&gt;&lt;p&gt;使用非阻塞赋值方式进行赋值时，各个赋值语句同步执行；因此通常在一个时钟沿对临时变量进行赋值，而在另一个时钟沿对其进行采样。因为在相同的时钟沿采样赋值，采样的还是原来的值，赋值操作是在块结束时进行。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;阻塞赋值&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;下面模块会综合成为触发器&lt;/p&gt;
-&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; block(clk,a,b);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;input&lt;/span&gt; clk,a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;output&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;typename&quot;&gt;reg&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		y&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		b&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;y;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;非阻塞赋值&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;下面的模块会综合成两个触发器&lt;/p&gt;
-&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; block(clk,a,b);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;input&lt;/span&gt; clk,a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;output&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;typename&quot;&gt;reg&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		y&lt;span class=&quot;keyword&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		b&lt;span class=&quot;keyword&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;y;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;img src=&quot;\img\article\ise\block-unblock-setvalue.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;上图左侧是阻塞赋值的综合结果，右侧则为非阻塞赋值。相比左侧，右侧的例子会造成一个时钟周期的延迟。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;过程块&quot;&gt;过程块&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;always过程块&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;模板：&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;always @(&amp;lt;敏感信号表达式&amp;gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//过程赋值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//if语句	&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//case语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//while、repeat、for语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//task、function调用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;当敏感信号表达式的值改变时候，就执行一遍块内语句。同时always过程块是不能够嵌套使用的。
     
     </summary>
     
@@ -1105,227 +1318,6 @@
     
       &lt;h1 id=&quot;并行块&quot;&gt;并行块&lt;/h1&gt;&lt;p&gt;在测试中经常会用到    &lt;code&gt;fork...join&lt;/code&gt;块。使用并行块能表示以同一个时间起点算起的多个时间的运行，并行的执行复杂的过程结构，如循环或任务。&lt;/p&gt;
 &lt;h2 id=&quot;eg&quot;&gt;eg&lt;/h2&gt;
-    
-    </summary>
-    
-      <category term="Verilog" scheme="http://peihao.space/categories/Verilog/"/>
-    
-    
-      <category term="Verilog" scheme="http://peihao.space/tags/Verilog/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>小记(3)</title>
-    <link href="http://peihao.space/2016/04/13/%E5%B0%8F%E8%AE%B03/"/>
-    <id>http://peihao.space/2016/04/13/小记3/</id>
-    <published>2016-04-13T07:54:57.543Z</published>
-    <updated>2016-04-13T07:54:57.543Z</updated>
-    
-    <content type="html">&lt;p&gt;过了17岁的青涩无知，祛了十多岁朝气蓬勃的精神气儿。逐渐长大接近这个社会的真实，逐渐接受麻木的驯服。一个接一个憧憬的或事物，每一个我所认知的、欣赏的人物。这可是我们当中最好的一批人啊，却也跟我一样肮脏、黑暗。不自觉的每个任性闪光，最终都会在挖掘之后令人作呕。&lt;/p&gt;
-&lt;p&gt;23分的黑色阳光洒在白皙纯真的脸庞，每一寸都是黑色。乘着城堡下遮盖的柔软龙猫，不想要看到任何物质。每个生物都如此污秽，我无法接受你。越来越快在齿轮的碾压下破碎的理想，编织成三伏天的网。&lt;/p&gt;
-&lt;p&gt;自私虚伪。人生不如意之八八九九，心切切不可闻。坐上西部的老爷车，飞向没有卢瑟与温拿的理想世界。十四岁写下的种种缺诬，一百四十年不会削减的向阳花。&lt;/p&gt;
-&lt;p&gt;谎言杀死自由，情话强奸温柔。那些或清晰或模糊的片段，随着离去的大风，依旧留在二十岁的铁轨。像当初分开时的那种情节，有时候还是想回到过去。黑暗的不是人间，是完善的人格。回到90岁的中世纪世界,不是卢瑟夫的狂想，我不爱它。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&quot;/img/slim-note.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=&quot;330&quot; height=&quot;86&quot; src=&quot;http://music.163.com/outchain/player?type=2&amp;id=30260069&amp;auto=1&amp;height=66&quot;&gt;&lt;/iframe&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;过了17岁的青涩无知，祛了十多岁朝气蓬勃的精神气儿。逐渐长大接近这个社会的真实，逐渐接受麻木的驯服。一个接一个憧憬的或事物，每一个我所认知的、欣赏的人物。这可是我们当中最好的一批人啊，却也跟我一样肮脏、黑暗。不自觉的每个任性闪光，最终都会在挖掘之后令人作呕。&lt;/p&gt;
-&lt;p&gt;23分的黑色阳光洒在白皙纯真的脸庞，每一寸都是黑色。乘着城堡下遮盖的柔软龙猫，不想要看到任何物质。每个生物都如此污秽，我无法接受你。越来越快在齿轮的碾压下破碎的理想，编织成三伏天的网。&lt;/p&gt;
-&lt;p&gt;自私虚伪。人生不如意之八八九九，心切切不可闻。坐上西部的老爷车，飞向没有卢瑟与温拿的理想世界。十四岁写下的种种缺诬，一百四十年不会削减的向阳花。&lt;/p&gt;
-&lt;p&gt;谎言杀死自由，情话强奸温柔。那些或清晰或模糊的片段，随着离去的大风，依旧留在二十岁的铁轨。像当初分开时的那种情节，有时候还是想回到过去。黑暗的不是人间，是完善的人格。回到90岁的中世纪世界,不是卢瑟夫的狂想，我不爱它。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&quot;/img/slim-note.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="随笔" scheme="http://peihao.space/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="随笔" scheme="http://peihao.space/tags/%E9%9A%8F%E7%AC%94/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>太聪明</title>
-    <link href="http://peihao.space/2016/04/12/%E5%A4%AA%E8%81%AA%E6%98%8E/"/>
-    <id>http://peihao.space/2016/04/12/太聪明/</id>
-    <published>2016-04-12T07:36:28.000Z</published>
-    <updated>2016-04-17T12:34:54.039Z</updated>
-    
-    <content type="html">&lt;center&gt;&lt;br&gt;总以为谜一般难懂的我&lt;br&gt;&lt;br&gt;在你了解了以后&lt;br&gt;&lt;br&gt;其实也没什么&lt;br&gt;&lt;br&gt;我总是忽冷又忽热&lt;br&gt;&lt;br&gt;隐藏我的感受&lt;br&gt;&lt;br&gt;只是怕爱你的心被你看透&lt;br&gt;&lt;br&gt;猜的没错想得太多&lt;br&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;不会有结果&lt;br&gt;&lt;br&gt;被你看穿了以后&lt;br&gt;&lt;br&gt;我更无处可躲&lt;br&gt;&lt;br&gt;我开始后悔不应该太聪明的卖弄&lt;br&gt;&lt;br&gt;只是怕亲手将我的真心葬送&lt;br&gt;&lt;br&gt;我猜着你的心&lt;br&gt;&lt;br&gt;要再一次确定&lt;br&gt;&lt;br&gt;遥远的距离都是因为太过聪明&lt;br&gt;&lt;br&gt;要猜着你的心&lt;br&gt;&lt;br&gt;要再一次确定&lt;br&gt;&lt;br&gt;混乱的思绪都是因为太想靠近你&lt;br&gt;&lt;br&gt;猜的没错想得太多&lt;br&gt;&lt;br&gt;不会有结果&lt;br&gt;&lt;br&gt;被你看穿了以后&lt;br&gt;&lt;br&gt;我更无处可躲&lt;br&gt;&lt;br&gt;我开始后悔不应该太聪明的卖弄&lt;br&gt;&lt;br&gt;只是怕亲手将我的真心葬送&lt;br&gt;&lt;br&gt;我猜着你的心&lt;br&gt;&lt;br&gt;要再一次确定&lt;br&gt;&lt;br&gt;遥远的距离都是因为太过聪明&lt;br&gt;&lt;br&gt;要猜着你的心&lt;br&gt;&lt;br&gt;要再一次确定&lt;br&gt;&lt;br&gt;混乱的思绪都是因为太想靠近你&lt;br&gt;&lt;br&gt;猜的没错想得太多&lt;br&gt;&lt;br&gt;不会有结果&lt;br&gt;&lt;br&gt;被你看穿了以后&lt;br&gt;&lt;br&gt;我更无处可躲&lt;br&gt;&lt;br&gt;我开始后悔不应该太聪明的卖弄&lt;br&gt;&lt;br&gt;只是怕亲手将我的真心葬送&lt;br&gt;&lt;br&gt;&lt;embed border=&quot;0&quot; src=&quot;http://music.163.com/outchain/player?type=2&amp;id=209196&amp;auto=1&amp;width=200&amp;height=100&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;/center&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;center&gt;&lt;br&gt;总以为谜一般难懂的我&lt;br&gt;&lt;br&gt;在你了解了以后&lt;br&gt;&lt;br&gt;其实也没什么&lt;br&gt;&lt;br&gt;我总是忽冷又忽热&lt;br&gt;&lt;br&gt;隐藏我的感受&lt;br&gt;&lt;br&gt;只是怕爱你的心被你看透&lt;br&gt;&lt;br&gt;猜的没错想得太多&lt;br&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="随笔" scheme="http://peihao.space/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="随笔" scheme="http://peihao.space/tags/%E9%9A%8F%E7%AC%94/"/>
-    
-      <category term="音乐" scheme="http://peihao.space/tags/%E9%9F%B3%E4%B9%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>testbench实例</title>
-    <link href="http://peihao.space/2016/04/12/verilog-testbench-001/"/>
-    <id>http://peihao.space/2016/04/12/verilog-testbench-001/</id>
-    <published>2016-04-12T06:17:22.000Z</published>
-    <updated>2016-04-12T14:03:48.398Z</updated>
-    
-    <content type="html">&lt;p&gt;本文介绍在ISE开发环境下，由两个16bit加法器构成的、可以完成4个16bit输入的18bit输出加法器。&lt;/p&gt;
-&lt;h1 id=&quot;IP核&quot;&gt;IP核&lt;/h1&gt;&lt;p&gt;IP Core就是预先设计好、经过严格测试和优化过的电路功能模块，如乘法器、FIR滤波器、PCI接口等，并且一般采用参数可配置的结构，方便用户根据实际情况来调用这些模块。随着FPGA规模的增加，使用IP core完成设计成为发展趋势。&lt;/p&gt;
-&lt;p&gt;IP Core生成器（Core Generator）是Xilinx FPGA设计中的一个重要设计工具，提供了大量成熟的、高效的IP Core为用户所用，涵盖了汽车工业、基本单元、通信和网络、数字信号处理、FPGA特点和设计、数学函数、记忆和存储单元、标准总线接口等8大类。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;IP核生成器的使用&quot;&gt;IP核生成器的使用&lt;/h1&gt;&lt;p&gt;在这里，我们使用ISE提供的IP Core生成器创建3个加法器IP Core。包含2个16bit 2输入加法器与1个17bit 2输入加法器。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;\img\article\ise\ise-newsource-wizard.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;点击工程器件，右键新建源文件。选择IP Core，填写基本信息后，在IP Core目录中选择&lt;code&gt;Math Function&lt;/code&gt;-&amp;gt;&lt;code&gt;Adders Subtracter&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/IP-Core-proper.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;填写基本的IP Core属性。16bit输入的加法器，输出时17bit；同理17bit输入、输出时18bit。&lt;/p&gt;
-&lt;p&gt;IP Core在综合时被认为是黑盒子，综合器不对IP Core做任何编译。IP Core的仿真主要是运用Core Generator的仿真模型来完成的，会自动生成扩展名为.v的源代码文件。设计人员只需要从该源文件中查看其端口声明，将其作为一个普通的子程序进行调用即可。&lt;/p&gt;
-&lt;h1 id=&quot;逻辑生成&quot;&gt;逻辑生成&lt;/h1&gt;&lt;figure class=&quot;highlight openscad&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;`timescale &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;ns / &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;ps&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    input clk,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    input [&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] a1,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    input [&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] a2,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    input [&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] b1,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    input [&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] b2,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    output [&lt;span class=&quot;number&quot;&gt;17&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] c&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    )&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;wire&lt;/span&gt; [16:0] &lt;span class=&quot;title&quot;&gt;ab1&lt;/span&gt;,&lt;span class=&quot;title&quot;&gt;ab2&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;adder&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;adder16_1&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	.a&lt;span class=&quot;params&quot;&gt;(a1)&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	.b&lt;span class=&quot;params&quot;&gt;(a2)&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	.s&lt;span class=&quot;params&quot;&gt;(ab1)&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	.clk&lt;span class=&quot;params&quot;&gt;(clk)&lt;/span&gt;)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;adder&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;adder16_2&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	.a&lt;span class=&quot;params&quot;&gt;(b1)&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	.b&lt;span class=&quot;params&quot;&gt;(b2)&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	.s&lt;span class=&quot;params&quot;&gt;(ab2)&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	.clk&lt;span class=&quot;params&quot;&gt;(clk)&lt;/span&gt;)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;adder17&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;adder7&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	.a&lt;span class=&quot;params&quot;&gt;(ab1)&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	.b&lt;span class=&quot;params&quot;&gt;(ab2)&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	.s&lt;span class=&quot;params&quot;&gt;(c)&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	.clk&lt;span class=&quot;params&quot;&gt;(clk)&lt;/span&gt;)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;这里定义了两个wire类型变量存储16bit输入的加法器输出结果，同时作为17bit加法器的输入。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/adder-RTL.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;上图是RTL级结构。&lt;/p&gt;
-&lt;h1 id=&quot;TestBench文件编写&quot;&gt;TestBench文件编写&lt;/h1&gt;&lt;figure class=&quot;highlight armasm&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;`timescale &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;ns / &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;ps&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;label&quot;&gt;module&lt;/span&gt; ttt&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	// Inputs&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	reg clk&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	reg [&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] &lt;span class=&quot;literal&quot;&gt;a1&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	reg [&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] &lt;span class=&quot;literal&quot;&gt;a2&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	reg [&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] &lt;span class=&quot;keyword&quot;&gt;b1;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;	reg [&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] &lt;span class=&quot;keyword&quot;&gt;b2;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	// Outputs&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	wire [&lt;span class=&quot;number&quot;&gt;17&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] c&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	// Instantiate the Unit Under Test (UUT)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;add &lt;/span&gt;uut (&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		.clk(clk), &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		.a1(&lt;span class=&quot;literal&quot;&gt;a1&lt;/span&gt;), &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		.a2(&lt;span class=&quot;literal&quot;&gt;a2&lt;/span&gt;), &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		.&lt;span class=&quot;keyword&quot;&gt;b1(b1), &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		.&lt;span class=&quot;keyword&quot;&gt;b2(b2), &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		.c(c)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	)&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	initial &lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;		// Initialize Inputs&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		clk = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;literal&quot;&gt;a1&lt;/span&gt; = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;literal&quot;&gt;a2&lt;/span&gt; = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;b1 &lt;/span&gt;= &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;b2 &lt;/span&gt;= &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		// Wait &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; ns for &lt;span class=&quot;preprocessor&quot;&gt;global&lt;/span&gt; reset to finish&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;number&quot;&gt;#100&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		// &lt;span class=&quot;keyword&quot;&gt;Add &lt;/span&gt;stimulus here&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		forever &lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;			&lt;span class=&quot;number&quot;&gt;#5&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			clk=~clk&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;preprocessor&quot;&gt;if&lt;/span&gt;(clk=&lt;span class=&quot;number&quot;&gt;=1&lt;/span&gt;)&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;				&lt;span class=&quot;literal&quot;&gt;a1&lt;/span&gt;&lt;span class=&quot;label&quot;&gt;=a1&lt;/span&gt;+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;				&lt;span class=&quot;literal&quot;&gt;a2&lt;/span&gt;&lt;span class=&quot;label&quot;&gt;=a2&lt;/span&gt;+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;				&lt;span class=&quot;keyword&quot;&gt;b1=b1+1;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;				&lt;span class=&quot;keyword&quot;&gt;b2=b2+1;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;			&lt;span class=&quot;preprocessor&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;preprocessor&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;preprocessor&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;label&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;上面设置的激励规定了输入初始值全为0，同时每隔10ns，4个模块15bit变量输入值加1。在仿真中可以看到仿真结果，由于每一级都会产生一个时钟周期的延迟，最终会有2个时钟周期的延迟。&lt;/p&gt;
-&lt;h1 id=&quot;Tips&quot;&gt;Tips&lt;/h1&gt;&lt;p&gt;要注意的是，在IP Core创建的时候，一定要确保所有输入端口都有用到。我刚开始生成的时候，多选择了&lt;code&gt;C_in&lt;/code&gt;输入，导致在综合是由Warn提醒，同时在测试时，输出仿真失败，显示红色警告。18bit的输出结果最低2bit一直是xx.这里一定要注意。对于FPGA仿真而言，每一个值都应该有初始值设置。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本文介绍在ISE开发环境下，由两个16bit加法器构成的、可以完成4个16bit输入的18bit输出加法器。&lt;/p&gt;
-&lt;h1 id=&quot;IP核&quot;&gt;IP核&lt;/h1&gt;&lt;p&gt;IP Core就是预先设计好、经过严格测试和优化过的电路功能模块，如乘法器、FIR滤波器、PCI接口等，并且一般采用参数可配置的结构，方便用户根据实际情况来调用这些模块。随着FPGA规模的增加，使用IP core完成设计成为发展趋势。&lt;/p&gt;
-&lt;p&gt;IP Core生成器（Core Generator）是Xilinx FPGA设计中的一个重要设计工具，提供了大量成熟的、高效的IP Core为用户所用，涵盖了汽车工业、基本单元、通信和网络、数字信号处理、FPGA特点和设计、数学函数、记忆和存储单元、标准总线接口等8大类。
-    
-    </summary>
-    
-      <category term="Verilog" scheme="http://peihao.space/categories/Verilog/"/>
-    
-    
-      <category term="Verilog" scheme="http://peihao.space/tags/Verilog/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Verilog的testbench入门</title>
-    <link href="http://peihao.space/2016/04/11/verilog-testbench-intro/"/>
-    <id>http://peihao.space/2016/04/11/verilog-testbench-intro/</id>
-    <published>2016-04-11T06:17:22.000Z</published>
-    <updated>2016-04-11T13:27:10.955Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;基础知识&quot;&gt;基础知识&lt;/h1&gt;&lt;p&gt;Test bench即Verilog需要编写的测试文件。在module设计完成、综合之后我们需要通过测试文件完成对设计module的测试。&lt;/p&gt;
-&lt;p&gt;Test bench大致分为下面三个部分:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;时钟控制 clock control&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;一般采用always实现&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;实例化instantiate要测试的module&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;对实例的输入赋值&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;与待测模块的接口:&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;与输出端口相连接的变量定义为reg&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;与输出端口相连的定义为wire&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;初始化变量&quot;&gt;初始化变量&lt;/h2&gt;&lt;p&gt;Verilog中使用&lt;code&gt;initial&lt;/code&gt;block初始化变量。&lt;/p&gt;
-&lt;h2 id=&quot;时钟的产生&quot;&gt;时钟的产生&lt;/h2&gt;&lt;p&gt;&lt;code&gt;always # 10 clk=~clk;&lt;/code&gt; 产生时钟&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;initial repeat(13) #5 clk=~clk&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;控制只产生13个时钟&lt;/p&gt;
-&lt;h2 id=&quot;同步数据&quot;&gt;同步数据&lt;/h2&gt;&lt;p&gt;&lt;code&gt;initial forever @ (posedge clk) #3 x=$random;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;为了降低多个输入同时翻转的概率，对时序电路的输入一般采用素数作为时间间隔&lt;/p&gt;
-&lt;h2 id=&quot;随机数据&quot;&gt;随机数据&lt;/h2&gt;&lt;p&gt;&lt;code&gt;initial repeat(5) #7 x=$random;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;a=$random%60;&lt;/code&gt; //产生-59到59之间的随机数&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;a={$random}%60;&lt;/code&gt; //产生0到59之间的随机数&lt;/p&gt;
-&lt;h2 id=&quot;产生随机事件间隔&quot;&gt;产生随机事件间隔&lt;/h2&gt;&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;always &lt;span class=&quot;operator&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;t&lt;/span&gt;=$random&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	#(&lt;span class=&quot;keyword&quot;&gt;t&lt;/span&gt;) x=$random;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;operator&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;数据缓存&quot;&gt;数据缓存&lt;/h2&gt;&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;initial&lt;/span&gt; buffer &lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;16&#39;b1110&lt;/span&gt;_0001_1011_0101;&lt;span class=&quot;comment&quot;&gt;//将测试数据进行初始化&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;&amp;#123;&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;x&lt;/span&gt;,buffer&lt;span class=&quot;keyword&quot;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;&amp;#123;&lt;/span&gt;buffer,&lt;span class=&quot;number&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;//可以在控制的数据下输入信号x&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;读取数据文件&quot;&gt;读取数据文件&lt;/h2&gt;&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;reg [&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] mem1[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;1024&lt;/span&gt;];&lt;span class=&quot;comment&quot;&gt;//定义一个1KB的存储&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;initial begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$readmemh(data1.dat,mem1)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h1 id=&quot;简单的实例&quot;&gt;简单的实例&lt;/h1&gt;&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;timescale&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;ns &lt;span class=&quot;keyword&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;ps&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;`&lt;/span&gt;include &lt;span class=&quot;string&quot;&gt;&quot;adder.v&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; test;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;// Inputs&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;typename&quot;&gt;reg&lt;/span&gt; a,b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;typename&quot;&gt;wire&lt;/span&gt; sum,count;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;// 实例化待测试模块&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	add uut (&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;typename&quot;&gt;.sum&lt;/span&gt;(sum),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;typename&quot;&gt;.c&lt;/span&gt;(count), &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;typename&quot;&gt;.b&lt;/span&gt;(b), &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;typename&quot;&gt;.a&lt;/span&gt;(a)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;initial&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;comment&quot;&gt;// Initialize Inputs&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		a&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;comment&quot;&gt;//没经过20个单位时间，a取反&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;forever&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt; a&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;~&lt;/span&gt;a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;initial&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;comment&quot;&gt;// Initialize Inputs&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		b&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;comment&quot;&gt;//没经过10个单位时间，b取反&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;forever&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; b&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;~&lt;/span&gt;b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;initial&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;comment&quot;&gt;//监控输出&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		$monitor()$&lt;span class=&quot;typename&quot;&gt;time&lt;/span&gt;,,,&lt;span class=&quot;string&quot;&gt;&quot;%d+%d=&amp;#123;%d,%d&amp;#125;&quot;&lt;/span&gt;,a,b,count,sum;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;40&lt;/span&gt; $stop;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;Tip&quot;&gt;Tip&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;$monitor&lt;/code&gt;  出输出打印显示&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;$stop&lt;/code&gt;  停止当前仿真&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;￥finish&lt;/code&gt;  结束仿真&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;时钟产生&quot;&gt;时钟产生&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;使用initial语句&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;typename&quot;&gt;reg&lt;/span&gt; clock;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;initial&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	clock&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;forever&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; clock&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;~&lt;/span&gt;clock;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;使用always语句&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight nginx&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;reg&lt;/span&gt; clock;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;initial&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	clock=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;always&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;#10 clock=~clock;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;基础知识&quot;&gt;基础知识&lt;/h1&gt;&lt;p&gt;Test bench即Verilog需要编写的测试文件。在module设计完成、综合之后我们需要通过测试文件完成对设计module的测试。&lt;/p&gt;
-&lt;p&gt;Test bench大致分为下面三个部分:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;时钟控制 clock control&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;一般采用always实现&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;实例化instantiate要测试的module&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;对实例的输入赋值&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Verilog" scheme="http://peihao.space/categories/Verilog/"/>
-    
-    
-      <category term="Verilog" scheme="http://peihao.space/tags/Verilog/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Verilog中的timescale</title>
-    <link href="http://peihao.space/2016/04/10/verilog-timescale/"/>
-    <id>http://peihao.space/2016/04/10/verilog-timescale/</id>
-    <published>2016-04-10T06:17:22.000Z</published>
-    <updated>2016-04-10T09:12:32.741Z</updated>
-    
-    <content type="html">&lt;p&gt;在Verilog HDL 模型中，所有时延都用单位时间表述。使用`timescale&lt;br&gt;编译器指令将时间单位与实际时间相关联。该指令用于定义时延的单位和时延精度。&lt;/p&gt;
-&lt;p&gt;`timescale编译器指令格式为：&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;timescale time_unit / time_precision&lt;/code&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;time_unit 单位时间&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;time_precision  时间精度&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;time_unit 和time_precision 由值1、10、和100以及单位s、ms、us、ns、ps和fs组成。&lt;/p&gt;
-&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;`timescale &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;ns/ &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;function&quot;&gt;ps &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;module &lt;span class=&quot;title&quot;&gt;AndFunc&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(Z, A, B)&lt;/span&gt;&lt;/span&gt;; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;output Z; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;input A, B;  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;and &lt;span class=&quot;preprocessor&quot;&gt;# (&lt;span class=&quot;number&quot;&gt;5.22&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;6.17&lt;/span&gt; ) Al (Z, A, B); &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//规定了上升及下降时延值。 &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;编译器指令定义时延以ns为单位，并且时延精度为 0.1 ns（100 ps）。因此，时延值(#5.22)即代表5.22ns，5.22对应5.2 ns, 时延6.17对应6.2 ns。如果用如下的`timescale程序指令代替上例中的编译器指令,&lt;/p&gt;
-&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;`timescale &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;ns/&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;ns&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;则基础的时间单位为10ns，精度1ns。5.22代表52.2ns，固定到精度上就是52ns。同理，6.17转换为62ns。&lt;/p&gt;
-&lt;p&gt;在编译过程中，timescale指令影响这一编译器指令后面所有模块中的时延值，直至遇到另一timescale指令或resetall指令。当一个设计中的多个模块带有自身的`timescale编译指令时将发生什么？在这种情况下，模拟器总是定位在所有模块的最小时延精度上，并且所有时延都相应地换算为最小时延精度。&lt;/p&gt;
-&lt;p&gt;在verilog中是没有默认timescale的。一个没有指定timescale的verilog模块就有可能错误的继承了前面编译模块的无效timescale参数。所以在verilog的LRM中推荐在每个module的前面指定&lt;code&gt;timescale,并且相
-应的在最后加一个&lt;/code&gt;resetall来确保timescale的局部有效。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在Verilog HDL 模型中，所有时延都用单位时间表述。使用`timescale&lt;br&gt;编译器指令将时间单位与实际时间相关联。该指令用于定义时延的单位和时延精度。&lt;/p&gt;
-&lt;p&gt;`timescale编译器指令格式为：&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;timescale time_unit / time_precision&lt;/code&gt;&lt;br&gt;
     
     </summary>
     
