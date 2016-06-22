@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://peihao.space/album/edit.json</loc>
+    
+    <lastmod>2016-06-22T03:16:19.545Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://peihao.space/2016/05/23/about-verilog-newnote/</loc>
     
     <lastmod>2016-05-23T15:26:03.480Z</lastmod>
@@ -40,13 +47,6 @@
     <loc>http://peihao.space/2015/04/15/router-testbench-note/</loc>
     
     <lastmod>2016-05-09T13:44:33.737Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://peihao.space/album/edit.json</loc>
-    
-    <lastmod>2016-05-08T13:15:49.787Z</lastmod>
     
   </url>
   
