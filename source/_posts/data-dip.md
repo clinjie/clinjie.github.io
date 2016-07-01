@@ -1,7 +1,6 @@
 title: （ZT）机器学习与数据挖掘
 date: 2016-04-28 17:17:22
 tags: algorithm
-toc: true
 categories: algorithm
 ---
 
