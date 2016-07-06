@@ -32,7 +32,7 @@ categories: algorithm
 - 变量的值是字符串。 　
 
 - 如果标记中的变量没有定义，则生成空串，相当于把标记从模板中删除。 　
-
+<!--more-->
 - 模板不递归生成。也就是说，如果变量的值中包含形如`{{ VAR }}`的内容，不再做进一步的替换。
 
 
@@ -49,12 +49,41 @@ categories: algorithm
 
 - 样例输入
 
-![](http://peihao.space/img/article/ccf2.1.png)
+```html
+11 2
+< !DOCTYPE html>
+< html>
+< head>
+< title>User {{ name }}</title>
+< /head>
+< body>
+< h1>{{ name }}</h1>
+< p>Email: <a href="mailto:{{ email }}">{{ email }}</a></p>
+< p>Address: {{ address }}</p>
+< /body>
+< /html>
+name "David Beckham"
+email "david@beckham.com"
+```
+
 
 
 - 样例输出
  
-![](http://peihao.space/img/article/ccf2.2.png)
+
+```html
+<!DOCTYPE html>
+< html>
+< head>
+< title>User David Beckham</title>
+< /head>
+< body>
+< h1>David Beckham</h1>
+< p>Email: <a href="mailto:david@beckham.com">david@beckham.com</a></p>
+< p>Address: </p>
+< /body>
+< /html>
+```
 
 - 评测用例规模与约定
 
@@ -173,15 +202,16 @@ int main()
 ## 实现 ##
 
 ```c++
-#include <cstdio>
-#include <cstring>
-#include <algorithm>
+#include <iostream>
+#include <string.h>
+#include <stdio.h>
 #include <vector>
 #include <stack>
 using namespace std;
+#define maxn 10005
 
-const int maxn = 10005;
-int n, m;
+vector<int> G[maxn];
+stack<int> s;
 
 int dfn[maxn];
 int low[maxn];
@@ -189,64 +219,66 @@ int in_stack[maxn];
 int col_num[maxn];
 int vis[maxn];
 
-vector<int> G[maxn];
-stack<int> s;
 
 int cur_time, color;
-void tarjan(int u) {
-    dfn[u] = low[u] = ++ cur_time;
+void tarjan(int u){
+    dfn[u]=low[u]=cur_time++;
     s.push(u);
-    in_stack[u] = 1;
-    vis[u] = 1;
+    in_stack[u]=1;
+    vis[u]=1;
 
-    int d = G[u].size();
-    for(int i = 0; i < d; i ++) {
-        int v = G[u][i];
-        if(!vis[v]) {
+    int d=G[u].size();
+    for(int i=0;i<d;i++){
+        int v=G[u][i];
+        if(!vis[v]){
+		//防止v是之前已被访问过、但已出栈，所以不使用in_stack，因为不可能跟
+		//上述情况的v节点构成强连通分量
             tarjan(v);
-            low[u] = min(low[u], low[v]);
+            low[u]=min(low[u],low[v]);
         }
-        else if(in_stack[v] == 1) {
-            low[u] = min(low[u], dfn[v]);
+        else if(in_stack[v]){
+		//强连通分量必定是相邻的，一起在栈中
+            low[u]=min(low[u],dfn[v]);
         }
     }
 
-    if(dfn[u] == low[u]) {
-        color ++;
+    if(dfn[u]==low[u]){
+        color++;
         int v;
-        do {
-            v = s.top();
+        do{
+            v=s.top();
             s.pop();
-            in_stack[v] = 0;
-            col_num[color] ++;
-        } while(v != u);
+            in_stack[v]=0;
+            col_num[color]++;
+        }while(u!=v);
     }
 }
 
-int main() {
-    while(scanf("%d %d", &n, &m) != EOF) {
-        for(int i = 0; i < m; i ++) {
-            int u, v;
-            scanf("%d %d", &u, &v);
+int main()
+{
+    int n,m;
+    while(scanf("%d %d",&n,&m)!=EOF){
+        for(int i=0;i<m;i++){
+            int u,v;
+            scanf("%d %d",&u,&v);
             G[u].push_back(v);
         }
-        while(!s.empty()) s.pop();
+        while(!s.empty())s.pop();
+        cur_time=0;
+        color=0;
         memset(col_num, 0, sizeof(col_num));
         memset(in_stack, 0, sizeof(in_stack));
         memset(vis, 0, sizeof(vis));
-        cur_time = 0, color = 0;
-        for(int i = 1; i <= n; i ++) {
-            if(!vis[i]) tarjan(i);
+        for(int i=1;i<=n;i++){
+            if(!vis[i])tarjan(i);
         }
-
-        int ans = 0;
-        for(int i = 1; i <= color; i ++) {
-            if(col_num[i] > 1) {
-                 int x = col_num[i];
-                 ans += (x * (x - 1) / 2);
+        int res=0;
+        for(int i=1;i<=color;i++){
+            if(col_num[i]>1){
+                res+=(col_num[i]*(col_num[i]-1))/2;
             }
         }
-        printf("%d\n", ans);
+        cout<<res<<endl;
     }
     return 0;
 }
