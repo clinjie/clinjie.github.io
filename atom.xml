@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peihao.space/"/>
-  <updated>2016-07-09T15:39:19.088Z</updated>
+  <updated>2016-07-10T08:47:49.673Z</updated>
   <id>http://peihao.space/</id>
   
   <author>
@@ -14,6 +14,146 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Matlab学习(五)</title>
+    <link href="http://peihao.space/2016/07/11/matlab5/"/>
+    <id>http://peihao.space/2016/07/11/matlab5/</id>
+    <published>2016-07-11T04:24:06.000Z</published>
+    <updated>2016-07-10T08:47:49.673Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;绘图&quot;&gt;绘图&lt;/h1&gt;&lt;h2 id=&quot;单变量函数&quot;&gt;单变量函数&lt;/h2&gt;&lt;p&gt;在 MATLAB 中绘图包含下面三个步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;定义函数&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;指定要绘制的函数图形的值范围&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;调用 MATLAB 的 plot(x, y)函数&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;当指定函数的值范围时，我们必须告诉 MATLAB 函数使用的变量的增量。使用较少的增量可以使得图形显示更加平滑。如果增量较小，MATLAB 会计算更多的函数值，不过通常不需要取得那么小。我们用一个简单的例子来看看如何做。&lt;/p&gt;
+&lt;p&gt;我们绘制 0≤x≤10 之间的 y = cos(x)的图形。绘制之前，我们要定义这个区间并告诉&lt;br&gt;MATLAB 我们所使用的增量。区间使用方括号[]以下面的形式定义：&lt;br&gt;&lt;code&gt;[ start : interval : end ]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;例如，如果我们要告诉 MATLAB 在 0≤x≤10 上以 0.1 的增量（间隔）递增，我们输入：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;[0:0.1:10]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;用赋值运算符给这个范围内的变量一个名称，也用这种办法告知 MATLAB 相关变量和我们要绘制的函数。因此，要绘制 y = cos(x)，我们输入下面的命令：&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; x = [&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0.1&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;*pi];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; y = &lt;span class=&quot;built_in&quot;&gt;cos&lt;/span&gt;(x);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意我们每行都以分号“;”结尾，记住，这会抑制 MATLAB 输出。你不会想让 MATLAB&lt;br&gt;在屏幕中间输出一大串 x 值，因此使用了分号。现在我们可以输入下面的命令绘图了：&lt;br&gt;&lt;code&gt;&amp;gt;&amp;gt; plot(x, y), xlabel(&amp;#39;x&amp;#39;), ylabel(&amp;#39;cos(x)&amp;#39;)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://peihao.space/img/article/matlab/matlab_s005.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;fplot&quot;&gt;fplot&lt;/h2&gt;&lt;p&gt;上面的例子只是简单的提供了一种图形曲线画法函数，然而当我们遇到需要多个包含变量的函数进行乘除运算时，就会出现：&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; t = [&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;0.02&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; f = &lt;span class=&quot;built_in&quot;&gt;exp&lt;/span&gt;(-&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;*t)*&lt;span class=&quot;built_in&quot;&gt;sin&lt;/span&gt;(t);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Error &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt;  * &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Inner matrix dimensions must agree.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; f=&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;*&lt;span class=&quot;built_in&quot;&gt;sin&lt;/span&gt;(t);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; f=&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;*&lt;span class=&quot;function&quot;&gt;x*&lt;span class=&quot;title&quot;&gt;sin&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(t)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Error &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt;  * &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Inner matrix dimensions must agree.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;为什么会出现这种情况呢？在Matlab中，x是一个[0:0.02:4]的矩阵，同样sin(x)也是一个矩阵。&lt;code&gt;*&lt;/code&gt;是矩阵乘法operator。x是一个长度为200的矩阵，sin(x)也是如此。也就是说，x和sin(x)都是1*200的矩阵，这在矩阵乘法中显然是无法进行的。所以提醒&lt;code&gt;Inner matrix dimensions must agree&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;此时我们可以使用dot乘，对应元素分别相乘。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;exp(-2*x).*sin(x)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;或者使用&lt;code&gt;fplot&lt;/code&gt;函数：&lt;/p&gt;
+&lt;figure class=&quot;highlight vbnet&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; help fplot&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; fplot   Plot &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    fplot(FUN,LIMS) plots the &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; FUN between the x-axis limits&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    specified &lt;span class=&quot;keyword&quot;&gt;by&lt;/span&gt; LIMS = [XMIN XMAX]. &lt;span class=&quot;keyword&quot;&gt;Using&lt;/span&gt; LIMS = [XMIN XMAX YMIN YMAX]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    also controls the y-axis limits. FUN(x) must &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; a row vector &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;each&lt;/span&gt; element &lt;span class=&quot;keyword&quot;&gt;of&lt;/span&gt; vector x. &lt;span class=&quot;keyword&quot;&gt;For&lt;/span&gt; example, &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; FUN returns&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    [f1(x),f2(x),f3(x)] &lt;span class=&quot;keyword&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; input [x1;x2] FUN should &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;       [f1(x1) f2(x1) f3(x1);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        f1(x2) f2(x2) f3(x2)]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    fplot(FUN,LIMS,TOL) &lt;span class=&quot;keyword&quot;&gt;with&lt;/span&gt; TOL &amp;lt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; specifies the relative &lt;span class=&quot;keyword&quot;&gt;error&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    tolerance. The &lt;span class=&quot;keyword&quot;&gt;default&lt;/span&gt; TOL &lt;span class=&quot;keyword&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;2e-3&lt;/span&gt;, i.e. &lt;span class=&quot;number&quot;&gt;0.2&lt;/span&gt; percent accuracy.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    fplot(FUN,LIMS,N) &lt;span class=&quot;keyword&quot;&gt;with&lt;/span&gt; N &amp;gt;= &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; plots the &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;with&lt;/span&gt; a minimum &lt;span class=&quot;keyword&quot;&gt;of&lt;/span&gt; N+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    points. The &lt;span class=&quot;keyword&quot;&gt;default&lt;/span&gt; N &lt;span class=&quot;keyword&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1.&lt;/span&gt; The maximum &lt;span class=&quot;keyword&quot;&gt;step&lt;/span&gt; size &lt;span class=&quot;keyword&quot;&gt;is&lt;/span&gt; restricted &lt;span class=&quot;keyword&quot;&gt;to&lt;/span&gt; be&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    (&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;/N)*(XMAX-XMIN).&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    fplot(FUN,LIMS,&lt;span class=&quot;comment&quot;&gt;&#39;LineSpec&#39;) plots with the given line specification.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    fplot(FUN,LIMS,...) accepts combinations &lt;span class=&quot;keyword&quot;&gt;of&lt;/span&gt; the &lt;span class=&quot;keyword&quot;&gt;optional&lt;/span&gt; arguments&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    TOL, N, &lt;span class=&quot;keyword&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;&#39;LineSpec&#39;, in any order.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    [X,Y] = fplot(FUN,LIMS,...) returns X &lt;span class=&quot;keyword&quot;&gt;and&lt;/span&gt; Y such that Y = FUN(X). No&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    plot &lt;span class=&quot;keyword&quot;&gt;is&lt;/span&gt; drawn &lt;span class=&quot;keyword&quot;&gt;on&lt;/span&gt; the screen.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    fplot(AX,...) plots &lt;span class=&quot;keyword&quot;&gt;into&lt;/span&gt; AX instead &lt;span class=&quot;keyword&quot;&gt;of&lt;/span&gt; GCA.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;fplot 为你产生尽可能精确的的图象，同时它也帮助我们绕过像这样的错误。调用 fplot 的形式如&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;fplot(&amp;#39;function string&amp;#39;, [xstart, xend])&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;参数 function string 告诉 fplot 你所要绘制的图象函数，而 xstart 和 xend 定义了函数的区间。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;gt;&amp;gt; fplot(&amp;#39;exp(-2*t)*sin(t)&amp;#39;,[0, 4]), xlabel(&amp;#39;t&amp;#39;), ylabel(&amp;#39;f(t)&amp;#39;),title(&amp;#39;阻尼弹力&amp;#39;)&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id=&quot;多个函数&quot;&gt;多个函数&lt;/h1&gt;&lt;p&gt;Matlab支持多个函数在一张图表中显示：&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; t = [0:0.01:5];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% 接着我们定义两个函数&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; f = exp(-t);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; g = exp(-2*t);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plot(t,f,t,g,&#39;--&#39;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;上面的例子告诉Matlab要绘制 f(t)和 g(t)函数，并且第二个函数曲线使用虚线。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;实线  ‘-‘&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;虚线  ‘–’&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;虚点线 ‘-.’&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;点线  ‘:’&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;&amp;gt;&amp;gt; plot(t,f,&amp;#39;:&amp;#39;,t,g,&amp;#39;--&amp;#39;)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://peihao.space/img/article/matlab/matlab_s006.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;添加图例&quot;&gt;添加图例&lt;/h2&gt;&lt;p&gt;专业的图象总是附有图例，告诉读者某个曲线是什么。在下面的例子中，假设我们要绘制两个表示势能的函数，它们由双曲三角函数 sinh(x)和 cosh(x)定义，定义域为 0≤x≤2。首先我们定义x：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;gt;&amp;gt; x = [0:0.01:2];&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;现在我们定义这两个函数，在 MATLAB 中把函数称为 y 并不是什么不可思议的事，所以我们把第二个函数称为 z，因此有：&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; y = &lt;span class=&quot;built_in&quot;&gt;sinh&lt;/span&gt;(x);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; z = &lt;span class=&quot;built_in&quot;&gt;cosh&lt;/span&gt;(x);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;legend 命令用起来很简单。只需把它加在 plot(x,y)命令后面，并用单引号把要添加为图例的文本引起来。在这个例子中我们有：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;legend(&amp;#39;sinh(x)&amp;#39;,&amp;#39;cosh(x)&amp;#39;)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;我们只需把这一行添加到 plot 命令后面。在这个例子中，我们还包含 x 和 y 标签，第一条曲线用实线而第二条曲线用虚点线：&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; plot(x,y,x,z,&#39;-.&#39;), xlabel(&#39;x&#39;), ylabel(&#39;Potential&#39;), legend(&#39;sinh(x)&#39;,&#39;cosh(x)&#39;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&quot;http://peihao.space/img/article/matlab/matlab_s006.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;颜色设置&quot;&gt;颜色设置&lt;/h2&gt;&lt;p&gt;相比其他类似的开发工具，Matlab画图是也同样支持设置图像颜色。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;plot(x,y,&amp;#39;r&amp;#39;,x,z,&amp;#39;b--&amp;#39;)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;上面的代码代表第一个函数为红色，第二个以虚线填充的函数为蓝色。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;白色  w&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;黑色  k&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;蓝色  b&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;红色  r&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;青色  c&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;绿色  g&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;洋红  m&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;蓝色  y&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;设置坐标比例&quot;&gt;设置坐标比例&lt;/h2&gt;&lt;p&gt;axis命令可以设置绘图范围。通过用下面的方式调用 axis 命令：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;axis ([xmin xmax ymin ymax])&lt;/code&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;绘图&quot;&gt;绘图&lt;/h1&gt;&lt;h2 id=&quot;单变量函数&quot;&gt;单变量函数&lt;/h2&gt;&lt;p&gt;在 MATLAB 中绘图包含下面三个步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;定义函数&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;指定要绘制的函数图形的值范围&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;调用 MATLAB 的 plot(x, y)函数&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+      <category term="matlab" scheme="http://peihao.space/categories/matlab/"/>
+    
+    
+      <category term="matlab" scheme="http://peihao.space/tags/matlab/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Matlab学习(四)</title>
+    <link href="http://peihao.space/2016/07/10/matlab4/"/>
+    <id>http://peihao.space/2016/07/10/matlab4/</id>
+    <published>2016-07-10T04:24:06.000Z</published>
+    <updated>2016-07-10T08:56:49.202Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;矩阵&quot;&gt;矩阵&lt;/h1&gt;&lt;p&gt;矩阵是两维数字数组，要在 MATLAB 创建矩阵，输入的行各元素之间用空格或逗号分隔，行末使用分号标记。&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; A = [-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;; &lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;A =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; B = [&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;; &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;B =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;转置&quot;&gt;转置&lt;/h2&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; A = [-1 2 0; 6 4 1]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;A =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	-1 2 0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	6 4 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; B = A&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;B =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	-1 6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	2 4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	0 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% 如果矩阵包含有复数元素，那么转置操作会自动计算复数的共轭值：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; C = [1+i, 4-i; 5+2*i, 3-3*i]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;C =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	1.0000 + 1.0000i 4.0000 - 1.0000i&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	5.0000 + 2.0000i 3.0000 - 3.0000i&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; D = C&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;D =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	1.0000 - 1.0000i 5.0000 - 2.0000i&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	4.0000 + 1.0000i 3.0000 + 3.0000i&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% 如果要转置复数矩阵的而不计算它的共轭值，那么我们使用（.&#39;）&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; D = C.&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;D =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	1.0000 + 1.0000i 5.0000 + 2.0000i&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	4.0000 - 1.0000i 3.0000 - 3.0000i&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;乘法&quot;&gt;乘法&lt;/h2&gt;&lt;p&gt;与数组类似，矩阵的乘法同样分为两种：&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; A = [&lt;span class=&quot;number&quot;&gt;12&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;; -&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;]; B = [&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;; &lt;span class=&quot;number&quot;&gt;9&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; C = A .* B&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;C =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;48&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	-&lt;span class=&quot;number&quot;&gt;9&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; A = [&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;]; B = [&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;; &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt;&amp;gt; A * B&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ans =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;11&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;14&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;13&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;16&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; A = [&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;; &lt;span class=&quot;number&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; -&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;]; B = [-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;; &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; -&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; C = A*B&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;C =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;11&lt;/span&gt; -&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	-&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;56&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt; -&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; -&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;特殊矩阵&quot;&gt;特殊矩阵&lt;/h2&gt;&lt;p&gt;单元矩阵是一个对角线为非零元素其它元素为零的方形矩阵。要创建 n×n 的单元矩阵，输入下面的 MATLAB 命令：&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; eye(&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ans =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;下面是创建全0或者全1的矩阵操作：&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; zeros(&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ans =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; zeros(&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ans =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; ones(&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ans =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; ones(&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ans =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;矩阵引用&quot;&gt;矩阵引用&lt;/h1&gt;&lt;p&gt;在 MATLAB 中，矩阵的单个元素或整列都能够被引用。考虑下面的矩阵：&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; A = [&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;; &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;; &lt;span class=&quot;number&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;9&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;A =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;9&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% 单元素选择&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; A(&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ans =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% 列元素选择&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; A(:,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ans =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% 行元素选择&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; A(&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,:)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ans=&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; A(:,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ans =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;9&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; E = A([&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;],:)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;E =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;矩阵&quot;&gt;矩阵&lt;/h1&gt;&lt;p&gt;矩阵是两维数字数组，要在 MATLAB 创建矩阵，输入的行各元素之间用空格或逗号分隔，行末使用分号标记。&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; A = [-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;; &lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;A =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt; B = [&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;; &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;B =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="matlab" scheme="http://peihao.space/categories/matlab/"/>
+    
+    
+      <category term="matlab" scheme="http://peihao.space/tags/matlab/"/>
+    
+  </entry>
   
   <entry>
     <title>Matlab学习(三)</title>
@@ -537,6 +677,32 @@
   </entry>
   
   <entry>
+    <title>属于你的文件</title>
+    <link href="http://peihao.space/2016/05/18/xdy/"/>
+    <id>http://peihao.space/2016/05/18/xdy/</id>
+    <published>2016-05-18T08:59:35.000Z</published>
+    <updated>2016-05-22T13:27:51.062Z</updated>
+    
+    <content type="html">&lt;p&gt;六层空间的叠叠瓦瓦，11月8小时的温柔似玉&lt;/p&gt;
+&lt;p&gt;念念忘忘的油纸伞片，27度6分钟的暖暖如花&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;六层空间的叠叠瓦瓦，11月8小时的温柔似玉&lt;/p&gt;
+&lt;p&gt;念念忘忘的油纸伞片，27度6分钟的暖暖如花&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="随感" scheme="http://peihao.space/categories/%E9%9A%8F%E6%84%9F/"/>
+    
+    
+      <category term="随感" scheme="http://peihao.space/tags/%E9%9A%8F%E6%84%9F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>VS连接Sql Server</title>
     <link href="http://peihao.space/2016/05/18/vs%E8%BF%9E%E6%8E%A5sqlserver/"/>
     <id>http://peihao.space/2016/05/18/vs连接sqlserver/</id>
@@ -580,32 +746,6 @@
     
     
       <category term="C#" scheme="http://peihao.space/tags/C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>属于你的文件</title>
-    <link href="http://peihao.space/2016/05/18/xdy/"/>
-    <id>http://peihao.space/2016/05/18/xdy/</id>
-    <published>2016-05-18T08:59:35.000Z</published>
-    <updated>2016-05-22T13:27:51.062Z</updated>
-    
-    <content type="html">&lt;p&gt;六层空间的叠叠瓦瓦，11月8小时的温柔似玉&lt;/p&gt;
-&lt;p&gt;念念忘忘的油纸伞片，27度6分钟的暖暖如花&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;六层空间的叠叠瓦瓦，11月8小时的温柔似玉&lt;/p&gt;
-&lt;p&gt;念念忘忘的油纸伞片，27度6分钟的暖暖如花&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="随感" scheme="http://peihao.space/categories/%E9%9A%8F%E6%84%9F/"/>
-    
-    
-      <category term="随感" scheme="http://peihao.space/tags/%E9%9A%8F%E6%84%9F/"/>
     
   </entry>
   
@@ -1126,207 +1266,6 @@
     
     
       <category term="python" scheme="http://peihao.space/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>基于Xilinx的Synthesize</title>
-    <link href="http://peihao.space/2016/04/18/ise-synthesize/"/>
-    <id>http://peihao.space/2016/04/18/ise-synthesize/</id>
-    <published>2016-04-18T06:17:22.000Z</published>
-    <updated>2016-04-18T13:06:11.753Z</updated>
-    
-    <content type="html">&lt;p&gt;所谓综合，就是讲HDL语言、原理图等设计输入翻译成由与、或、非们和RAM、触发器登记本逻辑单元的逻辑连接（即网表）。并根据目标和要求（约束条件）优化生成的逻辑连接。&lt;/p&gt;
-&lt;h1 id=&quot;ISE-XST&quot;&gt;ISE-XST&lt;/h1&gt;&lt;p&gt;XST是Xilinx公司自己的综合（Synthsize）工具。当我们完成输入、仿真以及管脚分配之后就可以进行综合和实现。&lt;/p&gt;
-&lt;p&gt;双击Synthesize-XST，就可以完成综合。一般而言，会有三种结果：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;仿真完成&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Warn警告&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;ERROR错误&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Warn会在Synthesize-XST出现黄色警示，而Error有红色标识。&lt;/p&gt;
-&lt;p&gt;综合完成之后可以通过使用XST的&lt;code&gt;View RTLSchematics&lt;/code&gt;工具查看RTL级结构图。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/adder-RTL.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;Synthesize_Proprtties&quot;&gt;Synthesize Proprtties&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;[Optimization Goal]：优化的目标。该参数决定了综合工具对设计进行优化时，是以面积还是以速度作为优先原则。面积优先原则可以节省器件内部的逻辑资源，即尽可能地采用串行逻辑结构，但这是以牺牲速度为代价的。而速度优先原则保证了器件的整体工作速度，即尽可能地采用并行逻辑结构，但这样将会浪费器件内部大量的逻辑资源，因此，它是以牺牲逻辑资源为代价的。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Optimization Effort]：优化器努力程度。这里有[normal]和[high]两种选择方式。对于[normal]，优化器对逻辑设计仅仅进行普通的优化处理，其结果可能并不是最好的，但是综合和优化流程执行地较快。如果选择[high]，优化器对逻辑设计进行反复的优化处理和分析，并能生成最理想的综合和优化结果，在对高性能和最终的设计通常采用这种模式；当然在综合和优化时，需要的时间较长。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Use Synthesis Constraints File]：使用综合约束文件。如果选择了该选项，那么综合约束文件XCF有效。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Synthesis Constraints File]：综合约束文件。该选项用于指定XST综合约束文件XCF的路径。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Global Optimization Goal]：全局优化目标。可以选择的属性包括有[AllClockNets]、[Inpad To Outpad]、[Offest In Before]、[Offest Out After]、[Maximm Delay]。该参数仅对FPGA器件有效，可用于选择所设定的寄存器之间、输入引脚到寄存器之间、寄存器到输出引脚之间，或者是输入引脚到输出引脚之间逻辑的优化策略。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Generate RTL Schematic]：生成寄存器传输级视图文件。该参数用于将综合结果生成RTL视图。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Write Timing Constraints]：写时序约束。该参数仅对FPGA有效，用来设置是否将HDL源代码中用于控制综合的时序约束传给NGC网表文件，该文件用于布局和布线。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;HDL语言选项&quot;&gt;HDL语言选项&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;[FSM Encoding Algorithm]：有限状态机编码算法。该参数用于指定有限状态机的编码方式。选项有[Auto]、[One-Hot]、[Compact]、[Sequential]、[Gray]、[Johnson]、[User]、[Speed1]、[None]编码方式，默认为[Auto]编码方式。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Safe Implementation]：将添加安全模式约束来实现有限状态机，将添加额外的逻辑将状态机从无效状态调转到有效状态，否则只能复位来实现，有[Yes]、[No]两种选择，默认为[No]。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Case Implementation Sytle]：条件语句实现类型。该参数用于控制XST综合工具解释和推论Verilog的条件语句。其中选项有[None]、[Full]、[Parallel]、[Full-Parallel]，默认为[None]。 对于这四种选项，区别如下：（1）[None]，XST将保留程序中条件语句的原型，不进行任何处理；（2）[Full]，XST认为条件语句是完整的，避免锁存器的产生；（3）[Parallel]，XST认为在条件语句中不能产生分支，并且不使用优先级编码器；（4）[Full-Parallel]，XST认为条件语句是完整的，并且在内部没有分支，不使用锁存器和优先级编码器。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[RAM Extraction]：存储器扩展。该参数仅对FPGA有效，用于使能和禁止RAM宏接口。默认为允许使用RAM宏接口。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[RAM Style]：RAM实现类型。该参数仅对FPGA有效，用于选择是采用块RAM还是分布式RAM来作为RAM的实现类型。默认为 [Auto]。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[ROM Extraction]：只读存储器扩展。该参数仅对FPGA有效，用于使能和禁止只读存储器ROM宏接口。默认为允许使用ROM宏接口。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[ROM Style]：ROM实现类型。该参数仅对FPGA有效，用于选择是采用块RAM还是分布式RAM来作为ROM的实现和推论类型。默认为[Auto]。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Mux Extraction]：多路复用器扩展。该参数用于使能和禁止多路复用器的宏接口。根据某些内定的算法，对于每个已识别的多路复用/选择器，XST能够创建一个宏，并进行逻辑的优化。可以选择[Yes]、[No]和[Force]中的任何一种，默认为[Yes]。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Mux Style]：多路复用实现类型。该参数用于胃宏生成器选择实现和推论多路复用/选择器的宏类型。可以选择[Auto]、[MUXF]和[MUXCY]中的任何一种，默认为[Auto]。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Decoder Extraction]：译码器扩展。该参数用于使能和禁止译码器宏接口，默认为允许使用该接口。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Priority Encoder Extraction]：优先级译码器扩展。该参数用于指定是否使用带有优先级的编码器宏单元。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Shift Register Extraction]：移位寄存器扩展。该参数仅对FPGA有效，用于指定是否使用移位寄存器宏单元。默认为使能。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Logical Shifter Extraction]：逻辑移位寄存器扩展。该参数仅对FPGA有效，用于指定是否使用逻辑移位寄存器宏单元。默认为使能。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[XOR Collapsing]：异或逻辑合并方式。该参数仅对FPGA有效，用于指定是否将级联的异或逻辑单元合并成一个大的异或宏逻辑结构。默认为使能。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Resource Sharing]：资源共享。该参数用于指定在XST综合时，是否允许复用一些运算处理模块，如加法器、减法器、加/减法器和乘法器。默认为使能。如果综合工具的选择是以速度为优先原则的，那么就不考虑资源共享。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Multiplier Style]：乘法器实现类型。该参数仅对FPGA有效，用于指定宏生成器使用乘法器宏单元的方式。选项有[Auto]、Block]、[LUT]和[Pipe_LUT]。默认为[Auto]。选择的乘法器实现类型和所选择的器件有关。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;特殊选项&quot;&gt;特殊选项&lt;/h1&gt;&lt;p&gt;Xilinx特殊选项用于将用户逻辑适配到Xilinx芯片的特殊结构中，不仅能节省资源，还能提高设计的工作频率&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;[Add I/O Buffers]：插入I/O缓冲器。该参数用于控制对所综合的模块是否自动插入I/O缓冲器。默认为自动插入。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Max Fanout]：最大扇出数。该参数用于指定信号和网线的最大扇出数。这里扇出数的选择与设计的性能有直接的关系，需要用户合理选择。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Register Duplication]：寄存器复制。该参数用于控制是否允许寄存器的复制。对于高扇出和时序不能满足要求的寄存器进行复制，可以减少缓冲器输出的数目以及逻辑级数，改变时序的某些特性，提高设计的工作频率。默认为允许寄存器复制。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Equivalent Register Removal]：等效寄存器删除。该参数用于指定是否把寄存器传输级功能等效的寄存器删除，这样可以减少寄存器资源的使用。如果某个寄存器是用Xilinx的硬件原语指定的，那么就不会被删除。默认为使能。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Register Balancing]：寄存器配平。该参数仅对FPGA有效，用于指定是否允许平衡寄存器。可选项有[No]、[Yes]、    [Forward]和[Backward]。采用寄存器配平技术，可以改善某些设计的时序条件。其中，[Forward]为前移寄存器配平，[Backward]为后移寄存器配平。采用寄存器配平后，所用到的寄存器数就会相应地增减。默认为寄存器不配平。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Move First Flip-Flop Stage]：移动前级寄存器。该参数仅对FPGA有效，用于控制在进行寄存器配平时，是否允许移动前级寄存器。如果[Register Balancing]的设置为[No]，那么该参数的设置无效。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Move Last Flip-Flop Stage]：移动后级寄存器。该参数仅对FPGA有效，用于控制在进行寄存器配平时，是否允许移动后级寄存器。如果[Register Balancing]的设置为[No]，那么该参数的设置无效。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Pack I/O Registers into IOBs]：I/O寄存器置于输入输出块。该参数仅对FPGA有效，用于控制是否将逻辑设计中的寄存器用IOB内部寄存器实现。在Xilinx系列FPGA的IOB中分别有输入和输出寄存器。如果将设计中的第一级寄存器或最后一级寄存器用IOB内部寄存器实现，那么就可以缩短IO引脚到寄存器之间的路径，这通常可以缩短大约1~2ns的传输时延。默认为[Auto]。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Slice Packing]：优化Slice结构。该参数仅对FPGA有效，用于控制是否将关键路径的查找表逻辑尽量配置在同一个Slice或者CLB模块中，由此来缩短LUT之间的布线。这一功能对于提高设计的工作频率、改善时序特性是非常有用的。 默认为允许优化Slice结构。 &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;[Optimize Instantiated Primitives]：优化已例化的原语。该参数控制是否需要优化在HDL代码中已例化的原语。默认为不优化。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;以上三个部分分别用于设置综合的全局目标和整体策略、HDL硬件语法规则以及Xilinx特有的结构属性。&lt;/strong&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;所谓综合，就是讲HDL语言、原理图等设计输入翻译成由与、或、非们和RAM、触发器登记本逻辑单元的逻辑连接（即网表）。并根据目标和要求（约束条件）优化生成的逻辑连接。&lt;/p&gt;
-&lt;h1 id=&quot;ISE-XST&quot;&gt;ISE-XST&lt;/h1&gt;&lt;p&gt;XST是Xilinx公司自己的综合（Synthsize）工具。当我们完成输入、仿真以及管脚分配之后就可以进行综合和实现。&lt;/p&gt;
-&lt;p&gt;双击Synthesize-XST，就可以完成综合。一般而言，会有三种结果：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;仿真完成&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Warn警告&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;ERROR错误&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Warn会在Synthesize-XST出现黄色警示，而Error有红色标识。&lt;/p&gt;
-&lt;p&gt;综合完成之后可以通过使用XST的&lt;code&gt;View RTLSchematics&lt;/code&gt;工具查看RTL级结构图。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/adder-RTL.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Verilog" scheme="http://peihao.space/categories/Verilog/"/>
-    
-    
-      <category term="Verilog" scheme="http://peihao.space/tags/Verilog/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>verilog过程块与赋值</title>
-    <link href="http://peihao.space/2016/04/18/verilog-setvalue/"/>
-    <id>http://peihao.space/2016/04/18/verilog-setvalue/</id>
-    <published>2016-04-18T06:17:22.000Z</published>
-    <updated>2016-04-18T13:05:56.736Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;过程块&quot;&gt;过程块&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;always过程块&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;模板：&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;always @(&amp;lt;敏感信号表达式&amp;gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//过程赋值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//if语句	&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//case语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//while、repeat、for语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//task、function调用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;当敏感信号表达式的值改变时候，就执行一遍块内语句。同时always过程块是不能够嵌套使用的。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;关键字&lt;/strong&gt;&lt;code&gt;posedge&lt;/code&gt;与&lt;code&gt;negedge&lt;/code&gt;关键字分别是上升沿以及下降沿&lt;/p&gt;
-&lt;p&gt;例如：同步时序电路的时钟信号为clk，clear为异步清零信号。敏感信号可写为：&lt;/p&gt;
-&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//上升沿触发，高电平清0有效&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clear)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//上升沿触发，低电平清0有效&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;negedge&lt;/span&gt; clear)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;例如当&lt;code&gt;negedge clear&lt;/code&gt;表示当&lt;code&gt;clear==0&lt;/code&gt;时&lt;/p&gt;
-&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;negedge&lt;/span&gt; clear)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;!&lt;/span&gt;clear)&lt;span class=&quot;comment&quot;&gt;//当clear==0时候，always会由事件驱动&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			qout&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			qout&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;in;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ol&gt;
-&lt;li&gt;initial过程块&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;initial模板：&lt;/p&gt;
-&lt;figure class=&quot;highlight erlang&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;initial&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	语句&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	语句&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	......&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;对变量和存贮器初始化&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;initial&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	reg1=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(addr=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;addr&amp;lt;size;addr=addr+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		memory[addr]=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;initial语句主要面向功能模拟，通常不具有可综合性。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;模拟0时刻开始执行，只执行一次&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;同一模块内的多个initial过程块，模拟0时刻开始并行执行。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;initial与always语句一样，是不能嵌套使用的。即在initial语句中不能再次嵌套initial语句块。&lt;/p&gt;
-&lt;h1 id=&quot;连续赋值&quot;&gt;连续赋值&lt;/h1&gt;&lt;p&gt;用连续赋值语句表达的是： &lt;code&gt;assign val=newval;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;任何一个输入的改变都将立即导致输出更新；&lt;/p&gt;
-&lt;figure class=&quot;highlight stata&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;module orand(&lt;span class=&quot;keyword&quot;&gt;out&lt;/span&gt;,a,b,c,&lt;span class=&quot;keyword&quot;&gt;d&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;e&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;input&lt;/span&gt; a,b,c,&lt;span class=&quot;keyword&quot;&gt;d&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;e&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	output &lt;span class=&quot;keyword&quot;&gt;out&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	assign &lt;span class=&quot;keyword&quot;&gt;out&lt;/span&gt;=3&amp;amp;(a|b)&amp;amp;(c|&lt;span class=&quot;keyword&quot;&gt;d&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h1 id=&quot;过程赋值语句&quot;&gt;过程赋值语句&lt;/h1&gt;&lt;p&gt;过程赋值语句常用于对reg变量进行赋值。一般分为两种，&lt;em&gt;阻塞赋值&lt;/em&gt;与&lt;em&gt;非阻塞赋值&lt;/em&gt;&lt;/p&gt;
-&lt;h2 id=&quot;阻塞与非阻塞赋值&quot;&gt;阻塞与非阻塞赋值&lt;/h2&gt;&lt;p&gt;赋值的类型选择取决于建模的逻辑类型。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;在时序块的RTL代码中使用&lt;em&gt;非阻塞赋值&lt;/em&gt;&lt;code&gt;&amp;lt;=&lt;/code&gt;。非阻塞赋值在块结束后才完成赋值操作。此赋值方式可以避免在仿真出现魔仙和竞争现象。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;在组合的RTL代码中使用&lt;em&gt;阻塞赋值&lt;/em&gt;&lt;code&gt;=&lt;/code&gt;。使用阻塞赋值方式对一个变量进行赋值时，此变量的值在赋值语句执行完后才能之后就立即改变。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;compare&quot;&gt;compare&lt;/h2&gt;&lt;p&gt;使用非阻塞赋值方式进行赋值时，各个赋值语句同步执行；因此通常在一个时钟沿对临时变量进行赋值，而在另一个时钟沿对其进行采样。因为在相同的时钟沿采样赋值，采样的还是原来的值，赋值操作是在块结束时进行。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;阻塞赋值&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;下面模块会综合成为触发器&lt;/p&gt;
-&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; block(clk,a,b);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;input&lt;/span&gt; clk,a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;output&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;typename&quot;&gt;reg&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		y&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		b&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;y;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;非阻塞赋值&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;下面的模块会综合成两个触发器&lt;/p&gt;
-&lt;figure class=&quot;highlight verilog&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; block(clk,a,b);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;input&lt;/span&gt; clk,a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;output&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;typename&quot;&gt;reg&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;always&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;@&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;posedge&lt;/span&gt; clk)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		y&lt;span class=&quot;keyword&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		b&lt;span class=&quot;keyword&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;=&lt;/span&gt;y;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;img src=&quot;\img\article\ise\block-unblock-setvalue.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;上图左侧是阻塞赋值的综合结果，右侧则为非阻塞赋值。相比左侧，右侧的例子会造成一个时钟周期的延迟。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;过程块&quot;&gt;过程块&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;always过程块&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;模板：&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;always @(&amp;lt;敏感信号表达式&amp;gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//过程赋值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//if语句	&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//case语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//while、repeat、for语句&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//task、function调用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;end&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;当敏感信号表达式的值改变时候，就执行一遍块内语句。同时always过程块是不能够嵌套使用的。
-    
-    </summary>
-    
-      <category term="Verilog" scheme="http://peihao.space/categories/Verilog/"/>
-    
-    
-      <category term="Verilog" scheme="http://peihao.space/tags/Verilog/"/>
     
   </entry>
   

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Matlab学习(五) | 窗外临街</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="绘图单变量函数在 MATLAB 中绘图包含下面三个步骤：
+
+定义函数
+
+指定要绘制的函数图形的值范围
+
+调用 MATLAB 的 plot(x, y)函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Matlab学习(五)">
+<meta property="og:url" content="http://peihao.space/2016/07/11/matlab5/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="绘图单变量函数在 MATLAB 中绘图包含下面三个步骤：
+
+定义函数
+
+指定要绘制的函数图形的值范围
+
+调用 MATLAB 的 plot(x, y)函数">
+<meta property="og:image" content="http://peihao.space/img/article/matlab/matlab_s005.png">
+<meta property="og:image" content="http://peihao.space/img/article/matlab/matlab_s006.png">
+<meta property="og:image" content="http://peihao.space/img/article/matlab/matlab_s006.png">
+<meta property="og:updated_time" content="2016-07-10T08:47:49.673Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Matlab学习(五)">
+<meta name="twitter:description" content="绘图单变量函数在 MATLAB 中绘图包含下面三个步骤：
+
+定义函数
+
+指定要绘制的函数图形的值范围
+
+调用 MATLAB 的 plot(x, y)函数">
+  
+    <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a706fa9fd732d608b9ad7e589d371545";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="baidu_js_push">
+	<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</div>
+<div class="overlay"> 
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div align="left" style="margin-top:6px;">
+<p style="color:#cccc99;font-size:90%">您好，培豪的第<span id="busuanzi_value_site_uv"></span>个小伙伴</p>
+</div>
+</div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">培豪</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/album">相册</a></li>
+				        
+							<li><a href="/atom.xml">Rss</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 11.25px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 12.5px;">Front End</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Gulp/" style="font-size: 10px;">Gulp</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/ISE/" style="font-size: 10px;">ISE</a> <a href="/tags/JQuery/" style="font-size: 11.25px;">JQuery</a> <a href="/tags/NoC/" style="font-size: 13.75px;">NoC</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Python/" style="font-size: 18.75px;">Python</a> <a href="/tags/Requests/" style="font-size: 12.5px;">Requests</a> <a href="/tags/Router/" style="font-size: 12.5px;">Router</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/Verilog/" style="font-size: 17.5px;">Verilog</a> <a href="/tags/Verilog-HDL/" style="font-size: 15px;">Verilog HDL</a> <a href="/tags/algorithm/" style="font-size: 18.75px;">algorithm</a> <a href="/tags/android/" style="font-size: 12.5px;">android</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/front-end/" style="font-size: 10px;">front end</a> <a href="/tags/hexo优化/" style="font-size: 11.25px;">hexo优化</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/matlab/" style="font-size: 15px;">matlab</a> <a href="/tags/matplotlib/" style="font-size: 11.25px;">matplotlib</a> <a href="/tags/noc/" style="font-size: 11.25px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/re/" style="font-size: 11.25px;">re</a> <a href="/tags/router/" style="font-size: 12.5px;">router</a> <a href="/tags/torrent/" style="font-size: 11.25px;">torrent</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/verilog/" style="font-size: 10px;">verilog</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/仿真/" style="font-size: 12.5px;">仿真</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/编码/" style="font-size: 12.5px;">编码</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 12.5px;">随感</a> <a href="/tags/随笔/" style="font-size: 16.25px;">随笔</a> <a href="/tags/音乐/" style="font-size: 11.25px;">音乐</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">衣服晒干风在穿，我一个人，很简单，自己放纵自己管…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">培豪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">培豪</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/album">相册</a></li>
+		        
+					<li><a href="/atom.xml">Rss</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-matlab5" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/11/matlab5/" class="article-date">
+  	<time datetime="2016-07-11T04:24:06.000Z" itemprop="datePublished">2016-07-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Matlab学习(五)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/matlab/">matlab</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/matlab/">matlab</a>
+	</div>
+
+
+
+		
+		<div class="bookicon"></div>
+		<div class="article-hit">
+		<span id="busuanzi_container_page_pv">
+  热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+	</div>
+	
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	      	<!-- Table of Contents -->
+			
+			  <div id="toc" class="toc-article">
+			    <strong class="toc-title">文章目录</strong>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#绘图"><span class="toc-number">1.</span> <span class="toc-text">绘图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单变量函数"><span class="toc-number">1.1.</span> <span class="toc-text">单变量函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fplot"><span class="toc-number">1.2.</span> <span class="toc-text">fplot</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#多个函数"><span class="toc-number">2.</span> <span class="toc-text">多个函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#添加图例"><span class="toc-number">2.1.</span> <span class="toc-text">添加图例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#颜色设置"><span class="toc-number">2.2.</span> <span class="toc-text">颜色设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置坐标比例"><span class="toc-number">2.3.</span> <span class="toc-text">设置坐标比例</span></a></li></ol></li></ol>
+			  </div>
+			
+        <h1 id="绘图">绘图</h1><h2 id="单变量函数">单变量函数</h2><p>在 MATLAB 中绘图包含下面三个步骤：</p>
+<ol>
+<li><p>定义函数</p>
+</li>
+<li><p>指定要绘制的函数图形的值范围</p>
+</li>
+<li><p>调用 MATLAB 的 plot(x, y)函数</p>
+</li>
+</ol>
+<a id="more"></a>
+<p>当指定函数的值范围时，我们必须告诉 MATLAB 函数使用的变量的增量。使用较少的增量可以使得图形显示更加平滑。如果增量较小，MATLAB 会计算更多的函数值，不过通常不需要取得那么小。我们用一个简单的例子来看看如何做。</p>
+<p>我们绘制 0≤x≤10 之间的 y = cos(x)的图形。绘制之前，我们要定义这个区间并告诉<br>MATLAB 我们所使用的增量。区间使用方括号[]以下面的形式定义：<br><code>[ start : interval : end ]</code></p>
+<p>例如，如果我们要告诉 MATLAB 在 0≤x≤10 上以 0.1 的增量（间隔）递增，我们输入：</p>
+<p><code>[0:0.1:10]</code></p>
+<p>用赋值运算符给这个范围内的变量一个名称，也用这种办法告知 MATLAB 相关变量和我们要绘制的函数。因此，要绘制 y = cos(x)，我们输入下面的命令：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; x = [<span class="number">0</span>:<span class="number">0.1</span>:<span class="number">4</span>*pi];</span><br><span class="line">&gt;&gt; y = <span class="built_in">cos</span>(x);</span><br></pre></td></tr></table></figure>
+<p>注意我们每行都以分号“;”结尾，记住，这会抑制 MATLAB 输出。你不会想让 MATLAB<br>在屏幕中间输出一大串 x 值，因此使用了分号。现在我们可以输入下面的命令绘图了：<br><code>&gt;&gt; plot(x, y), xlabel(&#39;x&#39;), ylabel(&#39;cos(x)&#39;)</code></p>
+<p><img src="http://peihao.space/img/article/matlab/matlab_s005.png" alt=""></p>
+<h2 id="fplot">fplot</h2><p>上面的例子只是简单的提供了一种图形曲线画法函数，然而当我们遇到需要多个包含变量的函数进行乘除运算时，就会出现：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; t = [<span class="number">0</span>:<span class="number">0.02</span>:<span class="number">4</span>];</span><br><span class="line">&gt;&gt; f = <span class="built_in">exp</span>(-<span class="number">2</span>*t)*<span class="built_in">sin</span>(t);</span><br><span class="line">Error <span class="keyword">using</span>  * </span><br><span class="line">Inner matrix dimensions must agree.</span><br><span class="line"> </span><br><span class="line">&gt;&gt; f=<span class="number">2</span>*<span class="built_in">sin</span>(t);</span><br><span class="line">&gt;&gt; f=<span class="number">2</span>*<span class="function">x*<span class="title">sin</span><span class="params">(t)</span></span>;</span><br><span class="line">Error <span class="keyword">using</span>  * </span><br><span class="line">Inner matrix dimensions must agree.</span><br></pre></td></tr></table></figure>
+<p>为什么会出现这种情况呢？在Matlab中，x是一个[0:0.02:4]的矩阵，同样sin(x)也是一个矩阵。<code>*</code>是矩阵乘法operator。x是一个长度为200的矩阵，sin(x)也是如此。也就是说，x和sin(x)都是1*200的矩阵，这在矩阵乘法中显然是无法进行的。所以提醒<code>Inner matrix dimensions must agree</code></p>
+<p>此时我们可以使用dot乘，对应元素分别相乘。</p>
+<p><code>exp(-2*x).*sin(x)</code></p>
+<p>或者使用<code>fplot</code>函数：</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; help fplot</span><br><span class="line"> fplot   Plot <span class="keyword">function</span></span><br><span class="line">    fplot(FUN,LIMS) plots the <span class="keyword">function</span> FUN between the x-axis limits</span><br><span class="line">    specified <span class="keyword">by</span> LIMS = [XMIN XMAX]. <span class="keyword">Using</span> LIMS = [XMIN XMAX YMIN YMAX]</span><br><span class="line">    also controls the y-axis limits. FUN(x) must <span class="keyword">return</span> a row vector <span class="keyword">for</span></span><br><span class="line">    <span class="keyword">each</span> element <span class="keyword">of</span> vector x. <span class="keyword">For</span> example, <span class="keyword">if</span> FUN returns</span><br><span class="line">    [f1(x),f2(x),f3(x)] <span class="keyword">then</span> <span class="keyword">for</span> input [x1;x2] FUN should <span class="keyword">return</span></span><br><span class="line"> </span><br><span class="line">       [f1(x1) f2(x1) f3(x1);</span><br><span class="line">        f1(x2) f2(x2) f3(x2)]</span><br><span class="line"> </span><br><span class="line">    fplot(FUN,LIMS,TOL) <span class="keyword">with</span> TOL &lt; <span class="number">1</span> specifies the relative <span class="keyword">error</span></span><br><span class="line">    tolerance. The <span class="keyword">default</span> TOL <span class="keyword">is</span> <span class="number">2e-3</span>, i.e. <span class="number">0.2</span> percent accuracy.</span><br><span class="line"> </span><br><span class="line">    fplot(FUN,LIMS,N) <span class="keyword">with</span> N &gt;= <span class="number">1</span> plots the <span class="keyword">function</span> <span class="keyword">with</span> a minimum <span class="keyword">of</span> N+<span class="number">1</span></span><br><span class="line">    points. The <span class="keyword">default</span> N <span class="keyword">is</span> <span class="number">1.</span> The maximum <span class="keyword">step</span> size <span class="keyword">is</span> restricted <span class="keyword">to</span> be</span><br><span class="line">    (<span class="number">1</span>/N)*(XMAX-XMIN).</span><br><span class="line"> </span><br><span class="line">    fplot(FUN,LIMS,<span class="comment">'LineSpec') plots with the given line specification.</span></span><br><span class="line"> </span><br><span class="line">    fplot(FUN,LIMS,...) accepts combinations <span class="keyword">of</span> the <span class="keyword">optional</span> arguments</span><br><span class="line">    TOL, N, <span class="keyword">and</span> <span class="comment">'LineSpec', in any order.</span></span><br><span class="line">    </span><br><span class="line">    [X,Y] = fplot(FUN,LIMS,...) returns X <span class="keyword">and</span> Y such that Y = FUN(X). No</span><br><span class="line">    plot <span class="keyword">is</span> drawn <span class="keyword">on</span> the screen.</span><br><span class="line"> </span><br><span class="line">    fplot(AX,...) plots <span class="keyword">into</span> AX instead <span class="keyword">of</span> GCA.</span><br></pre></td></tr></table></figure>
+<p>fplot 为你产生尽可能精确的的图象，同时它也帮助我们绕过像这样的错误。调用 fplot 的形式如</p>
+<p><code>fplot(&#39;function string&#39;, [xstart, xend])</code></p>
+<p>参数 function string 告诉 fplot 你所要绘制的图象函数，而 xstart 和 xend 定义了函数的区间。</p>
+<p><code>&gt;&gt; fplot(&#39;exp(-2*t)*sin(t)&#39;,[0, 4]), xlabel(&#39;t&#39;), ylabel(&#39;f(t)&#39;),title(&#39;阻尼弹力&#39;)</code></p>
+<h1 id="多个函数">多个函数</h1><p>Matlab支持多个函数在一张图表中显示：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; t = [0:0.01:5];</span><br><span class="line">% 接着我们定义两个函数</span><br><span class="line">&gt;&gt; f = exp(-t);</span><br><span class="line">&gt;&gt; g = exp(-2*t);</span><br><span class="line"></span><br><span class="line">plot(t,f,t,g,'--')</span><br></pre></td></tr></table></figure>
+<p>上面的例子告诉Matlab要绘制 f(t)和 g(t)函数，并且第二个函数曲线使用虚线。</p>
+<ul>
+<li><p>实线  ‘-‘</p>
+</li>
+<li><p>虚线  ‘–’</p>
+</li>
+<li><p>虚点线 ‘-.’</p>
+</li>
+<li><p>点线  ‘:’</p>
+</li>
+</ul>
+<p><code>&gt;&gt; plot(t,f,&#39;:&#39;,t,g,&#39;--&#39;)</code></p>
+<p><img src="http://peihao.space/img/article/matlab/matlab_s006.png" alt=""></p>
+<h2 id="添加图例">添加图例</h2><p>专业的图象总是附有图例，告诉读者某个曲线是什么。在下面的例子中，假设我们要绘制两个表示势能的函数，它们由双曲三角函数 sinh(x)和 cosh(x)定义，定义域为 0≤x≤2。首先我们定义x：</p>
+<p><code>&gt;&gt; x = [0:0.01:2];</code></p>
+<p>现在我们定义这两个函数，在 MATLAB 中把函数称为 y 并不是什么不可思议的事，所以我们把第二个函数称为 z，因此有：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; y = <span class="built_in">sinh</span>(x);</span><br><span class="line">&gt;&gt; z = <span class="built_in">cosh</span>(x);</span><br></pre></td></tr></table></figure>
+<p>legend 命令用起来很简单。只需把它加在 plot(x,y)命令后面，并用单引号把要添加为图例的文本引起来。在这个例子中我们有：</p>
+<p><code>legend(&#39;sinh(x)&#39;,&#39;cosh(x)&#39;)</code></p>
+<p>我们只需把这一行添加到 plot 命令后面。在这个例子中，我们还包含 x 和 y 标签，第一条曲线用实线而第二条曲线用虚点线：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; plot(x,y,x,z,'-.'), xlabel('x'), ylabel('Potential'), legend('sinh(x)','cosh(x)')</span><br></pre></td></tr></table></figure>
+<p><img src="http://peihao.space/img/article/matlab/matlab_s006.png" alt=""></p>
+<h2 id="颜色设置">颜色设置</h2><p>相比其他类似的开发工具，Matlab画图是也同样支持设置图像颜色。</p>
+<p><code>plot(x,y,&#39;r&#39;,x,z,&#39;b--&#39;)</code></p>
+<p>上面的代码代表第一个函数为红色，第二个以虚线填充的函数为蓝色。</p>
+<ul>
+<li><p>白色  w</p>
+</li>
+<li><p>黑色  k</p>
+</li>
+<li><p>蓝色  b</p>
+</li>
+<li><p>红色  r</p>
+</li>
+<li><p>青色  c</p>
+</li>
+<li><p>绿色  g</p>
+</li>
+<li><p>洋红  m</p>
+</li>
+<li><p>蓝色  y</p>
+</li>
+</ul>
+<h2 id="设置坐标比例">设置坐标比例</h2><p>axis命令可以设置绘图范围。通过用下面的方式调用 axis 命令：</p>
+<p><code>axis ([xmin xmax ymin ymax])</code></p>
+
+      
+      
+	<! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &weierp;&weierp;&weierp;<br>
+		   得到的是侥幸，失去的是人生
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/wx.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+
+	
+			<! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由<b><a href="/index.html" target="_blank" title="培豪">培豪</a></b>创作和发表于&nbsp<a href="http://peihao.space">培豪的博客</a>&nbsp,采用<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">署名-非商业性使用-禁止演绎 3.0</a>进行许可。</p>
+
+<p>非商业转载请注明作者及出处。商业转载请联系作者本人。</p>
+ 
+ <p>本文标题为: <a href="http://peihao.space/2016/07/11/matlab5/">Matlab学习(五)</a> </p>
+ 
+ <p>本文链接为：<a href="http://peihao.space/2016/07/11/matlab5/">http://peihao.space/2016/07/11/matlab5/</a></p>
+</div>
+<! -- 添加版权信息 -->
+		
+    </div>
+    
+  </div>
+
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/07/10/matlab4/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Matlab学习(四)</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+  
+		
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="matlab5" data-title="Matlab学习(五)" data-url="http://peihao.space/2016/07/11/matlab5/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"chuangwailinjie"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 培豪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<div id="totop" style="position:fixed;bottom:100px;right:30px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>
