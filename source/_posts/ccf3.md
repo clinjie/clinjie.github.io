@@ -5,6 +5,7 @@ toc: true
 categories: algorithm
 ---
 
+>代码来源[逍遥丶綦-最佳文章》](http://blog.csdn.net/qwb492859377/article/details/50950293)
 
 # 最佳文章 #
 
@@ -77,3 +78,171 @@ gvagva
 
 单词中仅出现英文小写字母，输入中不含多余字符，不会出现重复的单词。
 
+# 实现 #
+
+```c++
+#include <map>
+#include <set>
+#include <cmath>
+#include <ctime>
+#include <Stack>
+#include <queue>
+#include <cstdio>
+#include <cctype>
+#include <bitset>
+#include <string>
+#include <vector>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+#include <functional>
+#define fuck(x) cout << "[" << x << "]"
+using namespace std;
+typedef long long LL;
+typedef pair<int, int> PII;
+typedef vector<LL> vec;
+typedef vector<vec> mat;//二维数组
+
+const int MX = 1e4 + 5;
+const LL INF = 0x3f3f3f3f3f3f3f3f;
+
+int rear, root;
+
+//Next二维数组中26个空间分别对26个小写英文字母进行试探
+//Fail数组保存Trie树元素的Fail指针
+//End数组进行词标记
+int Next[MX][26], Fail[MX], End[MX];
+
+//申请Trie元素节点并初始化
+int New() {
+    rear++;
+    End[rear] = 0;
+    for(int i = 0; i < 26; i++) {
+        Next[rear][i] = -1;
+    }
+    return rear;
+}
+
+//初始化Trie树
+void Init() {
+    rear = 0;
+    root = New();
+}
+
+//Trie树增加元素节点
+void Add(char *A) {
+    int n = strlen(A), now = root;
+    for(int i = 0; i < n; i++) {
+        int id = A[i] - 'a';
+        if(Next[now][id] == -1) {
+            Next[now][id] = New();
+        }
+        now = Next[now][id];
+    }
+    End[now]++;
+}
+
+//二维矩阵填充值val
+void mat_fill(mat &A, LL val) {
+    for(int i = 0; i < A.size(); i++) {
+        for(int j = 0; j < A[0].size(); j++) {
+            A[i][j] = val;
+        }
+    }
+}
+
+
+mat Build() {
+    queue<int>Q;
+    Fail[root] = root;
+    for(int i = 0; i < 26; i++) {
+        if(Next[root][i] == -1) {
+            Next[root][i] = root;
+        } else {
+            Fail[Next[root][i]] = root;
+            Q.push(Next[root][i]);
+        }
+    }
+    while(!Q.empty()) {
+        int u = Q.front(); 
+		Q.pop();
+        End[u] += End[Fail[u]];
+        for(int i = 0; i < 26; i++) {
+            if(Next[u][i] == -1) {
+                Next[u][i] = Next[Fail[u]][i];
+            } else {
+                Fail[Next[u][i]] = Next[Fail[u]][i];
+                Q.push(Next[u][i]);
+            }
+        }
+    }
+    mat A(rear, vec(rear));
+    mat_fill(A, -INF);
+    for(int i = 1; i <= rear; i++) {
+        for(int j = 0; j < 26; j++) {
+            int chd = Next[i][j];
+            A[chd - 1][i - 1] = End[chd];
+        }
+    }
+    return A;
+}
+
+
+//矩阵乘法
+mat mat_mul(mat &A, mat &B) {
+    mat C(A.size(), vec(B[0].size()));
+    mat_fill(C, -INF);
+    for(int i = 0; i < A.size(); i++) {
+        for(int j = 0; j < B[0].size(); j++) {
+            for(int k = 0; k < B.size(); k++) {
+                if(A[i][k] + B[k][j] >= 0) {
+                    C[i][j] = max(C[i][j], A[i][k] + B[k][j]);
+                }
+            }
+        }
+    }
+    return C;
+}
+
+
+//矩阵快速幂优化
+mat mat_pow(mat A, LL n) {
+    mat B = A; n--;
+    while(n) {
+        if(n & 1) B = mat_mul(B, A);
+        A = mat_mul(A, A);
+        n >>= 1;
+    }
+    return B;
+}
+
+
+void print(mat &A) {
+    for(int i = 0; i < A.size(); i++) {
+        for(int j = 0; j < A[0].size(); j++) {
+            fuck(A[i][j]);
+        } printf("\n");
+    }
+}
+
+char S[MX];
+
+int main() {
+    int n; LL m;
+    scanf("%d%lld", &n, &m);
+    Init();
+    for(int i = 1; i <= n; i++) {
+        scanf("%s", S);
+        Add(S);
+    }
+    mat A = Build();
+    A = mat_pow(A, m);
+
+    LL ans = 0;
+    for(int i = 0; i < rear; i++) {
+        ans = max(ans, A[i][0]);
+    }
+    printf("%lld\n", ans);
+    return 0;
+}
+```
