@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peihao.space/"/>
-  <updated>2016-07-10T08:47:49.673Z</updated>
+  <updated>2016-07-20T16:22:23.411Z</updated>
   <id>http://peihao.space/</id>
   
   <author>
@@ -14,6 +14,240 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AC自动机</title>
+    <link href="http://peihao.space/2016/07/21/Aho-Corasick-automation/"/>
+    <id>http://peihao.space/2016/07/21/Aho-Corasick-automation/</id>
+    <published>2016-07-21T14:24:06.000Z</published>
+    <updated>2016-07-20T16:22:23.411Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;文章大部分内容参考自&lt;a href=&quot;http://blog.csdn.net/niushuai666/article/details/7002823&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CSDN–飘过的小牛&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;AC自动机，全程是Aho-Corasick automaton，该算法在1975年产生于贝尔实验室，是著名的多模匹配算法。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;要讲清楚比较吃力，直接上实例边消化边理解会好很多。&lt;/p&gt;
+&lt;h1 id=&quot;示例&quot;&gt;示例&lt;/h1&gt;&lt;h2 id=&quot;构造&quot;&gt;构造&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;构造一棵Trie，作为AC自动机的搜索数据结构。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;构造fail指针，使当前字符失配时跳转到具有最长公共前后缀的字符继续匹配。如同 KMP算法一样， AC自动机在匹配时如果当前字符匹配失败，那么利用fail指针进行跳转。由此可知如果跳转，跳转后的串的前缀，必为跳转前的模式串的后缀并且跳转的新位置的深度（匹配字符个数）一定小于跳之前的节点。所以我们可以利用 bfs在 Trie上面进行 fail指针的求解。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;扫描主串进行匹配。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;过程记录&quot;&gt;过程记录&lt;/h2&gt;&lt;p&gt;给出5个单词，say，she，shr，he，her。给定字符串为yasherhs。问多少个单词在字符串中出现过&lt;/p&gt;
+&lt;p&gt;首先我们需要建立一棵Trie。但是这棵Trie不是普通的Trie，而是带有一些特殊的性质。&lt;/p&gt;
+&lt;p&gt;Trie树有3个重要的指针，分别为p, p-&amp;gt;fail, temp。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;指针p，指向当前匹配的字符。若p指向root，表示当前匹配的字符序列为空。（root是Trie入口，没有实际含义）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;指针p-&amp;gt;fail，p的失败指针，指向与字符p相同的结点，若没有，则指向root。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;指针temp，测试指针（自己命名的，容易理解！~），在建立fail指针时有寻找与p字符匹配的结点的作用，在扫描时作用最大，也最不好理解。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.cppblog.com/images/cppblog_com/mythit/ac1.jpg&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;构造fail&quot;&gt;构造fail&lt;/h2&gt;&lt;p&gt;用BFS来构造失败指针，与KMP算法相似的思想。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;首先，root入队，第1次循环时处理与root相连的字符，也就是各个单词的第一个字符h和s，因为第一个字符不匹配需要重新匹配，所以第一个字符都指向root（root是Trie入口，没有实际含义）失败指针的指向对应下图中的(1)，(2)两条虚线；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;第2次进入循环后，从队列中先弹出h，接下来p指向h节点的fail指针指向的节点，也就是root；p=p-&amp;gt;fail也就是p=NULL说明匹配序列为空，则把节点e的fail指针指向root表示没有匹配序列，对应图-2中的(3)，然后节点e进入队列；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;第3次循环时，弹出的第一个节点a的操作与上一步操作的节点e相同，把a的fail指针指向root，对应图-2中的(4)，并入队；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;第4次进入循环时，弹出节点h(图中左边那个)，这时操作略有不同。由于p-&amp;gt;next[i]!=NULL(root有h这个儿子节点，图中右边那个)，这样便把左边那个h节点的失败指针指向右边那个root的儿子节点h，对应图-2中的(5)，然后h入队。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;以此类推：在循环结束后，所有的失败指针就是图-2中的这种形式。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;扫描遍历&quot;&gt;扫描遍历&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://www.cppblog.com/images/cppblog_com/mythit/ac2.JPG&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;构造好Trie和失败指针后，我们就可以对主串进行扫描了。这个过程和KMP算法很类似，但是也有一定的区别，主要是因为AC自动机处理的是多串模式，需要防止遗漏某个单词，所以引入temp指针。&lt;br&gt;匹配过程分两种情况：(1)当前字符匹配，表示从当前节点沿着树边有一条路径可以到达目标字符，此时只需沿该路径走向下一个节点继续匹配即可，目标字符串指针移向下个字符继续匹配；(2)当前字符不匹配，则去当前节点失败指针所指向的字符继续匹配，匹配过程随着指针指向root结束。重复这2个过程中的任意一个，直到模式串走到结尾为止。&lt;/p&gt;
+&lt;p&gt;对照上图，看一下模式匹配这个详细的流程，其中模式串为yasherhs。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;对于i=0,1。Trie中没有对应的路径，故不做任何操作；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;i=2,3,4时，指针p走到左下节点e。因为节点e的count信息为1，所以cnt+1，并且讲节点e的count值设置为-1，表示改单词已经出现过了，防止重复计数，最后temp指向e节点的失败指针所指向的节点(即图中右边相同的e节点开始)继续查找，以此类推，最后temp指向root，退出while循环，这个过程中count增加了2。表示找到了2个单词she和he。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;当i=5时，程序进入第5行，p指向其失败指针的节点，也就是右边那个e节点，随后在第6行指向r节点，r节点的count值为1，从而count+1，循环直到temp指向root为止。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;最后i=6,7时，找不到任何匹配，匹配过程结束。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;实现&quot;&gt;实现&lt;/h1&gt;&lt;h2 id=&quot;HDU2222&quot;&gt;HDU2222&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Input&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;First line will contain one integer means how many cases will follow by.&lt;br&gt;Each case will contain two integers N means the number of keywords and N keywords follow. (N &amp;lt;= 10000)&lt;br&gt;Each keyword will only contains characters ‘a’-‘z’, and the length will be not longer than 50.&lt;br&gt;The last line is the description, and the length will be not longer than 1000000.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Output&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Print how many keywords are contained in the description.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Sample Input&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;1&lt;br&gt;5&lt;br&gt;she&lt;br&gt;he&lt;br&gt;say&lt;br&gt;shr&lt;br&gt;her&lt;br&gt;yasherhs&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Sample Output&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;3&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;57&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;58&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;59&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;61&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;62&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;63&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;64&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;65&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;66&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;67&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;68&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;69&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;70&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;71&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;72&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;73&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;74&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;75&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;76&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;77&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;78&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;79&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;80&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;81&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;82&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;83&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;84&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;85&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;86&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;87&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;88&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;89&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;90&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;91&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;92&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;93&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;94&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;95&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;96&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;97&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;98&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;99&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;100&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;101&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;102&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;103&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;104&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;105&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;106&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;107&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;108&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;109&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;110&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;111&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;112&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&amp;lt;algorithm&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&amp;lt;string.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&amp;lt;queue&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;std&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; Trie&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; next[&lt;span class=&quot;number&quot;&gt;500010&lt;/span&gt;][&lt;span class=&quot;number&quot;&gt;26&lt;/span&gt;],fail[&lt;span class=&quot;number&quot;&gt;500010&lt;/span&gt;],end[&lt;span class=&quot;number&quot;&gt;500010&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; root,L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;newnode&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i &amp;lt; &lt;span class=&quot;number&quot;&gt;26&lt;/span&gt;;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            next[L][i] = -&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        end[L++] = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; L-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        L = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        root = newnode();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; buf[])&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; len = &lt;span class=&quot;built_in&quot;&gt;strlen&lt;/span&gt;(buf);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; now = root;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i &amp;lt; len;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(next[now][buf[i]-&lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;] == -&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                next[now][buf[i]-&lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;] = newnode();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            now = next[now][buf[i]-&lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        end[now]++;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;queue&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;Q;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        fail[root] = root;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i &amp;lt; &lt;span class=&quot;number&quot;&gt;26&lt;/span&gt;;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(next[root][i] == -&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                next[root][i] = root;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                fail[next[root][i]] = root;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                Q.push(next[root][i]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;( !Q.empty() )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; now = Q.front();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            Q.pop();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i &amp;lt; &lt;span class=&quot;number&quot;&gt;26&lt;/span&gt;;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(next[now][i] == -&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    next[now][i] = next[fail[now]][i];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    fail[next[now][i]]=next[fail[now]][i];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    Q.push(next[now][i]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;query&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; buf[])&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; len = &lt;span class=&quot;built_in&quot;&gt;strlen&lt;/span&gt;(buf);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; now = root;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; res = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i &amp;lt; len;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            now = next[now][buf[i]-&lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; temp = now;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;( temp != root )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                res += end[temp];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                end[temp] = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                temp = fail[temp];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; res;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i &amp;lt; L;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;built_in&quot;&gt;printf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;id = %3d,fail = %3d,end = %3d,chi = [&quot;&lt;/span&gt;,i,fail[i],end[i]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; j = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;j &amp;lt; &lt;span class=&quot;number&quot;&gt;26&lt;/span&gt;;j++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;built_in&quot;&gt;printf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;%2d&quot;&lt;/span&gt;,next[i][j]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;built_in&quot;&gt;printf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;]\n&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; buf[&lt;span class=&quot;number&quot;&gt;1000010&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Trie ac;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; T;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; n;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;scanf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;%d&quot;&lt;/span&gt;,&amp;amp;T);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;( T-- )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;scanf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;%d&quot;&lt;/span&gt;,&amp;amp;n);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        ac.init();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i &amp;lt; n;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;built_in&quot;&gt;scanf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;%s&quot;&lt;/span&gt;,buf);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            ac.insert(buf);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        ac.build();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;scanf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;%s&quot;&lt;/span&gt;,buf);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;printf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;%d\n&quot;&lt;/span&gt;,ac.query(buf));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;位置记录&quot;&gt;位置记录&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;模式串集合：{“nihao”,”hao”,”hs”,”hsr”}&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;待匹配文本：”sdmfhsgnshejfgnihaofhsrnihao”&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;57&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;58&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;59&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;61&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;62&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;63&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;64&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;65&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;66&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;67&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;68&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;69&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;70&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;71&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;72&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;73&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;74&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;75&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;76&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;77&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;78&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;79&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;80&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;81&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;82&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;83&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;84&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;85&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;86&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;87&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;88&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;89&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;90&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;91&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;92&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;93&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;94&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;95&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;96&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;97&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;98&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;99&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;100&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;101&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;102&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;103&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;104&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;105&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;106&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;107&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;108&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;109&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;110&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;111&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;112&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;113&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;114&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;115&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;116&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;117&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;118&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;119&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;120&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;121&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;122&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;123&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;124&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;125&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;126&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;127&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;128&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;129&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;130&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;131&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;132&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;133&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;134&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;135&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;136&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;137&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;138&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;139&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;140&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;141&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;142&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;143&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;144&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;145&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;146&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;147&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;148&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;149&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;150&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;151&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;152&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;153&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;154&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;155&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;156&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;157&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;158&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;159&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;160&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;161&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;162&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;163&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;164&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;165&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;166&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;167&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;168&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;169&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;170&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;171&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;172&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;173&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;174&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;175&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;176&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;177&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;178&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;179&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;180&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;181&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;182&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;183&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;184&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;185&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;186&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;187&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;188&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;189&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;190&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;191&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;192&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;193&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;194&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;195&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;196&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;197&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;198&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;199&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;200&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;201&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;202&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;203&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;204&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;lt;string.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;lt;malloc.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&amp;lt;queue&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;std&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; node&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; node *next[&lt;span class=&quot;number&quot;&gt;26&lt;/span&gt;];  &lt;span class=&quot;comment&quot;&gt;//接收的态&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; node *par;   &lt;span class=&quot;comment&quot;&gt;//父亲节点&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; node *fail;  &lt;span class=&quot;comment&quot;&gt;//失败节点&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; inputchar;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; patterTag;    &lt;span class=&quot;comment&quot;&gt;//是否为可接收态&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; patterNo;   &lt;span class=&quot;comment&quot;&gt;//接收态对应的可接受模式&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;*Tree,TreeNode;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; pattern[&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;][&lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;]=&amp;#123;&lt;span class=&quot;string&quot;&gt;&quot;nihao&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;hao&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;hs&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;hsr&quot;&lt;/span&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;申请新的节点，并进行初始化&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;TreeNode *&lt;span class=&quot;title&quot;&gt;getNewNode&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    TreeNode* tnode=(TreeNode*)&lt;span class=&quot;built_in&quot;&gt;malloc&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;sizeof&lt;/span&gt;(TreeNode));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    tnode-&amp;gt;fail=&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    tnode-&amp;gt;par=&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    tnode-&amp;gt;patterTag=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;&lt;span class=&quot;number&quot;&gt;26&lt;/span&gt;;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        tnode-&amp;gt;next[i]=&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; tnode;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;将Trie树中，root节点的分支节点，放入队列&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;  &lt;span class=&quot;title&quot;&gt;nodeToQueue&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Tree root,&lt;span class=&quot;built_in&quot;&gt;queue&lt;/span&gt;&amp;lt;Tree&amp;gt; &amp;amp;myqueue)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i &amp;lt; &lt;span class=&quot;number&quot;&gt;26&lt;/span&gt;; i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (root-&amp;gt;next[i]!=&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            myqueue.push(root-&amp;gt;next[i]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;建立trie树&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;Tree &lt;span class=&quot;title&quot;&gt;buildingTree&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i,j;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Tree root=getNewNode();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Tree tmp1=&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;,tmp2=&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        tmp1=root;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(j=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;j&amp;lt;&lt;span class=&quot;built_in&quot;&gt;strlen&lt;/span&gt;(pattern[i]);j++)   &lt;span class=&quot;comment&quot;&gt;///对每个模式进行处理&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(tmp1-&amp;gt;next[pattern[i][j]-&lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;]==&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;) &lt;span class=&quot;comment&quot;&gt;///是否已经有分支，Trie共用节点&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                tmp2=getNewNode();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                tmp2-&amp;gt;inputchar=pattern[i][j];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                tmp2-&amp;gt;par=tmp1;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                tmp1-&amp;gt;next[pattern[i][j]-&lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;]=tmp2;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                tmp1=tmp2;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                tmp1=tmp1-&amp;gt;next[pattern[i][j]-&lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        tmp1-&amp;gt;patterTag=&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        tmp1-&amp;gt;patterNo=i;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; root;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;建立失败指针&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;buildingFailPath&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Tree root)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; inputchar;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;queue&lt;/span&gt;&amp;lt;Tree&amp;gt; myqueue;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    root-&amp;gt;fail=root;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;&lt;span class=&quot;number&quot;&gt;26&lt;/span&gt;;i++)   &lt;span class=&quot;comment&quot;&gt;///对root下面的第二层进行特殊处理&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (root-&amp;gt;next[i]!=&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            nodeToQueue(root-&amp;gt;next[i],myqueue);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            root-&amp;gt;next[i]-&amp;gt;fail=root;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Tree tmp=&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;,par=&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(!myqueue.empty())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        tmp=myqueue.front();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        myqueue.pop();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        nodeToQueue(tmp,myqueue);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        inputchar=tmp-&amp;gt;inputchar;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        par=tmp-&amp;gt;par;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(&lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(par-&amp;gt;fail-&amp;gt;next[inputchar-&lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;]!=&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                tmp-&amp;gt;fail=par-&amp;gt;fail-&amp;gt;next[inputchar-&lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;break&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(par-&amp;gt;fail==root)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    tmp-&amp;gt;fail=root;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;keyword&quot;&gt;break&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    par=par-&amp;gt;fail-&amp;gt;par;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;进行多模式搜索，即搜寻AC自动机&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;searchAC&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Tree root,&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt;* str,&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; len)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    TreeNode *tmp=root;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(i &amp;lt; len)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; pos=str[i]-&lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (tmp-&amp;gt;next[pos]!=&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            tmp=tmp-&amp;gt;next[pos];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(tmp-&amp;gt;patterTag==&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)    &lt;span class=&quot;comment&quot;&gt;///如果为接收态&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&amp;lt;&amp;lt;i-&lt;span class=&quot;built_in&quot;&gt;strlen&lt;/span&gt;(pattern[tmp-&amp;gt;patterNo])+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&#39;\t&#39;&lt;/span&gt;&amp;lt;&amp;lt;tmp-&amp;gt;patterNo&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&#39;\t&#39;&lt;/span&gt;&amp;lt;&amp;lt;pattern[tmp-&amp;gt;patterNo]&amp;lt;&amp;lt;endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            i++;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(tmp==root)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                i++;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                tmp=tmp-&amp;gt;fail;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(tmp-&amp;gt;patterTag==&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)    &lt;span class=&quot;comment&quot;&gt;//如果为接收态&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&amp;lt;&amp;lt;i-&lt;span class=&quot;built_in&quot;&gt;strlen&lt;/span&gt;(pattern[tmp-&amp;gt;patterNo])+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&#39;\t&#39;&lt;/span&gt;&amp;lt;&amp;lt;tmp-&amp;gt;patterNo&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&#39;\t&#39;&lt;/span&gt;&amp;lt;&amp;lt;pattern[tmp-&amp;gt;patterNo]&amp;lt;&amp;lt;endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(tmp!=root)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        tmp=tmp-&amp;gt;fail;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(tmp-&amp;gt;patterTag==&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&amp;lt;&amp;lt;i-&lt;span class=&quot;built_in&quot;&gt;strlen&lt;/span&gt;(pattern[tmp-&amp;gt;patterNo])+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&#39;\t&#39;&lt;/span&gt;&amp;lt;&amp;lt;tmp-&amp;gt;patterNo&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&#39;\t&#39;&lt;/span&gt;&amp;lt;&amp;lt;pattern[tmp-&amp;gt;patterNo]&amp;lt;&amp;lt;endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;释放内存，DFS&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;destory&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Tree tree)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(tree==&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;queue&lt;/span&gt;&amp;lt;Tree&amp;gt; myqueue;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    TreeNode *tmp=&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    myqueue.push(tree);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    tree=&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(!myqueue.empty())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        tmp=myqueue.front();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        myqueue.pop();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i &amp;lt; &lt;span class=&quot;number&quot;&gt;26&lt;/span&gt;; i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(tmp-&amp;gt;next[i]!=&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                myqueue.push(tmp-&amp;gt;next[i]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;free&lt;/span&gt;(tmp);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; a[]=&lt;span class=&quot;string&quot;&gt;&quot;sdmfhsgnshejfgnihaofhsrnihao&quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Tree root=buildingTree();   &lt;span class=&quot;comment&quot;&gt;///建立Trie树&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    buildingFailPath(root); &lt;span class=&quot;comment&quot;&gt;///添加失败转移&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&quot;待匹配字符串：&quot;&lt;/span&gt;&amp;lt;&amp;lt;a&amp;lt;&amp;lt;endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&quot;模式&quot;&lt;/span&gt;&amp;lt;&amp;lt;pattern[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;]&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&quot; &quot;&lt;/span&gt;&amp;lt;&amp;lt;pattern[&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&quot; &quot;&lt;/span&gt;&amp;lt;&amp;lt;pattern[&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;]&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&quot; &quot;&lt;/span&gt;&amp;lt;&amp;lt;pattern[&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;]&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&quot; &quot;&lt;/span&gt;&amp;lt;&amp;lt;endl&amp;lt;&amp;lt;endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&quot;匹配结果如下：&quot;&lt;/span&gt;&amp;lt;&amp;lt;endl&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&quot;位置\t&quot;&lt;/span&gt;&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&quot;编号\t&quot;&lt;/span&gt;&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&quot;模式&quot;&lt;/span&gt;&amp;lt;&amp;lt;endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    searchAC(root,a,&lt;span class=&quot;built_in&quot;&gt;strlen&lt;/span&gt;(a)); &lt;span class=&quot;comment&quot;&gt;///搜索&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    destory(root);  &lt;span class=&quot;comment&quot;&gt;///释放动态申请内存&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;文章大部分内容参考自&lt;a href=&quot;http://blog.csdn.net/niushuai666/article/details/7002823&quot;&gt;CSDN–飘过的小牛&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;AC自动机，全程是Aho-Corasick automaton，该算法在1975年产生于贝尔实验室，是著名的多模匹配算法。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;要讲清楚比较吃力，直接上实例边消化边理解会好很多。&lt;/p&gt;
+&lt;h1 id=&quot;示例&quot;&gt;示例&lt;/h1&gt;&lt;h2 id=&quot;构造&quot;&gt;构造&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;构造一棵Trie，作为AC自动机的搜索数据结构。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;构造fail指针，使当前字符失配时跳转到具有最长公共前后缀的字符继续匹配。如同 KMP算法一样， AC自动机在匹配时如果当前字符匹配失败，那么利用fail指针进行跳转。由此可知如果跳转，跳转后的串的前缀，必为跳转前的模式串的后缀并且跳转的新位置的深度（匹配字符个数）一定小于跳之前的节点。所以我们可以利用 bfs在 Trie上面进行 fail指针的求解。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;扫描主串进行匹配。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+      <category term="algorithm" scheme="http://peihao.space/categories/algorithm/"/>
+    
+    
+      <category term="algorithm" scheme="http://peihao.space/tags/algorithm/"/>
+    
+      <category term="模式匹配" scheme="http://peihao.space/tags/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>矩阵快速幂</title>
+    <link href="http://peihao.space/2016/07/21/%E7%9F%A9%E9%98%B5%E5%BF%AB%E9%80%9F%E5%B9%82/"/>
+    <id>http://peihao.space/2016/07/21/矩阵快速幂/</id>
+    <published>2016-07-21T07:24:06.000Z</published>
+    <updated>2016-07-21T07:12:06.432Z</updated>
+    
+    <content type="html">&lt;p&gt;矩阵的快速幂是用来高效地计算矩阵的高次方的。将朴素的o（n）的时间复杂度，降到log（n）.&lt;/p&gt;
+&lt;p&gt;最简单的例子来讲，一般我们正常计算实数x的n次幂时，都是从1开始，进行n次的x相乘。&lt;/p&gt;
+&lt;p&gt;但做下简单的改进就能减少连乘的次数，方法如下：&lt;/p&gt;
+&lt;p&gt;把n个矩阵进行两两分组，比如：&lt;code&gt;A*A*A*A*A*A  =&amp;gt;  (A*A)*(A*A)*(A*A)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这样变的好处是，你只需要计算一次A&lt;em&gt;A，然后将结果(A&lt;/em&gt;A)连乘自己两次就能得到A^6，即(A*A)^3=A^6.这样就很容易的实现了时间复杂度的优化。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;在上面的问题中，最重要的就是如何选择间距值，上面的解答给我们展示了间距为2的示例，但我们还可以有很多其他的选择。那么如何选择出时间复杂度最低的呢，我们应该充分的使用现有的计算结果&lt;/p&gt;
+&lt;p&gt;回头看看矩阵的快速幂问题，我们是不是也能把它离散化呢？比如A^19  =&amp;gt;  （A^16）&lt;em&gt;（A^2）&lt;/em&gt;（A^1），显然采取这样的方式计算时因子数将是log(n)级别的(原来的因子数是n)，不仅这样，因子间也是存在某种联系的，比如A^4能通过(A^2)&lt;em&gt;(A^2)得到，A^8又能通过(A^4)&lt;/em&gt;(A^4)得到，这点也充分利用了现有的结果作为有利条件。&lt;/p&gt;
+&lt;p&gt;下面举个例子进行说明：&lt;/p&gt;
+&lt;p&gt;现在要求A^156,而156(10)=10011100(2) &lt;/p&gt;
+&lt;p&gt;也就有A^156=&amp;gt;(A^4)&lt;em&gt;(A^8)&lt;/em&gt;(A^16)*(A^128)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;c++&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(N)
+ {
+                &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(N&amp;amp;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)
+                       res=res*A;
+                N&amp;gt;&amp;gt;=&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;
+                A=A*A;
+ }
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;矩阵的快速幂是用来高效地计算矩阵的高次方的。将朴素的o（n）的时间复杂度，降到log（n）.&lt;/p&gt;
+&lt;p&gt;最简单的例子来讲，一般我们正常计算实数x的n次幂时，都是从1开始，进行n次的x相乘。&lt;/p&gt;
+&lt;p&gt;但做下简单的改进就能减少连乘的次数，方法如下：&lt;/p&gt;
+&lt;p&gt;把n个矩阵进行两两分组，比如：&lt;code&gt;A*A*A*A*A*A  =&amp;gt;  (A*A)*(A*A)*(A*A)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这样变的好处是，你只需要计算一次A&lt;em&gt;A，然后将结果(A&lt;/em&gt;A)连乘自己两次就能得到A^6，即(A*A)^3=A^6.这样就很容易的实现了时间复杂度的优化。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="algorithm" scheme="http://peihao.space/categories/algorithm/"/>
+    
+    
+      <category term="algorithm" scheme="http://peihao.space/tags/algorithm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Trie树</title>
+    <link href="http://peihao.space/2016/07/20/Trie/"/>
+    <id>http://peihao.space/2016/07/20/Trie/</id>
+    <published>2016-07-20T14:24:06.000Z</published>
+    <updated>2016-07-21T06:18:18.413Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;文章大部分内容引用自Encyclopedia&lt;/p&gt;
+&lt;p&gt;Trie树，即字典树。是一种树形结构，哈希树的变种。典型应用是用于统计，排序和保存大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的优点是：利用字符串的公共前缀来减少查询时间，最大限度地减少无谓的字符串比较，查询效率比哈希树高。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Trie树可以用来作为搜索引擎中的分词处理手段。&lt;/p&gt;
+&lt;h1 id=&quot;描述&quot;&gt;描述&lt;/h1&gt;&lt;p&gt;根节点不包含字符，除根节点外每一个节点都只包含一个字符； 从根节点到某一节点，路径上经过的字符连接起来，为该节点对应的字符串； 每个节点的所有子节点包含的字符都不相同。&lt;/p&gt;
+&lt;h2 id=&quot;实现&quot;&gt;实现&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;从根结点开始一次搜索；&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;取得要查找关键词的第一个字母，并根据该字母选择对应的子树并转到该子树继续进行检索；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在相应的子树上，取得要查找关键词的第二个字母,并进一步选择对应的子树进行检索。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;迭代过程……&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在某个结点处，关键词的所有字母已被取出，则读取附在该结点上的信息，即完成查找。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;示例&quot;&gt;示例&lt;/h2&gt;&lt;p&gt;给出say，she，shr，he，her这5个单词作为构造Trie树的元素，构造的Trie树应该是这样的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://images.cppblog.com/cppblog_com/mythit/ac1.jpg&quot; alt=&quot;AC自动机算法-飘过的小牛&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;应用&quot;&gt;应用&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;串的快速检索&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;给出N个单词组成的熟词表，以及一篇全用小写英文书写的文章，请你按最早出现的顺序写出所有不在熟词表中的生词。&lt;br&gt;在这种问题下，我们可以用数组枚举、哈希、用字典树，先把熟词建一棵树，然后读入文章进行比较，这种方法效率是比较高的。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;“串”排序&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;给定N个互不相同的仅由一个单词构成的英文名，让你将他们按字典序从小到大输出&lt;br&gt;用字典树进行排序，采用数组的方式创建字典树，这棵树的每个结点的所有儿子很显然地按照其字母大小排序。对这棵树进行先序遍历即可。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;最长公共前缀&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对所有串建立字典树，对于两个串的最长公共前缀的长度即他们所在的结点的公共祖先个数，于是，问题就转化为当时公共祖先问题。&lt;/p&gt;
+&lt;h1 id=&quot;C++实现&quot;&gt;C++实现&lt;/h1&gt;&lt;p&gt;HDU1251&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Input&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;输入数据的第一部分是一张单词表,每行一个单词,单词的长度不超过10,它们代表的是老师交给Ignatius统计的单词,一个空行代表单词表的结束.第二部分是一连串的提问,每行一个提问,每个提问都是一个字符串.&lt;/p&gt;
+&lt;p&gt;注意:本题只有一组测试数据,处理到文件结束.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Output&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对于每个提问,给出以该字符串为前缀的单词的数量.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Sample Input&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;banana&lt;br&gt;band&lt;br&gt;bee&lt;br&gt;absolute&lt;br&gt;acm&lt;/p&gt;
+&lt;p&gt;ba&lt;br&gt;b&lt;br&gt;band&lt;br&gt;abc&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Sample Output&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;2&lt;br&gt;3&lt;br&gt;1&lt;br&gt;0&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;57&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;58&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;59&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;61&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;62&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;63&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;64&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;65&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;66&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;67&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;68&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;69&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;70&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;71&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;72&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;73&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;74&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;75&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;76&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;77&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;lt;cstring&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;std&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; Trie_node&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; count;                    &lt;span class=&quot;comment&quot;&gt;// 统计单词前缀出现的次数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; Trie_node* next[&lt;span class=&quot;number&quot;&gt;26&lt;/span&gt;];   &lt;span class=&quot;comment&quot;&gt;// 指向各个子树的指针&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;bool&lt;/span&gt; exist;                   &lt;span class=&quot;comment&quot;&gt;// 标记该结点处是否构成单词  &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;TrieNode , *Trie;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;TrieNode* &lt;span class=&quot;title&quot;&gt;createTrieNode&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	TrieNode* node = (TrieNode *)&lt;span class=&quot;built_in&quot;&gt;malloc&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;sizeof&lt;/span&gt;(TrieNode));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	node-&amp;gt;count = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	node-&amp;gt;exist = &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;built_in&quot;&gt;memset&lt;/span&gt;(node-&amp;gt;next , &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; , &lt;span class=&quot;keyword&quot;&gt;sizeof&lt;/span&gt;(node-&amp;gt;next));    &lt;span class=&quot;comment&quot;&gt;// 初始化为空指针&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; node;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Trie_insert&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Trie root, &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt;* word)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	Trie node = root;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; *p = word;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; id;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;( *p )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		id = *p - &lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(node-&amp;gt;next[id] == &lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			node-&amp;gt;next[id] = createTrieNode();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		node = node-&amp;gt;next[id];  &lt;span class=&quot;comment&quot;&gt;// 每插入一步，相当于有一个新串经过，指针向下移动&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		++p;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		node-&amp;gt;count += &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;      &lt;span class=&quot;comment&quot;&gt;// 这行代码用于统计每个单词前缀出现的次数（也包括统计每个单词出现的次数）&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	node-&amp;gt;exist = &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;;        &lt;span class=&quot;comment&quot;&gt;// 单词结束的地方标记此处可以构成一个单词&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Trie_search&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Trie root, &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt;* word)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	Trie node = root;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; *p = word;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; id;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;( *p )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		id = *p - &lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		node = node-&amp;gt;next[id];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		++p;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(node == &lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; node-&amp;gt;count;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Trie root = createTrieNode();     &lt;span class=&quot;comment&quot;&gt;// 初始化字典树的根节点&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; str[&lt;span class=&quot;number&quot;&gt;12&lt;/span&gt;] ;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;bool&lt;/span&gt; flag = &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(gets(str))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(flag)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;built_in&quot;&gt;printf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;%d\n&quot;&lt;/span&gt;,Trie_search(root , str));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(&lt;span class=&quot;built_in&quot;&gt;strlen&lt;/span&gt;(str) != &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;				Trie_insert(root , str);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;				flag = &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;文章大部分内容引用自Encyclopedia&lt;/p&gt;
+&lt;p&gt;Trie树，即字典树。是一种树形结构，哈希树的变种。典型应用是用于统计，排序和保存大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的优点是：利用字符串的公共前缀来减少查询时间，最大限度地减少无谓的字符串比较，查询效率比哈希树高。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Trie树可以用来作为搜索引擎中的分词处理手段。&lt;/p&gt;
+&lt;h1 id=&quot;描述&quot;&gt;描述&lt;/h1&gt;&lt;p&gt;根节点不包含字符，除根节点外每一个节点都只包含一个字符； 从根节点到某一节点，路径上经过的字符连接起来，为该节点对应的字符串； 每个节点的所有子节点包含的字符都不相同。&lt;/p&gt;
+&lt;h2 id=&quot;实现&quot;&gt;实现&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;从根结点开始一次搜索；
+    
+    </summary>
+    
+      <category term="algorithm" scheme="http://peihao.space/categories/algorithm/"/>
+    
+    
+      <category term="algorithm" scheme="http://peihao.space/tags/algorithm/"/>
+    
+  </entry>
   
   <entry>
     <title>Matlab学习(五)</title>
@@ -118,6 +352,102 @@
     
     
       <category term="matlab" scheme="http://peihao.space/tags/matlab/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>KMP笔记</title>
+    <link href="http://peihao.space/2016/07/11/KMP/"/>
+    <id>http://peihao.space/2016/07/11/KMP/</id>
+    <published>2016-07-11T04:24:06.000Z</published>
+    <updated>2016-07-20T16:05:38.503Z</updated>
+    
+    <content type="html">&lt;p&gt;文章来源：&lt;a href=&quot;http://www.cnblogs.com/c-cloud/p/3224788.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;c_cloud  KMP&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;思想&quot;&gt;思想&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;KMP算法是一种改进的字符串匹配算法，由D.E.Knuth，J.H.Morris和V.R.Pratt同时发现，因此人们称它为克努特——莫里斯——普拉特操作（The Knuth-Morris-Pratt Algorithm，简称KMP算法）。KMP算法的关键是利用匹配失败后的信息，尽量减少模式串与主串的匹配次数以达到快速匹配的目的。具体实现就是实现一个next()函数，函数本身包含了模式串的局部匹配信息&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;首先介绍几个算法的术语：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;前缀&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;前缀指除了最后一个字符以外，一个字符串的全部头部组合&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;ol&gt;
+&lt;li&gt;后缀&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;后缀指除了第一个字符以外，一个字符串的全部尾部组合&lt;/p&gt;
+&lt;h2 id=&quot;部分匹配值&quot;&gt;部分匹配值&lt;/h2&gt;&lt;p&gt;部分匹配值就是”前缀”和”后缀”的最长的共有元素的长度。以”ABCDABD”为例&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;“A”的前缀和后缀都为空集，共有元素的长度为0；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“AB”的前缀为[A]，后缀为[B]，共有元素的长度为0；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABC”的前缀为[A, AB]，后缀为[BC, C]，共有元素的长度0；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCD”的前缀为[A, AB, ABC]，后缀为[BCD, CD, D]，共有元素的长度为0；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCDA”的前缀为[A, AB, ABC, ABCD]，后缀为[BCDA, CDA, DA, A]，共有元素为”A”，长度为1；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCDAB”的前缀为[A, AB, ABC, ABCD, ABCDA]，后缀为[BCDAB, CDAB, DAB, AB, B]，共有元素为”AB”，长度为2；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCDABD”的前缀为[A, AB, ABC, ABCD, ABCDA, ABCDAB]，后缀为[BCDABD, CDABD, DABD, ABD, BD, D]，共有元素的长度为0&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&quot;http://image.beekka.com/blog/201305/bg2013050112.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;“部分匹配”的实质是，有时候，字符串头部和尾部会有重复。比如，”ABCDAB”之中有两个”AB”，那么它的”部分匹配值”就是2（”AB”的长度）。搜索词移动的时候，第一个”AB”向后移动4位（字符串长度-部分匹配值），就可以来到第二个”AB”的位置。&lt;/p&gt;
+&lt;p&gt;在KMP算法中，模式字符串向右移动的位数 = 已匹配的字符数 - 对应的部分匹配值&lt;/p&gt;
+&lt;h2 id=&quot;部分匹配的实现&quot;&gt;部分匹配的实现&lt;/h2&gt;&lt;p&gt;下面给出模式串右移位数：&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;makeNext&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; P[],&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; next[])&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; q,k;&lt;span class=&quot;comment&quot;&gt;//q:模式字符串下标；k:最大前后缀长度&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; m = &lt;span class=&quot;built_in&quot;&gt;strlen&lt;/span&gt;(P);&lt;span class=&quot;comment&quot;&gt;//模式字符串长度&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    next[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;span class=&quot;comment&quot;&gt;//模版字符串的第一个字符的最大前后缀长度为0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (q = &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,k = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; q &amp;lt; m; q++)&lt;span class=&quot;comment&quot;&gt;//for循环，从第二个字符开始，依次计算每一个字符对应的next值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(k &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &amp;amp;&amp;amp; P[q] != P[k])&lt;span class=&quot;comment&quot;&gt;//递归的求出P[0]到P[q]最大的相同的前后缀长度k&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            k = next[k-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (P[q] == P[k])&lt;span class=&quot;comment&quot;&gt;//如果相等，那么最大相同前后缀长度加1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            k++;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        next[q] = k;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;已知前一步计算时最大相同的前后缀长度为k（k&amp;gt;0），即P[0]···P[k-1]；
+　　&lt;/p&gt;
+&lt;p&gt;上面的代码中&lt;br&gt;&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(k &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &amp;amp;&amp;amp; P[q] != P[k])&lt;span class=&quot;comment&quot;&gt;//递归的求出P[0]到P[q]最大的相同的前后缀长度k&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            k = next[k-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (P[q] == P[k])&lt;span class=&quot;comment&quot;&gt;//如果相等，那么最大相同前后缀长度加1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            k++;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这几步是比较难理解的，实际上这几步就是上面我们手工对字符串”ABCDABD”进行的部分匹配值计算。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;“ABCD”的前缀为[A, AB, ABC]，后缀为[BCD, CD, D]，共有元素的长度为0；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCDA”的前缀为[A, AB, ABC, ABCD]，后缀为[BCDA, CDA, DA, A]，共有元素为”A”，长度为1；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCDAB”的前缀为[A, AB, ABC, ABCD, ABCDA]，后缀为[BCDAB, CDAB, DAB, AB, B]，共有元素为”AB”，长度为2；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCDABD”的前缀为[A, AB, ABC, ABCD, ABCDA, ABCDAB]，后缀为[BCDABD, CDABD, DABD, ABD, BD, D]，共有元素的长度为0&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;截取这几步，我们按照从左向右的顺序进行模式匹配，字符串”ABCDABD”依序增加的话，因为前缀与后缀相同的子字符串顺序是一致的，所以部分匹配值增加的话也是根据上一字符串的部分匹配值基础进行。&lt;/p&gt;
+&lt;p&gt;我们拿到一个字符串计算部分匹配值，如果上一字符串匹配值为0，我们肯定会先将字符串的第一位与最后一位进行匹配，因为此时字符串最多只能可能有1的部分匹配值，否则的话上一字符串匹配值不会是0。&lt;/p&gt;
+&lt;p&gt;如果上一字符串部分匹配值为k时，我们将字符串的前（k+1）位与后（k+1）位进行匹配，如果匹配成功，则next值为k+1，&lt;/p&gt;
+&lt;p&gt;如果匹配失败的话：&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(k &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &amp;amp;&amp;amp; P[q] != P[k])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     k = next[k-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;P[k]已经和P[q]失配了，而且P[q-k] ··· P[q-1]又与P[0] ···P[k-1]相同。假设模式串长度length，失配也就是讲模式串的前k位与P[length-k-1:length-2]相同，而P[k]与P[length-1]不同。看来P[0]···P[k-1]这么长的子串是用不了了，那么我要找个同样也是P[0]打头、P[k-1]结尾的子串，即P[0]···P&lt;a href=&quot;j==next[k-1]&quot;&gt;j-1&lt;/a&gt;，看看它的下一项P[j]是否能和P[q]匹配。循环进行，直到k=0，从头再开始。&lt;/p&gt;
+&lt;p&gt;那么为什么&lt;code&gt;j==next[k-1]&lt;/code&gt;呢？上一次k的匹配失败，导致求下一个k值只能在模式串的前next[k-1]字符中寻找，而非next[k]-1。因为前面的寻找依然是一次模式匹配，所以next数组的求值实际上就是一个递归。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;“ABCABHABCAB”  部分匹配值为5&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCABHABCABC”  &lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;继续增加字符时出现失配，j=next[k-1]，也就是求next[4]=2。因为之前的”ABCABH”没法使用了，但是”ABCAB”是匹配过的，”H”无法使用，就在”ABCAB”中寻找匹配度，目的是尝试对下标next[4]与整个模式串的最后一位匹配。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;文章来源：&lt;a href=&quot;http://www.cnblogs.com/c-cloud/p/3224788.html&quot;&gt;c_cloud  KMP&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;思想&quot;&gt;思想&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;KMP算法是一种改进的字符串匹配算法，由D.E.Knuth，J.H.Morris和V.R.Pratt同时发现，因此人们称它为克努特——莫里斯——普拉特操作（The Knuth-Morris-Pratt Algorithm，简称KMP算法）。KMP算法的关键是利用匹配失败后的信息，尽量减少模式串与主串的匹配次数以达到快速匹配的目的。具体实现就是实现一个next()函数，函数本身包含了模式串的局部匹配信息&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;首先介绍几个算法的术语：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;前缀&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;前缀指除了最后一个字符以外，一个字符串的全部头部组合&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="algorithm" scheme="http://peihao.space/categories/algorithm/"/>
+    
+    
+      <category term="algorithm" scheme="http://peihao.space/tags/algorithm/"/>
+    
+      <category term="模式匹配" scheme="http://peihao.space/tags/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D/"/>
     
   </entry>
   
@@ -677,32 +1007,6 @@
   </entry>
   
   <entry>
-    <title>属于你的文件</title>
-    <link href="http://peihao.space/2016/05/18/xdy/"/>
-    <id>http://peihao.space/2016/05/18/xdy/</id>
-    <published>2016-05-18T08:59:35.000Z</published>
-    <updated>2016-05-22T13:27:51.062Z</updated>
-    
-    <content type="html">&lt;p&gt;六层空间的叠叠瓦瓦，11月8小时的温柔似玉&lt;/p&gt;
-&lt;p&gt;念念忘忘的油纸伞片，27度6分钟的暖暖如花&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;六层空间的叠叠瓦瓦，11月8小时的温柔似玉&lt;/p&gt;
-&lt;p&gt;念念忘忘的油纸伞片，27度6分钟的暖暖如花&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="随感" scheme="http://peihao.space/categories/%E9%9A%8F%E6%84%9F/"/>
-    
-    
-      <category term="随感" scheme="http://peihao.space/tags/%E9%9A%8F%E6%84%9F/"/>
-    
-  </entry>
-  
-  <entry>
     <title>VS连接Sql Server</title>
     <link href="http://peihao.space/2016/05/18/vs%E8%BF%9E%E6%8E%A5sqlserver/"/>
     <id>http://peihao.space/2016/05/18/vs连接sqlserver/</id>
@@ -746,6 +1050,32 @@
     
     
       <category term="C#" scheme="http://peihao.space/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>属于你的文件</title>
+    <link href="http://peihao.space/2016/05/18/xdy/"/>
+    <id>http://peihao.space/2016/05/18/xdy/</id>
+    <published>2016-05-18T08:59:35.000Z</published>
+    <updated>2016-05-22T13:27:51.062Z</updated>
+    
+    <content type="html">&lt;p&gt;六层空间的叠叠瓦瓦，11月8小时的温柔似玉&lt;/p&gt;
+&lt;p&gt;念念忘忘的油纸伞片，27度6分钟的暖暖如花&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;六层空间的叠叠瓦瓦，11月8小时的温柔似玉&lt;/p&gt;
+&lt;p&gt;念念忘忘的油纸伞片，27度6分钟的暖暖如花&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="随感" scheme="http://peihao.space/categories/%E9%9A%8F%E6%84%9F/"/>
+    
+    
+      <category term="随感" scheme="http://peihao.space/tags/%E9%9A%8F%E6%84%9F/"/>
     
   </entry>
   
@@ -942,330 +1272,6 @@
     
     
       <category term="java" scheme="http://peihao.space/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>DP介绍-最长递增子序列</title>
-    <link href="http://peihao.space/2016/04/23/DP-intro-001/"/>
-    <id>http://peihao.space/2016/04/23/DP-intro-001/</id>
-    <published>2016-04-23T09:17:22.000Z</published>
-    <updated>2016-04-23T13:25:47.796Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;最长递增子序列系列是DP动态规划中简单、经典的入门题目。类似最长非递减子序列、导弹拦截问题、最长公共子序列问题等等。这在我们逐渐了解、认知动态规划的过程中可以给我们提高很大的帮助。&lt;/p&gt;
-&lt;p&gt;设有由n个不相同的整数组成的数列，记为:a[0]、a[1]、……、a[n-1]且a(i)&amp;lt;&amp;gt;a(j) (i&amp;lt;&amp;gt;j)&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;例如&lt;code&gt;{2,3,4,5,6,343,5,36,45,64,56,564}&lt;/code&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;若存在i1&amp;lt;i2&amp;lt;i3&amp;lt; … &amp;lt; ie 且有a[i1]&amp;lt;a[i2]&amp;lt; … &amp;lt;a[ie]则称为长度为e的递增子序列序列。如上例中3，18，23，24就是一个长度为4的递增序列，同时也有3，7，10，12，16，24长度为6的递增序列&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h1 id=&quot;问题的引出与思路&quot;&gt;问题的引出与思路&lt;/h1&gt;&lt;p&gt;要解决这个问题，按我们正常人的习惯性思维没我们往往会通过在下标从小到大逐渐增加，一步步的计算前n个数值（子数组，子序列最后的一个数值必须是a[n-1]）中的最长递增子序列，所以前n数值最长子序列未必会比前n-1最长子序列结果要大，这是需要我们注意的。&lt;/p&gt;
-&lt;p&gt;换句话说。我们需要在前n-1个数值中循环找出比第n个数值小、且成递增规律的序列。假如当前的数值比上个子序列的最后一个数值都要大，那么就可以直接在上个子问题结果的基础上加1。当然，这不是要我们局限于紧邻的上个子问题，而是前面所有子问题都要对比，然后将这些结果再取最大值。实际上，值已经引出了状态转移方程。&lt;/p&gt;
-&lt;p&gt;显然，这些子问题相互重叠、每次的结果都会影响下一个子数组结果，但是前面子数组的结果不会在改变。&lt;/p&gt;
-&lt;p&gt;现在想想上篇文章&lt;a href=&quot;http://peihao.space/2016/04/22/DP-intro/&quot;&gt;DP动态规划简介&lt;/a&gt;中提出的DP动态规划的三大条件：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;最优化原理（最优子结构性质） &lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;最优化原理可这样阐述：一个最优化策略具有这样的性质，不论过去状态和决策如何，对前面的决策所形成的状态而言，余下的诸决策必须构成最优策略。简而言之，一个最优化策略的子策略总是最优的。一个问题满足最优化原理又称其具有最优子结构性质。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;无后效性&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;将各阶段按照一定的次序排列好之后，对于某个给定的阶段状态，它以前各阶段的状态无法直接影响它未来的决策，而只能通过当前的这个状态。换句话说，每个状态都是过去历史的一个完整总结。这就是无后向性，又称为无后效性。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;子问题的重叠性&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;动态规划将原来具有指数级时间复杂度的搜索算法改进成了具有多项式时间复杂度的算法。其中的关键在于解决冗余，这是动态规划算法的根本目的。动态规划实质上是一种以空间换时间的技术，它在实现的过程中，不得不存储产生过程中的各种状态，所以它的空间复杂度要大于其它的算法。&lt;/p&gt;
-&lt;p&gt;在这个问题中都得到了完善的支撑，而且这个思想也很适合解决这个系列的问题，高效、简便。&lt;/p&gt;
-&lt;h1 id=&quot;解决过程&quot;&gt;解决过程&lt;/h1&gt;&lt;p&gt;我们使用一些列变量记录前n个子序列的结果。再具体的实现中，我们通常使用数组数据结构记录。数组&lt;code&gt;opt[length]&lt;/code&gt;中&lt;code&gt;opt[i]&lt;/code&gt;记录原始数据中前&lt;code&gt;i+1&lt;/code&gt;个数值（子数组）的最长递增子序列长度数值。&lt;/p&gt;
-&lt;p&gt;就以前面&lt;code&gt;seq={2,3,4,5,6,343,5,36,45,64,56,564}&lt;/code&gt;提过的数据来看：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;opt[0]:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;opt[0]代表的是原始数据中前1个数值的最长递增长度值，只有一个数值，显然seq[0]=2就是目前这个子问题的path，opt[0]=1。用上篇文章提到的术语，当前子问题的状态就是&lt;code&gt;opt[0]=1&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;opt[1]:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;opt[1]代表的是原始数据中前2个数值的最长递增长度值，&lt;code&gt;seq[1]&amp;gt;seq[0]&lt;/code&gt;，所以根据前面托出的状态转移方程，可以得出&lt;code&gt;opt[1]=opt[0]+1=2&lt;/code&gt;.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;opt[2]:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;opt[2]代表的是原始数据中前3个数值的最长递增长度值，&lt;code&gt;seq[2]&amp;gt;seq[1]&lt;/code&gt;，由于前面序列的连续递增，所以根据前面托出的状态转移方程，可以得出&lt;code&gt;opt[2]=opt[1]+1=3&lt;/code&gt;.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;opt[3]:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;opt[3]代表的是原始数据中前4个数值的最长递增长度值，&lt;code&gt;seq[3]&amp;gt;seq[2]&lt;/code&gt;，由于前面序列的连续递增，所以根据前面托出的状态转移方程，可以得出&lt;code&gt;opt[3]=opt[2]+1=4&lt;/code&gt;.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;opt[4]:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;opt[4]代表的是原始数据中前5个数值的最长递增长度值，&lt;code&gt;seq[4]&amp;gt;seq[3]&lt;/code&gt;，由于前面序列的连续递增，所以根据前面托出的状态转移方程，可以得出&lt;code&gt;opt[4]=opt[3]+1=5&lt;/code&gt;.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;opt[5]:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;opt[5]代表的是原始数据中前6个数值的最长递增长度值，&lt;code&gt;seq[5]&amp;gt;seq[4]&lt;/code&gt;，由于前面序列的连续递增，所以根据前面托出的状态转移方程，可以得出&lt;code&gt;opt[5]=opt[4]+1=6&lt;/code&gt;.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;opt[6]:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;opt[6]代表的是原始数据中前7个数值的最长递增长度值，&lt;code&gt;seq[6]&amp;lt;seq[5]&lt;/code&gt;，突如其来的变化让我们突然没了思绪。跳过seq[5]怎么样？&lt;code&gt;seq[6]&amp;lt;seq[4]&lt;/code&gt;，不行，再跳过直接到&lt;code&gt;seq[2]&lt;/code&gt;，现在因为&lt;code&gt;seq[6]&amp;gt;seq[2]&lt;/code&gt;，由于前面序列的连续递增，根据前面托出的状态转移方程，可以得出&lt;code&gt;opt[6]=opt[2]+1=4&lt;/code&gt;.这些逻辑很容易理解。但是如果前面的数据源并不是连续递增的，我们还是应该老老实实的遍历、比照大小得出结果。&lt;/p&gt;
-&lt;h1 id=&quot;实现&quot;&gt;实现&lt;/h1&gt;&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; seq[] = &amp;#123;&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;343&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;36&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;45&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;64&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;56&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;564&lt;/span&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; length=&lt;span class=&quot;keyword&quot;&gt;sizeof&lt;/span&gt;(seq)/&lt;span class=&quot;keyword&quot;&gt;sizeof&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; opt[length]=&amp;#123;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; path[length]=&amp;#123;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i, j, maxa = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,maxb=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i&amp;lt;length; i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        opt[i] = &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//计算子序列状态，path是为了还原最长子序列的辅助数组&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(i=&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;i&amp;lt;length;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(j=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;j&amp;lt;i;j++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(seq[i]&amp;gt;seq[j]&amp;amp;&amp;amp;opt[j]+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&amp;gt;opt[i])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            opt[i]=opt[j]+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            path[i]=j;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;length;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(maxa&amp;lt;opt[i])&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            maxa=opt[i];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            maxb=i;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//还原递增最长子序列&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(j=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,i=maxb;i&amp;gt;=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        opt[maxa-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;-j]=seq[i];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        i=path[i];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(++j==maxa)&lt;span class=&quot;keyword&quot;&gt;break&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;maxa;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&amp;lt;&amp;lt;opt[i]&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&#39; &#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;最长递增子序列系列是DP动态规划中简单、经典的入门题目。类似最长非递减子序列、导弹拦截问题、最长公共子序列问题等等。这在我们逐渐了解、认知动态规划的过程中可以给我们提高很大的帮助。&lt;/p&gt;
-&lt;p&gt;设有由n个不相同的整数组成的数列，记为:a[0]、a[1]、……、a[n-1]且a(i)&amp;lt;&amp;gt;a(j) (i&amp;lt;&amp;gt;j)&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;例如&lt;code&gt;{2,3,4,5,6,343,5,36,45,64,56,564}&lt;/code&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;若存在i1&amp;lt;i2&amp;lt;i3&amp;lt; … &amp;lt; ie 且有a[i1]&amp;lt;a[i2]&amp;lt; … &amp;lt;a[ie]则称为长度为e的递增子序列序列。如上例中3，18，23，24就是一个长度为4的递增序列，同时也有3，7，10，12，16，24长度为6的递增序列&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="algorithm" scheme="http://peihao.space/categories/algorithm/"/>
-    
-    
-      <category term="algorithm" scheme="http://peihao.space/tags/algorithm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>DP介绍</title>
-    <link href="http://peihao.space/2016/04/22/DP-intro/"/>
-    <id>http://peihao.space/2016/04/22/DP-intro/</id>
-    <published>2016-04-22T09:17:22.000Z</published>
-    <updated>2016-04-22T15:26:23.471Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;动态规划(dynamic programming)是运筹学的一个分支，是求解决策过程(decision process)最优化的数学方法。20世纪50年代初美国数学家R.E.Bellman等人在研究多阶段决策过程(multistep decision process)的优化问题时，提出了著名的最优化原理(principle of optimality)，把多阶段过程转化为一系列单阶段问题，利用各阶段之间的关系，逐个求解，创立了解决这类过程优化问题的新方法——动态规划&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;动态规划算法通常基于一个递推公式和n个初始状态。当前子问题的解将由前子问题的解推出。使用动态规划来解题只需要多项式时间复杂度。&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h1 id=&quot;基本思想&quot;&gt;基本思想&lt;/h1&gt;&lt;p&gt;动态规划算法通常用于求解具有某种最优性质的问题。在这类问题中，可能会有许多可行解。每一个解都对应于一个值，我们希望找到具有最优值的解。与分治法类似，基本思想也是将待求解问题分解成若干个子问题，先求解子问题，然后从这些子问题的解得到原问题的解。&lt;/p&gt;
-&lt;p&gt;与分治法不同的是，适合于用动态规划求解的问题，经分解得到子问题往往不是互相独立的。若用分治法来解这类问题，则分解得到的子问题数目太多，有些子问题被重复计算了很多次。如果我们能够保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算。可以用一个表来记录所有已解的子问题的答案。不管该子问题以后是否被用到，只要它被计算过，就将结果记录下来，方便之后使用。这就是动态规划法的基本思路。&lt;/p&gt;
-&lt;p&gt;动态规划程序设计是对解最优化问题的一种途径、一种方法，而不是一种特殊算法。不像搜索或数值计算那样，具有一个标准的数学表达式和明确清晰的解题方法。动态规划程序设计往往是针对一种最优化问题，由于各种问题的性质不同，确定最优解的条件也互不相同，因而动态规划的设计方法对不同的问题，有各具特色的解题方法，而不存在一种万能的动态规划算法，可以解决各类最优化问题。&lt;/p&gt;
-&lt;h1 id=&quot;适用条件&quot;&gt;适用条件&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;最优化原理（最优子结构性质） &lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;最优化原理可这样阐述：一个最优化策略具有这样的性质，不论过去状态和决策如何，对前面的决策所形成的状态而言，余下的诸决策必须构成最优策略。简而言之，一个最优化策略的子策略总是最优的。一个问题满足最优化原理又称其具有最优子结构性质。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;无后效性&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;将各阶段按照一定的次序排列好之后，对于某个给定的阶段状态，它以前各阶段的状态无法直接影响它未来的决策，而只能通过当前的这个状态。换句话说，每个状态都是过去历史的一个完整总结。这就是无后向性，又称为无后效性。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;子问题的重叠性&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;动态规划将原来具有指数级时间复杂度的搜索算法改进成了具有多项式时间复杂度的算法。其中的关键在于解决冗余，这是动态规划算法的根本目的。动态规划实质上是一种以空间换时间的技术，它在实现的过程中，不得不存储产生过程中的各种状态，所以它的空间复杂度要大于其它的算法。&lt;/p&gt;
-&lt;h1 id=&quot;经典问题&quot;&gt;经典问题&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;有面值为1元、3元和5元的硬币若干枚，如何用最少的硬币凑够x元？&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;我们最先想到的算法一般是贪婪算法，每次减去能够减掉的最大数值，最后得出结果。&lt;/p&gt;
-&lt;p&gt;当然这在上面问题这种问题上是成立的，因为有面值是基数&lt;em&gt;1元&lt;/em&gt;，这显然不能代表普遍性。当提供的面值是2、3、5时，要求x=11，我们发现直接粗暴地套用贪婪原理并不奏效，&lt;code&gt;x-5-5=1&lt;/code&gt;，此时无法进行下一步，需要提供回溯。&lt;/p&gt;
-&lt;p&gt;所以说，在有些时候这类问题可以通过贪婪算法解决，但是大部分情况，我们无法直接获得想要的结果。&lt;/p&gt;
-&lt;p&gt;很明显，这个问题可以分解为:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;求解凑齐&lt;code&gt;x-1&lt;/code&gt;数值的硬币枚数+1&lt;/p&gt;
-&lt;p&gt;求解凑齐&lt;code&gt;x-3&lt;/code&gt;数值的硬币枚数+1&lt;/p&gt;
-&lt;p&gt;求解凑齐&lt;code&gt;x-5&lt;/code&gt;数值的硬币枚数+1&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;最终的结果就是这三种情况的最小值，而这三种情况又可以继续分别分解。解决的路径跟递归很相似，但是相当容易套圈~&lt;/p&gt;
-&lt;p&gt;所以我们开始尝试顺人类认知的从小数值递推到x.&lt;/p&gt;
-&lt;p&gt;现在我们在开始看上一部分&lt;strong&gt;DP适用条件&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;最优化原理&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;无后效性&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;子问题的重叠性&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;第一个条件显而易见的符合，第二个条件，当我们求出&lt;code&gt;x-1&lt;/code&gt;、&lt;code&gt;x-3&lt;/code&gt;、&lt;code&gt;x-5&lt;/code&gt;这些结果之后，这些步骤的最终结果只是为了能够得到x的最优解，求解之后跟&lt;code&gt;x+1&lt;/code&gt;、&lt;code&gt;x+3&lt;/code&gt;后续再无瓜葛，这就符合了无后效性。第三个条件，从我开始分解这道问题的时候就能够得出结论。&lt;/p&gt;
-&lt;h1 id=&quot;解决&quot;&gt;解决&lt;/h1&gt;&lt;h2 id=&quot;术语介绍&quot;&gt;术语介绍&lt;/h2&gt;&lt;p&gt;按照DP的知识，有下面几个重要的术语：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;阶段：把所给求解问题的过程恰当地分成若干个相互联系的阶段，以便于求解，过程不同，阶段数就可能不同．描述阶段的变量称为阶段变量。在多数情况下，阶段变量是离散的，用k表示。此外，也有阶段变量是连续的情形。如果过程可以在任何时刻作出决策，且在任意两个不同的时刻之间允许有无穷多个决策时，阶段变量就是连续的&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;状态：状态表示每个阶段开始面临的自然状况或客观条件，它不以人们的主观意志为转移，也称为不可控因素。在上面的例子中状态就是某阶段的出发位置，它既是该阶段某路的起点，同时又是前一阶段某支路的终点。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;决策：一个阶段的状态给定以后，从该状态演变到下一阶段某个状态的一种选择（行动）称为决策。在最优控制中，也称为控制。在许多问题中，决策可以自然而然地表示为一个数或一组数。不同的决策对应着不同的数值。描述决策的变量称决策变量，因状态满足无后效性，故在每个阶段选择决策时只需考虑当前的状态而无须考虑过程的历史。决策变量的范围称为允许决策集合&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;策略：由每个阶段的决策组成的序列称为策略。对于每一个实际的多阶段决策过程，可供选取的策略有一定的范围限制，这个范围称为允许策略集合。允许策略集合中达到最优效果的策略称为最优策略。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;状态转移方程：给定k阶段状态变量x(k)的值后，如果这一阶段的决策变量一经确定，第k+1阶段的状态变量x(k+1)也就完全确定，即x(k+1)的值随x(k)和第k阶段的决策u(k)的值变化而变化，那么可以把这一关系看成(x(k)，u(k))与x(k+1)确定的对应关系，用x(k+1)=Tk(x(k),u(k))表示。这是从k阶段到k+1阶段的状态转移规律，也就是状态转移方程。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;状态&quot;&gt;状态&lt;/h2&gt;&lt;p&gt;上面在Encyclopedia上提到的解读可能比较抽象，状态就是问题分解得到子问题的当前解。&lt;/p&gt;
-&lt;p&gt;具体到这个例子，就是当&lt;code&gt;x=[0、1、2、3、4、5、6、7、8、9、...x-1、x]&lt;/code&gt;这些问题的解。&lt;/p&gt;
-&lt;p&gt;我们通过基础的数据结构数组S表示子问题解，也就是原来问题的状态。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;s[0]&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;求解需要多少枚硬币可以凑齐0元，显然，s[0]=0&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;s[1]&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;需要多少枚硬币可以凑齐1元，s[1]=1，需要1枚1元硬币&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;s[2]&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;需要多少枚硬币可以凑齐2元，s[2]=s[2-1]+1=s[1]+1=2。需要上面子问题状态再加上1枚1元硬币&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;s[3]&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;需要多少枚硬币可以凑齐3元，此时的情况就比较复杂了。我们有两种选择，当然是基于原来的状态求出。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;以s[2]的状态基础在加一枚1元硬币。s[3]=s[3-1]+1&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;以s[0]的状态再加一枚3元硬币。s[3]=s[3-3]+1&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;现在的问题就是如何确定所有选择。从前面的疾苦==记录可以看出，我都是有意识的在下标上做文章，故意将&lt;code&gt;s[0]===s[3-3]&lt;/code&gt;，这就是关键。每次我们获取当前状态，不是要从紧邻的上一个状态递推，而是根据提供给我们的硬币数值得到可能凑到当前数值的情况。&lt;/p&gt;
-&lt;p&gt;2元再加一枚1元硬币是如此，0元再加一枚3元硬币也是如此。当要求解s[5]的时候情况更加多变。候选变成了&lt;code&gt;[s[4]+1,s[2]+1,s[0]+1]&lt;/code&gt;。每个子问题的求解都要尝试可能的求解路径状态。&lt;/p&gt;
-&lt;p&gt;4+1是一种情况，2+3、0+5是另外的情况。&lt;/p&gt;
-&lt;p&gt;那么s[3]的结果是哪一个呢，根据问题需要求解最小的硬币枚数，显然结果是&lt;code&gt;Min(s[2]+1,s[0]+1)&lt;/code&gt;，是s[3]=1，需要1枚三元硬币&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;s[4]&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;需要多少枚硬币可以凑齐4元，&lt;code&gt;s[4]=Min(s[3]+1,s[1]+1)&lt;/code&gt;，s[4]=2,需要一枚3元硬币的基础上再加一枚1元硬币。&lt;/p&gt;
-&lt;p&gt;上面在s[3]的求解过程中，实际上已经脱出了该问题的状态转移方程。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;s[x]=Min(s[x-j]+1)&lt;/code&gt;，其中j是提供的硬币面值。&lt;/p&gt;
-&lt;h2 id=&quot;实现&quot;&gt;实现&lt;/h2&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;x=input(&lt;span class=&quot;string&quot;&gt;&#39;plz input the value of x&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;s=np.arange(int(x))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;x_coins=(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; range(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,x-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; i &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; x_coins:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; item&amp;gt;=i &lt;span class=&quot;keyword&quot;&gt;and&lt;/span&gt; s[item-i]+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&amp;lt;s[item]:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			s[item]=s[item-i]+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(s)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;动态规划(dynamic programming)是运筹学的一个分支，是求解决策过程(decision process)最优化的数学方法。20世纪50年代初美国数学家R.E.Bellman等人在研究多阶段决策过程(multistep decision process)的优化问题时，提出了著名的最优化原理(principle of optimality)，把多阶段过程转化为一系列单阶段问题，利用各阶段之间的关系，逐个求解，创立了解决这类过程优化问题的新方法——动态规划&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;动态规划算法通常基于一个递推公式和n个初始状态。当前子问题的解将由前子问题的解推出。使用动态规划来解题只需要多项式时间复杂度。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="algorithm" scheme="http://peihao.space/categories/algorithm/"/>
-    
-    
-      <category term="algorithm" scheme="http://peihao.space/tags/algorithm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Android Sdk获取更新</title>
-    <link href="http://peihao.space/2016/04/21/android-sdk/"/>
-    <id>http://peihao.space/2016/04/21/android-sdk/</id>
-    <published>2016-04-21T09:17:22.000Z</published>
-    <updated>2016-04-21T11:32:55.396Z</updated>
-    
-    <content type="html">&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/hei-131.jpg?imageView/2/w/610/q/100&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;最近好多朋友、同学陆陆续续开始了他们的毕设阶段，得益于国内蓬勃爆炸发展的移动终端产业，有相当一部分小伙伴们的课题都是基于android platform这个世界占比最大的开源移动操作系统app开发。他们也陆陆续续遇到了新的问题。&lt;/p&gt;
-&lt;p&gt;恰好我曾经作为初学者遇到过相同的问题，我将这些问题记录下来，希望可以分享我的知识、经验与见解。&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h1 id=&quot;Android_SDK更新&quot;&gt;Android SDK更新&lt;/h1&gt;&lt;p&gt;由于国内Google的IP受到GFW限制，所以无法通过唱过方法直接获取sdk更新，一般有两种办法。&lt;/p&gt;
-&lt;h2 id=&quot;Android_SDK在线更新镜像服务器&quot;&gt;Android SDK在线更新镜像服务器&lt;/h2&gt;&lt;p&gt;可以通过国内或者准许服务器的镜像获取更新，常用稳定的镜像有下面：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;南阳理工学院镜像服务器地址:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;mirror.nyist.edu.cn 端口：80&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;中国科学院开源协会镜像站地址:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight http&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;IPV4/IPV6&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;mirrors.opencas.cn 端口：80&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;http&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;IPV4/IPV6&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;mirrors.opencas.org 端口：80&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;stylus&quot;&gt;IPV4/IPV6: mirrors&lt;span class=&quot;class&quot;&gt;.opencas&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.ac&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.cn&lt;/span&gt; 端口：&lt;span class=&quot;number&quot;&gt;80&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;上海GDG镜像服务器地址:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;sdk.gdgshanghai.com 端口：8000&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;北京化工大学镜像服务器地址:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;IPv4: ubuntu&lt;span class=&quot;class&quot;&gt;.buct&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.edu&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.cn&lt;/span&gt;/ 端口：&lt;span class=&quot;number&quot;&gt;80&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;IPv4: ubuntu&lt;span class=&quot;class&quot;&gt;.buct&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.cn&lt;/span&gt;/ 端口：&lt;span class=&quot;number&quot;&gt;80&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;IPv6: ubuntu&lt;span class=&quot;class&quot;&gt;.buct6&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.edu&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.cn&lt;/span&gt;/ 端口：&lt;span class=&quot;number&quot;&gt;80&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;大连东软信息学院镜像服务器地址:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;mirrors.neusoft.edu.cn 端口：80&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;腾讯Bugly 镜像:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;android-mirror.bugly.qq.com 端口：8080&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;tips:&lt;/p&gt;
-&lt;p&gt;腾讯镜像使用方法:&lt;a href=&quot;http://android-mirror.bugly.qq.com:8080/include/usage.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://android-mirror.bugly.qq.com:8080/include/usage.html&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;温馨提示，注意选择合适的版本更新~&quot;&gt;温馨提示，注意选择合适的版本更新~&lt;/h2&gt;&lt;h2 id=&quot;使用方法&quot;&gt;使用方法&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;启动 Android SDK Manager ，打开主界面，依次选择『Tools』、『Options…』，弹出『Android SDK Manager - Settings』窗口；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;在『Android SDK Manager - Settings』窗口中，在『HTTP Proxy Server』和『HTTP Proxy Port』输入框内填入上面镜像服务器地址(不包含&lt;a href=&quot;http://，如下图)和端口，并且选中『Force&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://，如下图)和端口，并且选中『Force&lt;/a&gt; https://… sources to be fetched using &lt;a href=&quot;http://...』复选框。设置完成后单击『Close』按钮关闭『Android&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://...』复选框。设置完成后单击『Close』按钮关闭『Android&lt;/a&gt; SDK Manager - Settings』窗口返回到主界面；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;依次选择『Packages』、『Reload』。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&quot;http://www.androiddevtools.cn/static/image/sdk-manager-proxy-settings.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h2 id=&quot;直接下载离线包&quot;&gt;直接下载离线包&lt;/h2&gt;&lt;p&gt;一种更轻松的方法就是下载正确版本的离线包，首先明确开发的程序在哪一个Level（可以直接换算成android版本，如4.4、5.1），下载对应的文件，复制到本地&lt;code&gt;sdk manager&lt;/code&gt;设置的目录位置。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/android-local-sdk.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h2 id=&quot;直接下载带sdk的IDE&quot;&gt;直接下载带sdk的IDE&lt;/h2&gt;&lt;p&gt;Google公司官方推出的Android平台开发环境Android Studio是一款相当棒的开发软件，我平时使用的开发环境就是AS，相比Eclipse，他可以显著提高我的工作效率、学习进程。同时，因为Google已经宣布了不再对Eclipse进行Plugins更新维护，AS将会是以后的Android开发趋势。&lt;/p&gt;
-&lt;p&gt;这里直接提供当前最新的一次稳定版更新：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://pan.baidu.com/s/1cHlqma#path=%252FAndroid%252FDeveloper%2520Tools%252FWindows%252FAndroid%2520Studio%252F2.0%25E6%25AD%25A3%25E5%25BC%258F%25E7%2589%2588&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Win平台AS2.0稳定版   戳我&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;AS的一次Relase包括两种形式：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;带最新SDK版本&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;纯IDE&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;想要使用最新的SDK可以下载附带最新SDK的IDE.&lt;/p&gt;
-&lt;h1 id=&quot;一些你会用到的Docs&quot;&gt;一些你会用到的Docs&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;Android Api中文版&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&quot;http://www.embeddedlinux.org.cn/androidapi/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Android Api-zh&lt;/a&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Android API指南中文版&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&quot;http://api.apkbus.com/guide/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Gudie-zh&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/hei-131.jpg?imageView/2/w/610/q/100&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;最近好多朋友、同学陆陆续续开始了他们的毕设阶段，得益于国内蓬勃爆炸发展的移动终端产业，有相当一部分小伙伴们的课题都是基于android platform这个世界占比最大的开源移动操作系统app开发。他们也陆陆续续遇到了新的问题。&lt;/p&gt;
-&lt;p&gt;恰好我曾经作为初学者遇到过相同的问题，我将这些问题记录下来，希望可以分享我的知识、经验与见解。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="android" scheme="http://peihao.space/categories/android/"/>
-    
-    
-      <category term="android" scheme="http://peihao.space/tags/android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>宅福利-Tumblr</title>
-    <link href="http://peihao.space/2016/04/20/tumblr/"/>
-    <id>http://peihao.space/2016/04/20/tumblr/</id>
-    <published>2016-04-20T14:17:22.000Z</published>
-    <updated>2016-04-24T13:20:49.400Z</updated>
-    
-    <content type="html">&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/tumblr.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;本篇文章是&lt;a href=&quot;http://peihao.space/2016/03/16/alter_torrent/&quot;&gt;洗白种子文件&lt;/a&gt;的兄弟篇，也是为了安利一个宅男宅女极好的网站–&lt;a href=&quot;https://www.tumblr.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;汤不热&lt;/a&gt;.&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;&lt;em&gt;Tumblr（中文名：汤博乐）成立于2007年，是目前全球最大的轻博客网站，也是轻博客网站的始祖。Tumblr（汤博乐）是一种介于传统博客和微博之间的全新媒体形态，既注重表达，又注重社交，而且注重个性化设置，成为当前最受年轻人欢迎的社交网站之一。雅虎公司董事会2013年5月19日决定，以11亿美元收购Tumblr。&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;tumblr是纯粹基于兴趣的社交网站，产品形态好用只是一个方面，更重要的是，可以只关注自己感兴趣的人和博客，而且不必为了维持真实好友关系和自己被期望的网络形象而去做一些自己不想做的事（比如逃避家长监控）&lt;/p&gt;
-&lt;p&gt;好了，不装x，目前国内青年使用Tumblr频率最高的动机不是为了寻觅上面叹为观止的写真、艺术创造，而是为了解决青春期荷尔蒙沉淀过多问题。Tumblr上面有大量的喜闻乐见的po主，他们经常更新自己的站点，包括一颗赛艇的pic和video。而且，最重要的，到目前为止，GFW还没有明确的将网站放到黑名单…&lt;/p&gt;
-&lt;p&gt;当你有了Tumblr博主账号之后，你可以轻松的访问获取他发布的每一条资源分享。然而可能因为服务器的缘故，国内请求受限，速度很慢，好吧，编程改变世界.|&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; re&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; requests&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; lxml &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; etree&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Res=set()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Res1=set()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;blogname=input(&lt;span class=&quot;string&quot;&gt;&#39;plz input the username:&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(keys)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    dom=etree.HTML(requests.get(&lt;span class=&quot;string&quot;&gt;&#39;http://&#39;&lt;/span&gt;+blogname+&lt;span class=&quot;string&quot;&gt;&#39;.tumblr.com/&#39;&lt;/span&gt;).text)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    title=(dom.xpath(&lt;span class=&quot;string&quot;&gt;&#39;//title/text()&#39;&lt;/span&gt;))[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; outputfile&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    outputfile= open(title+&lt;span class=&quot;string&quot;&gt;&#39;-result.txt&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;w&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; key &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; keys:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        baseurl = &lt;span class=&quot;string&quot;&gt;&#39;http://&#39;&lt;/span&gt;+blogname.strip()+&lt;span class=&quot;string&quot;&gt;&#39;.tumblr.com/api/read?type=&#39;&lt;/span&gt;+key+&lt;span class=&quot;string&quot;&gt;&#39;&amp;amp;num=50&amp;amp;start=&#39;&lt;/span&gt;    &lt;span class=&quot;comment&quot;&gt;#pic&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        start = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;   &lt;span class=&quot;comment&quot;&gt;#start from num zero&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            url = baseurl + str(start)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            pagecontent = requests.get(url).text&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; key==&lt;span class=&quot;string&quot;&gt;&#39;photo&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                result=re.findall(&lt;span class=&quot;string&quot;&gt;&#39;&amp;lt;photo-url .*?&amp;gt;(.*?)&amp;lt;/photo-url&amp;gt;&#39;&lt;/span&gt;,pagecontent)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; result:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    Res.add(item)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                result=re.findall(&lt;span class=&quot;string&quot;&gt;&#39;source src=&quot;(.*?)&quot;&#39;&lt;/span&gt;,pagecontent)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; result:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    Res1.add(item)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (len(result) &amp;lt; &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;break&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                start += &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;func((&lt;span class=&quot;string&quot;&gt;&#39;video&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;photo&#39;&lt;/span&gt;))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; Res:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; Res:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        outputfile.writelines(item+&lt;span class=&quot;string&quot;&gt;&#39;\n&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; Res1:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; Res1:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        outputfile.writelines(item+&lt;span class=&quot;string&quot;&gt;&#39;\n&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;outputfile.close()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;运行上面的代码，输入正确的站主name，就可以在当前目录下的&lt;code&gt;result.txt&lt;/code&gt;文件写入所有的pic和video。&lt;/p&gt;
-&lt;p&gt;听过实验，pic会有很多的重复内容，因为会返回原图的不同尺寸url，这里我没有对他进行排重获取高分辨率，因为我懒。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.jianguoyun.com/p/DbSPNO0QpYz2BRi1qhM&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;下载戳我&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/tumblr2.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/tumblr.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;本篇文章是&lt;a href=&quot;http://peihao.space/2016/03/16/alter_torrent/&quot;&gt;洗白种子文件&lt;/a&gt;的兄弟篇，也是为了安利一个宅男宅女极好的网站–&lt;a href=&quot;https://www.tumblr.com/&quot;&gt;汤不热&lt;/a&gt;.&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="python" scheme="http://peihao.space/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://peihao.space/tags/python/"/>
     
   </entry>
   
