@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Trie树 | 窗外临街</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="文章大部分内容引用自Encyclopedia
+Trie树，即字典树。是一种树形结构，哈希树的变种。典型应用是用于统计，排序和保存大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的优点是：利用字符串的公共前缀来减少查询时间，最大限度地减少无谓的字符串比较，查询效率比哈希树高。
+
+Trie树可以用来作为搜索引擎中的分词处理手段。
+描述根节点不包含字符，除根节点外每一个节点都">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Trie树">
+<meta property="og:url" content="http://peihao.space/2016/01/20/Trie/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="文章大部分内容引用自Encyclopedia
+Trie树，即字典树。是一种树形结构，哈希树的变种。典型应用是用于统计，排序和保存大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的优点是：利用字符串的公共前缀来减少查询时间，最大限度地减少无谓的字符串比较，查询效率比哈希树高。
+
+Trie树可以用来作为搜索引擎中的分词处理手段。
+描述根节点不包含字符，除根节点外每一个节点都">
+<meta property="og:image" content="http://images.cppblog.com/cppblog_com/mythit/ac1.jpg">
+<meta property="og:updated_time" content="2016-07-25T08:12:10.632Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Trie树">
+<meta name="twitter:description" content="文章大部分内容引用自Encyclopedia
+Trie树，即字典树。是一种树形结构，哈希树的变种。典型应用是用于统计，排序和保存大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的优点是：利用字符串的公共前缀来减少查询时间，最大限度地减少无谓的字符串比较，查询效率比哈希树高。
+
+Trie树可以用来作为搜索引擎中的分词处理手段。
+描述根节点不包含字符，除根节点外每一个节点都">
+  
+    <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a706fa9fd732d608b9ad7e589d371545";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="baidu_js_push">
+	<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</div>
+<div class="overlay"> 
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div align="left" style="margin-top:6px;">
+<p style="color:#cccc99;font-size:90%">您好，培豪的第<span id="busuanzi_value_site_uv"></span>个小伙伴</p>
+</div>
+</div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">培豪</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/album">相册</a></li>
+				        
+							<li><a href="/atom.xml">Rss</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 11.11px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 12.22px;">Front End</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Gulp/" style="font-size: 10px;">Gulp</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/ISE/" style="font-size: 10px;">ISE</a> <a href="/tags/JQuery/" style="font-size: 11.11px;">JQuery</a> <a href="/tags/NoC/" style="font-size: 13.33px;">NoC</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.78px;">Python</a> <a href="/tags/Requests/" style="font-size: 12.22px;">Requests</a> <a href="/tags/Router/" style="font-size: 12.22px;">Router</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/Verilog/" style="font-size: 16.67px;">Verilog</a> <a href="/tags/Verilog-HDL/" style="font-size: 14.44px;">Verilog HDL</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/android/" style="font-size: 15.56px;">android</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/front-end/" style="font-size: 10px;">front end</a> <a href="/tags/hexo优化/" style="font-size: 11.11px;">hexo优化</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/matlab/" style="font-size: 14.44px;">matlab</a> <a href="/tags/matplotlib/" style="font-size: 11.11px;">matplotlib</a> <a href="/tags/noc/" style="font-size: 11.11px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 18.89px;">python</a> <a href="/tags/re/" style="font-size: 11.11px;">re</a> <a href="/tags/router/" style="font-size: 12.22px;">router</a> <a href="/tags/torrent/" style="font-size: 11.11px;">torrent</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/verilog/" style="font-size: 10px;">verilog</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/仿真/" style="font-size: 12.22px;">仿真</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/模式匹配/" style="font-size: 11.11px;">模式匹配</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/编码/" style="font-size: 12.22px;">编码</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 12.22px;">随感</a> <a href="/tags/随笔/" style="font-size: 15.56px;">随笔</a> <a href="/tags/音乐/" style="font-size: 11.11px;">音乐</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">衣服晒干风在穿，我一个人，很简单，自己放纵自己管…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">培豪</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">培豪</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/album">相册</a></li>
+		        
+					<li><a href="/atom.xml">Rss</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chuangwailinjie" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/chuangwailinjie" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Trie" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/20/Trie/" class="article-date">
+  	<time datetime="2016-01-20T14:24:06.000Z" itemprop="datePublished">2016-01-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Trie树
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+	</div>
+
+
+
+		
+		<div class="bookicon"></div>
+		<div class="article-hit">
+		<span id="busuanzi_container_page_pv">
+  热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+	</div>
+	
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	      	<!-- Table of Contents -->
+			
+			  <div id="toc" class="toc-article">
+			    <strong class="toc-title">文章目录</strong>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#描述"><span class="toc-number">1.</span> <span class="toc-text">描述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实现"><span class="toc-number">1.1.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例"><span class="toc-number">1.2.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用"><span class="toc-number">1.3.</span> <span class="toc-text">应用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#C++实现"><span class="toc-number">2.</span> <span class="toc-text">C++实现</span></a></li></ol>
+			  </div>
+			
+        <blockquote>
+<p>文章大部分内容引用自Encyclopedia</p>
+<p>Trie树，即字典树。是一种树形结构，哈希树的变种。典型应用是用于统计，排序和保存大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的优点是：利用字符串的公共前缀来减少查询时间，最大限度地减少无谓的字符串比较，查询效率比哈希树高。</p>
+</blockquote>
+<p>Trie树可以用来作为搜索引擎中的分词处理手段。</p>
+<h1 id="描述">描述</h1><p>根节点不包含字符，除根节点外每一个节点都只包含一个字符； 从根节点到某一节点，路径上经过的字符连接起来，为该节点对应的字符串； 每个节点的所有子节点包含的字符都不相同。</p>
+<h2 id="实现">实现</h2><ol>
+<li>从根结点开始一次搜索；<a id="more"></a></li>
+<li><p>取得要查找关键词的第一个字母，并根据该字母选择对应的子树并转到该子树继续进行检索；</p>
+</li>
+<li><p>在相应的子树上，取得要查找关键词的第二个字母,并进一步选择对应的子树进行检索。</p>
+</li>
+<li><p>迭代过程……</p>
+</li>
+<li><p>在某个结点处，关键词的所有字母已被取出，则读取附在该结点上的信息，即完成查找。</p>
+</li>
+</ol>
+<h2 id="示例">示例</h2><p>给出say，she，shr，he，her这5个单词作为构造Trie树的元素，构造的Trie树应该是这样的。</p>
+<p><img src="http://images.cppblog.com/cppblog_com/mythit/ac1.jpg" alt="AC自动机算法-飘过的小牛"></p>
+<h2 id="应用">应用</h2><ul>
+<li>串的快速检索</li>
+</ul>
+<p>给出N个单词组成的熟词表，以及一篇全用小写英文书写的文章，请你按最早出现的顺序写出所有不在熟词表中的生词。<br>在这种问题下，我们可以用数组枚举、哈希、用字典树，先把熟词建一棵树，然后读入文章进行比较，这种方法效率是比较高的。</p>
+<ul>
+<li>“串”排序</li>
+</ul>
+<p>给定N个互不相同的仅由一个单词构成的英文名，让你将他们按字典序从小到大输出<br>用字典树进行排序，采用数组的方式创建字典树，这棵树的每个结点的所有儿子很显然地按照其字母大小排序。对这棵树进行先序遍历即可。</p>
+<ul>
+<li>最长公共前缀</li>
+</ul>
+<p>对所有串建立字典树，对于两个串的最长公共前缀的长度即他们所在的结点的公共祖先个数，于是，问题就转化为当时公共祖先问题。</p>
+<h1 id="C++实现">C++实现</h1><p>HDU1251</p>
+<ul>
+<li>Input</li>
+</ul>
+<p>输入数据的第一部分是一张单词表,每行一个单词,单词的长度不超过10,它们代表的是老师交给Ignatius统计的单词,一个空行代表单词表的结束.第二部分是一连串的提问,每行一个提问,每个提问都是一个字符串.</p>
+<p>注意:本题只有一组测试数据,处理到文件结束.</p>
+<ul>
+<li>Output</li>
+</ul>
+<p>对于每个提问,给出以该字符串为前缀的单词的数量.</p>
+<ul>
+<li>Sample Input</li>
+</ul>
+<p>banana<br>band<br>bee<br>absolute<br>acm</p>
+<p>ba<br>b<br>band<br>abc</p>
+<ul>
+<li>Sample Output</li>
+</ul>
+<p>2<br>3<br>1<br>0</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> Trie_node</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> count;                    <span class="comment">// 统计单词前缀出现的次数</span></span><br><span class="line">	<span class="keyword">struct</span> Trie_node* next[<span class="number">26</span>];   <span class="comment">// 指向各个子树的指针</span></span><br><span class="line">	<span class="keyword">bool</span> exist;                   <span class="comment">// 标记该结点处是否构成单词  </span></span><br><span class="line">&#125;TrieNode , *Trie;</span><br><span class="line"></span><br><span class="line"><span class="function">TrieNode* <span class="title">createTrieNode</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	TrieNode* node = (TrieNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(TrieNode));</span><br><span class="line">	node-&gt;count = <span class="number">0</span>;</span><br><span class="line">	node-&gt;exist = <span class="literal">false</span>;</span><br><span class="line">	<span class="built_in">memset</span>(node-&gt;next , <span class="number">0</span> , <span class="keyword">sizeof</span>(node-&gt;next));    <span class="comment">// 初始化为空指针</span></span><br><span class="line">	<span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Trie_insert</span><span class="params">(Trie root, <span class="keyword">char</span>* word)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	Trie node = root;</span><br><span class="line">	<span class="keyword">char</span> *p = word;</span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">while</span>( *p )</span><br><span class="line">	&#123;</span><br><span class="line">		id = *p - <span class="string">'a'</span>;</span><br><span class="line">		<span class="keyword">if</span>(node-&gt;next[id] == <span class="literal">NULL</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			node-&gt;next[id] = createTrieNode();</span><br><span class="line">		&#125;</span><br><span class="line">		node = node-&gt;next[id];  <span class="comment">// 每插入一步，相当于有一个新串经过，指针向下移动</span></span><br><span class="line">		++p;</span><br><span class="line">		node-&gt;count += <span class="number">1</span>;      <span class="comment">// 这行代码用于统计每个单词前缀出现的次数（也包括统计每个单词出现的次数）</span></span><br><span class="line">	&#125;</span><br><span class="line">	node-&gt;exist = <span class="literal">true</span>;        <span class="comment">// 单词结束的地方标记此处可以构成一个单词</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Trie_search</span><span class="params">(Trie root, <span class="keyword">char</span>* word)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	Trie node = root;</span><br><span class="line">	<span class="keyword">char</span> *p = word;</span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">while</span>( *p )</span><br><span class="line">	&#123;</span><br><span class="line">		id = *p - <span class="string">'a'</span>;</span><br><span class="line">		node = node-&gt;next[id];</span><br><span class="line">		++p;</span><br><span class="line">		<span class="keyword">if</span>(node == <span class="literal">NULL</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> node-&gt;count;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    Trie root = createTrieNode();     <span class="comment">// 初始化字典树的根节点</span></span><br><span class="line">    <span class="keyword">char</span> str[<span class="number">12</span>] ;</span><br><span class="line">	<span class="keyword">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">while</span>(gets(str))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(flag)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,Trie_search(root , str));</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(<span class="built_in">strlen</span>(str) != <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				Trie_insert(root , str);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				flag = <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+      
+	<! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &weierp;&weierp;&weierp;<br>
+		   得到的是侥幸，失去的是人生
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/wx.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+
+	
+			<! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由<b><a href="/index.html" target="_blank" title="培豪">培豪</a></b>创作和发表于&nbsp<a href="http://peihao.space">培豪的博客</a>&nbsp,采用<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">署名-非商业性使用-禁止演绎 3.0</a>进行许可。</p>
+
+<p>非商业转载请注明作者及出处。商业转载请联系作者本人。</p>
+ 
+ <p>本文标题为: <a href="http://peihao.space/2016/01/20/Trie/">Trie树</a> </p>
+ 
+ <p>本文链接为：<a href="http://peihao.space/2016/01/20/Trie/">http://peihao.space/2016/01/20/Trie/</a></p>
+</div>
+<! -- 添加版权信息 -->
+		
+    </div>
+    
+  </div>
+
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/21/矩阵快速幂/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          矩阵快速幂
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/02/str-bytes/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Python中的str与bytes</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+  
+		
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Trie" data-title="Trie树" data-url="http://peihao.space/2016/01/20/Trie/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"chuangwailinjie"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 培豪
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<div id="totop" style="position:fixed;bottom:100px;right:30px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>
