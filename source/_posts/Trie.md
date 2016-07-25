@@ -1,5 +1,5 @@
 title: Trie树
-date: 2016-07-20 22:24:06
+date: 2016-01-20 22:24:06
 toc: true
 tags:
 - algorithm
