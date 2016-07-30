@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peihao.space/"/>
-  <updated>2016-07-25T08:11:26.635Z</updated>
+  <updated>2016-07-30T12:09:40.570Z</updated>
   <id>http://peihao.space/</id>
   
   <author>
@@ -16,50 +16,52 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>LayoutParams</title>
-    <link href="http://peihao.space/2016/07/24/Rel-layout/"/>
-    <id>http://peihao.space/2016/07/24/Rel-layout/</id>
-    <published>2016-07-24T10:24:06.000Z</published>
-    <updated>2016-07-25T08:11:26.635Z</updated>
+    <title>Android Application版本更新</title>
+    <link href="http://peihao.space/2016/07/30/android_application_update/"/>
+    <id>http://peihao.space/2016/07/30/android_application_update/</id>
+    <published>2016-07-30T14:24:06.000Z</published>
+    <updated>2016-07-30T12:09:40.570Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;RelativeLayout-LayoutParams&quot;&gt;RelativeLayout.LayoutParams&lt;/h1&gt;&lt;p&gt;Per-child layout information associated with RelativeLayout.&lt;/p&gt;
+    <content type="html">&lt;h1 id=&quot;get&amp;amp;set版本号&quot;&gt;get&amp;amp;set版本号&lt;/h1&gt;&lt;h2 id=&quot;set&quot;&gt;set&lt;/h2&gt;&lt;p&gt;在传统的Eclipse IDE开发中，我们通常只需要在清单文件&lt;code&gt;manifests&lt;/code&gt;中写入相应代码即可搞定。&lt;/p&gt;
+&lt;figure class=&quot;highlight groovy&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;manifest &lt;span class=&quot;string&quot;&gt;xmlns:&lt;/span&gt;android=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res/android&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;package&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;your package name&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;label&quot;&gt;    android:&lt;/span&gt;versionCode=&lt;span class=&quot;string&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;label&quot;&gt;    android:&lt;/span&gt;versionName=&lt;span class=&quot;string&quot;&gt;&quot;1.1.1&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;ul&gt;
-&lt;li&gt;Constructor&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;package属性的值为工程默认包名，一般不用我们重新设置。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;android:versionCode属性值为int型，开发者可见，开发版本号&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;android:versionName属性为String类型，用户可见，我们需要使用的就是这个值。&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;RelativeLayout.LayoutParams layoutParams = new LayoutParams(width, height);&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;构造函数，设置相对布局的宽高。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;后两个属性在默认情况下是没有的，我们需要添加版本信息时候，可以自行添加。&lt;/p&gt;
+&lt;p&gt;在Android Studio中没我们使用Gradle开发工具，版本信息设置与传统Eclipse不同，需要更新Gradle.Scripts中的build.gradle(Module:app)中修改相关代码。&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;defaultConfig &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        applicationId &lt;span class=&quot;string&quot;&gt;&quot;your package name&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        minSdkVersion &lt;span class=&quot;number&quot;&gt;14&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        targetSdkVersion &lt;span class=&quot;number&quot;&gt;23&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        versionCode &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        versionName &lt;span class=&quot;string&quot;&gt;&quot;1.1.2&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;默认5个属性，minSdkVersion为向下兼容最低平台版本；targetSdkVersion为目标平台版本&lt;/p&gt;
+&lt;h2 id=&quot;get&quot;&gt;get&lt;/h2&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;getVersionCode&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Context context)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            PackageManager manager = context.getPackageManager();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            PackageInfo info = manager.getPackageInfo(&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.getPackageName(), &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            String version = info.versionName;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; version;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125; &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt; (Exception e) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            e.printStackTrace();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;Can&#39;t get application version_name&quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;版本对比与更新&quot;&gt;版本对比与更新&lt;/h1&gt;&lt;h2 id=&quot;对比&quot;&gt;对比&lt;/h2&gt;&lt;figure class=&quot;highlight xml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;update&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;version&lt;/span&gt;&amp;gt;&lt;/span&gt;1.1.2&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;version&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;name&lt;/span&gt;&amp;gt;&lt;/span&gt;2048&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;name&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;url&lt;/span&gt;&amp;gt;&lt;/span&gt;https://raw.githubusercontent.com/xxxx/xxxxx/xxxxx/xxxx.apk&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;url&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;update&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在服务器中房屋文件update.xml，内容如上。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;layoutParams.rightMargin&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;version 属性值为上文记录的&lt;code&gt;versionName&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;url 属性值为新版本apk文件直接下载地址&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;一系列的Margin属性设置，设置right、left、top、bottom方向的Margin.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;addRule &lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;public void addRule (int verb)&lt;/code&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;Added in API level 1&lt;br&gt;Adds a layout rule to be interpreted by the RelativeLayout. This method should only be used for constraints that don’t refer to another sibling (e.g., CENTER_IN_PARENT) or take a boolean value (TRUE for true or 0 for false). To specify a verb that takes a subject, use addRule(int, int) instead.&lt;/p&gt;
-&lt;p&gt;Parameters&lt;br&gt;&lt;code&gt;verb&lt;/code&gt;    One of the verbs defined by RelativeLayout, such as ALIGN_WITH_PARENT_LEFT.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;public void addRule (int verb, int anchor)&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Added in API level 1&lt;br&gt;Adds a layout rule to be interpreted by the RelativeLayout. Use this for verbs that take a target, such as a sibling (ALIGN_RIGHT) or a boolean value (VISIBLE).&lt;/p&gt;
-&lt;p&gt;Parameters&lt;br&gt;&lt;code&gt;verb&lt;/code&gt;    One of the verbs defined by RelativeLayout, such as ALIGN_WITH_PARENT_LEFT.&lt;br&gt;&lt;code&gt;anchor&lt;/code&gt;    The id of another view to use as an anchor, or a boolean value (represented as TRUE for true or 0 for false). For verbs that don’t refer to another sibling (for example, ALIGN_WITH_PARENT_BOTTOM) just use -1.&lt;/p&gt;
-&lt;h1 id=&quot;例子&quot;&gt;例子&lt;/h1&gt;&lt;p&gt;&lt;code&gt;layoutParams.addRule(RIGHT_OF, items[i - 1].getId());&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;上面的函数设置当前控件在 &lt;code&gt;items[i-1].getId()&lt;/code&gt;这个Id对应控件的右侧&lt;/p&gt;
-</content>
+&lt;h2 id=&quot;xml文件内容转换&quot;&gt;xml文件内容转换&lt;/h2&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;ParseXmlService&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; HashMap&amp;lt;String, String&amp;gt; parseXml(InputStream inStream) &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; Exception&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        HashMap&amp;lt;String, String&amp;gt; hashMap = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; HashMap&amp;lt;String, String&amp;gt;();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 实例化一个文档构建器工厂&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 通过文档构建器工厂获取一个文档构建器&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        DocumentBuilder builder = factory.newDocumentBuilder();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 通过文档通过文档构建器构建一个文档实例&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        Document document = builder.parse(inStream);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;//获取XML文件根节点&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        Element root = document.getDocumentElement();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;//获得所有子节点&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        NodeList childNodes = root.getChildNodes();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; j = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; j &amp;lt; childNodes.getLength(); j++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;//遍历子节点&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            Node childNode = (Node) childNodes.item(j);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (childNode.getNodeType() == Node.ELEMENT_NODE)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                Element childElement = (Element) childNode;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;comment&quot;&gt;//版本号&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (&lt;span class=&quot;string&quot;&gt;&quot;version&quot;&lt;/span&gt;.equals(childElement.getNodeName()))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    hashMap.put(&lt;span class=&quot;string&quot;&gt;&quot;version&quot;&lt;/span&gt;,childElement.getFirstChild().getNodeValue());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;comment&quot;&gt;//下载地址&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ((&lt;span class=&quot;string&quot;&gt;&quot;url&quot;&lt;/span&gt;.equals(childElement.getNodeName())))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    hashMap.put(&lt;span class=&quot;string&quot;&gt;&quot;url&quot;&lt;/span&gt;,childElement.getFirstChild().getNodeValue());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; hashMap;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;``` &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;返回包含版本信息以及下载地址信息的Map&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;```java&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;String serviceCode = mHashMap.get(&lt;span class=&quot;string&quot;&gt;&quot;version&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 版本判断&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (!serviceCode.equals(versionCode))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;true&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;下载&quot;&gt;下载&lt;/h2&gt;&lt;p&gt;下载等网络相关代码不能在主线程中展开，新开一个线程&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;String sdpath = Environment.getExternalStorageDirectory() + &lt;span class=&quot;string&quot;&gt;&quot;/&quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;mSavePath = sdpath + &lt;span class=&quot;string&quot;&gt;&quot;download&quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;URL url = &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    url = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; URL(mHashMap.get(&lt;span class=&quot;string&quot;&gt;&quot;url&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125; &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt; (MalformedURLException e) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    e.printStackTrace();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 创建连接&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;HttpURLConnection conn = &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    conn = (HttpURLConnection) url.openConnection();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125; &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt; (IOException e) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    e.printStackTrace();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;conn.connect();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 获取文件大小&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; length = conn.getContentLength();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 创建输入流&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;InputStream is = conn.getInputStream();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;File file = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; File(mSavePath);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 判断文件目录是否存在&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (!file.exists())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    file.mkdir();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;File apkFile = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; File(mSavePath, mHashMap.get(&lt;span class=&quot;string&quot;&gt;&quot;name&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;FileOutputStream fos = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileOutputStream(apkFile);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; count = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 缓存&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt; buf[] = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;[&lt;span class=&quot;number&quot;&gt;1024&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 写入到文件中&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;do&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; numread = is.read(buf);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    count += numread;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 计算进度条位置&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    progress = (&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;) (((&lt;span class=&quot;keyword&quot;&gt;float&lt;/span&gt;) count / length) * &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 更新进度&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    mHandler.sendEmptyMessage(DOWNLOAD);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (numread &amp;lt;= &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 下载完成&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        mHandler.sendEmptyMessage(DOWNLOAD_FINISH);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;break&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 写入文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    fos.write(buf, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, numread);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125; &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; (!cancelUpdate);&lt;span class=&quot;comment&quot;&gt;// 点击取消就停止下载.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;fos.close();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;is.close();&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;RelativeLayout-LayoutParams&quot;&gt;RelativeLayout.LayoutParams&lt;/h1&gt;&lt;p&gt;Per-child layout information associated with RelativeLayout.&lt;/p&gt;
+      &lt;h1 id=&quot;get&amp;amp;set版本号&quot;&gt;get&amp;amp;set版本号&lt;/h1&gt;&lt;h2 id=&quot;set&quot;&gt;set&lt;/h2&gt;&lt;p&gt;在传统的Eclipse IDE开发中，我们通常只需要在清单文件&lt;code&gt;manifests&lt;/code&gt;中写入相应代码即可搞定。&lt;/p&gt;
+&lt;figure class=&quot;highlight groovy&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;manifest &lt;span class=&quot;string&quot;&gt;xmlns:&lt;/span&gt;android=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res/android&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;package&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;your package name&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;label&quot;&gt;    android:&lt;/span&gt;versionCode=&lt;span class=&quot;string&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;label&quot;&gt;    android:&lt;/span&gt;versionName=&lt;span class=&quot;string&quot;&gt;&quot;1.1.1&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;ul&gt;
-&lt;li&gt;Constructor&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;package属性的值为工程默认包名，一般不用我们重新设置。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;android:versionCode属性值为int型，开发者可见，开发版本号&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;android:versionName属性为String类型，用户可见，我们需要使用的就是这个值。&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;RelativeLayout.LayoutParams layoutParams = new LayoutParams(width, height);&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;构造函数，设置相对布局的宽高。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;layoutParams.rightMargin&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;一系列的Margin属性设置，设置right、left、top、bottom方向的Margin.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;addRule &lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;public void addRule (int verb)&lt;/code&gt;&lt;br&gt;
     
     </summary>
     
@@ -119,6 +121,61 @@
 &lt;li&gt;public final int getMeasuredHeightAndState ()&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Added in API level 11&lt;br&gt;
+    
+    </summary>
+    
+      <category term="android" scheme="http://peihao.space/categories/android/"/>
+    
+    
+      <category term="android" scheme="http://peihao.space/tags/android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>LayoutParams</title>
+    <link href="http://peihao.space/2016/07/24/Rel-layout/"/>
+    <id>http://peihao.space/2016/07/24/Rel-layout/</id>
+    <published>2016-07-24T10:24:06.000Z</published>
+    <updated>2016-07-25T08:11:26.635Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;RelativeLayout-LayoutParams&quot;&gt;RelativeLayout.LayoutParams&lt;/h1&gt;&lt;p&gt;Per-child layout information associated with RelativeLayout.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Constructor&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;RelativeLayout.LayoutParams layoutParams = new LayoutParams(width, height);&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;构造函数，设置相对布局的宽高。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;layoutParams.rightMargin&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一系列的Margin属性设置，设置right、left、top、bottom方向的Margin.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;addRule &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;public void addRule (int verb)&lt;/code&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;Added in API level 1&lt;br&gt;Adds a layout rule to be interpreted by the RelativeLayout. This method should only be used for constraints that don’t refer to another sibling (e.g., CENTER_IN_PARENT) or take a boolean value (TRUE for true or 0 for false). To specify a verb that takes a subject, use addRule(int, int) instead.&lt;/p&gt;
+&lt;p&gt;Parameters&lt;br&gt;&lt;code&gt;verb&lt;/code&gt;    One of the verbs defined by RelativeLayout, such as ALIGN_WITH_PARENT_LEFT.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;public void addRule (int verb, int anchor)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Added in API level 1&lt;br&gt;Adds a layout rule to be interpreted by the RelativeLayout. Use this for verbs that take a target, such as a sibling (ALIGN_RIGHT) or a boolean value (VISIBLE).&lt;/p&gt;
+&lt;p&gt;Parameters&lt;br&gt;&lt;code&gt;verb&lt;/code&gt;    One of the verbs defined by RelativeLayout, such as ALIGN_WITH_PARENT_LEFT.&lt;br&gt;&lt;code&gt;anchor&lt;/code&gt;    The id of another view to use as an anchor, or a boolean value (represented as TRUE for true or 0 for false). For verbs that don’t refer to another sibling (for example, ALIGN_WITH_PARENT_BOTTOM) just use -1.&lt;/p&gt;
+&lt;h1 id=&quot;例子&quot;&gt;例子&lt;/h1&gt;&lt;p&gt;&lt;code&gt;layoutParams.addRule(RIGHT_OF, items[i - 1].getId());&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;上面的函数设置当前控件在 &lt;code&gt;items[i-1].getId()&lt;/code&gt;这个Id对应控件的右侧&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;RelativeLayout-LayoutParams&quot;&gt;RelativeLayout.LayoutParams&lt;/h1&gt;&lt;p&gt;Per-child layout information associated with RelativeLayout.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Constructor&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;RelativeLayout.LayoutParams layoutParams = new LayoutParams(width, height);&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;构造函数，设置相对布局的宽高。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;layoutParams.rightMargin&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一系列的Margin属性设置，设置right、left、top、bottom方向的Margin.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;addRule &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;public void addRule (int verb)&lt;/code&gt;&lt;br&gt;
     
     </summary>
     
@@ -805,6 +862,62 @@
   </entry>
   
   <entry>
+    <title>Ngroke</title>
+    <link href="http://peihao.space/2016/06/29/ngroke/"/>
+    <id>http://peihao.space/2016/06/29/ngroke/</id>
+    <published>2016-06-29T14:24:06.000Z</published>
+    <updated>2016-07-28T16:34:54.492Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;为了方便本地服务器简单映射到外网访问，我们可以使用Ngroke服务。只需要几条简单的命令即可使用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.ngrok.cc/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;国内ngrok服务&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;点击进入获取相应平台的最新版本&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.ngrok.cc/index.php/login/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;注册/登录&lt;/a&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.ngrok.cc/index.php/Tunnel/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;添加隧道列表&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;将本地服务器地址、端口号与Ngroke分配的服务器绑定。本地地址： &lt;code&gt;127.0.0.1&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.ngrok.cc/index.php/Tunnel/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;隧道状态页面&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;添加映射隧道之后，在隧道状态页面获取Ngroke服务器提供的客户端Id。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;解压网站提供的客户端压缩包，执行.bat程序&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;打开本机的服务器容器，并在如&lt;code&gt;webapps\ROOT&lt;/code&gt;目录下放入文件，或者&lt;code&gt;webapps&lt;/code&gt;目录下放入Web工程&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在Ngroke客户端.bat中提供客户端Id，开启映射服务。  &lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;为了方便本地服务器简单映射到外网访问，我们可以使用Ngroke服务。只需要几条简单的命令即可使用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.ngrok.cc/&quot;&gt;国内ngrok服务&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;点击进入获取相应平台的最新版本&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.ngrok.cc/index.php/login/index.html&quot;&gt;注册/登录&lt;/a&gt;
+    
+    </summary>
+    
+      <category term="网络" scheme="http://peihao.space/categories/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="网络" scheme="http://peihao.space/tags/%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
     <title>（ZT）Verilog</title>
     <link href="http://peihao.space/2016/05/23/about-verilog-newnote/"/>
     <id>http://peihao.space/2016/05/23/about-verilog-newnote/</id>
@@ -945,6 +1058,32 @@
   </entry>
   
   <entry>
+    <title>属于你的文件</title>
+    <link href="http://peihao.space/2016/05/18/xdy/"/>
+    <id>http://peihao.space/2016/05/18/xdy/</id>
+    <published>2016-05-18T08:59:35.000Z</published>
+    <updated>2016-05-22T13:27:51.062Z</updated>
+    
+    <content type="html">&lt;p&gt;六层空间的叠叠瓦瓦，11月8小时的温柔似玉&lt;/p&gt;
+&lt;p&gt;念念忘忘的油纸伞片，27度6分钟的暖暖如花&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;六层空间的叠叠瓦瓦，11月8小时的温柔似玉&lt;/p&gt;
+&lt;p&gt;念念忘忘的油纸伞片，27度6分钟的暖暖如花&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="随感" scheme="http://peihao.space/categories/%E9%9A%8F%E6%84%9F/"/>
+    
+    
+      <category term="随感" scheme="http://peihao.space/tags/%E9%9A%8F%E6%84%9F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>VS连接Sql Server</title>
     <link href="http://peihao.space/2016/05/18/vs%E8%BF%9E%E6%8E%A5sqlserver/"/>
     <id>http://peihao.space/2016/05/18/vs连接sqlserver/</id>
@@ -988,32 +1127,6 @@
     
     
       <category term="C#" scheme="http://peihao.space/tags/C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>属于你的文件</title>
-    <link href="http://peihao.space/2016/05/18/xdy/"/>
-    <id>http://peihao.space/2016/05/18/xdy/</id>
-    <published>2016-05-18T08:59:35.000Z</published>
-    <updated>2016-05-22T13:27:51.062Z</updated>
-    
-    <content type="html">&lt;p&gt;六层空间的叠叠瓦瓦，11月8小时的温柔似玉&lt;/p&gt;
-&lt;p&gt;念念忘忘的油纸伞片，27度6分钟的暖暖如花&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;六层空间的叠叠瓦瓦，11月8小时的温柔似玉&lt;/p&gt;
-&lt;p&gt;念念忘忘的油纸伞片，27度6分钟的暖暖如花&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="随感" scheme="http://peihao.space/categories/%E9%9A%8F%E6%84%9F/"/>
-    
-    
-      <category term="随感" scheme="http://peihao.space/tags/%E9%9A%8F%E6%84%9F/"/>
     
   </entry>
   
@@ -1103,113 +1216,6 @@
     
     
       <category term="algorithm" scheme="http://peihao.space/tags/algorithm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>DP介绍-二维苹果收集</title>
-    <link href="http://peihao.space/2016/04/26/DP-intro-002/"/>
-    <id>http://peihao.space/2016/04/26/DP-intro-002/</id>
-    <published>2016-04-26T15:17:22.000Z</published>
-    <updated>2016-04-27T03:40:36.724Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;问题引出&quot;&gt;问题引出&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;平面上有N*M个格子，每个格子中放着一定数量的苹果。你从左上角的格子开始，每一步只能向下走或是向右走，每次走到一个格子上就把格子里的苹果收集起来，这样下去，你最多能收集到多少个苹果。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;分析&quot;&gt;分析&lt;/h1&gt;&lt;p&gt;问题最红需要我们求出整个格子里最终能收集到多少苹果，这个问题直接求解是没有办法的。我们可以换个办法依次趋近这个问题的结果。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;当前位置（x，y）能够获取的苹果数目最多是多少。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这个问题就比较好说了，因为到达当前位置的前置节点只有两个，也就是他的上方位置或左侧位置（先不讨论边界问题）。我们从格子的起点开始，每次获取当前位置上侧、左侧位置节点的苹果数目对比即可。&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;毫无疑问，现在这个已经被我们分解的多个子问题的问题集已经符合DP问题的基本条件：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;最优化原理（最优子结构性质） &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;无后效性&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;子问题的重叠性&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;以&lt;code&gt;s[length][length]&lt;/code&gt;记录每个格子包含的苹果数目，&lt;code&gt;dp[length][length]&lt;/code&gt;记录到达当前节点最多获取的苹果数目，即子问题的状态。问题的状态转移方程：&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;dp[x][y] = max( if(x&amp;gt;0) dp[x-1][y] , if(y&amp;gt;0) dp[x][y-1])&lt;/code&gt;&lt;/p&gt;
-&lt;h1 id=&quot;实现&quot;&gt;实现&lt;/h1&gt;&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;57&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;58&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;59&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;61&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;62&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;63&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;64&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;65&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;66&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;67&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;lt;string.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;std&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; a[&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;][&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; dp[&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;][&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; m,n;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//递归版本&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;dp_fun&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; x,&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; y)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  dp[x][y] = a[x][y];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; max = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(x &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &amp;amp;&amp;amp; max &amp;lt; dp[x-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;][y])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    max = dp[x-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;][y];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(y &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &amp;amp;&amp;amp; max &amp;lt; dp[x][y-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    max = dp[x][y-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  dp[x][y] += max;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(x&amp;lt;m-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    dp_fun(x+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,y);	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(y&amp;lt;n-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    dp_fun(x,y+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/*递推版本  调用dp_fun(m,n);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;void dp_fun(int x,int y)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;/*dp[0][0]=a[0][0];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    for(int i=1;i&amp;lt;x;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        dp[i][0]=dp[i-1][0]+a[i][0];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    for(int i=1;i&amp;lt;y;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        dp[0][i]=dp[0][i-1]+a[0][i];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    for(int i=1;i&amp;lt;x;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        for(int j=1;j&amp;lt;y;j++)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        int max_value=dp[i][j-1]&amp;gt;dp[i-1][j]?dp[i][j-1]:dp[i-1][j];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        dp[i][j]=a[i][j]+max_value;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    for(int i=1;i&amp;lt;x;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        a[i][0]=a[i-1][0]+a[i][0];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    for(int i=1;i&amp;lt;y;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        a[0][i]=a[0][i-1]+a[0][i];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    for(int i=1;i&amp;lt;x;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        for(int j=1;j&amp;lt;y;j++)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        int max_value=a[i][j-1]&amp;gt;a[i-1][j]?a[i][j-1]:a[i-1][j];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        a[i][j]+=max_value;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    return;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;built_in&quot;&gt;memset&lt;/span&gt;(dp,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;sizeof&lt;/span&gt;(dp));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;//m、n代表格子的数目，在本例中&amp;lt;=100 &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;built_in&quot;&gt;cin&lt;/span&gt;&amp;gt;&amp;gt;m&amp;gt;&amp;gt;n;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;m;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; j=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;j&amp;lt;n;j++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;built_in&quot;&gt;cin&lt;/span&gt;&amp;gt;&amp;gt;a[i][j];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  dp_fun(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;m;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; j=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;j&amp;lt;n;j++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&amp;lt;&amp;lt;dp[i][j]&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&quot;\t&quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&amp;lt;&amp;lt;endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;img src=&quot;http://peihao.space\img\article\DP-getapples.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;问题引出&quot;&gt;问题引出&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;平面上有N*M个格子，每个格子中放着一定数量的苹果。你从左上角的格子开始，每一步只能向下走或是向右走，每次走到一个格子上就把格子里的苹果收集起来，这样下去，你最多能收集到多少个苹果。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;分析&quot;&gt;分析&lt;/h1&gt;&lt;p&gt;问题最红需要我们求出整个格子里最终能收集到多少苹果，这个问题直接求解是没有办法的。我们可以换个办法依次趋近这个问题的结果。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;当前位置（x，y）能够获取的苹果数目最多是多少。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这个问题就比较好说了，因为到达当前位置的前置节点只有两个，也就是他的上方位置或左侧位置（先不讨论边界问题）。我们从格子的起点开始，每次获取当前位置上侧、左侧位置节点的苹果数目对比即可。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="algorithm" scheme="http://peihao.space/categories/algorithm/"/>
-    
-    
-      <category term="algorithm" scheme="http://peihao.space/tags/algorithm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java操作Ini文件</title>
-    <link href="http://peihao.space/2016/04/25/java-iniFile/"/>
-    <id>http://peihao.space/2016/04/25/java-iniFile/</id>
-    <published>2016-04-25T07:28:30.000Z</published>
-    <updated>2016-04-27T06:07:19.203Z</updated>
-    
-    <content type="html">&lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/ini-file.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;这个问题最开始是一个朋友面试时面试官让他解决的问题，他拿来请教我，我正好借此机会了解了下这种数据、配置存储文件。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;ini 文件是Initialization File的缩写，即初始化文件，是windows的系统配置文件所采用的存储格式，统管windows的各项配置，一般用户就用windows提供的各项图形化管理界面就可实现相同的配置了。但在某些情况，还是要直接编辑ini才方便，一般只有很熟悉windows才能去直接编辑。开始时用于WIN3X下面，WIN95用注册表代替，以及后面的内容表示一个节，相当于注册表中的键。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h1 id=&quot;具体Format&quot;&gt;具体Format&lt;/h1&gt;&lt;p&gt;INI文件由节（Section）、参数Item：键（key）、值（value）组成。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;data&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight fortran&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[section &lt;span class=&quot;keyword&quot;&gt;name&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;参数（键=值）&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;keyword&quot;&gt;value&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;注解&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;注解使用分号表示（;）。在分号后面的文字，直到该行结尾都全部为注解。&lt;br&gt;&lt;figure class=&quot;highlight ini&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;; comment textINI文件的数据格式的例子（配置文件的内容）　[Section1 Name]&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;setting&quot;&gt;KeyName1=&lt;span class=&quot;value&quot;&gt;value1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;setting&quot;&gt;KeyName2=&lt;span class=&quot;value&quot;&gt;value2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;因为INI文件可能是项目中共用的，所以使用[Section Name]段名来区分不同用途的参数区。&lt;/p&gt;
-&lt;h1 id=&quot;Java操作&quot;&gt;Java操作&lt;/h1&gt;&lt;p&gt;在常规的WIn平台下，ini文件的默认编码格式是ANSI。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;不同的国家和地区制定了不同的标准，由此产生了 GB2312、GBK、GB18030、Big5、Shift_JIS 等各自的编码标准。这些使用多个字节来代表一个字符的各种汉字延伸编码方式，称为 ANSI 编码。在简体中文Windows操作系统中，ANSI 编码代表 GBK 编码；在繁体中文Windows操作系统中，ANSI编码代表Big5；在日文Windows操作系统中，ANSI 编码代表 Shift_JIS 编码。&lt;br&gt;不同 ANSI 编码之间互不兼容，当信息在国际间交流时，无法将属于两种语言的文字，存储在同一段 ANSI 编码的文本中。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;ANSI在我们国内的具体编码实现实际上是GB2312（或GBK），所以我们对这种格式的文本数据进行操作即可。&lt;/p&gt;
-&lt;p&gt;Java INI Package (JavaINI) 是一个 Java 语言用来读写 INI 文件的工具包.&lt;a href=&quot;http://javaini.sourceforge.net/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Project Location&lt;/a&gt;，以下称为Ini开源包.&lt;/p&gt;
-&lt;p&gt;Ini开源包默认的编码格式是ASCII，也就是默认只操作范围内的128个字符，这会大大限制Ini开源包的功能。通过修改org.dtools.ini包的IniFileWriter类改属性值ENCODING，修改成适合我们的编码。GB2312、GBK在国内使用，因为win平台建立的ini文件默认就是ANSI编码，所以推荐修改为这两种编码格式。如果想要国际化，则可将ENCODING修改为UTF-8即可。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;读操作&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;IniFile ini = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; BasicIniFile(&lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt;);&lt;span class=&quot;comment&quot;&gt;//不使用大小写敏感&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;readContent&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		IniFileReader reader = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; IniFileReader(ini, file);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			reader.read();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#125; &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt; (IOException e) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			e.printStackTrace();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;comment&quot;&gt;//获取ini文件的所有Section&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;ini.getNumberOfSections();i++)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			IniSection sec = ini.getSection(i);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;comment&quot;&gt;//获取每个Section的Item&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;---- &quot;&lt;/span&gt; + sec.getName() + &lt;span class=&quot;string&quot;&gt;&quot; ----&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(IniItem item : sec.getItems())&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;				System.out.println(item.getName() + &lt;span class=&quot;string&quot;&gt;&quot; = &quot;&lt;/span&gt; + item.getValue());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;写操作&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;writeContent&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;comment&quot;&gt;//创建一个数据Section，在本例中Section名为 config&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		IniSection dataSection = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; BasicIniSection( &lt;span class=&quot;string&quot;&gt;&quot;config&quot;&lt;/span&gt; );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		ini.addSection( dataSection );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;comment&quot;&gt;//在上面的Section中添加Item，包括name、sex、age&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		IniItem nameItem = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; IniItem( &lt;span class=&quot;string&quot;&gt;&quot;name&quot;&lt;/span&gt; );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		nameItem.setValue(&lt;span class=&quot;string&quot;&gt;&quot;培豪&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		dataSection.addItem( nameItem );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		IniItem ageItem = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; IniItem( &lt;span class=&quot;string&quot;&gt;&quot;age&quot;&lt;/span&gt; );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		ageItem.setValue(&lt;span class=&quot;string&quot;&gt;&quot;999999&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		dataSection.addItem( ageItem );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		IniItem sexItem = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; IniItem( &lt;span class=&quot;string&quot;&gt;&quot;sex&quot;&lt;/span&gt; );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		sexItem.setValue(&lt;span class=&quot;string&quot;&gt;&quot;男&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		dataSection.addItem( sexItem );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;comment&quot;&gt;//将数据写入到磁盘&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		IniFileWriter writer=&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; IniFileWriter(ini, file);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			writer.write();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#125; &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt; (IOException e) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			e.printStackTrace();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;http://7xowaa.com1.z0.glb.clouddn.com/ini-file.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;这个问题最开始是一个朋友面试时面试官让他解决的问题，他拿来请教我，我正好借此机会了解了下这种数据、配置存储文件。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;ini 文件是Initialization File的缩写，即初始化文件，是windows的系统配置文件所采用的存储格式，统管windows的各项配置，一般用户就用windows提供的各项图形化管理界面就可实现相同的配置了。但在某些情况，还是要直接编辑ini才方便，一般只有很熟悉windows才能去直接编辑。开始时用于WIN3X下面，WIN95用注册表代替，以及后面的内容表示一个节，相当于注册表中的键。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="java" scheme="http://peihao.space/categories/java/"/>
-    
-    
-      <category term="java" scheme="http://peihao.space/tags/java/"/>
     
   </entry>
   
