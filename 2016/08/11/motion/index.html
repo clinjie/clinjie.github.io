@@ -3,30 +3,42 @@
 <head>
   <meta charset="utf-8">
   
-  <title>矩阵快速幂 | 窗外临街</title>
+  <title>android中的获取坐标 | 窗外临街</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="矩阵的快速幂是用来高效地计算矩阵的高次方的。将朴素的o（n）的时间复杂度，降到log（n）.
-最简单的例子来讲，一般我们正常计算实数x的n次幂时，都是从1开始，进行n次的x相乘。
-但做下简单的改进就能减少连乘的次数，方法如下：
-把n个矩阵进行两两分组，比如：A*A*A*A*A*A  =&amp;gt;  (A*A)*(A*A)*(A*A)
-这样变的好处是，你只需要计算一次AA，然后将结果(AA)连乘自己两">
+  <meta name="description" content="OnTouchListener
+getRawX()和getRawY()
+
+获得的是相对屏幕的位置
+
+getX()和getY()
+
+获得的永远是view的触摸位置坐标（这两个值不会超过view的长度和宽度）。
+View">
 <meta property="og:type" content="article">
-<meta property="og:title" content="矩阵快速幂">
-<meta property="og:url" content="http://peihao.space/2016/07/21/矩阵快速幂/index.html">
+<meta property="og:title" content="android中的获取坐标">
+<meta property="og:url" content="http://peihao.space/2016/08/11/motion/index.html">
 <meta property="og:site_name" content="窗外临街">
-<meta property="og:description" content="矩阵的快速幂是用来高效地计算矩阵的高次方的。将朴素的o（n）的时间复杂度，降到log（n）.
-最简单的例子来讲，一般我们正常计算实数x的n次幂时，都是从1开始，进行n次的x相乘。
-但做下简单的改进就能减少连乘的次数，方法如下：
-把n个矩阵进行两两分组，比如：A*A*A*A*A*A  =&amp;gt;  (A*A)*(A*A)*(A*A)
-这样变的好处是，你只需要计算一次AA，然后将结果(AA)连乘自己两">
-<meta property="og:updated_time" content="2016-07-21T07:12:06.432Z">
+<meta property="og:description" content="OnTouchListener
+getRawX()和getRawY()
+
+获得的是相对屏幕的位置
+
+getX()和getY()
+
+获得的永远是view的触摸位置坐标（这两个值不会超过view的长度和宽度）。
+View">
+<meta property="og:updated_time" content="2016-08-11T07:43:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="矩阵快速幂">
-<meta name="twitter:description" content="矩阵的快速幂是用来高效地计算矩阵的高次方的。将朴素的o（n）的时间复杂度，降到log（n）.
-最简单的例子来讲，一般我们正常计算实数x的n次幂时，都是从1开始，进行n次的x相乘。
-但做下简单的改进就能减少连乘的次数，方法如下：
-把n个矩阵进行两两分组，比如：A*A*A*A*A*A  =&amp;gt;  (A*A)*(A*A)*(A*A)
-这样变的好处是，你只需要计算一次AA，然后将结果(AA)连乘自己两">
+<meta name="twitter:title" content="android中的获取坐标">
+<meta name="twitter:description" content="OnTouchListener
+getRawX()和getRawY()
+
+获得的是相对屏幕的位置
+
+getX()和getY()
+
+获得的永远是view的触摸位置坐标（这两个值不会超过view的长度和宽度）。
+View">
   
     <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
   
@@ -174,7 +186,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 11.11px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 12.22px;">Front End</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Gulp/" style="font-size: 10px;">Gulp</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/ISE/" style="font-size: 10px;">ISE</a> <a href="/tags/JQuery/" style="font-size: 11.11px;">JQuery</a> <a href="/tags/NoC/" style="font-size: 13.33px;">NoC</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.78px;">Python</a> <a href="/tags/Requests/" style="font-size: 12.22px;">Requests</a> <a href="/tags/Router/" style="font-size: 12.22px;">Router</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/Verilog/" style="font-size: 16.67px;">Verilog</a> <a href="/tags/Verilog-HDL/" style="font-size: 14.44px;">Verilog HDL</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/android/" style="font-size: 12.22px;">android</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/front-end/" style="font-size: 10px;">front end</a> <a href="/tags/hexo优化/" style="font-size: 11.11px;">hexo优化</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/matlab/" style="font-size: 14.44px;">matlab</a> <a href="/tags/matplotlib/" style="font-size: 11.11px;">matplotlib</a> <a href="/tags/noc/" style="font-size: 11.11px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 18.89px;">python</a> <a href="/tags/re/" style="font-size: 11.11px;">re</a> <a href="/tags/router/" style="font-size: 12.22px;">router</a> <a href="/tags/torrent/" style="font-size: 11.11px;">torrent</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/verilog/" style="font-size: 10px;">verilog</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/仿真/" style="font-size: 12.22px;">仿真</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/模式匹配/" style="font-size: 11.11px;">模式匹配</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/编码/" style="font-size: 12.22px;">编码</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 12.22px;">随感</a> <a href="/tags/随笔/" style="font-size: 15.56px;">随笔</a> <a href="/tags/音乐/" style="font-size: 11.11px;">音乐</a>
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/BeautifulSoup/" style="font-size: 10px;">BeautifulSoup</a> <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/FTP/" style="font-size: 11px;">FTP</a> <a href="/tags/Front-End/" style="font-size: 12px;">Front End</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Gulp/" style="font-size: 10px;">Gulp</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/ISE/" style="font-size: 10px;">ISE</a> <a href="/tags/JQuery/" style="font-size: 11px;">JQuery</a> <a href="/tags/NoC/" style="font-size: 13px;">NoC</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Python/" style="font-size: 18px;">Python</a> <a href="/tags/Requests/" style="font-size: 12px;">Requests</a> <a href="/tags/Router/" style="font-size: 12px;">Router</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/Verilog/" style="font-size: 17px;">Verilog</a> <a href="/tags/Verilog-HDL/" style="font-size: 14px;">Verilog HDL</a> <a href="/tags/algorithm/" style="font-size: 19px;">algorithm</a> <a href="/tags/android/" style="font-size: 16px;">android</a> <a href="/tags/cgi/" style="font-size: 10px;">cgi</a> <a href="/tags/front-end/" style="font-size: 10px;">front end</a> <a href="/tags/hexo优化/" style="font-size: 11px;">hexo优化</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/lxml/" style="font-size: 10px;">lxml</a> <a href="/tags/matlab/" style="font-size: 14px;">matlab</a> <a href="/tags/matplotlib/" style="font-size: 11px;">matplotlib</a> <a href="/tags/noc/" style="font-size: 11px;">noc</a> <a href="/tags/pyquery/" style="font-size: 10px;">pyquery</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/re/" style="font-size: 11px;">re</a> <a href="/tags/router/" style="font-size: 12px;">router</a> <a href="/tags/torrent/" style="font-size: 11px;">torrent</a> <a href="/tags/urllib/" style="font-size: 10px;">urllib</a> <a href="/tags/verilog/" style="font-size: 10px;">verilog</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/仿真/" style="font-size: 12px;">仿真</a> <a href="/tags/基础知识/" style="font-size: 10px;">基础知识</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/实用/" style="font-size: 10px;">实用</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/模式匹配/" style="font-size: 11px;">模式匹配</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/编码/" style="font-size: 12px;">编码</a> <a href="/tags/网络/" style="font-size: 11px;">网络</a> <a href="/tags/贝叶斯/" style="font-size: 10px;">贝叶斯</a> <a href="/tags/随感/" style="font-size: 12px;">随感</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a> <a href="/tags/音乐/" style="font-size: 11px;">音乐</a>
 					</div>
 				</section>
 				
@@ -254,11 +266,11 @@ var _hmt = _hmt || [];
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-矩阵快速幂" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-motion" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/07/21/矩阵快速幂/" class="article-date">
-  	<time datetime="2016-07-21T07:24:06.000Z" itemprop="datePublished">2016-07-21</time>
+      <a href="/2016/08/11/motion/" class="article-date">
+  	<time datetime="2016-08-11T14:24:06.000Z" itemprop="datePublished">2016-08-11</time>
 </a>
     </div>
   
@@ -271,7 +283,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      矩阵快速幂
+      android中的获取坐标
     </h1>
   
 
@@ -280,12 +292,12 @@ var _hmt = _hmt || [];
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
 	</div>
 
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+	<a class="article-category-link" href="/categories/android/">android</a>
 	</div>
 
 
@@ -308,27 +320,27 @@ var _hmt = _hmt || [];
 			
 			  <div id="toc" class="toc-article">
 			    <strong class="toc-title">文章目录</strong>
-			    
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#OnTouchListener"><span class="toc-number">1.</span> <span class="toc-text">OnTouchListener</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#View"><span class="toc-number">2.</span> <span class="toc-text">View</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Width/Height"><span class="toc-number">3.</span> <span class="toc-text">Width/Height</span></a></li></ol>
 			  </div>
 			
-        <p>矩阵的快速幂是用来高效地计算矩阵的高次方的。将朴素的o（n）的时间复杂度，降到log（n）.</p>
-<p>最简单的例子来讲，一般我们正常计算实数x的n次幂时，都是从1开始，进行n次的x相乘。</p>
-<p>但做下简单的改进就能减少连乘的次数，方法如下：</p>
-<p>把n个矩阵进行两两分组，比如：<code>A*A*A*A*A*A  =&gt;  (A*A)*(A*A)*(A*A)</code></p>
-<p>这样变的好处是，你只需要计算一次A<em>A，然后将结果(A</em>A)连乘自己两次就能得到A^6，即(A*A)^3=A^6.这样就很容易的实现了时间复杂度的优化。<br><a id="more"></a></p>
-<p>在上面的问题中，最重要的就是如何选择间距值，上面的解答给我们展示了间距为2的示例，但我们还可以有很多其他的选择。那么如何选择出时间复杂度最低的呢，我们应该充分的使用现有的计算结果</p>
-<p>回头看看矩阵的快速幂问题，我们是不是也能把它离散化呢？比如A^19  =&gt;  （A^16）<em>（A^2）</em>（A^1），显然采取这样的方式计算时因子数将是log(n)级别的(原来的因子数是n)，不仅这样，因子间也是存在某种联系的，比如A^4能通过(A^2)<em>(A^2)得到，A^8又能通过(A^4)</em>(A^4)得到，这点也充分利用了现有的结果作为有利条件。</p>
-<p>下面举个例子进行说明：</p>
-<p>现在要求A^156,而156(10)=10011100(2) </p>
-<p>也就有A^156=&gt;(A^4)<em>(A^8)</em>(A^16)*(A^128)</p>
-<pre><code class="c++"><span class="keyword">while</span>(N)
- {
-                <span class="keyword">if</span>(N&amp;<span class="number">1</span>)
-                       res=res*A;
-                N&gt;&gt;=<span class="number">1</span>;
-                A=A*A;
- }
-</code></pre>
+        <h1 id="OnTouchListener">OnTouchListener</h1><ul>
+<li><code>getRawX</code>()和<code>getRawY()</code></li>
+</ul>
+<p>获得的是相对屏幕的位置</p>
+<ul>
+<li><code>getX()</code>和<code>getY()</code></li>
+</ul>
+<p>获得的永远是view的触摸位置坐标（这两个值不会超过view的长度和宽度）。</p>
+<h1 id="View">View</h1><a id="more"></a>
+<ul>
+<li><code>view.getTranslationX()</code></li>
+</ul>
+<p>计算的该view的偏移量。初始值为0，向左偏移值为负，向右偏移值为正。</p>
+<ul>
+<li><code>view.getX()</code></li>
+</ul>
+<p>相当于该view左上角距离父容器左边缘的距离，等于<code>getLeft()</code>+<code>getTranslationX()</code></p>
+<h1 id="Width/Height">Width/Height</h1><p>当获取<code>view.getWidth()/view.getHeight()</code>返回值为0时，可能是view控件还未在Activity中准备好，尝试下使用<code>view.getMeasuredWidth()/view.gwtMeasuredHeight()</code></p>
 
       
       
@@ -365,9 +377,9 @@ var _hmt = _hmt || [];
 
 <p>非商业转载请注明作者及出处。商业转载请联系作者本人。</p>
  
- <p>本文标题为: <a href="http://peihao.space/2016/07/21/矩阵快速幂/">矩阵快速幂</a> </p>
+ <p>本文标题为: <a href="http://peihao.space/2016/08/11/motion/">android中的获取坐标</a> </p>
  
- <p>本文链接为：<a href="http://peihao.space/2016/07/21/矩阵快速幂/">http://peihao.space/2016/07/21/矩阵快速幂/</a></p>
+ <p>本文链接为：<a href="http://peihao.space/2016/08/11/motion/">http://peihao.space/2016/08/11/motion/</a></p>
 </div>
 <! -- 添加版权信息 -->
 		
@@ -379,18 +391,18 @@ var _hmt = _hmt || [];
     
 <nav id="article-nav">
   
-    <a href="/2016/07/21/Aho-Corasick-automation/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/08/20/小记3/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          AC自动机
+          小记(3)
         
       </div>
     </a>
   
   
-    <a href="/2016/07/20/Trie/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Trie树</div>
+    <a href="/2016/07/30/android_application_update/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android Application版本更新</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -421,7 +433,7 @@ var _hmt = _hmt || [];
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="矩阵快速幂" data-title="矩阵快速幂" data-url="http://peihao.space/2016/07/21/矩阵快速幂/"></div>
+	<div class="ds-thread" data-thread-key="motion" data-title="android中的获取坐标" data-url="http://peihao.space/2016/08/11/motion/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
