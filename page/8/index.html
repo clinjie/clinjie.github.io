@@ -243,6 +243,214 @@ var _hmt = _hmt || [];
 </nav>
       <div class="body-wrap">
   
+    <article id="post-router-topology" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/29/router-topology/" class="article-date">
+  	<time datetime="2016-03-29T13:35:02.000Z" itemprop="datePublished">2016-03-29</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/29/router-topology/">Noc Topology</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>NoC的拓扑结构就是指NoC中各个节点的连接方式。通常NoC拓扑结构分为两类，一类是直接型网络拓扑，另一类是间接性网络拓扑。</p>
+<h1 id="直接型">直接型</h1><p>在直接网络中，节点处理器（IP）直接地通过网络彼此连接。常见的直接型拓扑包括网状拓扑（Mesh）、花式拓扑（Torus）等。<br>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/router/">router</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/router/">router</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/03/29/router-topology/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
+    <article id="post-router_know" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/28/router_know/" class="article-date">
+  	<time datetime="2016-03-28T13:35:02.000Z" itemprop="datePublished">2016-03-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/28/router_know/">路由器架构</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Noc小记">Noc小记</h1><p>Noc是由Router和Channel组成的网络结构。其中router主要用来控制网络中数据传输，channel是连通片上系统中各处理核之间进行点对点数据传输的通路。</p>
+<p>NoC采用分组交换的方式进行通信，片上网络中各处理核之间通过发送请求和接收相应消息的方式通信。在网络中传输的消息由头（head）、传输数据和尾（tail）组成。投中包含接收方的地址信息，router根据这个地址建立从传输方到达接收方的传输路径。传输数据即通信中核间要传输的信息。尾用来表示一个消息传输完毕。由于一个完整的传输数据往往包含的数据量很大，这样对片上网络的通信效率不利，于是我们将传输数据分割成更小的数据段，在对数据段添加头和尾构成数据包。</p>
+<p>一般的Router有以下单元组成：</p>
+<ul>
+<li><p>计算单元</p>
+</li>
+<li><p>分配单元</p>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/router/">router</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/router/">router</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/03/28/router_know/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
+    <article id="post-SA" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/27/SA/" class="article-date">
+  	<time datetime="2016-03-27T13:35:02.000Z" itemprop="datePublished">2016-03-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/27/SA/">模拟退火</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="模拟退火算法概述">模拟退火算法概述</h1><p>模拟退火算法来源于固体退火原理，将固体加温至充分高，再让其徐徐冷却，加温时，固体内部粒子随温升变为无序状，内能增大，而徐徐冷却时粒子渐趋有序，在每个温度都达到平衡态，最后在常温时达到基态，内能减为最小。根据<code>Metropolis</code>准则，粒子在温度T时趋于平衡的概率为<code>e-ΔE/(kT)</code>，其中E为温度T时的内能，ΔE为其改变量，k为<code>Boltzmann</code>常数。
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/算法/">算法</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/03/27/SA/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
     <article id="post-verilog_date" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -382,6 +590,74 @@ var _hmt = _hmt || [];
 
 
   
+    <article id="post-numpy" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/17/numpy/" class="article-date">
+  	<time datetime="2016-03-17T14:23:35.000Z" itemprop="datePublished">2016-03-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/17/numpy/">Python中的numpy</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/img/article/article_numpy.png" alt=""></p>
+<h1 id="Numpy">Numpy</h1><p><em>NumPy系统是Python的一种开源的数值计算扩展。这种工具可用来存储和处理大型矩阵，比Python自身的嵌套列表（nested list structure)结构要高效的多（该结构也可以用来表示矩阵（matrix））</em>。
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Numpy/">Numpy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Python/">Python</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/03/17/numpy/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
     <article id="post-Matplotlib快速绘图" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -452,74 +728,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-numpy" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/17/numpy/" class="article-date">
-  	<time datetime="2016-03-17T14:23:35.000Z" itemprop="datePublished">2016-03-17</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/17/numpy/">Python中的numpy</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/img/article/article_numpy.png" alt=""></p>
-<h1 id="Numpy">Numpy</h1><p><em>NumPy系统是Python的一种开源的数值计算扩展。这种工具可用来存储和处理大型矩阵，比Python自身的嵌套列表（nested list structure)结构要高效的多（该结构也可以用来表示矩阵（matrix））</em>。
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Numpy/">Numpy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Python/">Python</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/03/17/numpy/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
     <article id="post-alter_torrent" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -570,217 +778,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2016/03/16/alter_torrent/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-torrent" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/14/torrent/" class="article-date">
-  	<time datetime="2016-03-14T14:23:35.000Z" itemprop="datePublished">2016-03-14</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/14/torrent/">torrent文件编码</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://img1.mydrivers.com/img/20150517/008c977d53a449319839b62734ab656b.jpg" alt=""></p>
-<h1 id="Torrent小记">Torrent小记</h1><p>由于某些众所周知的原因，我对torrent文件(也就是我们常说的种子文件)产生了浓厚的兴趣，这里是官方百科对torrent文件的定义：</p>
-<p><em>torrent文件本质上是文本文件，包含Tracker信息和文件信息两部分。Tracker信息主要是BT下载中需要用到的Tracker服务器的地址和针对Tracker服务器的设置，文件信息是根据对目标文件的计算生成的，计算结果根据BitTorrent协议内的B编码规则进行编码。所以，torrent文件就是被下载文件的“索引”。</em></p>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/torrent/">torrent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编码/">编码</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/torrent/">torrent</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/03/14/torrent/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-verilog_hdl3" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/09/verilog_hdl3/" class="article-date">
-  	<time datetime="2016-03-09T14:23:35.000Z" itemprop="datePublished">2016-03-09</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/09/verilog_hdl3/">Verilog小叙(三)</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>好的，接着上篇文章<a href="/2016/03/08/verilog_hdl2/">Verilog小叙(二)</a></p>
-<h1 id="数据流建模">数据流建模</h1><p>之前的介绍中，我们已经初步了解到数据流描述方式，本节对数据流的建模方式进一步讨论，主要讲述连续赋值语句、阻塞赋值语句、非阻塞赋值语句，并针对一个系统设计频率计数器的实例进行讲解。</p>
-<h2 id="连续赋值语句">连续赋值语句</h2><p>数据流的描述是采用连续赋值语句(assign )语句来实现的。语法如下：<br><code>assign net_type = 表达式；</code><br>连续赋值语句用于组合逻辑的建模。 等式左边是wire 类型的变量。等式右边可以是常量、由运算符如逻辑运算符、算术运算符参与的表达。<br>如下几个实例：</p>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Verilog-HDL/">Verilog HDL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/仿真/">仿真</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Verilog/">Verilog</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/03/09/verilog_hdl3/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-verilog_hdl2" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/08/verilog_hdl2/" class="article-date">
-  	<time datetime="2016-03-08T14:23:35.000Z" itemprop="datePublished">2016-03-08</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/08/verilog_hdl2/">Verilog小叙(二)</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>好的，接着上篇文章<a href="/2016/03/06/verilog_hdl/">Verilog小叙(一)</a></p>
-<h1 id="常量">常量</h1><p>Verilog HDL中有三种常量：<br>整型、实型、字符串型。<br>下划线符号“_”可以随意用在整数或实数中，它们就数量本身没有意义。它们能用来提高易读性；唯一的限制是下划线符号不能用作为首字符。<br>下面主要介绍整型和字符串型。</p>
-<h2 id="整型">整型</h2><p>整型数可以按如下两种方式书写：</p>
-<ol>
-<li>简单的十进制数格式</li>
-<li>基数格式</li>
-</ol>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Verilog-HDL/">Verilog HDL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/仿真/">仿真</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Verilog/">Verilog</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/03/08/verilog_hdl2/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

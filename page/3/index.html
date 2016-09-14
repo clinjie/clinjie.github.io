@@ -243,6 +243,220 @@ var _hmt = _hmt || [];
 </nav>
       <div class="body-wrap">
   
+    <article id="post-matlab2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/08/matlab2/" class="article-date">
+  	<time datetime="2016-07-08T07:24:06.000Z" itemprop="datePublished">2016-07-08</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/08/matlab2/">Matlab学习(二)</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="辅助指令">辅助指令</h1><h2 id="help工具">help工具</h2><ul>
+<li><p>help 目录名       显示指定目录中的所有命令及其函数</p>
+</li>
+<li><p>help lang      将列出与 MATLAB 编程语言的所有命令及其函数</p>
+</li>
+<li><p>help matfun     将列出与数值线性代数有关的所有矩阵函数</p>
+</li>
+<li><p>help elfun     列出所有基本函数</p>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/matlab/">matlab</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/matlab/">matlab</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/07/08/matlab2/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
+    <article id="post-matlab1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/08/matlab1/" class="article-date">
+  	<time datetime="2016-07-08T04:24:06.000Z" itemprop="datePublished">2016-07-08</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/08/matlab1/">Matlab学习</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="matlab小序">matlab小序</h1><blockquote>
+<p>MALAB译于矩阵实验室MATrix LABoratory是用来提供通往LINPACK 和 EISPACK 矩阵软件包接口的，后来，它渐渐发展成了通用科技计算图视交互系统和程序语言。</p>
+</blockquote>
+<p>MATLAB 的基本数据单位是矩阵 它的指令表达与数学 工程中常用的习惯形式十分相似 比如 矩阵方程 Ax=b 在 MATLAB 中被写成 A*x=b 而若要通过 A,b 求 x 那么只要写 x=A\b 即可。完全不需要对矩阵的乘法和求逆进行编程因此 用MATLAB 解算问题要比用C Fortran 等语言简捷得多。</p>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/matlab/">matlab</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/matlab/">matlab</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/07/08/matlab1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
+    <article id="post-shuapiao" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/07/shuapiao/" class="article-date">
+  	<time datetime="2016-07-07T14:24:06.000Z" itemprop="datePublished">2016-07-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/07/shuapiao/">多线程刷票</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="需求">需求</h1><p>最近突然有朋友对投票刷票有需求，正好自己空了下来，就帮他写了个简单的多线程投票脚本。因为不想考虑过多的session、cookie以及post data，所以直接使用了自动化工具<a href="http://peihao.space/2016/02/27/selenium/">Selenium</a></p>
+<p>简单地说，Selenium就是一个通过执行预先设置的Browser的指令，解放双手，提高工作效率。</p>
+<p>不同于通用的流行python网络模块，Selenium更像是市面上流行的按键精灵类似的软件，通过设定特定的工作流程，保证任务的完成。任务的实际执行者是Browser本身。</p>
+<p>Selenium对网页的request、response、解析等操作都是另外的伪浏览器进程执行，然后将获取的数据返回。而传统的python网络模块则通过python进程，对网页请求、回应。显然网络模块会更加高效，而对于普通人，Selenium的操作更加直观。</p>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/python/">python</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/07/07/shuapiao/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
     <article id="post-dfs_bfs" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -588,213 +802,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2016/05/20/android-sqlite-rawsql/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-xdy" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/18/xdy/" class="article-date">
-  	<time datetime="2016-05-18T08:59:35.000Z" itemprop="datePublished">2016-05-18</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/18/xdy/">属于你的文件</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	      	<!-- Table of Contents -->
-			
-        <p>六层空间的叠叠瓦瓦，11月8小时的温柔似玉</p>
-<p>念念忘忘的油纸伞片，27度6分钟的暖暖如花</p>
-
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/随感/">随感</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/随感/">随感</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-vs连接sqlserver" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/18/vs连接sqlserver/" class="article-date">
-  	<time datetime="2016-05-18T08:59:35.000Z" itemprop="datePublished">2016-05-18</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/18/vs连接sqlserver/">VS连接Sql Server</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近在帮同学搞一个小项目时遇到的关于VS2013连接微软公司的DBS SqlServer遇到的问题，这里mark以下，防止以后遗忘。</p>
-<p>当我尝试调试这个半成品的时候，出现了下面的问题。</p>
-<p>上面提示VS在于SQL Server建立连接时出现了问题，无法正确找到服务器，所以与数据服务器建立连接也就无从谈起了。</p>
-<p>在services.msc程序中确保SQL Server的支撑服务已经正常启动，再次尝试，依旧如此。<br>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/C/">C#</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/05/18/vs连接sqlserver/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-data-dip" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/04/28/data-dip/" class="article-date">
-  	<time datetime="2016-04-28T09:17:22.000Z" itemprop="datePublished">2016-04-28</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/28/data-dip/">（ZT）机器学习与数据挖掘</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>文章摘录自周志华老师《机器学习与数据挖掘》.</p>
-</blockquote>
-<p>机器学习是人工智能的核心研究领域之一， 其最初的研究动机是为了让计算机系统具有人的学习能力以便实现人工智能，因为众所周知，没有学习能力的系统很难被认为是具有智能的。目前被广泛采用的机器学习的定义是“利用经验来改善计算机系统自身的性能”。事实上，由于“经验”在计算机系统中主要是以数据的形式存在的，因此机器学习需要设法对数据进行分析，这就使得它逐渐成为智能数据分析技术的创新源之一，并且为此而受到越来越多的关注。</p>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/algorithm/">algorithm</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/04/28/data-dip/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

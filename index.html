@@ -243,6 +243,222 @@ var _hmt = _hmt || [];
 </nav>
       <div class="body-wrap">
   
+    <article id="post-fullset" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/14/fullset/" class="article-date">
+  	<time datetime="2016-09-14T14:24:06.000Z" itemprop="datePublished">2016-09-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/14/fullset/">string全排列</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="字符串全排列">字符串全排列</h1><h2 id="规则">规则</h2><p>最简单的思路就是使用递归实现：</p>
+<ul>
+<li><p>将最左边字符固定，后面的依次全排</p>
+</li>
+<li><p>上一步的依次安排实际上是一次小集合的字符串全排</p>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/09/14/fullset/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
+    <article id="post-django_intro3" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/11/django_intro3/" class="article-date">
+  	<time datetime="2016-09-11T14:24:06.000Z" itemprop="datePublished">2016-09-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/11/django_intro3/">Django初识3</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="View视图">View视图</h1><p>Django 中的视图的概念是「一类具有相同功能和模板的网页的集合」。比如，在一个博客应用中，你可能会创建如下几个视图：</p>
+<ul>
+<li>博客首页——展示最近的几项内容。</li>
+<li>内容“详情”页——详细展示某项内容。</li>
+<li>以年为单位的归档页——展示选中的年份里各个月份创建的内容。</li>
+<li>以月为单位的归档页——展示选中的月份里各天创建的内容。</li>
+<li>以天为单位的归档页——展示选中天里创建的所有内容。</li>
+<li>评论处理器——用于响应为一项内容添加评论的操作。</li>
+</ul>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/python/">python</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/09/11/django_intro3/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
+    <article id="post-django_intro2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/10/django_intro2/" class="article-date">
+  	<time datetime="2016-09-10T14:24:06.000Z" itemprop="datePublished">2016-09-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/10/django_intro2/">Django初识2</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="创建管理员账户">创建管理员账户</h1><p>作为一个常规的Blog系统，我们需要有能够后台操作的账户。Django提供了便捷的创建用户接口：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage<span class="class">.py</span> createsuperuser</span><br></pre></td></tr></table></figure>
+<p>在交互式输入相关信息时，要注意密码不能是纯数字形式。</p>
+<p>在<code>http://127.0.0.1:8000/admin</code>中输入刚刚创建的用户即可管理项目。</p>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/python/">python</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/09/10/django_intro2/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
     <article id="post-django_intro1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -348,7 +564,7 @@ var _hmt = _hmt || [];
 <p>Django 是 Python 编程语言驱动的一个开源模型-视图-控制器（MVC）风格的 Web 应用程序框架。使用 Django，我们在几分钟之内就可以创建高品质、易维护、数据库驱动的应用程序。</p>
 </blockquote>
 <p>下面是简略的django应用流程图</p>
-<p><a href="http://peihao.space/img/article\djaogo\diango_flow.png"></a></p>
+<p><a href="http://peihao.space/img/article/djaogo/diango_flow.png"></a></p>
       
       
 
@@ -601,238 +817,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2016/08/11/motion/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-android_application_update" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/07/30/android_application_update/" class="article-date">
-  	<time datetime="2016-07-30T14:24:06.000Z" itemprop="datePublished">2016-07-30</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/30/android_application_update/">Android Application版本更新</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="get&amp;set版本号">get&amp;set版本号</h1><h2 id="set">set</h2><p>在传统的Eclipse IDE开发中，我们通常只需要在清单文件<code>manifests</code>中写入相应代码即可搞定。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;manifest <span class="string">xmlns:</span>android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="keyword">package</span>=<span class="string">"your package name"</span></span><br><span class="line"><span class="label">    android:</span>versionCode=<span class="string">"1"</span></span><br><span class="line"><span class="label">    android:</span>versionName=<span class="string">"1.1.1"</span>&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>package属性的值为工程默认包名，一般不用我们重新设置。</p>
-</li>
-<li><p>android:versionCode属性值为int型，开发者可见，开发版本号</p>
-</li>
-<li><p>android:versionName属性为String类型，用户可见，我们需要使用的就是这个值。</p>
-</li>
-</ul>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/android/">android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/07/30/android_application_update/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-getMeasured" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/07/24/getMeasured/" class="article-date">
-  	<time datetime="2016-07-24T10:24:06.000Z" itemprop="datePublished">2016-07-24</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/24/getMeasured/">getMeasured</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>public final int getMeasuredHeight ()</li>
-</ul>
-<p>Added in API level 1<br>Like getMeasuredHeightAndState(), but only returns the raw width component (that is the result is masked by MEASURED_SIZE_MASK).</p>
-<p>Returns:</p>
-<p><strong>The raw measured height of this view.</strong></p>
-<ul>
-<li>public final int getMeasuredHeightAndState ()</li>
-</ul>
-<p>Added in API level 11<br>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/android/">android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/07/24/getMeasured/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-Rel-layout" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/07/24/Rel-layout/" class="article-date">
-  	<time datetime="2016-07-24T10:24:06.000Z" itemprop="datePublished">2016-07-24</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/24/Rel-layout/">LayoutParams</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="RelativeLayout-LayoutParams">RelativeLayout.LayoutParams</h1><p>Per-child layout information associated with RelativeLayout.</p>
-<ul>
-<li>Constructor</li>
-</ul>
-<p><code>RelativeLayout.LayoutParams layoutParams = new LayoutParams(width, height);</code></p>
-<p>构造函数，设置相对布局的宽高。</p>
-<ul>
-<li>layoutParams.rightMargin</li>
-</ul>
-<p>一系列的Margin属性设置，设置right、left、top、bottom方向的Margin.</p>
-<ul>
-<li>addRule </li>
-</ul>
-<p><code>public void addRule (int verb)</code><br>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/android/">android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/07/24/Rel-layout/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

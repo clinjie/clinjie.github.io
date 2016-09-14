@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://peihao.space/2016/09/14/fullset/</loc>
+    
+    <lastmod>2016-09-14T15:51:50.085Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://peihao.space/2016/09/11/django_intro3/</loc>
+    
+    <lastmod>2016-09-11T15:46:55.438Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://peihao.space/2016/09/10/django_intro2/</loc>
+    
+    <lastmod>2016-09-10T13:59:03.751Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://peihao.space/2016/09/06/django_pre/</loc>
     
-    <lastmod>2016-09-08T02:42:20.966Z</lastmod>
+    <lastmod>2016-09-08T07:19:00.248Z</lastmod>
     
   </url>
   

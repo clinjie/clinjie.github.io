@@ -3,42 +3,39 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Android-drawText | 窗外临街</title>
+  <title>Django初识3 | 窗外临街</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="FontMetricsFontMetrics是Paint的一个内部类，主要定义了Paint绘图时的一些关键坐标位置，具体如下图
+  <meta name="description" content="View视图Django 中的视图的概念是「一类具有相同功能和模板的网页的集合」。比如，在一个博客应用中，你可能会创建如下几个视图：
 
-
-ascent:该距离是从所绘字符的baseline之上至该字符所绘制的最高点。这个距离是系统推荐。
-
-descent:该距离是从所绘字符的baseline之下至该字符所绘制的最低点。这个距离是系统推荐的。
-
-top:该距离是从所绘字符的baseline之上至可绘制区域">
+博客首页——展示最近的几项内容。
+内容“详情”页——详细展示某项内容。
+以年为单位的归档页——展示选中的年份里各个月份创建的内容。
+以月为单位的归档页——展示选中的月份里各天创建的内容。
+以天为单位的归档页——展示选中天里创建的所有内容。
+评论处理器——用于响应为">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android-drawText">
-<meta property="og:url" content="http://peihao.space/2016/07/24/drawText/index.html">
+<meta property="og:title" content="Django初识3">
+<meta property="og:url" content="http://peihao.space/2016/09/11/django_intro3/index.html">
 <meta property="og:site_name" content="窗外临街">
-<meta property="og:description" content="FontMetricsFontMetrics是Paint的一个内部类，主要定义了Paint绘图时的一些关键坐标位置，具体如下图
+<meta property="og:description" content="View视图Django 中的视图的概念是「一类具有相同功能和模板的网页的集合」。比如，在一个博客应用中，你可能会创建如下几个视图：
 
-
-ascent:该距离是从所绘字符的baseline之上至该字符所绘制的最高点。这个距离是系统推荐。
-
-descent:该距离是从所绘字符的baseline之下至该字符所绘制的最低点。这个距离是系统推荐的。
-
-top:该距离是从所绘字符的baseline之上至可绘制区域">
-<meta property="og:image" content="http://xyczero.qiniudn.com/Bolg_%E5%A6%82%E4%BD%95%E2%80%9C%E4%BB%BB%E6%80%A7%E2%80%9D%E4%BD%BF%E7%94%A8Android%E7%9A%84drawText%28%29_base.png">
-<meta property="og:image" content="http://xyczero.qiniudn.com/Bolg_%E5%A6%82%E4%BD%95%E2%80%9C%E4%BB%BB%E6%80%A7%E2%80%9D%E4%BD%BF%E7%94%A8Android%E7%9A%84drawText%28%29_alignLeft.png">
-<meta property="og:image" content="http://xyczero.qiniudn.com/Bolg_%E5%A6%82%E4%BD%95%E2%80%9C%E4%BB%BB%E6%80%A7%E2%80%9D%E4%BD%BF%E7%94%A8Android%E7%9A%84drawText%28%29_alignCenter.png">
-<meta property="og:updated_time" content="2016-07-24T09:04:44.000Z">
+博客首页——展示最近的几项内容。
+内容“详情”页——详细展示某项内容。
+以年为单位的归档页——展示选中的年份里各个月份创建的内容。
+以月为单位的归档页——展示选中的月份里各天创建的内容。
+以天为单位的归档页——展示选中天里创建的所有内容。
+评论处理器——用于响应为">
+<meta property="og:updated_time" content="2016-09-11T15:46:55.438Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android-drawText">
-<meta name="twitter:description" content="FontMetricsFontMetrics是Paint的一个内部类，主要定义了Paint绘图时的一些关键坐标位置，具体如下图
+<meta name="twitter:title" content="Django初识3">
+<meta name="twitter:description" content="View视图Django 中的视图的概念是「一类具有相同功能和模板的网页的集合」。比如，在一个博客应用中，你可能会创建如下几个视图：
 
-
-ascent:该距离是从所绘字符的baseline之上至该字符所绘制的最高点。这个距离是系统推荐。
-
-descent:该距离是从所绘字符的baseline之下至该字符所绘制的最低点。这个距离是系统推荐的。
-
-top:该距离是从所绘字符的baseline之上至可绘制区域">
+博客首页——展示最近的几项内容。
+内容“详情”页——详细展示某项内容。
+以年为单位的归档页——展示选中的年份里各个月份创建的内容。
+以月为单位的归档页——展示选中的月份里各天创建的内容。
+以天为单位的归档页——展示选中天里创建的所有内容。
+评论处理器——用于响应为">
   
     <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
   
@@ -266,11 +263,11 @@ var _hmt = _hmt || [];
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-drawText" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-django_intro3" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/07/24/drawText/" class="article-date">
-  	<time datetime="2016-07-24T07:24:06.000Z" itemprop="datePublished">2016-07-24</time>
+      <a href="/2016/09/11/django_intro3/" class="article-date">
+  	<time datetime="2016-09-11T14:24:06.000Z" itemprop="datePublished">2016-09-11</time>
 </a>
     </div>
   
@@ -283,7 +280,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      Android-drawText
+      Django初识3
     </h1>
   
 
@@ -292,12 +289,12 @@ var _hmt = _hmt || [];
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
 	</div>
 
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/android/">android</a>
+	<a class="article-category-link" href="/categories/python/">python</a>
 	</div>
 
 
@@ -320,38 +317,72 @@ var _hmt = _hmt || [];
 			
 			  <div id="toc" class="toc-article">
 			    <strong class="toc-title">文章目录</strong>
-			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#FontMetrics"><span class="toc-number">1.</span> <span class="toc-text">FontMetrics</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#drawText"><span class="toc-number">2.</span> <span class="toc-text">drawText</span></a></li></ol>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#View视图"><span class="toc-number">1.</span> <span class="toc-text">View视图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#re命名组"><span class="toc-number">2.</span> <span class="toc-text">re命名组</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分组"><span class="toc-number">2.1.</span> <span class="toc-text">分组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命名分组"><span class="toc-number">2.2.</span> <span class="toc-text">命名分组</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#View"><span class="toc-number">3.</span> <span class="toc-text">View</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实践"><span class="toc-number">3.1.</span> <span class="toc-text">实践</span></a></li></ol></li></ol>
 			  </div>
 			
-        <h1 id="FontMetrics">FontMetrics</h1><p>FontMetrics是Paint的一个内部类，主要定义了Paint绘图时的一些关键坐标位置，具体如下图</p>
-<p><img src="http://xyczero.qiniudn.com/Bolg_%E5%A6%82%E4%BD%95%E2%80%9C%E4%BB%BB%E6%80%A7%E2%80%9D%E4%BD%BF%E7%94%A8Android%E7%9A%84drawText%28%29_base.png" alt=""></p>
+        <h1 id="View视图">View视图</h1><p>Django 中的视图的概念是「一类具有相同功能和模板的网页的集合」。比如，在一个博客应用中，你可能会创建如下几个视图：</p>
 <ul>
-<li><p>ascent:该距离是从所绘字符的baseline之上至该字符所绘制的最高点。这个距离是系统推荐。</p>
+<li>博客首页——展示最近的几项内容。</li>
+<li>内容“详情”页——详细展示某项内容。</li>
+<li>以年为单位的归档页——展示选中的年份里各个月份创建的内容。</li>
+<li>以月为单位的归档页——展示选中的月份里各天创建的内容。</li>
+<li>以天为单位的归档页——展示选中天里创建的所有内容。</li>
+<li>评论处理器——用于响应为一项内容添加评论的操作。</li>
+</ul>
+<a id="more"></a>
+<p><strong>而在投票应用中，我们需要下列几个视图：</strong></p>
+<ul>
+<li>问题索引页——展示最近的几个投票问题。</li>
+<li>问题详情页——展示某个投票的问题和不带结果的选项列表。</li>
+<li>问题结果页——展示某个投票的结果。</li>
+<li>投票处理器——用于响应用户为某个问题的特定选项投票的操作。</li>
+</ul>
+<p>在 Django 中，网页和其他内容都是从视图派生而来。每一个视图表现为一个简单的 Python 函数。Django 将会根据用户请求的 URL 来选择使用哪个视图（更准确的说，是根据 URL 中域名之后的部分）。</p>
+<h1 id="re命名组">re命名组</h1><h2 id="分组">分组</h2><ul>
+<li>(…) 用来匹配符合条件的字符串。并且将此部分，打包放在一起，看做成一个组，group。</li>
+</ul>
+<p>而此group，可以被后续的（正则表达式中）匹配时，所引用。此处我称其为 前向引用，即前面已经通过group定义好的字符串，你在后面需要引用。引用的方式，是通过\N，其中N是对应的group的编号。</p>
+<ul>
+<li>group的编号</li>
+</ul>
+<p>编号为0的group，始终代表匹配的整个字符串；我们在正则表达式内所看到的，通过括号括起来的group，编号分别对应着1,2,3，…</p>
+<p>如果你想要在正则表达式中，匹配左括号’(‘，右括号’)’，其字符本身，则通过添加反斜杠，即’(‘，’)’的方式来匹配。</p>
+<h2 id="命名分组">命名分组</h2><ul>
+<li><p>此处的(?P<name>…)，和普通的(?…)基本类似。区别在于，此处由于是给此group命名了，所以，后续（同一正则表达式内和搜索后得到的Match对象中），都可以通过此group的名字而去引用此group。</name></p>
 </li>
-<li><p>descent:该距离是从所绘字符的baseline之下至该字符所绘制的最低点。这个距离是系统推荐的。</p>
+<li><p>group的名字，当前需要是正常的Python标识符，即字母，数字，下划线等，即，没有特殊的字符。</p>
 </li>
-<li><p>top:该距离是从所绘字符的baseline之上至可绘制区域的最高点。</p>
-<a id="more"></a></li>
-<li><p>bottom:该距离是从所绘字符的baseline之下至可绘制区域的最低点。</p>
-</li>
-<li><p>leading:为文本的线之间添加额外的空间，这是官方文档直译，debug时发现一般都为0.0，该值也是系统推荐的。</p>
+<li><p>同一正则表达式内，每个group的组名，是唯一的，不能重复。</p>
 </li>
 </ul>
-<p>特别注意: ascent和top都是负值，而descent和bottom:都是正值</p>
-<h1 id="drawText">drawText</h1><p>canvas.drawText(String text, float x, float y, Paint paint)中有四个参数，这四个参数都是表示其相对于所在View中的坐标，和屏幕坐标无关</p>
+<p>虽然此处group内命名了，但是其仍然和普通的(…) group 分组中一样，可以通过索引号，即group(1),group(2)等等，去引用对应的group的。</p>
+<p>很明显，按照正则内被命名的group的顺序，依次地</p>
+<p>group(1)==group(name1)</p>
+<p>group(2)==group(name2)</p>
+<hr>
+<p><strong>Usage</strong></p>
 <ul>
-<li>float x：根据官方API上的解释，该参数表示text被画的起始x坐标。其实text被画的起始位置还与Paint有关，Paint的TextAlign属性决定了text相对于起始坐标x的相对位置。例如，TextAlign的默认属性为Paint.Align.LEFT，这是text就是从起始坐标x的右侧开始画起。</li>
+<li><p>命了名的group，在当前的正则表达式中，后续被(?P=name)的方式引用；</p>
+</li>
+<li><p>re.sub()中后续通过\g<name>方式被引用。</name></p>
+</li>
 </ul>
-<p><img src="http://xyczero.qiniudn.com/Bolg_%E5%A6%82%E4%BD%95%E2%80%9C%E4%BB%BB%E6%80%A7%E2%80%9D%E4%BD%BF%E7%94%A8Android%E7%9A%84drawText%28%29_alignLeft.png" alt=""></p>
-<p><img src="http://xyczero.qiniudn.com/Bolg_%E5%A6%82%E4%BD%95%E2%80%9C%E4%BB%BB%E6%80%A7%E2%80%9D%E4%BD%BF%E7%94%A8Android%E7%9A%84drawText%28%29_alignCenter.png" alt=""></p>
-<ul>
-<li>float y： 根据官方API上的解释，该参数表示text被画的起始y坐标。这个解释是比较抽象的，其实起始y坐标所代表是text的baseline在Y轴方向的位置</li>
+<h1 id="View">View</h1><ol>
+<li>修改views.py文件</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> HttpResponse(<span class="string">"Hello,World.You're at question %s."</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">detail</span><span class="params">(request,question_id)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> HttpResponse(<span class="string">"Hello,World.You're at question %s."</span> % question_id)</span><br><span class="line">	</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">results</span><span class="params">(request,question_id)</span>:</span></span><br><span class="line">	response=<span class="string">"You're looking the ewsults of question %s."</span></span><br><span class="line">	<span class="keyword">return</span> HttpResponse(response % question_id)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">votes</span><span class="params">(request,question_id)</span>:</span></span><br><span class="line">	response=<span class="string">"You're voting on question %s."</span></span><br><span class="line">	<span class="keyword">return</span> HttpResponse(response % question_id)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>修改urls.py文件</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns=[</span><br><span class="line">	url(<span class="string">r'^$'</span>,views.index,name=<span class="string">'index'</span>),</span><br><span class="line">	url(<span class="string">r'^(?P&lt;question_id&gt;[0-9]+)/$'</span>,views.detail,name=<span class="string">'detail'</span>),</span><br><span class="line">	url(<span class="string">r'^(?P&lt;question_id&gt;[0-9]+)/results/$'</span>,views.results,name=<span class="string">'results'</span>),</span><br><span class="line">	url(<span class="string">r'^(?P&lt;question_id&gt;[0-9]+)/votes/$'</span>,views.votes,name=<span class="string">'votes'</span>)]</span><br></pre></td></tr></table></figure>
+<p>urls文件中的re匹配用到了上面的re命名组。将匹配到的<code>[0-9]+</code>也就是多个数字结果命名为questiob_id。同事调用方法里面相应的view函数，在Browser中显示结果。因为之前已经在整个项目的urls.py文件中包括了polls应用的urls:</p>
+<p><code>url(r&#39;^polls/&#39;,include(&#39;polls.urls&#39;))</code>，所以不需要在此更新</p>
+<h2 id="实践">实践</h2><ul>
+<li><p>site_address:port/polls/数字/votes -&gt; You’re voting on question question_id.</p>
+</li>
+<li><p>site_address:port/polls/数字/results -&gt; You’re looking the ewsults of question question_id(也就是匹配的数字).</p>
+</li>
 </ul>
-<p>text的bottom距离：<br>①bottomY = baseY + fontMetrics.bottom;</p>
-<p>text的字体高度：<br>②fontHeight = fontMetrics.descent- fontMetrics.ascent</p>
-<p>因为我们要让text垂直居中，所以此时text的bottom距离应该为：<br>③bottomY=1/2 <em> height + 1/2 </em> fontHeight</p>
-<p>所以由上述①②③公式就可以推得：④baseY = 1/2 <em> height + 1/2 </em> (fontMetrics.descent- fontMetrics.ascent) - fontmetrics.bottom</p>
-<p>此时求得baseline的值，即cavans.drawText()里的y的坐标。</p>
 
       
       
@@ -388,9 +419,9 @@ var _hmt = _hmt || [];
 
 <p>非商业转载请注明作者及出处。商业转载请联系作者本人。</p>
  
- <p>本文标题为: <a href="http://peihao.space/2016/07/24/drawText/">Android-drawText</a> </p>
+ <p>本文标题为: <a href="http://peihao.space/2016/09/11/django_intro3/">Django初识3</a> </p>
  
- <p>本文链接为：<a href="http://peihao.space/2016/07/24/drawText/">http://peihao.space/2016/07/24/drawText/</a></p>
+ <p>本文链接为：<a href="http://peihao.space/2016/09/11/django_intro3/">http://peihao.space/2016/09/11/django_intro3/</a></p>
 </div>
 <! -- 添加版权信息 -->
 		
@@ -402,18 +433,18 @@ var _hmt = _hmt || [];
     
 <nav id="article-nav">
   
-    <a href="/2016/07/24/Rel-layout/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/09/14/fullset/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          LayoutParams
+          string全排列
         
       </div>
     </a>
   
   
-    <a href="/2016/07/11/KMP/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">KMP笔记</div>
+    <a href="/2016/09/10/django_intro2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Django初识2</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -444,7 +475,7 @@ var _hmt = _hmt || [];
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="drawText" data-title="Android-drawText" data-url="http://peihao.space/2016/07/24/drawText/"></div>
+	<div class="ds-thread" data-thread-key="django_intro3" data-title="Django初识3" data-url="http://peihao.space/2016/09/11/django_intro3/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

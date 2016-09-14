@@ -3,42 +3,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Android-drawText | 窗外临街</title>
+  <title>string全排列 | 窗外临街</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="FontMetricsFontMetrics是Paint的一个内部类，主要定义了Paint绘图时的一些关键坐标位置，具体如下图
+  <meta name="description" content="字符串全排列规则最简单的思路就是使用递归实现：
 
+将最左边字符固定，后面的依次全排
 
-ascent:该距离是从所绘字符的baseline之上至该字符所绘制的最高点。这个距离是系统推荐。
-
-descent:该距离是从所绘字符的baseline之下至该字符所绘制的最低点。这个距离是系统推荐的。
-
-top:该距离是从所绘字符的baseline之上至可绘制区域">
+上一步的依次安排实际上是一次小集合的字符串全排">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android-drawText">
-<meta property="og:url" content="http://peihao.space/2016/07/24/drawText/index.html">
+<meta property="og:title" content="string全排列">
+<meta property="og:url" content="http://peihao.space/2016/09/14/fullset/index.html">
 <meta property="og:site_name" content="窗外临街">
-<meta property="og:description" content="FontMetricsFontMetrics是Paint的一个内部类，主要定义了Paint绘图时的一些关键坐标位置，具体如下图
+<meta property="og:description" content="字符串全排列规则最简单的思路就是使用递归实现：
 
+将最左边字符固定，后面的依次全排
 
-ascent:该距离是从所绘字符的baseline之上至该字符所绘制的最高点。这个距离是系统推荐。
-
-descent:该距离是从所绘字符的baseline之下至该字符所绘制的最低点。这个距离是系统推荐的。
-
-top:该距离是从所绘字符的baseline之上至可绘制区域">
-<meta property="og:image" content="http://xyczero.qiniudn.com/Bolg_%E5%A6%82%E4%BD%95%E2%80%9C%E4%BB%BB%E6%80%A7%E2%80%9D%E4%BD%BF%E7%94%A8Android%E7%9A%84drawText%28%29_base.png">
-<meta property="og:image" content="http://xyczero.qiniudn.com/Bolg_%E5%A6%82%E4%BD%95%E2%80%9C%E4%BB%BB%E6%80%A7%E2%80%9D%E4%BD%BF%E7%94%A8Android%E7%9A%84drawText%28%29_alignLeft.png">
-<meta property="og:image" content="http://xyczero.qiniudn.com/Bolg_%E5%A6%82%E4%BD%95%E2%80%9C%E4%BB%BB%E6%80%A7%E2%80%9D%E4%BD%BF%E7%94%A8Android%E7%9A%84drawText%28%29_alignCenter.png">
-<meta property="og:updated_time" content="2016-07-24T09:04:44.000Z">
+上一步的依次安排实际上是一次小集合的字符串全排">
+<meta property="og:updated_time" content="2016-09-14T15:51:50.085Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android-drawText">
-<meta name="twitter:description" content="FontMetricsFontMetrics是Paint的一个内部类，主要定义了Paint绘图时的一些关键坐标位置，具体如下图
+<meta name="twitter:title" content="string全排列">
+<meta name="twitter:description" content="字符串全排列规则最简单的思路就是使用递归实现：
 
+将最左边字符固定，后面的依次全排
 
-ascent:该距离是从所绘字符的baseline之上至该字符所绘制的最高点。这个距离是系统推荐。
-
-descent:该距离是从所绘字符的baseline之下至该字符所绘制的最低点。这个距离是系统推荐的。
-
-top:该距离是从所绘字符的baseline之上至可绘制区域">
+上一步的依次安排实际上是一次小集合的字符串全排">
   
     <link rel="alternative" href="/atom.xml" title="窗外临街" type="application/atom+xml">
   
@@ -266,11 +254,11 @@ var _hmt = _hmt || [];
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-drawText" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-fullset" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/07/24/drawText/" class="article-date">
-  	<time datetime="2016-07-24T07:24:06.000Z" itemprop="datePublished">2016-07-24</time>
+      <a href="/2016/09/14/fullset/" class="article-date">
+  	<time datetime="2016-09-14T14:24:06.000Z" itemprop="datePublished">2016-09-14</time>
 </a>
     </div>
   
@@ -283,7 +271,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      Android-drawText
+      string全排列
     </h1>
   
 
@@ -292,12 +280,12 @@ var _hmt = _hmt || [];
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
 	</div>
 
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/android/">android</a>
+	<a class="article-category-link" href="/categories/algorithm/">algorithm</a>
 	</div>
 
 
@@ -318,41 +306,51 @@ var _hmt = _hmt || [];
       
 	      	<!-- Table of Contents -->
 			
-			  <div id="toc" class="toc-article">
-			    <strong class="toc-title">文章目录</strong>
-			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#FontMetrics"><span class="toc-number">1.</span> <span class="toc-text">FontMetrics</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#drawText"><span class="toc-number">2.</span> <span class="toc-text">drawText</span></a></li></ol>
-			  </div>
-			
-        <h1 id="FontMetrics">FontMetrics</h1><p>FontMetrics是Paint的一个内部类，主要定义了Paint绘图时的一些关键坐标位置，具体如下图</p>
-<p><img src="http://xyczero.qiniudn.com/Bolg_%E5%A6%82%E4%BD%95%E2%80%9C%E4%BB%BB%E6%80%A7%E2%80%9D%E4%BD%BF%E7%94%A8Android%E7%9A%84drawText%28%29_base.png" alt=""></p>
+        <h1 id="字符串全排列">字符串全排列</h1><h2 id="规则">规则</h2><p>最简单的思路就是使用递归实现：</p>
 <ul>
-<li><p>ascent:该距离是从所绘字符的baseline之上至该字符所绘制的最高点。这个距离是系统推荐。</p>
+<li><p>将最左边字符固定，后面的依次全排</p>
 </li>
-<li><p>descent:该距离是从所绘字符的baseline之下至该字符所绘制的最低点。这个距离是系统推荐的。</p>
-</li>
-<li><p>top:该距离是从所绘字符的baseline之上至可绘制区域的最高点。</p>
+<li><p>上一步的依次安排实际上是一次小集合的字符串全排</p>
 <a id="more"></a></li>
-<li><p>bottom:该距离是从所绘字符的baseline之下至可绘制区域的最低点。</p>
+<li><p>将次左边字符固定，剩下的全排</p>
 </li>
-<li><p>leading:为文本的线之间添加额外的空间，这是官方文档直译，debug时发现一般都为0.0，该值也是系统推荐的。</p>
+<li><p>将此次左边固定…</p>
+</li>
+<li><p>直到最后一个数</p>
+</li>
+<li><p>第一轮结束，将原始字符串的最左边字符与次左边字符交换位置</p>
+</li>
+<li><p>按照上面的顺序依次进行</p>
+</li>
+<li><p>将原始字符串从左数第3位固定到最左边</p>
+</li>
+<li><p>依次进行</p>
+</li>
+<li><p>…直到左右进行完毕输出</p>
 </li>
 </ul>
-<p>特别注意: ascent和top都是负值，而descent和bottom:都是正值</p>
-<h1 id="drawText">drawText</h1><p>canvas.drawText(String text, float x, float y, Paint paint)中有四个参数，这四个参数都是表示其相对于所在View中的坐标，和屏幕坐标无关</p>
-<ul>
-<li>float x：根据官方API上的解释，该参数表示text被画的起始x坐标。其实text被画的起始位置还与Paint有关，Paint的TextAlign属性决定了text相对于起始坐标x的相对位置。例如，TextAlign的默认属性为Paint.Align.LEFT，这是text就是从起始坐标x的右侧开始画起。</li>
-</ul>
-<p><img src="http://xyczero.qiniudn.com/Bolg_%E5%A6%82%E4%BD%95%E2%80%9C%E4%BB%BB%E6%80%A7%E2%80%9D%E4%BD%BF%E7%94%A8Android%E7%9A%84drawText%28%29_alignLeft.png" alt=""></p>
-<p><img src="http://xyczero.qiniudn.com/Bolg_%E5%A6%82%E4%BD%95%E2%80%9C%E4%BB%BB%E6%80%A7%E2%80%9D%E4%BD%BF%E7%94%A8Android%E7%9A%84drawText%28%29_alignCenter.png" alt=""></p>
-<ul>
-<li>float y： 根据官方API上的解释，该参数表示text被画的起始y坐标。这个解释是比较抽象的，其实起始y坐标所代表是text的baseline在Y轴方向的位置</li>
-</ul>
-<p>text的bottom距离：<br>①bottomY = baseY + fontMetrics.bottom;</p>
-<p>text的字体高度：<br>②fontHeight = fontMetrics.descent- fontMetrics.ascent</p>
-<p>因为我们要让text垂直居中，所以此时text的bottom距离应该为：<br>③bottomY=1/2 <em> height + 1/2 </em> fontHeight</p>
-<p>所以由上述①②③公式就可以推得：④baseY = 1/2 <em> height + 1/2 </em> (fontMetrics.descent- fontMetrics.ascent) - fontmetrics.bottom</p>
-<p>此时求得baseline的值，即cavans.drawText()里的y的坐标。</p>
-
+<h2 id="实例">实例</h2><p>举例来讲：原是字符串为’abc’</p>
+<ol>
+<li><p>a固定，剩下两个准备全排</p>
+</li>
+<li><p>剩下的两个中b固定，剩下的全排</p>
+</li>
+<li><p>只剩下一个字符，完成一次输出</p>
+</li>
+<li><p>一次递归后返回上一步，将c固定</p>
+</li>
+<li><p>剩下b全排，输出</p>
+</li>
+<li><p>a固定的虽有结果输出完毕</p>
+</li>
+<li><p>将b或c固定到首位</p>
+</li>
+<li><p>按照上面顺序进行全排</p>
+</li>
+</ol>
+<h1 id="实现">实现</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">callFunc</span><span class="params">(<span class="keyword">char</span> * str,<span class="keyword">int</span> from,<span class="keyword">int</span> to)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(to&lt;=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    <span class="keyword">if</span>(from==to)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="built_in">strlen</span>(str);i++)</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;str[i];</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">'\n'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=from;i&lt;to;i++)&#123;</span><br><span class="line">            swap(str[from],str[i]);</span><br><span class="line">            callFunc(str,from+<span class="number">1</span>,to);</span><br><span class="line">            swap(str[i],str[from]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> s[]=&#123;<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'\0'</span>&#125;;</span><br><span class="line">    callFunc(s,<span class="number">0</span>,<span class="built_in">strlen</span>(s));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面要注意的是，<code>char s[]={&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;}</code>，当使用strlen函数计算字符数组长度是总是输出错误数值11，发现strlen函数使用的查询’\0’字符数组，上面字符数组没有字符串结尾字符，所以函数越界。或者可以直接使用string类型:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">callFunc</span><span class="params">(<span class="built_in">string</span> str,<span class="keyword">int</span> from,<span class="keyword">int</span> to)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(to&lt;=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    <span class="keyword">if</span>(from==to)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;str[i];</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">'\n'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=from;i&lt;to;i++)&#123;</span><br><span class="line">            swap(str[from],str[i]);</span><br><span class="line">            callFunc(str,from+<span class="number">1</span>,to);</span><br><span class="line">            swap(str[i],str[from]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">string</span> xxx =<span class="string">"abc"</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;xxx.size()&lt;&lt;endl;</span><br><span class="line">    callFunc(xxx,<span class="number">0</span>,<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
       
 	<! -- 添加捐赠图标 -->
@@ -388,9 +386,9 @@ var _hmt = _hmt || [];
 
 <p>非商业转载请注明作者及出处。商业转载请联系作者本人。</p>
  
- <p>本文标题为: <a href="http://peihao.space/2016/07/24/drawText/">Android-drawText</a> </p>
+ <p>本文标题为: <a href="http://peihao.space/2016/09/14/fullset/">string全排列</a> </p>
  
- <p>本文链接为：<a href="http://peihao.space/2016/07/24/drawText/">http://peihao.space/2016/07/24/drawText/</a></p>
+ <p>本文链接为：<a href="http://peihao.space/2016/09/14/fullset/">http://peihao.space/2016/09/14/fullset/</a></p>
 </div>
 <! -- 添加版权信息 -->
 		
@@ -402,18 +400,9 @@ var _hmt = _hmt || [];
     
 <nav id="article-nav">
   
-    <a href="/2016/07/24/Rel-layout/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          LayoutParams
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/07/11/KMP/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">KMP笔记</div>
+    <a href="/2016/09/11/django_intro3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Django初识3</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -444,7 +433,7 @@ var _hmt = _hmt || [];
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="drawText" data-title="Android-drawText" data-url="http://peihao.space/2016/07/24/drawText/"></div>
+	<div class="ds-thread" data-thread-key="fullset" data-title="string全排列" data-url="http://peihao.space/2016/09/14/fullset/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

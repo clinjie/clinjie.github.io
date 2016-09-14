@@ -4,8 +4,68 @@
 
     
   <url>
+    <loc>http://peihao.space/2016/09/14/fullset/</loc>
+    <lastmod>2016-09-14T15:51:50.085Z</lastmod>
+    <data>
+        <display>
+        <title>string全排列</title>
+        <pubTime>2016-09-14T14:24:06.000Z</pubTime>
+        
+        <tag>algorithm</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://peihao.space/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2016/09/11/django_intro3/</loc>
+    <lastmod>2016-09-11T15:46:55.438Z</lastmod>
+    <data>
+        <display>
+        <title>Django初识3</title>
+        <pubTime>2016-09-11T14:24:06.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://peihao.space/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2016/09/10/django_intro2/</loc>
+    <lastmod>2016-09-10T13:59:03.751Z</lastmod>
+    <data>
+        <display>
+        <title>Django初识2</title>
+        <pubTime>2016-09-10T14:24:06.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://peihao.space/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://peihao.space/2016/09/06/django_pre/</loc>
-    <lastmod>2016-09-08T02:42:20.966Z</lastmod>
+    <lastmod>2016-09-08T07:19:00.248Z</lastmod>
     <data>
         <display>
         <title>Django介绍</title>

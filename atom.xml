@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peihao.space/"/>
-  <updated>2016-09-07T15:24:27.582Z</updated>
+  <updated>2016-09-14T15:51:50.085Z</updated>
   <id>http://peihao.space/</id>
   
   <author>
@@ -14,6 +14,234 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>string全排列</title>
+    <link href="http://peihao.space/2016/09/14/fullset/"/>
+    <id>http://peihao.space/2016/09/14/fullset/</id>
+    <published>2016-09-14T14:24:06.000Z</published>
+    <updated>2016-09-14T15:51:50.085Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;字符串全排列&quot;&gt;字符串全排列&lt;/h1&gt;&lt;h2 id=&quot;规则&quot;&gt;规则&lt;/h2&gt;&lt;p&gt;最简单的思路就是使用递归实现：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;将最左边字符固定，后面的依次全排&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;上一步的依次安排实际上是一次小集合的字符串全排&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;将次左边字符固定，剩下的全排&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;将此次左边固定…&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;直到最后一个数&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;第一轮结束，将原始字符串的最左边字符与次左边字符交换位置&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;按照上面的顺序依次进行&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;将原始字符串从左数第3位固定到最左边&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;依次进行&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;…直到左右进行完毕输出&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;实例&quot;&gt;实例&lt;/h2&gt;&lt;p&gt;举例来讲：原是字符串为’abc’&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;a固定，剩下两个准备全排&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;剩下的两个中b固定，剩下的全排&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;只剩下一个字符，完成一次输出&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;一次递归后返回上一步，将c固定&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;剩下b全排，输出&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;a固定的虽有结果输出完毕&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;将b或c固定到首位&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;按照上面顺序进行全排&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;实现&quot;&gt;实现&lt;/h1&gt;&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&amp;lt;cstring&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;std&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;callFunc&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; * str,&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; from,&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; to)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(to&amp;lt;=&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; ;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(from==to)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;&lt;span class=&quot;built_in&quot;&gt;strlen&lt;/span&gt;(str);i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&amp;lt;&amp;lt;str[i];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&#39;\n&#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i=from;i&amp;lt;to;i++)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            swap(str[from],str[i]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            callFunc(str,from+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,to);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            swap(str[i],str[from]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; s[]=&amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;b&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;c&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;d&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;\0&#39;&lt;/span&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    callFunc(s,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;built_in&quot;&gt;strlen&lt;/span&gt;(s));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;上面要注意的是，&lt;code&gt;char s[]={&amp;#39;a&amp;#39;,&amp;#39;b&amp;#39;,&amp;#39;c&amp;#39;,&amp;#39;d&amp;#39;}&lt;/code&gt;，当使用strlen函数计算字符数组长度是总是输出错误数值11，发现strlen函数使用的查询’\0’字符数组，上面字符数组没有字符串结尾字符，所以函数越界。或者可以直接使用string类型:&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;preprocessor&quot;&gt;#&lt;span class=&quot;keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&amp;lt;cstring&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;std&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;callFunc&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;built_in&quot;&gt;string&lt;/span&gt; str,&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; from,&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; to)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(to&amp;lt;=&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; ;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(from==to)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&amp;lt;&amp;lt;str[i];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&amp;lt;&amp;lt;&lt;span class=&quot;string&quot;&gt;&#39;\n&#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i=from;i&amp;lt;to;i++)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            swap(str[from],str[i]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            callFunc(str,from+&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,to);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            swap(str[i],str[from]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;string&lt;/span&gt; xxx =&lt;span class=&quot;string&quot;&gt;&quot;abc&quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;cout&lt;/span&gt;&amp;lt;&amp;lt;xxx.size()&amp;lt;&amp;lt;endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    callFunc(xxx,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;字符串全排列&quot;&gt;字符串全排列&lt;/h1&gt;&lt;h2 id=&quot;规则&quot;&gt;规则&lt;/h2&gt;&lt;p&gt;最简单的思路就是使用递归实现：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;将最左边字符固定，后面的依次全排&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;上一步的依次安排实际上是一次小集合的字符串全排&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="algorithm" scheme="http://peihao.space/categories/algorithm/"/>
+    
+    
+      <category term="algorithm" scheme="http://peihao.space/tags/algorithm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Django初识3</title>
+    <link href="http://peihao.space/2016/09/11/django_intro3/"/>
+    <id>http://peihao.space/2016/09/11/django_intro3/</id>
+    <published>2016-09-11T14:24:06.000Z</published>
+    <updated>2016-09-11T15:46:55.438Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;View视图&quot;&gt;View视图&lt;/h1&gt;&lt;p&gt;Django 中的视图的概念是「一类具有相同功能和模板的网页的集合」。比如，在一个博客应用中，你可能会创建如下几个视图：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;博客首页——展示最近的几项内容。&lt;/li&gt;
+&lt;li&gt;内容“详情”页——详细展示某项内容。&lt;/li&gt;
+&lt;li&gt;以年为单位的归档页——展示选中的年份里各个月份创建的内容。&lt;/li&gt;
+&lt;li&gt;以月为单位的归档页——展示选中的月份里各天创建的内容。&lt;/li&gt;
+&lt;li&gt;以天为单位的归档页——展示选中天里创建的所有内容。&lt;/li&gt;
+&lt;li&gt;评论处理器——用于响应为一项内容添加评论的操作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;而在投票应用中，我们需要下列几个视图：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;问题索引页——展示最近的几个投票问题。&lt;/li&gt;
+&lt;li&gt;问题详情页——展示某个投票的问题和不带结果的选项列表。&lt;/li&gt;
+&lt;li&gt;问题结果页——展示某个投票的结果。&lt;/li&gt;
+&lt;li&gt;投票处理器——用于响应用户为某个问题的特定选项投票的操作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在 Django 中，网页和其他内容都是从视图派生而来。每一个视图表现为一个简单的 Python 函数。Django 将会根据用户请求的 URL 来选择使用哪个视图（更准确的说，是根据 URL 中域名之后的部分）。&lt;/p&gt;
+&lt;h1 id=&quot;re命名组&quot;&gt;re命名组&lt;/h1&gt;&lt;h2 id=&quot;分组&quot;&gt;分组&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;(…) 用来匹配符合条件的字符串。并且将此部分，打包放在一起，看做成一个组，group。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;而此group，可以被后续的（正则表达式中）匹配时，所引用。此处我称其为 前向引用，即前面已经通过group定义好的字符串，你在后面需要引用。引用的方式，是通过\N，其中N是对应的group的编号。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;group的编号&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;编号为0的group，始终代表匹配的整个字符串；我们在正则表达式内所看到的，通过括号括起来的group，编号分别对应着1,2,3，…&lt;/p&gt;
+&lt;p&gt;如果你想要在正则表达式中，匹配左括号’(‘，右括号’)’，其字符本身，则通过添加反斜杠，即’(‘，’)’的方式来匹配。&lt;/p&gt;
+&lt;h2 id=&quot;命名分组&quot;&gt;命名分组&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;此处的(?P&lt;name&gt;…)，和普通的(?…)基本类似。区别在于，此处由于是给此group命名了，所以，后续（同一正则表达式内和搜索后得到的Match对象中），都可以通过此group的名字而去引用此group。&lt;/name&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;group的名字，当前需要是正常的Python标识符，即字母，数字，下划线等，即，没有特殊的字符。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;同一正则表达式内，每个group的组名，是唯一的，不能重复。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;虽然此处group内命名了，但是其仍然和普通的(…) group 分组中一样，可以通过索引号，即group(1),group(2)等等，去引用对应的group的。&lt;/p&gt;
+&lt;p&gt;很明显，按照正则内被命名的group的顺序，依次地&lt;/p&gt;
+&lt;p&gt;group(1)==group(name1)&lt;/p&gt;
+&lt;p&gt;group(2)==group(name2)&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;Usage&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;命了名的group，在当前的正则表达式中，后续被(?P=name)的方式引用；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;re.sub()中后续通过\g&lt;name&gt;方式被引用。&lt;/name&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;View&quot;&gt;View&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;修改views.py文件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; django.http &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; HttpResponse&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(request)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; HttpResponse(&lt;span class=&quot;string&quot;&gt;&quot;Hello,World.You&#39;re at question %s.&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;detail&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(request,question_id)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; HttpResponse(&lt;span class=&quot;string&quot;&gt;&quot;Hello,World.You&#39;re at question %s.&quot;&lt;/span&gt; % question_id)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(request,question_id)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	response=&lt;span class=&quot;string&quot;&gt;&quot;You&#39;re looking the ewsults of question %s.&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; HttpResponse(response % question_id)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;votes&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(request,question_id)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	response=&lt;span class=&quot;string&quot;&gt;&quot;You&#39;re voting on question %s.&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; HttpResponse(response % question_id)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ol&gt;
+&lt;li&gt;修改urls.py文件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; django.conf.urls &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; url&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; . &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; views&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;urlpatterns=[&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	url(&lt;span class=&quot;string&quot;&gt;r&#39;^$&#39;&lt;/span&gt;,views.index,name=&lt;span class=&quot;string&quot;&gt;&#39;index&#39;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	url(&lt;span class=&quot;string&quot;&gt;r&#39;^(?P&amp;lt;question_id&amp;gt;[0-9]+)/$&#39;&lt;/span&gt;,views.detail,name=&lt;span class=&quot;string&quot;&gt;&#39;detail&#39;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	url(&lt;span class=&quot;string&quot;&gt;r&#39;^(?P&amp;lt;question_id&amp;gt;[0-9]+)/results/$&#39;&lt;/span&gt;,views.results,name=&lt;span class=&quot;string&quot;&gt;&#39;results&#39;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	url(&lt;span class=&quot;string&quot;&gt;r&#39;^(?P&amp;lt;question_id&amp;gt;[0-9]+)/votes/$&#39;&lt;/span&gt;,views.votes,name=&lt;span class=&quot;string&quot;&gt;&#39;votes&#39;&lt;/span&gt;)]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;urls文件中的re匹配用到了上面的re命名组。将匹配到的&lt;code&gt;[0-9]+&lt;/code&gt;也就是多个数字结果命名为questiob_id。同事调用方法里面相应的view函数，在Browser中显示结果。因为之前已经在整个项目的urls.py文件中包括了polls应用的urls:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;url(r&amp;#39;^polls/&amp;#39;,include(&amp;#39;polls.urls&amp;#39;))&lt;/code&gt;，所以不需要在此更新&lt;/p&gt;
+&lt;h2 id=&quot;实践&quot;&gt;实践&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;site_address:port/polls/数字/votes -&amp;gt; You’re voting on question question_id.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;site_address:port/polls/数字/results -&amp;gt; You’re looking the ewsults of question question_id(也就是匹配的数字).&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;View视图&quot;&gt;View视图&lt;/h1&gt;&lt;p&gt;Django 中的视图的概念是「一类具有相同功能和模板的网页的集合」。比如，在一个博客应用中，你可能会创建如下几个视图：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;博客首页——展示最近的几项内容。&lt;/li&gt;
+&lt;li&gt;内容“详情”页——详细展示某项内容。&lt;/li&gt;
+&lt;li&gt;以年为单位的归档页——展示选中的年份里各个月份创建的内容。&lt;/li&gt;
+&lt;li&gt;以月为单位的归档页——展示选中的月份里各天创建的内容。&lt;/li&gt;
+&lt;li&gt;以天为单位的归档页——展示选中天里创建的所有内容。&lt;/li&gt;
+&lt;li&gt;评论处理器——用于响应为一项内容添加评论的操作。&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="python" scheme="http://peihao.space/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://peihao.space/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Django初识2</title>
+    <link href="http://peihao.space/2016/09/10/django_intro2/"/>
+    <id>http://peihao.space/2016/09/10/django_intro2/</id>
+    <published>2016-09-10T14:24:06.000Z</published>
+    <updated>2016-09-10T13:59:03.751Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;创建管理员账户&quot;&gt;创建管理员账户&lt;/h1&gt;&lt;p&gt;作为一个常规的Blog系统，我们需要有能够后台操作的账户。Django提供了便捷的创建用户接口：&lt;/p&gt;
+&lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ python manage&lt;span class=&quot;class&quot;&gt;.py&lt;/span&gt; createsuperuser&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在交互式输入相关信息时，要注意密码不能是纯数字形式。&lt;/p&gt;
+&lt;p&gt;在&lt;code&gt;http://127.0.0.1:8000/admin&lt;/code&gt;中输入刚刚创建的用户即可管理项目。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;管理页管理应用&quot;&gt;管理页管理应用&lt;/h1&gt;&lt;p&gt;默认的后台网页中是没有显示我们自行添加的应用的Model，我们可以根据自己需要，插件式自行添加。&lt;/p&gt;
+&lt;h2 id=&quot;model&quot;&gt;model&lt;/h2&gt;&lt;p&gt;app_name.admin.py中添加&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;admin.site.register(Model.name)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;默认添加model时的次序是我们在models.py中创建model时class属性次序。&lt;/p&gt;
+&lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;from &lt;span class=&quot;class&quot;&gt;.models&lt;/span&gt; import Choice, Question&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;admin&lt;span class=&quot;class&quot;&gt;.site&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.register&lt;/span&gt;(Question)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;admin&lt;span class=&quot;class&quot;&gt;.site&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.register&lt;/span&gt;(Choice)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如果想要在Model管理面上增加其他特性或者改变排序方式，需要在admin.py中修改相关设置：&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;QuestionAdmin&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(admin.ModelAdmin)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    fields = [&lt;span class=&quot;string&quot;&gt;&#39;pub_date&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;question_text&#39;&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#修改次序，类继承自admin.ModelAdmin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;admin.site.register(Question, QuestionAdmin)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#将字段次序修改为字段集合&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;QuestionAdmin&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(admin.ModelAdmin)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    fieldsets = [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        (&lt;span class=&quot;keyword&quot;&gt;None&lt;/span&gt;,               &amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;fields&#39;&lt;/span&gt;: [&lt;span class=&quot;string&quot;&gt;&#39;question_text&#39;&lt;/span&gt;]&amp;#125;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        (&lt;span class=&quot;string&quot;&gt;&#39;Date information&#39;&lt;/span&gt;, &amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;fields&#39;&lt;/span&gt;: [&lt;span class=&quot;string&quot;&gt;&#39;pub_date&#39;&lt;/span&gt;]&amp;#125;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;admin.site.register(Question, QuestionAdmin)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;关联对象&quot;&gt;关联对象&lt;/h2&gt;&lt;p&gt;Django对于ForeignKey有很好的支持机制，为了方便我们在后台操作，我们可以修改当前model的注册代码&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; django.contrib &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; admin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; .models &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; Choice, Question&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;ChoiceInline&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(admin.StackedInline)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    model = Choice&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    extra = &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;QuestionAdmin&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(admin.ModelAdmin)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    fieldsets = [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        (&lt;span class=&quot;keyword&quot;&gt;None&lt;/span&gt;,               &amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;fields&#39;&lt;/span&gt;: [&lt;span class=&quot;string&quot;&gt;&#39;question_text&#39;&lt;/span&gt;]&amp;#125;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        (&lt;span class=&quot;string&quot;&gt;&#39;Date information&#39;&lt;/span&gt;, &amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;fields&#39;&lt;/span&gt;: [&lt;span class=&quot;string&quot;&gt;&#39;pub_date&#39;&lt;/span&gt;], &lt;span class=&quot;string&quot;&gt;&#39;classes&#39;&lt;/span&gt;: [&lt;span class=&quot;string&quot;&gt;&#39;collapse&#39;&lt;/span&gt;]&amp;#125;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    inlines = [ChoiceInline]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;admin.site.register(Question, QuestionAdmin)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;增加的代码将会告诉 Django，Choice（选项） 对象将会在 问题（Question） 的管理界面里被编辑。默认显示3个问题字段以供编辑。&lt;/p&gt;
+&lt;h2 id=&quot;其他特性&quot;&gt;其他特性&lt;/h2&gt;&lt;p&gt;默认情况下，Django 使用 str() 方法来显示对象。但有时如果我们显示一些其他的字段会很有用。为此，我们可以使用 list_display 选项，它是由需要被显示的字段名组成的元组，这些字段将会作为额外的列显示在列表中。&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# polls/admin.py&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;QuestionAdmin&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(admin.ModelAdmin)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;# ...&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    list_display = (&lt;span class=&quot;string&quot;&gt;&#39;question_text&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;pub_date&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;简单搜索功能&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;search_fields = [&amp;#39;question_text&amp;#39;]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这将会在对象列表的顶部加一个搜索框。当有人键入内容时，Django 会搜索 question_text 字段。你想搜索多少字段都行 - 尽管搜索过程使用的是数据库查询语句里的 LIKE 关键字，但限制一下搜索结果数量将会让数据库搜索更加轻松。&lt;/p&gt;
+&lt;h1 id=&quot;自定义管理页面&quot;&gt;自定义管理页面&lt;/h1&gt;&lt;p&gt;Django管理页面是Django自身提供的，通过Django的模板系统可以轻易修改。&lt;/p&gt;
+&lt;p&gt;下面的例子，我们通过简单的管理主页面模板修改主页面：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;创建模板Tempalte目录&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在mysite/settings.py中添加DIRS选项&lt;/p&gt;
+&lt;figure class=&quot;highlight ocaml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;# mysite/settings.py&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;type&quot;&gt;TEMPLATES&lt;/span&gt; = [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;symbol&quot;&gt;&#39;BACKEND&#39;&lt;/span&gt;: &lt;span class=&quot;symbol&quot;&gt;&#39;django&lt;/span&gt;.template.backends.django.&lt;span class=&quot;type&quot;&gt;DjangoTemplates&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;symbol&quot;&gt;&#39;DIRS&#39;&lt;/span&gt;: [os.path.join(&lt;span class=&quot;type&quot;&gt;BASE_DIR&lt;/span&gt;, &lt;span class=&quot;symbol&quot;&gt;&#39;templates&#39;&lt;/span&gt;)],&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;symbol&quot;&gt;&#39;APP_DIRS&#39;&lt;/span&gt;: &lt;span class=&quot;type&quot;&gt;True&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;symbol&quot;&gt;&#39;OPTIONS&#39;&lt;/span&gt;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;symbol&quot;&gt;&#39;context_processors&#39;&lt;/span&gt;: [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;symbol&quot;&gt;&#39;django&lt;/span&gt;.template.context_processors.debug&#39;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;symbol&quot;&gt;&#39;django&lt;/span&gt;.template.context_processors.request&#39;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;symbol&quot;&gt;&#39;django&lt;/span&gt;.contrib.auth.context_processors.auth&#39;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;symbol&quot;&gt;&#39;django&lt;/span&gt;.contrib.messages.context_processors.messages&#39;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            ],&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;上述修改将mysite目录下的templates目录加入到模板扫描队列中&lt;br&gt;DIRS 是在载入 Django 模板时会搜索的文件系统上的目录集合。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;硬盘创建templates目录&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在mysite/下创建templates目录，里面可以根据需要包含整个Django项目的template文件。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;编写template&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我们只需要在管理页面中尝试修改小部分内容做测试，所以可以在原来模板上做轻微的修改。&lt;/p&gt;
+&lt;p&gt;在python安装目录下找到django安装路径，并找到&lt;code&gt;django/contrib/admin/templates&lt;/code&gt;，将目录下的admin/base_site.html模板复制。我们在项目mysite/templates/目录下创建admin目录，并粘贴刚刚复制的base_site.html文件。根据尝试，修改相应内容。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;创建管理员账户&quot;&gt;创建管理员账户&lt;/h1&gt;&lt;p&gt;作为一个常规的Blog系统，我们需要有能够后台操作的账户。Django提供了便捷的创建用户接口：&lt;/p&gt;
+&lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ python manage&lt;span class=&quot;class&quot;&gt;.py&lt;/span&gt; createsuperuser&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在交互式输入相关信息时，要注意密码不能是纯数字形式。&lt;/p&gt;
+&lt;p&gt;在&lt;code&gt;http://127.0.0.1:8000/admin&lt;/code&gt;中输入刚刚创建的用户即可管理项目。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="python" scheme="http://peihao.space/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://peihao.space/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>Django初识</title>
@@ -128,13 +356,13 @@
     <link href="http://peihao.space/2016/09/06/django_pre/"/>
     <id>http://peihao.space/2016/09/06/django_pre/</id>
     <published>2016-09-06T12:24:06.000Z</published>
-    <updated>2016-09-08T02:42:20.966Z</updated>
+    <updated>2016-09-08T07:19:00.248Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;Django 是 Python 编程语言驱动的一个开源模型-视图-控制器（MVC）风格的 Web 应用程序框架。使用 Django，我们在几分钟之内就可以创建高品质、易维护、数据库驱动的应用程序。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;下面是简略的django应用流程图&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://peihao.space/img/article\djaogo\diango_flow.png&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://peihao.space/img/article/djaogo/diango_flow.png&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a href=&quot;http://www.jianshu.com/p/3bf9fb2a7e31&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;简书作者&lt;/a&gt;&lt;/p&gt;
@@ -185,7 +413,7 @@
 &lt;p&gt;Django 是 Python 编程语言驱动的一个开源模型-视图-控制器（MVC）风格的 Web 应用程序框架。使用 Django，我们在几分钟之内就可以创建高品质、易维护、数据库驱动的应用程序。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;下面是简略的django应用流程图&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://peihao.space/img/article\djaogo\diango_flow.png&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://peihao.space/img/article/djaogo/diango_flow.png&quot;&gt;&lt;/a&gt;&lt;/p&gt;
     
     </summary>
     
@@ -576,6 +804,102 @@
   </entry>
   
   <entry>
+    <title>KMP笔记</title>
+    <link href="http://peihao.space/2016/07/11/KMP/"/>
+    <id>http://peihao.space/2016/07/11/KMP/</id>
+    <published>2016-07-11T04:24:06.000Z</published>
+    <updated>2016-07-20T16:05:40.000Z</updated>
+    
+    <content type="html">&lt;p&gt;文章来源：&lt;a href=&quot;http://www.cnblogs.com/c-cloud/p/3224788.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;c_cloud  KMP&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;思想&quot;&gt;思想&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;KMP算法是一种改进的字符串匹配算法，由D.E.Knuth，J.H.Morris和V.R.Pratt同时发现，因此人们称它为克努特——莫里斯——普拉特操作（The Knuth-Morris-Pratt Algorithm，简称KMP算法）。KMP算法的关键是利用匹配失败后的信息，尽量减少模式串与主串的匹配次数以达到快速匹配的目的。具体实现就是实现一个next()函数，函数本身包含了模式串的局部匹配信息&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;首先介绍几个算法的术语：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;前缀&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;前缀指除了最后一个字符以外，一个字符串的全部头部组合&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;ol&gt;
+&lt;li&gt;后缀&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;后缀指除了第一个字符以外，一个字符串的全部尾部组合&lt;/p&gt;
+&lt;h2 id=&quot;部分匹配值&quot;&gt;部分匹配值&lt;/h2&gt;&lt;p&gt;部分匹配值就是”前缀”和”后缀”的最长的共有元素的长度。以”ABCDABD”为例&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;“A”的前缀和后缀都为空集，共有元素的长度为0；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“AB”的前缀为[A]，后缀为[B]，共有元素的长度为0；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABC”的前缀为[A, AB]，后缀为[BC, C]，共有元素的长度0；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCD”的前缀为[A, AB, ABC]，后缀为[BCD, CD, D]，共有元素的长度为0；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCDA”的前缀为[A, AB, ABC, ABCD]，后缀为[BCDA, CDA, DA, A]，共有元素为”A”，长度为1；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCDAB”的前缀为[A, AB, ABC, ABCD, ABCDA]，后缀为[BCDAB, CDAB, DAB, AB, B]，共有元素为”AB”，长度为2；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCDABD”的前缀为[A, AB, ABC, ABCD, ABCDA, ABCDAB]，后缀为[BCDABD, CDABD, DABD, ABD, BD, D]，共有元素的长度为0&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&quot;http://image.beekka.com/blog/201305/bg2013050112.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;“部分匹配”的实质是，有时候，字符串头部和尾部会有重复。比如，”ABCDAB”之中有两个”AB”，那么它的”部分匹配值”就是2（”AB”的长度）。搜索词移动的时候，第一个”AB”向后移动4位（字符串长度-部分匹配值），就可以来到第二个”AB”的位置。&lt;/p&gt;
+&lt;p&gt;在KMP算法中，模式字符串向右移动的位数 = 已匹配的字符数 - 对应的部分匹配值&lt;/p&gt;
+&lt;h2 id=&quot;部分匹配的实现&quot;&gt;部分匹配的实现&lt;/h2&gt;&lt;p&gt;下面给出模式串右移位数：&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;makeNext&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; P[],&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; next[])&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; q,k;&lt;span class=&quot;comment&quot;&gt;//q:模式字符串下标；k:最大前后缀长度&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; m = &lt;span class=&quot;built_in&quot;&gt;strlen&lt;/span&gt;(P);&lt;span class=&quot;comment&quot;&gt;//模式字符串长度&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    next[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;span class=&quot;comment&quot;&gt;//模版字符串的第一个字符的最大前后缀长度为0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (q = &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,k = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; q &amp;lt; m; q++)&lt;span class=&quot;comment&quot;&gt;//for循环，从第二个字符开始，依次计算每一个字符对应的next值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(k &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &amp;amp;&amp;amp; P[q] != P[k])&lt;span class=&quot;comment&quot;&gt;//递归的求出P[0]到P[q]最大的相同的前后缀长度k&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            k = next[k-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (P[q] == P[k])&lt;span class=&quot;comment&quot;&gt;//如果相等，那么最大相同前后缀长度加1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            k++;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        next[q] = k;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;已知前一步计算时最大相同的前后缀长度为k（k&amp;gt;0），即P[0]···P[k-1]；
+　　&lt;/p&gt;
+&lt;p&gt;上面的代码中&lt;br&gt;&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(k &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &amp;amp;&amp;amp; P[q] != P[k])&lt;span class=&quot;comment&quot;&gt;//递归的求出P[0]到P[q]最大的相同的前后缀长度k&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            k = next[k-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (P[q] == P[k])&lt;span class=&quot;comment&quot;&gt;//如果相等，那么最大相同前后缀长度加1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            k++;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这几步是比较难理解的，实际上这几步就是上面我们手工对字符串”ABCDABD”进行的部分匹配值计算。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;“ABCD”的前缀为[A, AB, ABC]，后缀为[BCD, CD, D]，共有元素的长度为0；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCDA”的前缀为[A, AB, ABC, ABCD]，后缀为[BCDA, CDA, DA, A]，共有元素为”A”，长度为1；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCDAB”的前缀为[A, AB, ABC, ABCD, ABCDA]，后缀为[BCDAB, CDAB, DAB, AB, B]，共有元素为”AB”，长度为2；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCDABD”的前缀为[A, AB, ABC, ABCD, ABCDA, ABCDAB]，后缀为[BCDABD, CDABD, DABD, ABD, BD, D]，共有元素的长度为0&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;截取这几步，我们按照从左向右的顺序进行模式匹配，字符串”ABCDABD”依序增加的话，因为前缀与后缀相同的子字符串顺序是一致的，所以部分匹配值增加的话也是根据上一字符串的部分匹配值基础进行。&lt;/p&gt;
+&lt;p&gt;我们拿到一个字符串计算部分匹配值，如果上一字符串匹配值为0，我们肯定会先将字符串的第一位与最后一位进行匹配，因为此时字符串最多只能可能有1的部分匹配值，否则的话上一字符串匹配值不会是0。&lt;/p&gt;
+&lt;p&gt;如果上一字符串部分匹配值为k时，我们将字符串的前（k+1）位与后（k+1）位进行匹配，如果匹配成功，则next值为k+1，&lt;/p&gt;
+&lt;p&gt;如果匹配失败的话：&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(k &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &amp;amp;&amp;amp; P[q] != P[k])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     k = next[k-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;P[k]已经和P[q]失配了，而且P[q-k] ··· P[q-1]又与P[0] ···P[k-1]相同。假设模式串长度length，失配也就是讲模式串的前k位与P[length-k-1:length-2]相同，而P[k]与P[length-1]不同。看来P[0]···P[k-1]这么长的子串是用不了了，那么我要找个同样也是P[0]打头、P[k-1]结尾的子串，即P[0]···P&lt;a href=&quot;j==next[k-1]&quot;&gt;j-1&lt;/a&gt;，看看它的下一项P[j]是否能和P[q]匹配。循环进行，直到k=0，从头再开始。&lt;/p&gt;
+&lt;p&gt;那么为什么&lt;code&gt;j==next[k-1]&lt;/code&gt;呢？上一次k的匹配失败，导致求下一个k值只能在模式串的前next[k-1]字符中寻找，而非next[k]-1。因为前面的寻找依然是一次模式匹配，所以next数组的求值实际上就是一个递归。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;“ABCABHABCAB”  部分匹配值为5&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“ABCABHABCABC”  &lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;继续增加字符时出现失配，j=next[k-1]，也就是求next[4]=2。因为之前的”ABCABH”没法使用了，但是”ABCAB”是匹配过的，”H”无法使用，就在”ABCAB”中寻找匹配度，目的是尝试对下标next[4]与整个模式串的最后一位匹配。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;文章来源：&lt;a href=&quot;http://www.cnblogs.com/c-cloud/p/3224788.html&quot;&gt;c_cloud  KMP&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;思想&quot;&gt;思想&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;KMP算法是一种改进的字符串匹配算法，由D.E.Knuth，J.H.Morris和V.R.Pratt同时发现，因此人们称它为克努特——莫里斯——普拉特操作（The Knuth-Morris-Pratt Algorithm，简称KMP算法）。KMP算法的关键是利用匹配失败后的信息，尽量减少模式串与主串的匹配次数以达到快速匹配的目的。具体实现就是实现一个next()函数，函数本身包含了模式串的局部匹配信息&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;首先介绍几个算法的术语：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;前缀&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;前缀指除了最后一个字符以外，一个字符串的全部头部组合&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="algorithm" scheme="http://peihao.space/categories/algorithm/"/>
+    
+    
+      <category term="algorithm" scheme="http://peihao.space/tags/algorithm/"/>
+    
+      <category term="模式匹配" scheme="http://peihao.space/tags/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Matlab学习(五)</title>
     <link href="http://peihao.space/2016/07/11/matlab5/"/>
     <id>http://peihao.space/2016/07/11/matlab5/</id>
@@ -678,102 +1002,6 @@
     
     
       <category term="matlab" scheme="http://peihao.space/tags/matlab/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>KMP笔记</title>
-    <link href="http://peihao.space/2016/07/11/KMP/"/>
-    <id>http://peihao.space/2016/07/11/KMP/</id>
-    <published>2016-07-11T04:24:06.000Z</published>
-    <updated>2016-07-20T16:05:40.000Z</updated>
-    
-    <content type="html">&lt;p&gt;文章来源：&lt;a href=&quot;http://www.cnblogs.com/c-cloud/p/3224788.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;c_cloud  KMP&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;思想&quot;&gt;思想&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;KMP算法是一种改进的字符串匹配算法，由D.E.Knuth，J.H.Morris和V.R.Pratt同时发现，因此人们称它为克努特——莫里斯——普拉特操作（The Knuth-Morris-Pratt Algorithm，简称KMP算法）。KMP算法的关键是利用匹配失败后的信息，尽量减少模式串与主串的匹配次数以达到快速匹配的目的。具体实现就是实现一个next()函数，函数本身包含了模式串的局部匹配信息&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;首先介绍几个算法的术语：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;前缀&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;前缀指除了最后一个字符以外，一个字符串的全部头部组合&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;ol&gt;
-&lt;li&gt;后缀&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;后缀指除了第一个字符以外，一个字符串的全部尾部组合&lt;/p&gt;
-&lt;h2 id=&quot;部分匹配值&quot;&gt;部分匹配值&lt;/h2&gt;&lt;p&gt;部分匹配值就是”前缀”和”后缀”的最长的共有元素的长度。以”ABCDABD”为例&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;“A”的前缀和后缀都为空集，共有元素的长度为0；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;“AB”的前缀为[A]，后缀为[B]，共有元素的长度为0；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;“ABC”的前缀为[A, AB]，后缀为[BC, C]，共有元素的长度0；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;“ABCD”的前缀为[A, AB, ABC]，后缀为[BCD, CD, D]，共有元素的长度为0；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;“ABCDA”的前缀为[A, AB, ABC, ABCD]，后缀为[BCDA, CDA, DA, A]，共有元素为”A”，长度为1；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;“ABCDAB”的前缀为[A, AB, ABC, ABCD, ABCDA]，后缀为[BCDAB, CDAB, DAB, AB, B]，共有元素为”AB”，长度为2；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;“ABCDABD”的前缀为[A, AB, ABC, ABCD, ABCDA, ABCDAB]，后缀为[BCDABD, CDABD, DABD, ABD, BD, D]，共有元素的长度为0&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&quot;http://image.beekka.com/blog/201305/bg2013050112.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;“部分匹配”的实质是，有时候，字符串头部和尾部会有重复。比如，”ABCDAB”之中有两个”AB”，那么它的”部分匹配值”就是2（”AB”的长度）。搜索词移动的时候，第一个”AB”向后移动4位（字符串长度-部分匹配值），就可以来到第二个”AB”的位置。&lt;/p&gt;
-&lt;p&gt;在KMP算法中，模式字符串向右移动的位数 = 已匹配的字符数 - 对应的部分匹配值&lt;/p&gt;
-&lt;h2 id=&quot;部分匹配的实现&quot;&gt;部分匹配的实现&lt;/h2&gt;&lt;p&gt;下面给出模式串右移位数：&lt;/p&gt;
-&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;makeNext&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; P[],&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; next[])&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; q,k;&lt;span class=&quot;comment&quot;&gt;//q:模式字符串下标；k:最大前后缀长度&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; m = &lt;span class=&quot;built_in&quot;&gt;strlen&lt;/span&gt;(P);&lt;span class=&quot;comment&quot;&gt;//模式字符串长度&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    next[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;span class=&quot;comment&quot;&gt;//模版字符串的第一个字符的最大前后缀长度为0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (q = &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,k = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; q &amp;lt; m; q++)&lt;span class=&quot;comment&quot;&gt;//for循环，从第二个字符开始，依次计算每一个字符对应的next值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(k &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &amp;amp;&amp;amp; P[q] != P[k])&lt;span class=&quot;comment&quot;&gt;//递归的求出P[0]到P[q]最大的相同的前后缀长度k&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            k = next[k-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (P[q] == P[k])&lt;span class=&quot;comment&quot;&gt;//如果相等，那么最大相同前后缀长度加1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            k++;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        next[q] = k;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;已知前一步计算时最大相同的前后缀长度为k（k&amp;gt;0），即P[0]···P[k-1]；
-　　&lt;/p&gt;
-&lt;p&gt;上面的代码中&lt;br&gt;&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(k &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &amp;amp;&amp;amp; P[q] != P[k])&lt;span class=&quot;comment&quot;&gt;//递归的求出P[0]到P[q]最大的相同的前后缀长度k&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            k = next[k-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (P[q] == P[k])&lt;span class=&quot;comment&quot;&gt;//如果相等，那么最大相同前后缀长度加1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            k++;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;这几步是比较难理解的，实际上这几步就是上面我们手工对字符串”ABCDABD”进行的部分匹配值计算。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;“ABCD”的前缀为[A, AB, ABC]，后缀为[BCD, CD, D]，共有元素的长度为0；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;“ABCDA”的前缀为[A, AB, ABC, ABCD]，后缀为[BCDA, CDA, DA, A]，共有元素为”A”，长度为1；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;“ABCDAB”的前缀为[A, AB, ABC, ABCD, ABCDA]，后缀为[BCDAB, CDAB, DAB, AB, B]，共有元素为”AB”，长度为2；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;“ABCDABD”的前缀为[A, AB, ABC, ABCD, ABCDA, ABCDAB]，后缀为[BCDABD, CDABD, DABD, ABD, BD, D]，共有元素的长度为0&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;截取这几步，我们按照从左向右的顺序进行模式匹配，字符串”ABCDABD”依序增加的话，因为前缀与后缀相同的子字符串顺序是一致的，所以部分匹配值增加的话也是根据上一字符串的部分匹配值基础进行。&lt;/p&gt;
-&lt;p&gt;我们拿到一个字符串计算部分匹配值，如果上一字符串匹配值为0，我们肯定会先将字符串的第一位与最后一位进行匹配，因为此时字符串最多只能可能有1的部分匹配值，否则的话上一字符串匹配值不会是0。&lt;/p&gt;
-&lt;p&gt;如果上一字符串部分匹配值为k时，我们将字符串的前（k+1）位与后（k+1）位进行匹配，如果匹配成功，则next值为k+1，&lt;/p&gt;
-&lt;p&gt;如果匹配失败的话：&lt;/p&gt;
-&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(k &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &amp;amp;&amp;amp; P[q] != P[k])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     k = next[k-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;P[k]已经和P[q]失配了，而且P[q-k] ··· P[q-1]又与P[0] ···P[k-1]相同。假设模式串长度length，失配也就是讲模式串的前k位与P[length-k-1:length-2]相同，而P[k]与P[length-1]不同。看来P[0]···P[k-1]这么长的子串是用不了了，那么我要找个同样也是P[0]打头、P[k-1]结尾的子串，即P[0]···P&lt;a href=&quot;j==next[k-1]&quot;&gt;j-1&lt;/a&gt;，看看它的下一项P[j]是否能和P[q]匹配。循环进行，直到k=0，从头再开始。&lt;/p&gt;
-&lt;p&gt;那么为什么&lt;code&gt;j==next[k-1]&lt;/code&gt;呢？上一次k的匹配失败，导致求下一个k值只能在模式串的前next[k-1]字符中寻找，而非next[k]-1。因为前面的寻找依然是一次模式匹配，所以next数组的求值实际上就是一个递归。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;“ABCABHABCAB”  部分匹配值为5&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;“ABCABHABCABC”  &lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;继续增加字符时出现失配，j=next[k-1]，也就是求next[4]=2。因为之前的”ABCABH”没法使用了，但是”ABCAB”是匹配过的，”H”无法使用，就在”ABCAB”中寻找匹配度，目的是尝试对下标next[4]与整个模式串的最后一位匹配。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;文章来源：&lt;a href=&quot;http://www.cnblogs.com/c-cloud/p/3224788.html&quot;&gt;c_cloud  KMP&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;思想&quot;&gt;思想&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;KMP算法是一种改进的字符串匹配算法，由D.E.Knuth，J.H.Morris和V.R.Pratt同时发现，因此人们称它为克努特——莫里斯——普拉特操作（The Knuth-Morris-Pratt Algorithm，简称KMP算法）。KMP算法的关键是利用匹配失败后的信息，尽量减少模式串与主串的匹配次数以达到快速匹配的目的。具体实现就是实现一个next()函数，函数本身包含了模式串的局部匹配信息&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;首先介绍几个算法的术语：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;前缀&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;前缀指除了最后一个字符以外，一个字符串的全部头部组合&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="algorithm" scheme="http://peihao.space/categories/algorithm/"/>
-    
-    
-      <category term="algorithm" scheme="http://peihao.space/tags/algorithm/"/>
-    
-      <category term="模式匹配" scheme="http://peihao.space/tags/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D/"/>
     
   </entry>
   
@@ -1189,164 +1417,6 @@
     
     
       <category term="algorithm" scheme="http://peihao.space/tags/algorithm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ngroke</title>
-    <link href="http://peihao.space/2016/06/29/ngroke/"/>
-    <id>http://peihao.space/2016/06/29/ngroke/</id>
-    <published>2016-06-29T14:24:06.000Z</published>
-    <updated>2016-07-28T16:34:56.000Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;为了方便本地服务器简单映射到外网访问，我们可以使用Ngroke服务。只需要几条简单的命令即可使用。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.ngrok.cc/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;国内ngrok服务&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;点击进入获取相应平台的最新版本&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.ngrok.cc/index.php/login/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;注册/登录&lt;/a&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.ngrok.cc/index.php/Tunnel/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;添加隧道列表&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;将本地服务器地址、端口号与Ngroke分配的服务器绑定。本地地址： &lt;code&gt;127.0.0.1&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.ngrok.cc/index.php/Tunnel/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;隧道状态页面&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;添加映射隧道之后，在隧道状态页面获取Ngroke服务器提供的客户端Id。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;解压网站提供的客户端压缩包，执行.bat程序&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;打开本机的服务器容器，并在如&lt;code&gt;webapps\ROOT&lt;/code&gt;目录下放入文件，或者&lt;code&gt;webapps&lt;/code&gt;目录下放入Web工程&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;在Ngroke客户端.bat中提供客户端Id，开启映射服务。  &lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;为了方便本地服务器简单映射到外网访问，我们可以使用Ngroke服务。只需要几条简单的命令即可使用。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.ngrok.cc/&quot;&gt;国内ngrok服务&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;点击进入获取相应平台的最新版本&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.ngrok.cc/index.php/login/index.html&quot;&gt;注册/登录&lt;/a&gt;
-    
-    </summary>
-    
-      <category term="网络" scheme="http://peihao.space/categories/%E7%BD%91%E7%BB%9C/"/>
-    
-    
-      <category term="网络" scheme="http://peihao.space/tags/%E7%BD%91%E7%BB%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>（ZT）Verilog</title>
-    <link href="http://peihao.space/2016/05/23/about-verilog-newnote/"/>
-    <id>http://peihao.space/2016/05/23/about-verilog-newnote/</id>
-    <published>2016-05-23T08:59:35.000Z</published>
-    <updated>2016-05-23T15:26:04.000Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;转自 &lt;a href=&quot;http://www.sitongweilai.com/u/%E4%B8%80%E6%9C%88%E7%9A%84%E8%90%A7%E9%82%A6/Blog.aspx&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;sitongweilai&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;很多刚学Verilog HDL （硬件描述语言）的朋友肯定会对阻塞赋值和非阻塞赋值比较疑惑，那我们就一起来抛开这层迷雾吧。&lt;/p&gt;
-&lt;p&gt;首先我们要理解两种变量类型 Net Type（连线型）和 Register Type （寄存器型）。（有些参考书上有分为3种类型，这个无关紧要）&lt;/p&gt;
-&lt;p&gt;Net Type（连线型），从名字上理解就是“导线”呗，导线的这头和导线的另一头始终是直接连通的，这头是什么值，那头就是什么值，所以输出随着输入随时变化的。连线型中 wire 最常见。&lt;/p&gt;
-&lt;p&gt;Register Type（寄存器型），寄存器就不像普通导线了，它可以把值给存住，你只要给它赋一次值，它都会存住那个值，直到你给它赋一个新的值它才会改变。寄存器型中 reg 最常见。&lt;/p&gt;
-&lt;p&gt;最常用到的是 wire 和 reg 这两种类型，其他的对我们初学者来说一般很少用到，可以暂时跳过，以后慢慢学下去自然会理解。&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;注意：wire型变量如果没有赋予初始值，默认初始值为高阻态“Z”。&lt;/p&gt;
-&lt;p&gt;reg  型变量如果没有赋予初始值，默认初始值为不定态“X”。&lt;/p&gt;
-&lt;p&gt;在理解这两种基本的数据类型之后，我们来看看verilog语言中的赋值语句。verilog语言中的赋值语句有两种，一种是持续赋值语句（assign语句），另一种是过程赋值语句（always语句）。&lt;/p&gt;
-&lt;p&gt; 持续赋值语句（assign语句）主要用于对wire型变量的赋值，因为wire（线型）的值不能存住，需要一直给值，所以需要用持续赋值。&lt;/p&gt;
-&lt;p&gt;例如：assign c = a + b;    只要a和b有任意变化，都可以立即反映到c上，也就是说c的值是根据a，b的值随时变化的。&lt;/p&gt;
-&lt;p&gt; 过程赋值语句（always语句）主要用于reg 型变量的赋值 ，因为always语句被执行是需要满足触发条件的，所以always过程块里面的内容不是每时每刻都被执行，因此需要将被赋值的对象定义成寄存器类型，以便这个值能被保持住。&lt;/p&gt;
-&lt;p&gt;过程赋值又分为 阻塞赋值 “=”  和 非阻塞赋值 “&amp;lt;=” 两种。这里的非阻塞赋值符号 “&amp;lt;=” 与 “小于等于” 符号相同，他们在不同的语境下表示不同含义，要注意区分，例如在“if-else”等判断语句中，一般都表示为“小于等于”。&lt;/p&gt;
-&lt;p&gt;接下来对这两种赋值作具体讲解…&lt;/p&gt;
-&lt;p&gt; ① 阻塞赋值 “=“ 。 阻塞赋值和我们平时理解的赋值差不多，不用太多解释，就是按照语句的顺序，一句句往下顺序执行。一个赋值语句执行完，然后执行下一个赋值语句。&lt;/p&gt;
-&lt;p&gt; ② 非阻塞赋值 “&amp;lt;=” 。非阻塞赋值就比较特别了，在同一个always过程块中，非阻塞赋值语句都是同时并发执行的，并且在过程块结束时才执行赋值操作。也就是说，在同一个always过程块中，非阻塞赋值语句被执行没有先后顺序，在过程快结束时，大家一起被赋值。&lt;/p&gt;
-&lt;p&gt; 给大家举一个具体的例子：&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;function&quot;&gt;module &lt;span class=&quot;title&quot;&gt;test&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(clk, a1, a2, b1, b2, c1, c2)&lt;/span&gt;&lt;/span&gt;; &lt;span class=&quot;comment&quot;&gt;// test为module名称，括号内的是端口列表，包含所有输入输出的变量名称&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; input clk, a1, a2;           &lt;span class=&quot;comment&quot;&gt;// 定义输入变量，这里没有定义位宽，默认为1位宽度&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; output b1, b2, c1, c2;    &lt;span class=&quot;comment&quot;&gt;// 定义输出变量，这里没有定义位宽，默认为1位宽度&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; reg b1 = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; , b2 = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, c1 = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; , c2 = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;   &lt;span class=&quot;comment&quot;&gt;// 注意！因为这些变量将会在always过程块中被赋值，所以必须定义成 reg 型    &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 注意！这里省略了对输入信号clk, a1, a2 的类型定义，它们默认为1位的wire 型（因为输入信号是随时要变化，所以必须用wire型）              &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;always @ (posedge clk)   &lt;span class=&quot;comment&quot;&gt;// always 用 clk 上升沿触发&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        b1 = a1;       &lt;span class=&quot;comment&quot;&gt;// 这里采用的是阻塞赋值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        c1 = b1;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    end&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;always @ (posedge clk)  &lt;span class=&quot;comment&quot;&gt;// always 用 clk 上升沿触发&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    begin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        b2 &amp;lt;= a2;    &lt;span class=&quot;comment&quot;&gt;// 这里采用的是非阻塞赋值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        c2 &amp;lt;= b2;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    end   &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;endmodule     &lt;span class=&quot;comment&quot;&gt;// endmodule 别忘了，与 module 成对使用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt; 我们只需给输入信号赋值，输出信号根据输入信号的变化而变化。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;转自 &lt;a href=&quot;http://www.sitongweilai.com/u/%E4%B8%80%E6%9C%88%E7%9A%84%E8%90%A7%E9%82%A6/Blog.aspx&quot;&gt;sitongweilai&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;很多刚学Verilog HDL （硬件描述语言）的朋友肯定会对阻塞赋值和非阻塞赋值比较疑惑，那我们就一起来抛开这层迷雾吧。&lt;/p&gt;
-&lt;p&gt;首先我们要理解两种变量类型 Net Type（连线型）和 Register Type （寄存器型）。（有些参考书上有分为3种类型，这个无关紧要）&lt;/p&gt;
-&lt;p&gt;Net Type（连线型），从名字上理解就是“导线”呗，导线的这头和导线的另一头始终是直接连通的，这头是什么值，那头就是什么值，所以输出随着输入随时变化的。连线型中 wire 最常见。&lt;/p&gt;
-&lt;p&gt;Register Type（寄存器型），寄存器就不像普通导线了，它可以把值给存住，你只要给它赋一次值，它都会存住那个值，直到你给它赋一个新的值它才会改变。寄存器型中 reg 最常见。&lt;/p&gt;
-&lt;p&gt;最常用到的是 wire 和 reg 这两种类型，其他的对我们初学者来说一般很少用到，可以暂时跳过，以后慢慢学下去自然会理解。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="verilog" scheme="http://peihao.space/categories/verilog/"/>
-    
-    
-      <category term="verilog" scheme="http://peihao.space/tags/verilog/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Android全局变量</title>
-    <link href="http://peihao.space/2016/05/21/android-application/"/>
-    <id>http://peihao.space/2016/05/21/android-application/</id>
-    <published>2016-05-21T08:59:35.000Z</published>
-    <updated>2016-05-21T16:45:46.000Z</updated>
-    
-    <content type="html">&lt;p&gt;帮别人做一个小玩意儿时候遇到的问题，需要常常在不同activity、service之间传递一个数据变量。最前考虑的是入门时使用的&lt;code&gt;Bundle&lt;/code&gt;对象。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Bundle类用作携带数据，它类似于Map，用于存放key-value名值对形式的值。相对于Map，它提供了各种常用类型的putXxx()/getXxx()方法，如:&lt;br&gt;&lt;code&gt;putString()/getString()和putInt()/getInt()&lt;/code&gt;，putXxx()用于往Bundle对象放入数据，getXxx()方法用于从Bundle对象里获取数据。Bundle的内部实际上是使用了HashMap类型的变量来存放putXxx()方法放入的值.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;使用方法:&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Bundle bundle = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Bundle();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;app.setB(name);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;bundle.putString(&lt;span class=&quot;string&quot;&gt;&quot;username&quot;&lt;/span&gt;, name);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;it.putExtra(&lt;span class=&quot;string&quot;&gt;&quot;bundle&quot;&lt;/span&gt;, bundle);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;在Activity跳转之前，将已经存储数据的Bundle对象绑定到Intent对象上，然后在跳转之后的Activity界面内：&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Intent intent = getIntent();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Bundle bundle = intent.getBundleExtra(&lt;span class=&quot;string&quot;&gt;&quot;bundle&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;String name = bundle.getString(&lt;span class=&quot;string&quot;&gt;&quot;username&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;获取存储的数据。&lt;/p&gt;
-&lt;p&gt;后来想到了应该会与全局的变量可以使用吧，毕竟Application域是在整个app运行间都在的。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Step1&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;applicationData&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Application&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; String username;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;getB&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.username;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setB&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String c)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.username= c;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;annotation&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        username = &lt;span class=&quot;string&quot;&gt;&quot;undefined&quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;super&lt;/span&gt;.onCreate();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;新建继承自Application类，然后根据自己需要存储获取的数据自行修改setter/getter方法。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Step2&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;在程序清单&lt;code&gt;manifests&lt;/code&gt;文件内，将&lt;code&gt;android:name&lt;/code&gt;的值修改或增添为前面新建的继承Application的类名称：&lt;/p&gt;
-&lt;figure class=&quot;highlight applescript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;&lt;span class=&quot;type&quot;&gt;application&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:&lt;span class=&quot;property&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;applicationData&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;Step3&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;applicationData app;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//直接从程序运行中获取Application实例，此时app会自动调用applicationData的onCreate函数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;app=(applicationData)getApplication();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;app.setB(&lt;span class=&quot;string&quot;&gt;&quot;input you will set&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;String value=app.getB();&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;帮别人做一个小玩意儿时候遇到的问题，需要常常在不同activity、service之间传递一个数据变量。最前考虑的是入门时使用的&lt;code&gt;Bundle&lt;/code&gt;对象。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Bundle类用作携带数据，它类似于Map，用于存放key-value名值对形式的值。相对于Map，它提供了各种常用类型的putXxx()/getXxx()方法，如:&lt;br&gt;&lt;code&gt;putString()/getString()和putInt()/getInt()&lt;/code&gt;，putXxx()用于往Bundle对象放入数据，getXxx()方法用于从Bundle对象里获取数据。Bundle的内部实际上是使用了HashMap类型的变量来存放putXxx()方法放入的值.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;使用方法:&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Bundle bundle = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Bundle();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;app.setB(name);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;bundle.putString(&lt;span class=&quot;string&quot;&gt;&quot;username&quot;&lt;/span&gt;, name);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;it.putExtra(&lt;span class=&quot;string&quot;&gt;&quot;bundle&quot;&lt;/span&gt;, bundle);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="adnroid" scheme="http://peihao.space/categories/adnroid/"/>
-    
-    
-      <category term="android" scheme="http://peihao.space/tags/android/"/>
     
   </entry>
   
