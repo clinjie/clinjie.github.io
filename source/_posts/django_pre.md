@@ -11,7 +11,7 @@ categories: python
 
 下面是简略的django应用流程图
 
-[](http://peihao.space/img/article\djaogo\diango_flow.png)
+[](http://peihao.space/img/article/djaogo/diango_flow.png)
 
 
 <!--more-->
