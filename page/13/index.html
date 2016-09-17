@@ -243,6 +243,157 @@ var _hmt = _hmt || [];
 </nav>
       <div class="body-wrap">
   
+    <article id="post-BeautifulSooup" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/22/BeautifulSooup/" class="article-date">
+  	<time datetime="2016-01-22T13:28:30.000Z" itemprop="datePublished">2016-01-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/22/BeautifulSooup/">抓取豆瓣电影信息</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="BeautifulSoup抓取豆瓣电影信息">BeautifulSoup抓取豆瓣电影信息</h1><p>Beautiful Soup 是用Python写的一个HTML/XML的解析器，它可以很好的处理不规范标记并生成剖析树(parse tree)。 它提供简单又常用的导航（navigating），搜索以及修改剖析树的操作。它可以大大节省你的编程时间。</p>
+<hr>
+<h2 id="BeautifulSoup4的安装">BeautifulSoup4的安装</h2><p>一、使用pip直接安装beautifulsoup4</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">F:\demo&gt;pip install beautifulsoup4</span><br><span class="line">Collecting beautifulsoup4</span><br><span class="line">Downloading beautifulsoup4-<span class="number">4.4</span><span class="number">.0</span>-py3-none-any.whl (<span class="number">80</span>kB)</span><br><span class="line"><span class="number">328</span>kB/s</span><br><span class="line">Installing collected packages: beautifulsoup4</span><br><span class="line">Successfully installed beautifulsoup4-<span class="number">4.4</span><span class="number">.0</span></span><br><span class="line"></span><br><span class="line">F:\demo&gt;</span><br></pre></td></tr></table></figure>
+<p>或者从官网下载Beautifulsoup的软件包，然后解压，cmd命令行进入解压包目录，输入以下命令安装：python setup.py install</p>
+<h2 id="实例，新浪双色球开奖数据实现：">实例，新浪双色球开奖数据实现：</h2>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/python/">python</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/01/22/BeautifulSooup/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
+    <article id="post-Aho-Corasick-automation" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/21/Aho-Corasick-automation/" class="article-date">
+  	<time datetime="2016-01-21T14:24:06.000Z" itemprop="datePublished">2016-01-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/21/Aho-Corasick-automation/">AC自动机</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>文章大部分内容参考自<a href="http://blog.csdn.net/niushuai666/article/details/7002823">CSDN–飘过的小牛</a></p>
+<p>AC自动机，全程是Aho-Corasick automaton，该算法在1975年产生于贝尔实验室，是著名的多模匹配算法。</p>
+</blockquote>
+<p>要讲清楚比较吃力，直接上实例边消化边理解会好很多。</p>
+<h1 id="示例">示例</h1><h2 id="构造">构造</h2><ol>
+<li><p>构造一棵Trie，作为AC自动机的搜索数据结构。</p>
+</li>
+<li><p>构造fail指针，使当前字符失配时跳转到具有最长公共前后缀的字符继续匹配。如同 KMP算法一样， AC自动机在匹配时如果当前字符匹配失败，那么利用fail指针进行跳转。由此可知如果跳转，跳转后的串的前缀，必为跳转前的模式串的后缀并且跳转的新位置的深度（匹配字符个数）一定小于跳之前的节点。所以我们可以利用 bfs在 Trie上面进行 fail指针的求解。</p>
+</li>
+<li><p>扫描主串进行匹配。</p>
+</li>
+</ol>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/模式匹配/">模式匹配</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/01/21/Aho-Corasick-automation/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
     <article id="post-矩阵快速幂" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -685,150 +836,9 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-shadowsocks" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/12/23/shadowsocks/" class="article-date">
-  	<time datetime="2015-12-23T08:36:28.000Z" itemprop="datePublished">2015-12-23</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/23/shadowsocks/">科学上网</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="shadowsocks">shadowsocks</h1><hr>
-<p>Shadowsocks（中文名称：影梭）是一个安全的socks5代理，用于保护网络流量，是一个开源项目。通过客户端以指定的密码、加密方式和端口连接服务器，成功连接到服务器后，客户端在用户的电脑上构建一个本地socks5代理。使用时将流量分到本地socks5代理，客户端将自动加密并转发流量到服务器，服务器以同样的加密方式将流量回传给客户端，以此实现代理上网。</p>
-<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/chatu_ss.jpg" alt=""></p>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/网络/">网络</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/12/23/shadowsocks/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-python" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/12/20/python/" class="article-date">
-  	<time datetime="2015-12-20T14:39:55.000Z" itemprop="datePublished">2015-12-20</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/20/python/">Python学习(一)</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://7xowaa.com1.z0.glb.clouddn.com/python.jpg" alt=""></p>
-<p>python中的变量也是弱类型，无须使用保留字定义。想要使用的时候，可以直接对他赋值</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str='this <span class="keyword">is</span> a <span class="type">string</span> var example'</span><br><span class="line"><span class="comment">#在python中使用  ‘#’代替其他编程语言中的 ‘//’</span></span><br></pre></td></tr></table></figure>
-<p>然后就可以直接对他进行caozu9o，当然如果没有这一步骤，直接使用str会报错。<br>之后可以对str进行类型改变。</p>
-<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>=<span class="number">11</span>;</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span><span class="comment">//2);#对一个数字进行整除操作，可以使用'//'符号进行注释</span></span><br><span class="line">#正常的除法操作就可以直接使用<span class="string">'/'</span></span><br></pre></td></tr></table></figure>
-<p>Python中十六进制以 “0x”开头，二八进制以”0”开头<br>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/python/">python</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/12/20/python/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/12/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/14/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/12/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/14/">Next &raquo;</a>
     </nav>
   
 </div>

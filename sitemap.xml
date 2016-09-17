@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://peihao.space/2016/09/18/django_intro6/</loc>
+    
+    <lastmod>2016-09-17T13:45:33.870Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://peihao.space/2016/09/17/django_intro5/</loc>
+    
+    <lastmod>2016-09-17T12:16:38.370Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://peihao.space/2016/09/11/django_intro3/</loc>
     
     <lastmod>2016-09-17T02:31:37.323Z</lastmod>
