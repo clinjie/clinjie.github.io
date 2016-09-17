@@ -243,6 +243,74 @@ var _hmt = _hmt || [];
 </nav>
       <div class="body-wrap">
   
+    <article id="post-router-global-functions" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/14/router-global-functions/" class="article-date">
+  	<time datetime="2016-04-14T11:17:22.000Z" itemprop="datePublished">2016-04-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/14/router-global-functions/">Verilog的testbench笔记</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>记录下Router这个工程的几个全局函数.</p>
+<h1 id="clogb">clogb</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">function integer <span class="title">clogb</span><span class="params">(input integer argument)</span></span>;</span><br><span class="line">   integer 		     i;</span><br><span class="line">   begin</span><br><span class="line">      clogb = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span>(i = argument - <span class="number">1</span>; i &gt; <span class="number">0</span>; i = i &gt;&gt; <span class="number">1</span>)</span><br><span class="line">		clogb = clogb + <span class="number">1</span>;</span><br><span class="line">   end</span><br><span class="line">endfunction</span><br></pre></td></tr></table></figure>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Verilog/">Verilog</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Verilog/">Verilog</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/04/14/router-global-functions/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
     <article id="post-verilog-testbench-note" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -716,74 +784,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2016/04/07/context/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-Gulp-intro" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/04/06/Gulp-intro/" class="article-date">
-  	<time datetime="2016-04-06T06:17:22.000Z" itemprop="datePublished">2016-04-06</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/06/Gulp-intro/">Gulp介绍</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="介绍">介绍</h1><h2 id="什么是Gulp">什么是Gulp</h2><p><code>gulp.js</code>是一种基于流的，代码优于配置的新一代构建工具.<a href="https://github.com/gulpjs/gulp/tree/master/docs">官方文档</a></p>
-<p><code>Gulp</code>和<code>Grunt</code>类似。但相比于 Grunt 的频繁的 I/O 操作，Gulp 的流操作，能更快地完成构建
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gulp/">Gulp</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Gulp/">Gulp</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/04/06/Gulp-intro/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

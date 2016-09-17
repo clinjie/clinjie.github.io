@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>http://peihao.space/2016/09/11/django_intro3/</loc>
+    <lastmod>2016-09-17T02:31:37.323Z</lastmod>
+    <data>
+        <display>
+        <title>Django初识3</title>
+        <pubTime>2016-09-11T14:24:06.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://peihao.space/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2016/09/16/django_intro4/</loc>
+    <lastmod>2016-09-17T02:27:36.392Z</lastmod>
+    <data>
+        <display>
+        <title>Django初识4</title>
+        <pubTime>2016-09-16T04:24:06.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://peihao.space/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://peihao.space/2016/09/14/fullset/</loc>
     <lastmod>2016-09-14T15:51:50.085Z</lastmod>
     <data>
@@ -17,26 +57,6 @@
            
              
               <breadCrumb title="algorithm" url="http://peihao.space/categories/algorithm/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://peihao.space/2016/09/11/django_intro3/</loc>
-    <lastmod>2016-09-11T15:46:55.438Z</lastmod>
-    <data>
-        <display>
-        <title>Django初识3</title>
-        <pubTime>2016-09-11T14:24:06.000Z</pubTime>
-        
-        <tag>python</tag>
-         
-         
-           
-             
-              <breadCrumb title="python" url="http://peihao.space/categories/python/"/>
           
         </display>
     </data>

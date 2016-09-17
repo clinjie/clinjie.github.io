@@ -25,7 +25,9 @@
 以月为单位的归档页——展示选中的月份里各天创建的内容。
 以天为单位的归档页——展示选中天里创建的所有内容。
 评论处理器——用于响应为">
-<meta property="og:updated_time" content="2016-09-11T15:46:55.438Z">
+<meta property="og:image" content="http://peihao.space/img/article/djaogo/django_3_1.png">
+<meta property="og:image" content="http://peihao.space/img/article/djaogo/django_3_2.png">
+<meta property="og:updated_time" content="2016-09-17T02:31:37.323Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Django初识3">
 <meta name="twitter:description" content="View视图Django 中的视图的概念是「一类具有相同功能和模板的网页的集合」。比如，在一个博客应用中，你可能会创建如下几个视图：
@@ -317,7 +319,7 @@ var _hmt = _hmt || [];
 			
 			  <div id="toc" class="toc-article">
 			    <strong class="toc-title">文章目录</strong>
-			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#View视图"><span class="toc-number">1.</span> <span class="toc-text">View视图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#re命名组"><span class="toc-number">2.</span> <span class="toc-text">re命名组</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分组"><span class="toc-number">2.1.</span> <span class="toc-text">分组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命名分组"><span class="toc-number">2.2.</span> <span class="toc-text">命名分组</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#View"><span class="toc-number">3.</span> <span class="toc-text">View</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实践"><span class="toc-number">3.1.</span> <span class="toc-text">实践</span></a></li></ol></li></ol>
+			    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#View视图"><span class="toc-number">1.</span> <span class="toc-text">View视图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#re命名组"><span class="toc-number">2.</span> <span class="toc-text">re命名组</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分组"><span class="toc-number">2.1.</span> <span class="toc-text">分组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命名分组"><span class="toc-number">2.2.</span> <span class="toc-text">命名分组</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#View"><span class="toc-number">3.</span> <span class="toc-text">View</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实践"><span class="toc-number">3.1.</span> <span class="toc-text">实践</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#编写真正的View"><span class="toc-number">4.</span> <span class="toc-text">编写真正的View</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查询展现"><span class="toc-number">4.1.</span> <span class="toc-text">查询展现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用template"><span class="toc-number">4.2.</span> <span class="toc-text">使用template</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#404异常"><span class="toc-number">5.</span> <span class="toc-text">404异常</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#手动捕获处理"><span class="toc-number">5.1.</span> <span class="toc-text">手动捕获处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自动捕获"><span class="toc-number">5.2.</span> <span class="toc-text">自动捕获</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#去除硬编码以及namespace"><span class="toc-number">6.</span> <span class="toc-text">去除硬编码以及namespace</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#app_url命名"><span class="toc-number">6.1.</span> <span class="toc-text">app_url命名</span></a></li></ol></li></ol>
 			  </div>
 			
         <h1 id="View视图">View视图</h1><p>Django 中的视图的概念是「一类具有相同功能和模板的网页的集合」。比如，在一个博客应用中，你可能会创建如下几个视图：</p>
@@ -383,6 +385,52 @@ var _hmt = _hmt || [];
 <li><p>site_address:port/polls/数字/results -&gt; You’re looking the ewsults of question question_id(也就是匹配的数字).</p>
 </li>
 </ul>
+<h1 id="编写真正的View">编写真正的View</h1><h2 id="查询展现">查询展现</h2><p>可以直接通过查询存储在SQLite数据库中的Data，获取相应的属性数据反映在网页中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">	<span class="string">'''latest_question_list=Question.objects.order_by('-pub_date')[:5]</span><br><span class="line">	template=loader.get_template('polls/index.html')</span><br><span class="line">	context=&#123;</span><br><span class="line">		'latest_question_list':latest_question_list,</span><br><span class="line">	&#125;</span><br><span class="line">	return HttpResponse(template.render(context,request))'''</span></span><br><span class="line">	latest_question=Question.objects.order_by(<span class="string">'-pub_date'</span>)[:<span class="number">5</span>]</span><br><span class="line">	output=<span class="string">''</span>.join([p.question_text+<span class="string">"  :  "</span>+str(p.pub_date) <span class="keyword">for</span> p <span class="keyword">in</span> latest_question])</span><br><span class="line">	<span class="keyword">return</span> HttpResponse(output)</span><br></pre></td></tr></table></figure>
+<p>上面实现了将database中所有的question尸体相应属性展现在网页中。</p>
+<h2 id="使用template">使用template</h2><p>使用template模板可以方便的使用html语言设计页面布局，同事在响应函数中传值使用数据：</p>
+<ul>
+<li><p>在网站项目的templates/目录下新建polls目录</p>
+</li>
+<li><p>在polls目录下新建index.html</p>
+</li>
+<li><p>index.html文件中填充需要修改设计的部分</p>
+</li>
+</ul>
+<p><img src="http://peihao.space/img/article/djaogo/django_3_1.png" alt=""></p>
+<p>同时在view.py中修改pools/index.html对应的view函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">	latest_question_list=Question.objects.order_by(<span class="string">'-pub_date'</span>)[:<span class="number">5</span>]</span><br><span class="line">	template=loader.get_template(<span class="string">'polls/index.html'</span>)</span><br><span class="line">	context=&#123;</span><br><span class="line">		<span class="string">'latest_question_list'</span>:latest_question_list,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> HttpResponse(template.render(context,request))</span><br></pre></td></tr></table></figure>
+<p>或者我们可以直接使用<code>render</code>函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Question</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">    latest_question_list = Question.objects.order_by(<span class="string">'-pub_date'</span>)[:<span class="number">5</span>]</span><br><span class="line">    context = &#123;<span class="string">'latest_question_list'</span>: latest_question_list&#125;</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">'polls/index.html'</span>, context)</span><br></pre></td></tr></table></figure>
+<p>render() 函数的第一个参数是一个请求(HttpRequest)对象，第二个参数是需要载入的模板的名字。第三个参数是需要用于渲染模板的上下文字典，这个参数是可选的。函数返回一个 HttpResponse 对象，内容为指定模板用指定上下文渲染后的结果。</p>
+<p>因为url配对情况没有发生变化，所以不需要修改。</p>
+<h1 id="404异常">404异常</h1><h2 id="手动捕获处理">手动捕获处理</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">detail</span><span class="params">(request, question_id)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        question = Question.objects.get(pk=question_id)</span><br><span class="line">    <span class="keyword">except</span> Question.DoesNotExist:</span><br><span class="line">        <span class="keyword">raise</span> Http404(<span class="string">"Question does not exist"</span>)</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">'polls/detail.html'</span>, &#123;<span class="string">'question'</span>: question&#125;</span><br></pre></td></tr></table></figure>
+<p>在网站项目的templates目录下新建detail.html文件，由于这里只是简单测试下，所以仅仅需要反馈最简答的信息即可：</p>
+<pre><code><span class="comment"></span>
+</code></pre><p>此时，当访问的question_id在DataBase中存在时，question将直接显示在页面中。否则会出现404异常页面。</p>
+<h2 id="自动捕获">自动捕获</h2><p>可以直接使用django提供的get_object_or_404()函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Question</span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render,get_object_or_404</span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> Http404</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">detail</span><span class="params">(request, question_id)</span>:</span></span><br><span class="line">    question = get_object_or_404(Question, pk=question_id)</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">'polls/detail.html'</span>, &#123;<span class="string">'question'</span>: question&#125;)</span><br></pre></td></tr></table></figure>
+<h1 id="去除硬编码以及namespace">去除硬编码以及namespace</h1><p>在templates/polls/目录下的index.html文件中，我们定义了polls 应用的首页模板，当访问site_address/polls/时，默认加载site_address/polls/index.html文件中的模板进行匹配。</p>
+<pre><code><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/polls//"</span>&gt;</span><span class="comment"></span>  
+</code></pre><p>在前文中，我们直接使用的是这种absolute url，这对于项目的若耦合目标相违背，django提供了url函数通过在urls.py中定义的url name直接连接代替硬编码：</p>
+<p><img src="http://peihao.space/img/article/djaogo/django_3_2.png" alt=""></p>
+<p>其中<code>url &#39;detail&#39; question.id</code>代表的是文字下面的链接地址，url是函数名，detail是url name，对应的是<code>^()/$</code>，在本例中就是对应polls，随后的question.id就是不同question的id值，此项与上面的对应</p>
+<p>其中’detail’代表的是urls.py文件中定义的url name：</p>
+<p><code>url(r&#39;^(?P&lt;question_id&gt;[0-9]+)/$&#39;,views.detail,name=&#39;detail&#39;)</code></p>
+<p>之后若是想修改url路径，可以直接在app的urls.py中修改：</p>
+<p><code>url(r&#39;^specifics/(?P&lt;question_id&gt;[0-9]+)/$&#39;)</code></p>
+<p>此时原来的网页路径将会迁移到site_address/polls/specifics/数字，显示的是question的id为12时choice_text</p>
+<h2 id="app_url命名">app_url命名</h2><p>在真实的项目实例中，必然会出现多个app应用，多个app应用的view名称可能会出现重叠，此时就应该加上namespace加以区分。</p>
+<ul>
+<li>在mysite/urls.py文件在注册将不同app的urls.py文件时，直接加入namespace.</li>
+</ul>
+<ul>
+<li><p>url(r’^polls/‘, include(‘polls.urls’, namespace=”polls”))</p>
+</li>
+<li><p>多个app情况下，模板使用时注意加上namespace进行区分</p>
+</li>
+</ul>
+<p>‘detail’–&gt;’polls:detail’</p>
 
       
       

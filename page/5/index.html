@@ -243,6 +243,76 @@ var _hmt = _hmt || [];
 </nav>
       <div class="body-wrap">
   
+    <article id="post-DP-intro" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/22/DP-intro/" class="article-date">
+  	<time datetime="2016-04-22T09:17:22.000Z" itemprop="datePublished">2016-04-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/22/DP-intro/">DP介绍</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>动态规划(dynamic programming)是运筹学的一个分支，是求解决策过程(decision process)最优化的数学方法。20世纪50年代初美国数学家R.E.Bellman等人在研究多阶段决策过程(multistep decision process)的优化问题时，提出了著名的最优化原理(principle of optimality)，把多阶段过程转化为一系列单阶段问题，利用各阶段之间的关系，逐个求解，创立了解决这类过程优化问题的新方法——动态规划</p>
+</blockquote>
+<p>动态规划算法通常基于一个递推公式和n个初始状态。当前子问题的解将由前子问题的解推出。使用动态规划来解题只需要多项式时间复杂度。</p>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/04/22/DP-intro/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
     <article id="post-android-sdk" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -731,74 +801,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2016/04/15/router-source-file-architecture-Filt_sink/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-router-global-functions" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/04/14/router-global-functions/" class="article-date">
-  	<time datetime="2016-04-14T11:17:22.000Z" itemprop="datePublished">2016-04-14</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/14/router-global-functions/">Verilog的testbench笔记</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>记录下Router这个工程的几个全局函数.</p>
-<h1 id="clogb">clogb</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">function integer <span class="title">clogb</span><span class="params">(input integer argument)</span></span>;</span><br><span class="line">   integer 		     i;</span><br><span class="line">   begin</span><br><span class="line">      clogb = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span>(i = argument - <span class="number">1</span>; i &gt; <span class="number">0</span>; i = i &gt;&gt; <span class="number">1</span>)</span><br><span class="line">		clogb = clogb + <span class="number">1</span>;</span><br><span class="line">   end</span><br><span class="line">endfunction</span><br></pre></td></tr></table></figure>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Verilog/">Verilog</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Verilog/">Verilog</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/04/14/router-global-functions/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

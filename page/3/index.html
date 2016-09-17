@@ -243,6 +243,80 @@ var _hmt = _hmt || [];
 </nav>
       <div class="body-wrap">
   
+    <article id="post-matlab3" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/10/matlab3/" class="article-date">
+  	<time datetime="2016-07-10T02:24:06.000Z" itemprop="datePublished">2016-07-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/10/matlab3/">Matlab学习(三)</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="文件存储">文件存储</h1><h2 id="-mat">.mat</h2><p>在Matlab中，为了方便我们在之后的工作中随时进行中断的工作，我们可以在IDE中通过：</p>
+<ol>
+<li>点击“文件（File）”下接菜单</li>
+<li>选择“保存工作区为（Save Workspace As…）”</li>
+<li>输入文件名</li>
+<li>点击“保存（Save）”按钮</li>
+</ol>
+<p>将当前工作状态保存为.mat文件，之后我们就可以随时、随地在任何安装Matlab软件的计算机上使用当前工作状态。</p>
+      
+      
+
+	
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/matlab/">matlab</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/matlab/">matlab</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/07/10/matlab3/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+
+  
+  
+		
+</article>
+
+
+
+
+
+
+  
     <article id="post-matlab2" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -732,76 +806,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2016/05/21/android-application/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-
-  
-  
-		
-</article>
-
-
-
-
-
-
-  
-    <article id="post-android-sqlite-rawsql" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/20/android-sqlite-rawsql/" class="article-date">
-  	<time datetime="2016-05-20T08:59:35.000Z" itemprop="datePublished">2016-05-20</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/20/android-sqlite-rawsql/">Android中SQLite基础操作</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>记录基本的android使用SQLite方法：</p>
-<p>目前比较主流的方法是，使用继承自<code>SQLiteOpenHelper</code>类的对象创建数据库并管理数据库版本。</p>
-<p>当创建实例之后，除了自动运行构造函数，这个继承自<code>SQLiteOpenHelper</code>的类还会自动调用onCreate方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(SQLiteDatabase db)</span> </span>&#123;</span><br><span class="line">        db.execSQL(<span class="string">"create table if not exists tb_user"</span> +</span><br><span class="line">                <span class="string">"(_id integer primary key autoincrement,"</span> +</span><br><span class="line">                <span class="string">"username varchar(20),"</span> +</span><br><span class="line">                <span class="string">"password varchar(20))"</span>);</span><br><span class="line">        db.execSQL(<span class="string">"create table if not exists tb_userInfo"</span> +</span><br><span class="line">                <span class="string">"(_id integer primary key autoincrement,"</span> +</span><br><span class="line">                <span class="string">"username varchar(20),"</span> +</span><br><span class="line">                <span class="string">"suggestions text)"</span>);</span><br><span class="line">        db.execSQL(<span class="string">"insert into tb_user(username, password) values('chuangwailinjie', '123456')"</span>);</span><br><span class="line">        db.execSQL(<span class="string">"insert into tb_user(username, password) values('peihao', '1234567')"</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-      
-      
-
-	
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/adnroid/">adnroid</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/05/20/android-sqlite-rawsql/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
