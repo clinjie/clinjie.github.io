@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://peihao.space/2016/09/12/py_buptnet/</loc>
+    
+    <lastmod>2016-09-19T09:34:11.920Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://peihao.space/2016/09/13/selenium%E9%80%89%E8%AF%BE/</loc>
+    
+    <lastmod>2016-09-19T09:29:55.229Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://peihao.space/2016/02/27/selenium/</loc>
+    
+    <lastmod>2016-09-19T07:27:25.003Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://peihao.space/2016/09/18/%E5%80%99%E9%B8%9F/</loc>
+    
+    <lastmod>2016-09-18T11:26:25.934Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://peihao.space/2016/04/12/%E5%A4%AA%E8%81%AA%E6%98%8E/</loc>
+    
+    <lastmod>2016-09-18T11:18:44.988Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://peihao.space/2016/09/18/django_intro6/</loc>
     
     <lastmod>2016-09-17T13:45:33.870Z</lastmod>
@@ -359,13 +394,6 @@
   </url>
   
   <url>
-    <loc>http://peihao.space/2016/04/12/%E5%A4%AA%E8%81%AA%E6%98%8E/</loc>
-    
-    <lastmod>2016-04-17T12:34:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://peihao.space/2016/04/16/Gray-code/</loc>
     
     <lastmod>2016-04-17T07:22:36.000Z</lastmod>
@@ -642,13 +670,6 @@
     <loc>http://peihao.space/2016/01/26/python_wx/</loc>
     
     <lastmod>2016-03-16T07:07:16.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://peihao.space/2016/02/27/selenium/</loc>
-    
-    <lastmod>2016-03-16T07:06:34.000Z</lastmod>
     
   </url>
   

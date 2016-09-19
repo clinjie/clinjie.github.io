@@ -4,6 +4,110 @@
 
     
   <url>
+    <loc>http://peihao.space/2016/09/12/py_buptnet/</loc>
+    <lastmod>2016-09-19T09:34:11.920Z</lastmod>
+    <data>
+        <display>
+        <title>校园网一键登录注销</title>
+        <pubTime>2016-09-12T14:23:35.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://peihao.space/categories/Python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2016/09/13/selenium%E9%80%89%E8%AF%BE/</loc>
+    <lastmod>2016-09-19T09:29:55.229Z</lastmod>
+    <data>
+        <display>
+        <title>Selenium模拟选课</title>
+        <pubTime>2016-09-13T14:23:35.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://peihao.space/categories/Python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2016/02/27/selenium/</loc>
+    <lastmod>2016-09-19T07:27:25.003Z</lastmod>
+    <data>
+        <display>
+        <title>Selenium模拟测试教务数据</title>
+        <pubTime>2016-02-27T14:23:35.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://peihao.space/categories/Python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2016/09/18/%E5%80%99%E9%B8%9F/</loc>
+    <lastmod>2016-09-18T11:26:25.934Z</lastmod>
+    <data>
+        <display>
+        <title>候鸟</title>
+        <pubTime>2016-09-18T12:36:28.000Z</pubTime>
+        
+        <tag>随笔</tag>
+         
+        <tag>音乐</tag>
+         
+         
+           
+             
+              <breadCrumb title="随笔" url="http://peihao.space/categories/%E9%9A%8F%E7%AC%94/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://peihao.space/2016/04/12/%E5%A4%AA%E8%81%AA%E6%98%8E/</loc>
+    <lastmod>2016-09-18T11:18:44.988Z</lastmod>
+    <data>
+        <display>
+        <title>太聪明</title>
+        <pubTime>2016-04-12T07:36:28.000Z</pubTime>
+        
+        <tag>随笔</tag>
+         
+        <tag>音乐</tag>
+         
+         
+           
+             
+              <breadCrumb title="随笔" url="http://peihao.space/categories/%E9%9A%8F%E7%AC%94/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://peihao.space/2016/09/18/django_intro6/</loc>
     <lastmod>2016-09-17T13:45:33.870Z</lastmod>
     <data>
@@ -1000,28 +1104,6 @@
 
     
   <url>
-    <loc>http://peihao.space/2016/04/12/%E5%A4%AA%E8%81%AA%E6%98%8E/</loc>
-    <lastmod>2016-04-17T12:34:56.000Z</lastmod>
-    <data>
-        <display>
-        <title>太聪明</title>
-        <pubTime>2016-04-12T07:36:28.000Z</pubTime>
-        
-        <tag>随笔</tag>
-         
-        <tag>音乐</tag>
-         
-         
-           
-             
-              <breadCrumb title="随笔" url="http://peihao.space/categories/%E9%9A%8F%E7%AC%94/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://peihao.space/2016/04/16/Gray-code/</loc>
     <lastmod>2016-04-17T07:22:36.000Z</lastmod>
     <data>
@@ -1819,26 +1901,6 @@
            
              
               <breadCrumb title="python" url="http://peihao.space/categories/python/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://peihao.space/2016/02/27/selenium/</loc>
-    <lastmod>2016-03-16T07:06:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>Selenium模拟测试教务数据</title>
-        <pubTime>2016-02-27T14:23:35.000Z</pubTime>
-        
-        <tag>Python</tag>
-         
-         
-           
-             
-              <breadCrumb title="Python" url="http://peihao.space/categories/Python/"/>
           
         </display>
     </data>
