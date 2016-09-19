@@ -252,10 +252,10 @@ c = webdriver.PhantomJS() # Get local session of firefox
 c.get("http://222.195.8.201/") # Load page
 ele=c.find_element_by_xpath('//*[@id="__01"]/tbody/tr[2]/td[2]/form/div/table/tbody/tr[2]/td[2]/input')
 ele.clear()
-ele.send_keys('2012217174')
+ele.send_keys('********')
 passwd=c.find_element_by_xpath('//*[@id="__01"]/tbody/tr[2]/td[2]/form/div/table/tbody/tr[3]/td[2]/input')
 passwd.clear()
-passwd.send_keys('1994100600')
+passwd.send_keys('********')
 c.find_element_by_xpath('//*[@id="__01"]/tbody/tr[2]/td[2]/form/div/table/tbody/tr[1]/td[1]/input').click()
 submit=c.find_element_by_class_name('button03')
 submit.submit()
