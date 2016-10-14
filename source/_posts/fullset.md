@@ -122,3 +122,25 @@ int main()
     return 0;
 }
 ```
+
+```java
+StringBuilder sb=new StringBuilder(str);
+	public String swap(String str,int x,int y){
+		char t=sb.charAt(x);
+		char v=sb.charAt(y);
+		sb.setCharAt(x, v);
+		sb.setCharAt(y, t);
+		return sb.toString() ;
+	}
+public void strfunc(String str,int from ,int to){
+		if(from==to){
+			System.out.println(str);
+			return;
+		}
+		for(int i=from;i<to;i++){
+			str=swap(str, i, from);
+			strfunc(str, from+1, to);
+			str=swap(str, i, from);
+		}
+	}
+```

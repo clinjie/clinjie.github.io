@@ -51,24 +51,12 @@ class Grab():
 
 	#获取目录页面下的文章url集合
     def ExtractInfo(self,buf):
-        try:
-            self.soup = BeautifulSoup(buf,'html.parser')
-        except:
-            LOG('soup failed in ExtractInfo :%s' % self.url)
-            return
-        try:
-			#通过BS模块可以很方便的获取想要的信息
-            items = self.soup.findAll(attrs={'class':'link_title'})
-        except:
-            LOG('failed on find items:%s' % self.url)
-            return
-        links = []
-        for item in items:
-            linkobj = item.findAll('a')
-            for it in linkobj:
-                link = it['href']
-                links.append(link)
-        return links
+        dom=etree.HTML(buf)
+        links=dom.xpath('//h3[@class="list_c_t"]/a/@href')
+        titles=dom.xpath('//h3[@class="list_c_t"]/a/text()')
+        for i in range(0,len(links)):links[i]='http://blog.csdn.net'+links[i]
+        for i in range(0,len(titles)):titles[i]=titles[i].strip()
+        return links,titles
 
 	#获取所有文章的目录页面url集合
     def GetPageUrl(self,buf):
@@ -86,9 +74,10 @@ class Grab():
 	#获取当前访问文章的访问数、文章标题
     def GetCurViewerPoint(self,buf):
         self.soup = BeautifulSoup(buf,'html.parser')
-        pointobj = self.soup.find(attrs={'class':'link_view'})
-        title = self.soup.find(attrs={'class':'link_title'})
-        return title.get_text().strip()+'  '+pointobj.get_text()
+        pointobj = (self.soup.find(attrs={'class':'read_r'})).label.span.string
+        title = (self.soup.find(attrs={'class':'list_c_t'})).get_text()
+        pointobj=pointobj[2:len(pointobj)-1]
+        return title+'  当前阅读数：'+pointobj
 
 grab = Grab()
 
@@ -213,41 +202,37 @@ from bs4 import BeautifulSoup
 class Grab():
     url = ''
     soup = None
+
     #读取当前网页的源代码数据返回
     def GetPage(self, url):
         self.url = url
+        LOG('input url is: %s' % self.url)
         req = urllib.request.Request(url, headers={'User-Agent' : "Magic Browser"})
-        try:page = urllib.request.urlopen(req)
-        except:return
+        try:
+            page = urllib.request.urlopen(req)
+        except:
+            return
         tem = page.read()
         if not tem:
             print('GetPage failed!')
             sys.exit()
         return tem
 
+	#获取目录页面下的文章url集合
     def ExtractInfo(self,buf):
-        try:
-            from bs4 import BeautifulSoup
-            self.soup = BeautifulSoup(buf,'html.parser')
-        except:return
-        try:items = self.soup.findAll(attrs={'class':'link_title'})
-        except:return
-        links = []
-        titles = []
-        for item in items:
-            title = item.get_text().strip()
-            titles.append(title)
-            linkobj = item.findAll('a')
-            for it in linkobj:
-                link = it['href']
-                links.append('http://blog.csdn.net'+link)
+        dom=etree.HTML(buf)
+        links=dom.xpath('//h3[@class="list_c_t"]/a/@href')
+        titles=dom.xpath('//h3[@class="list_c_t"]/a/text()')
+        for i in range(0,len(links)):links[i]='http://blog.csdn.net'+links[i]
+        for i in range(0,len(titles)):titles[i]=titles[i].strip()
         return links,titles
 
+	#获取所有文章的目录页面url集合
     def GetPageUrl(self,buf):
         pages = set()
         self.soup = BeautifulSoup(buf,'html.parser')
         pageInfo=self.soup.find(attrs={'id':'papelist'})
-        #当前文章数量只有一页
+        #如果当前文章数量只有一页
         if not pageInfo:
             return None
         pagelinks = pageInfo.findAll('a')
@@ -255,11 +240,13 @@ class Grab():
             pages.add('http://blog.csdn.net/'+link['href'])
         return pages
 
+	#获取当前访问文章的访问数、文章标题
     def GetCurViewerPoint(self,buf):
         self.soup = BeautifulSoup(buf,'html.parser')
-        pointobj = self.soup.find(attrs={'class':'link_view'})
-        title = self.soup.find(attrs={'class':'link_title'})
-        return title.get_text().strip()+'  '+pointobj.get_text()
+        pointobj = (self.soup.find(attrs={'class':'read_r'})).label.span.string
+        title = (self.soup.find(attrs={'class':'list_c_t'})).get_text()
+        pointobj=pointobj[2:len(pointobj)-1]
+        return title+'  当前阅读数：'+pointobj
 
 
 
@@ -418,39 +405,50 @@ class Grab():
     url = ''
     soup = None
     #读取当前网页的源代码数据返回
+    #读取当前网页的源代码数据返回
     def GetPage(self, url):
         self.url = url
-        try:page=requests.get(url, headers={'User-Agent' : "Magic Browser"})
-        except:return
-        tem = page.text
+        LOG('input url is: %s' % self.url)
+        req = urllib.request.Request(url, headers={'User-Agent' : "Magic Browser"})
+        try:
+            page = urllib.request.urlopen(req)
+        except:
+            return
+        tem = page.read()
         if not tem:
             print('GetPage failed!')
             sys.exit()
         return tem
 
+	#获取目录页面下的文章url集合
     def ExtractInfo(self,buf):
         dom=etree.HTML(buf)
-        links=dom.xpath('//h1/span[@class="link_title"]/a/@href')
-        titles=dom.xpath('//h1/span[@class="link_title"]/a/text()')
+        links=dom.xpath('//h3[@class="list_c_t"]/a/@href')
+        titles=dom.xpath('//h3[@class="list_c_t"]/a/text()')
         for i in range(0,len(links)):links[i]='http://blog.csdn.net'+links[i]
         for i in range(0,len(titles)):titles[i]=titles[i].strip()
         return links,titles
 
+	#获取所有文章的目录页面url集合
     def GetPageUrl(self,buf):
         pages = set()
-        dom=etree.HTML(buf)
-        pageinfo=(dom.xpath('//div[@id="papelist"]/span/text()'))[0]
-        pagecount=int((re.findall('共(.*?)页',pageinfo))[0])
-        for i in range(1,pagecount+1):
-            pages.add('http://blog.csdn.net/'+username+'/article/list/'+str(i))
+        self.soup = BeautifulSoup(buf,'html.parser')
+        pageInfo=self.soup.find(attrs={'id':'papelist'})
+        #如果当前文章数量只有一页
+        if not pageInfo:
+            return None
+        pagelinks = pageInfo.findAll('a')
+        for link  in pagelinks:
+            pages.add('http://blog.csdn.net/'+link['href'])
         return pages
 
-
+	#获取当前访问文章的访问数、文章标题
     def GetCurViewerPoint(self,buf):
         self.soup = BeautifulSoup(buf,'html.parser')
-        pointobj = self.soup.find(attrs={'class':'link_view'})
-        title = self.soup.find(attrs={'class':'link_title'})
-        return title.get_text().strip()+'  '+pointobj.get_text()
+        pointobj = (self.soup.find(attrs={'class':'read_r'})).label.span.string
+        title = (self.soup.find(attrs={'class':'list_c_t'})).get_text()
+        pointobj=pointobj[2:len(pointobj)-1]
+        return title+'  当前阅读数：'+pointobj
 ```
 
 

@@ -2,9 +2,7 @@
 menu:
   主页: /
   所有文章: /archives
-  随笔: /tags/随笔
   相册: /album
-  Rss: /atom.xml
 
 # SubNav
 subnav:
