@@ -100,11 +100,6 @@ define([], function (){
 		init:function(){
 			getList();
 			bind();
-			$(document).ready(function(){
-				$(document).bind("contextmenu",function(e){
-					return false;
-				});
-			});
 		}
 	}
 });

@@ -508,4 +508,6 @@ class MyThread(QtCore.QThread):
                 time.sleep(0.1)
 ```
 
-经过测试，去掉`time.sleep(seconds)`推迟线程调用之后，会出现网络模块报错，可能是服务器对爬虫的限制。
+去掉`time.sleep(seconds)`推迟线程调用之后，会出现网络模块报错，这应该是所有网络模块都会碰到的情况。
+
+[软件下载](https://www.jianguoyun.com/p/DQopnKQQpYz2BRiv5x0)
