@@ -83,3 +83,66 @@ if __name__ == "__main__":
 `curl http://localhost:8001/wrap -d text=Lorem+ipsum+dolor+sit+amet,+consectetuer+adipiscing+elit`
 
 
+# 异步执行 #
+
+上面的例子中，修改IndexHandler类：
+
+```python
+import time
+class IndexHandler(tornado.web.RequestHandler):
+	def get(slef):
+		time.sleep(10)
+		greeting=self.get_argument('greeting','Hello')
+		self.write(ge=reeting+',*******')
+```
+
+其他不用修改，此时我们按顺序在两个terminal中请求
+
+`curl http://localhost:8002/?greeting=clinjie`
+
+`curl http://localhost:8002/reverse/home`
+
+可以发现，虽然我们执行的时间间隔非常小，不会超过3s，但是由于第一个请求被阻塞了，第二个很简单可以直接返回数据的请求也无法立刻执行，只能等待第一个请求执行完毕后开始执行后面的。
+
+tornado与其他web framework最出彩的就是对于异步处理支持度很高。
+
+## tornado.web.asynchronous注解 ##
+
+在类前面使用`@tornado.web.asynchronous`装饰注解，此后命中匹配这个类的连接将会被认为是长连接(long connection)，保持连接开启。注意这里很重要，tornado默认是在当前方法结束之后就会将连接关闭，但是使用异步情况下，我们将会使用callback function，必须要保持连接开启
+
+直到某些到达状态（例如接受response）时都在等待。由于保证了长连接的状态，我们必须显式的执行self.finish关闭连接，否则连接是不会被关闭的，我们会一直等待，无法收到数据
+
+在类前面加入装饰器之后这个程序还是不能达到我们想要的效果，还要在函数中定义回调函数并在下面实现
+
+`curl http://localhost:8002/?greeting=clinjie`
+
+
+修改下：
+
+```python
+class IndexHandler(tornado.web.RequestHandler):
+	@tornado.web.asynchronous
+	def get(self):
+		do sth...
+		tornado.ioloop.IOLoop.instance().add_timeout(time.time() + 5, callback=self.on_response)
+	def on_response(self):
+		#self.write(self.greeting+',*******')
+		do sth...
+		self.finish()
+```
+
+终于可以搞了！
+
+新版本的tornado支持yield生成器，无需定义回调函数：
+
+```python
+#@tornado.web.asynchronous不用了
+@tornado.gen.coroutine
+def get(self):
+    yield tornado.gen.Task(tornado.ioloop.IOLoop.instance().add_timeout, time.time() + 5)
+    self.write("when i sleep 5s")
+```
+
+上面可以看到，要实现异步执行效果，都没有使用`time.sleep(m)`方法，因为time.sleep方法是线程阻塞的，而我们使用asynchronous或者coroutine这类装饰器的就是将耗时的工作变成异步回调/协程状态保存的（否则根本就没有意义），这里只能另辟蹊径，使用异步的定时执行器：`tornado.ioloop.IOLoop.instance().add_timeout`。
+
+基于IOLoop的，当我们get url进入get方法，耗时任务通过异步回调或者协程处理，底层通过epoll或者kqueue、select执行，但是你要来个time.sleep这种阻塞方法那就没得玩了，所以还是通过将定时器加入到IOLoop中实现类似sleep的效果
