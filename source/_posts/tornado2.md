@@ -112,7 +112,7 @@ tornado中的模板扩展，包括extens和block块使用与Django都很相似�
 
 原始的base文件base.html中使用的所有tag、layout、css、js内容都能够在使用扩展命令的其他模板文件中直接使用：
 
-`{\% extends base.html \%}`
+`{ % extends base.html % }`
 
 这一点与Django完全一致
 
@@ -120,9 +120,9 @@ tornado中的模板扩展，包括extens和block块使用与Django都很相似�
 
 只是继承原始的文件有什么用呢，一定要重写某些部分，够则与原始文件毫无二致，这需要2个步骤：
 
-1. 在原始需要扩展的base.html中的某些需要替换部分使用`{\% block block_name \%}{\% end \%}`
+1. 在原始需要扩展的base.html中的某些需要替换部分使用`{ % block block_name % }{ % end % }`
 
-2. 在扩展的文件中`{\% extends base.html \%}`
+2. 在扩展的文件中`{ % extends base.html % }`
 
 3. 在扩展的文件中重写`block_name`部分
 
@@ -131,18 +131,18 @@ tornado中的模板扩展，包括extens和block块使用与Django都很相似�
 ```html
 <!--base.html-->
 hiahiahia
-{\% block content \%}
+{ % block content % }
     I am the base.html
-{\% end \%}
+{ % end % }
 ```
 - override.html
 
 ```html
 <!--override.html-->
-{\% extends "base.html" \%}
-{\% block content \%}
+{ % extends "base.html" % }
+{ % block content % }
 I am the override.html
-{\% end \%}
+{ % end % }
 ```
 override.html文件继承base.html文件内容，在content block块中修改相应的内容
 
@@ -152,6 +152,6 @@ Tips:因为在base.html中我们定义的是完整的html标签，我们不可�
 
 与Django做对比，Django模板中也有block部分，使用也相当相似：
 
-`{\% block content \%}{\% endblock \%}`
+`{ % block content % }{ % endblock % }`
 
-在Django中因为要与for循环的结束符号`{\% endfor \%}`作出区别，没有直接使用end，而是选择了endblock，其他的毫无区别
+在Django中因为要与for循环的结束符号`{ % endfor % }`作出区别，没有直接使用end，而是选择了endblock，其他的毫无区别
