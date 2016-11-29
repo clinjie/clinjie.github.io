@@ -4,5 +4,5 @@ db.json
 *.log
 public/
 .deploy*/
-themes/landscape/
 .deploy_git/
+themes/yilia/

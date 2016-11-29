@@ -7,7 +7,7 @@ title: 窗外临街
 subtitle:
 description:
 author: 培豪
-language:
+language: zh-Hans
 timezone:
 
 # URL
@@ -64,7 +64,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: http://hexo.io/plugins/
 ## Themes: http://hexo.io/themes/
-theme: yilia
+theme: next
 
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
