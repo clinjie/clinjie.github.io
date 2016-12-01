@@ -1,7 +1,7 @@
 title: 科学上网
 date: 2015-12-23 16:36:28
 toc: true
-tags: 
+tags:
 - 网络
 categories: 网络
 ---
@@ -36,13 +36,13 @@ Shadowsocks（中文名称：影梭）是一个安全的socks5代理，用于保
 
 首次运行，会弹出编辑服务器窗口，按图示填写您的SHADOWSOCKS服务器地址，端口，密码和加密方式，点确定
 
-![](http://www.ishadowsocks.com/img/tutorials/windows_shadowsocks_02.png)  
+![](http://www.ishadowsocks.net/img/tutorials/windows_shadowsocks_02.png)  
 
 这里我提供一些免费的ss账号共享  
 
 - [http://yomoe.net/](http://yomoe.net/ "Yomoe共享")在这里注册账号，即可无流量限制获取ss账号，还能够通过ss提供的扫码功能直接获取服务
 
-- [http://www.ishadowsocks.com/](http://www.ishadowsocks.com/ "ishadowsocks")直接提供服务器账号密码使用，但是会隔6小时更换密码
+- [http://www.ishadowsocks.com/](http://www.ishadowsocks.net/ "ishadowsocks")直接提供服务器账号密码使用，但是会隔6小时更换密码
 
 如果以上的几种获取方式失效，请联系笔者获取。
 
@@ -50,13 +50,13 @@ Shadowsocks（中文名称：影梭）是一个安全的socks5代理，用于保
 
 按提示右键程序图标，弹出菜单，勾选“启用系统代理”
 
-![](http://www.ishadowsocks.com/img/tutorials/windows_shadowsocks_04.png)
+![](http://www.ishadowsocks.net/img/tutorials/windows_shadowsocks_04.png)
 
 好了，大功告成，打开任意浏览器上网吧，就是这么简单，就是这么任性
 
 设置好以后，IE/Chrome/Firefox无需设置，直接打开网址即可
 
-![](http://www.ishadowsocks.com/img/tutorials/windows_shadowsocks_05.png)
+![](http://www.ishadowsocks.net/img/tutorials/windows_shadowsocks_05.png)
 
 Tips:PAC和全局模式是什么意思？PAC模式访问国内网站不通过服务器，全局模式所有网站都通过服务器
 
@@ -113,8 +113,8 @@ shadowsocks代理属于socks5代理，通俗的理解，socks5只是局部代理
 菜单栏–>>配置文件–>>代理规则–>>点击“添加”–>>在“目标端口”里面添加端口，然后下面的动作选择“direct”，然后点确定。
 
 ![](http://www.dingziblog.com/wp-content/uploads/2015/05/%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE3.jpg)
- 
- 
+
+
 一定要注意以上两点，否则真心无法正常使用。
 
 Proxifier设置好以后，就可以打开ssh或shadowsocks客户端并登录了。此时，默认所有程序的网络都会走代理，百度里查ip，必定会是代理的ip。

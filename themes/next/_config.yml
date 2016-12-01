@@ -36,6 +36,7 @@ menu:
   #about: /about
   archives: /archives
   tags: /tags
+  photo: /photos
   #sitemap: /sitemap.xml
 
 
@@ -48,6 +49,7 @@ menu_icons:
   enable: true
   #KeyMapsToMenuItemKey: NameOfTheIconFromFontAwesome
   home: home
+  photo: photo
   about: user
   categories: th
   schedule: calendar
@@ -64,8 +66,8 @@ menu_icons:
 # ---------------------------------------------------------------
 
 # Schemes
-scheme: Muse
-#scheme: Mist
+#scheme: Muse
+scheme: Mist
 #scheme: Pisces
 
 

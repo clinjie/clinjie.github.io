@@ -7,7 +7,7 @@ tags:
 categories: torrent 
 ---
 
-![](http://www.bt.com.au/images/homepage/panotile001.jpg)
+![](http://img0.tech2ipo.com/upload/img/article/2015/01/1421913062966.jpg)
 
 # 写在前面 #
 
@@ -26,6 +26,10 @@ libtorrent的python版本：
 **Building the libtorrent python bindings will produce a shared library (DLL) which is a python module that can be imported in a python program.**
 
 libtorrent API的中文翻译[戳这里](http://ksharpdabu.ctfile.com/file/18920987),当然没有python版本的API文件，不过既然已经安装了libtorrent的python binding，熟悉C++的API也是必做的一步。有条件的筒子们还是建议去读英文版的API吧[Here](http://www.libtorrent.org/)，虽然我也不知道为什么这样推荐。
+
+## 库安装 ##
+
+[win平台的msi文件](https://sourceforge.net/projects/libtorrent/files/py-libtorrent/)  推荐直接使用msi文件安装，libtorrent支持python2.x版本，直接使用libtorrent组织提供的python bind无法正常安装
 
 # torrent_info #
 
