@@ -292,6 +292,33 @@
       {% if is_index and not isLast %}
         <div class="post-eof"></div>
       {% endif %}
+
+      <! -- 添加微信图标 -->
+	    {% if config.wechat_subscriber.enable %}
+			{% if is_home() %}
+			{% else %}
+
+				<div>
+
+				<span>
+				{% if config.wechat_subscriber.description %}
+					{{ config.wechat_subscriber.description }}
+				{% endif %}
+				<br>
+				</span>
+				<br>
+
+				{% if wechat_subscriber.qcode %}
+				<a href="{{ config.wechat_subscriber.qcode }}" title="clinjie's微信公众号" class="fancybox" rel="article0"       style="float:left;margin-left:25%;margin-right:2px;">
+				<img src="{{ config.wechat_subscriber.qcode }}" title="clinjie's微信公众号" height="200px" width="200px">
+				</a>
+				{% endif %}
+
+
+				</div>
+
+			{% endif %}
+	    {% endif %}
     </footer>
   </article>
 
