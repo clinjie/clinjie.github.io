@@ -2,7 +2,7 @@ title: 蓄水池
 date: 2016-09-21 22:24:06
 tags:
 - algorithm
-categories: algorithm、
+categories: algorithm
 ---
 
 # 蓄水池算法 #
@@ -14,7 +14,7 @@ categories: algorithm、
 
 - 1:`(1/1)*(1/2)*(2/3)*(3/4)=1/4`
 
-- 2:`(1/2)*(2/3)*(3/4)=1/4` 
+- 2:`(1/2)*(2/3)*(3/4)=1/4`
 
 - 3：`(1/3)*(3/4)=1/4`
 

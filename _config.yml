@@ -78,6 +78,32 @@ Plugins:
 - hexo-generator-feed
 - hexo-generator-baidu-sitemap
 - hexo-generator-sitemap
+- hexo-math
+
+
+math:
+  engine: 'mathjax' # or 'katex'
+  mathjax:
+    src: http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+    config:
+      {
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+          processEscapes: true
+        },
+        TeX: {
+          equationNumbers: {
+            autoNumber: "AMS"
+          }
+        },
+        messageStyle: "none"
+      }
+  katex:
+    css: # not used
+    js: # not used
+    config:
+      # KaTeX config
 
 #Feed Atom
 feed:
