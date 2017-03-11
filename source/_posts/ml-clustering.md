@@ -18,19 +18,19 @@ categories: ML
 
 ## 外部指标
 
-对数据集$D={x_1,x_2,...,x\_m}$，假定通过聚类给出额簇划分为$C={C_1,C_2,...,C_k}$，参考模型给出的簇划分为$C^`={C_1^\`,C_2^\`,...,C_s^\`}$。相应的，令$\lambda$与$\lambda^`$分别表示与$C$和$C^\`$对应的簇标记向量。注意的是，参考模型给出的划分类别数量不一定等于通过聚类得到的数量。
+对数据集$D={x_1,x_2,...,x\_m}$，假定通过聚类给出额簇划分为$C={C_1,C_2,...,C_k}$，参考模型给出的簇划分为$C^`={C\_1^T,C\_2^T,...,C\_s^T}$。相应的，令$\lambda$与$\lambda^T$分别表示与C和$C^T$对应的簇标记向量。注意的是，参考模型给出的划分类别数量不一定等于通过聚类得到的数量。
 
 样本两两配对：
 
-1. $a=\mid SS \mid ,SS={(x\_i,x\_j)\mid \lambda\_i = \lambda\_j,\lambda\_i^`=\lambda\_j^`,i<j}$
+1. $a=\mid SS \mid ,SS={(x\_i,x\_j)\mid \lambda\_i = \lambda\_j,\lambda\_i^T=\lambda\_j^T,i<j}$
 
-2. $b=\mid SS \mid ,SD={(x_i,x_j)\mid \lambda\_i = \lambda\_j,\lambda\_i^`\neq \lambda\_j^`,i<j}$
+2. $b=\mid SS \mid ,SD={(x_i,x_j)\mid \lambda\_i = \lambda\_j,\lambda\_i^T\neq \lambda\_j^T,i<j}$
 
-3. $c=\mid SS \mid ,DS={(x_i,x_j)\mid \lambda\_i \neq \lambda\_j,\lambda\_i^`=\lambda\_j^`,i<j}$
+3. $c=\mid SS \mid ,DS={(x_i,x_j)\mid \lambda\_i \neq \lambda\_j,\lambda\_i^T=\lambda\_j^T,i<j}$
 
-4. $a=\mid SS \mid ,DD={(x_i,x_j)\mid \lambda\_i \neq \lambda\_j,\lambda\_i^ `\neq \lambda\_j^`,i<j}$
+4. $a=\mid SS \mid ,DD={(x_i,x_j)\mid \lambda\_i \neq \lambda\_j,\lambda\_i^T \neq \lambda\_j^T,i<j}$
 
-集合SS包含了C中隶属于相同簇且在$C^`$中也隶属于相同簇的样本对，集合SD包含了在C中隶属于相同簇但在$C^`$中隶属于不同簇的样本对
+集合SS包含了C中隶属于相同簇且在$C^`$中也隶属于相同簇的样本对，集合SD包含了在C中隶属于相同簇但在$C^T$中隶属于不同簇的样本对
 
 1. Jaccard系数：$JC=\frac{a}{a+b+c}$
 
@@ -40,7 +40,7 @@ categories: ML
 
 上述性能度量的结果值均在[0,1]区间，值越大越好。
 
-## 外部指标
+## 内部指标
 
 考虑聚类结果的簇划分$C={C\_1,C\_2,...,C\_k}$，定义
 
