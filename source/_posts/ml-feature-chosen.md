@@ -17,9 +17,9 @@ categories: ML
 
 $L\_1$范数是$L\_0$范数的最优凸优化，常用$L\_1$代替$L\_0$范数。
 
-3. $L\_2$范数即欧式距离：$\mid\mid x \mid\mid\_2=\sqrt{\sum\_{i=1}^n x\_i^2}$
+- $L\_2$范数即欧式距离：$\mid\mid x \mid\mid\_2=\sqrt{\sum\_{i=1}^n x\_i^2}$
 
-4. Forbenius范数：$\mid\mid A \mid\mid\_F = \sqrt{\sum\limits\_{i=1}^m\sum\limits\_{j=1}^n}\mid a\_{ij} \mid^2$
+- Forbenius范数：$\mid\mid A \mid\mid\_F = \sqrt{\sum\limits\_{i=1}^m\sum\limits\_{j=1}^n \mid a\_{ij} \mid^2}$
 
 # 子图搜索与特征选择 #
 

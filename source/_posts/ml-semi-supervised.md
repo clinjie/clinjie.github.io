@@ -61,7 +61,7 @@ $$
 
 思想：相似或者相关联的顶点尽可能的赋予相同标记连接，以保证图的标记尽可能的平滑。相似性或者关系度越高，连接的权值越大。
 
-定义相似矩阵$W=(w\_{ij})$\_{(l+u)(l+u)},w\_{ij}=exp(-\frac{\mid\mid x\_i-x\_j \mid\mid^2}{2\sigma^2}) if e=(x\_i,e\_j) \in E else 0$其中$\sigma$是带宽系数，用于控制权值的减缓程度。$w\_{ij}$随着欧式距离的增加会减少。
+定义相似矩阵$W=(w\_{ij})\_{(l+u)\times(l+u)},w\_{ij}=exp(-\frac{\mid\mid x\_i-x\_j \mid\mid^2}{2\sigma^2})\ if\  e=(x\_i,e\_j) \in E\ else\ 0$其中$\sigma$是带宽系数，用于控制权值的减缓程度。$w\_{ij}$随着欧式距离的增加会减少。
 
 标记传递算法：已标记数据$Rightarrow$近邻未标记数据$Rightarrow$次级近邻未标记数据
 
