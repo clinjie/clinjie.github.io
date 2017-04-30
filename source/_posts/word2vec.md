@@ -68,7 +68,7 @@ Skip-gram模型包括两层：输入层和输出层，相比CBOW，少了投影�
 
 -----------------
 
-下面开始介绍基于Negative Smapling的模型，翻译过来就是负采样模型，是由NCE（Noise Contrastive Estimation）的一个简化版本，目的是用来提高训练速度并改善词向量的质量。与上面介绍的基于Hierarchical Softmax的CBOW和Skip-gram相比，这种不在使用复杂的哈夫曼树，而是使用相对简单的额随机负采样，大幅度提高性能。
+下面开始介绍基于Negative Smapling的模型，翻译过来就是负采样模型，是由NCE（Noise Contrastive Estimation）的一个简化版本，目的是用来提高训练速度并改善词向量的质量。与上面介绍的基于Hierarchical Softmax的CBOW和Skip-gram相比，这种不使用复杂的哈夫曼树，而使用相对简单的随机负采样。因为在计算损失函数的时候，只是有我们挑选出来的k个noise word，而非整个的语料库V，这使得训练非常快。大幅度提高性能。
 
 假设要求的未知的概率密度函数为X，已知的概率密度是Y，如果知道了X与Y的关系，那么X也就可以求出来。本质就是利用已知的概率密度估计未知的概率密度函数。
 
@@ -108,11 +108,11 @@ $$p(u\mid Context(w))=
 \end{cases}
 $$
 
-这里$x\_w$表示Context(w)中各词的词向量之和，而$\theta^u \in R^m$表示词u对应的一个辅助向量。
+这里$x\_w$表示Context(w)中各词的词向量之和，而$\theta^u \in R^m$表示词u对应的一个辅助向量，其实就是word-embeding中的嵌入值。
 
-$\sigma(x^T\_w\theta^w)  \ $表示当上下文为Context(w)时，预测中心词为w的概率，而$\sigma(x^T\_w\theta^u)\, u \in NEG(w)$则表示上下文为Context(w)时，预测中心词为u的概率。式子$g(w)$表示，所有在NEG集合加上实际的中心词w概率相乘，最大化这个式子，每一项，如果是实际的中心词w，最大化$p$，如果属于NEG集合，最大化$(1-p)$。增大正样本的概率同时降低负样本的概率。
+$\sigma(x\_w^T \theta^w)$表示当上下文为Context(w)时，预测中心词为w的概率，而$\sigma(x^T\_w\theta^u)\, u \in NEG(w)$则表示上下文为Context(w)时，预测中心词为u的概率。式子$g(w)$表示，所有在NEG集合加上实际的中心词w概率相乘，最大化这个式子，每一项，如果是实际的中心词w，最大化$p$，如果属于NEG集合，最大化$(1-p)$。增大正样本的概率同时降低负样本的概率。
 
-之后的内容就是使用SGD对求解最大化这个公式进行训练，参数的更新，包括$\theta$对应词的一个辅助向量，$x$对应Context(w)中各词的词向量之和，以及通过$x$更新最初的输入词$w$的向量。
+之后的内容就是使用SGD对求解最大化这个公式进行训练，参数的更新，包括$\theta$对应词的嵌入，$x$对应Context(w)中各词的词向量之和，以及通过$x$更新最初的输入词$w$的向量，对于整个数据集，当梯度下降的过程中不断地更新参数，对应产生的效果就是不断地移动每个单词的嵌套向量，直到可以把真实单词和噪声单词很好得区分开。
 
 
 # 基于负采样的Skip-gram
@@ -125,3 +125,244 @@ $\sigma(x^T\_w\theta^w)  \ $表示当上下文为Context(w)时，预测中心词
 作为整体优化的目标，然后为了变成和项，我们取对数等等。
 
 之后的步骤就跟原来一样。
+
+```python
+from __future__ import print_function
+import tensorflow.python.platform
+
+import collections
+import math
+from six.moves import xrange
+import numpy as np
+import os
+import random
+import tensorflow as tf
+import urllib.request
+import zipfile
+
+# Step 1: Download the data.
+url = 'http://mattmahoney.net/dc/'
+
+def maybe_download(filename, expected_bytes):
+  """Download a file if not present, and make sure it's the right size."""
+  if not os.path.exists(filename):
+    filename, _ = urllib.request.urlretrieve(url + filename, filename)
+  # 文件信息获取
+  statinfo = os.stat(filename)
+  if statinfo.st_size == expected_bytes:
+    print('Found and verified', filename)
+  else:
+    print(statinfo.st_size)
+    raise Exception(
+        'Failed to verify ' + filename + '. Can you get to it with a browser?')
+  return filename
+
+filename = maybe_download('text8.zip', 31344016)
+
+
+# Read the data into a string.
+def read_data(filename):
+  f = zipfile.ZipFile(filename)
+  # 获取压缩文件中的文件列表，返回第一个文件内容，根据空格进行分割成列表。
+  for name in f.namelist():
+  	return f.read(name).split()
+  f.close()
+
+words = read_data(filename)
+print('Data size', len(words))
+
+# Step 2: Build the dictionary and replace rare words with UNK token.#将稀少的词使用UNK替换
+vocabulary_size = 50000
+
+def build_dataset(words):
+  count = [['UNK', -1]]# 词'UNK'代表UnKnow
+  # 将count扩展，使用collections模块的计数器，根据出现次数的多少进行排序然后填充进count，排序之后UNK为第一位。s.most_common(n)方法返回对象s的Top n数据，没有指定的话，返回全部
+  count.extend(collections.Counter(words).most_common(vocabulary_size - 1))
+  dictionary = dict()
+  for word, _ in count:#count中按item有两个内容：str以及对应的times频率。定义一个字典对象，键为str，对应的值为上面count中按str频率高低的排名例如 the:1,of:2。。。
+    dictionary[word] = len(dictionary)
+  data = list()
+  unk_count = 0
+  for word in words:
+    if word in dictionary:
+      index = dictionary[word]
+    else:
+      index = 0  # dictionary['UNK'] 注意之前在dictionary中根据排序，UNK还是在第一位，对应的值为0
+      unk_count = unk_count + 1
+    # index代表了词对应的排名，出现一次，填充进data中一次。data中包含的是原来文件中词对应的排名列表
+    data.append(index)
+  count[0][1] = unk_count # count是一个二维的元祖，一个元素是'UNK':times，count[0][1]代表的就是UNK对应的频率
+  reverse_dictionary = dict(zip(dictionary.values(), dictionary.keys()))#键值对reverse
+  return data, count, dictionary, reverse_dictionary
+
+data, count, dictionary, reverse_dictionary = build_dataset(words)
+del words  # Hint to reduce memory.
+print('Most common words (+UNK)', count[:5])# 输出频率最高的5个词
+print('Sample data', data[:10])
+
+data_index = 0
+
+
+# Step 4: Function to generate a training batch for the skip-gram model.
+# num_skips 训练样本的源端要使用几次，出于n-skip算法的原因，一个中心词要对应多个周边词，也就是说一个中心词target要预测几次周边词，对应的词的数量
+# skip_window 左右各考虑多少个词，skip_windows*2=num_skips
+def generate_batch(batch_size, num_skips, skip_window):
+  global data_index
+  assert batch_size % num_skips == 0
+  assert num_skips <= 2 * skip_window
+  # ndarray本质是数组，其不同于一般的数组，或者Python 的list的地方在于它可以有N 维（dimentions），也可简单理解为数组里面嵌套数组。
+  batch = np.ndarray(shape=(batch_size), dtype=np.int32)
+  labels = np.ndarray(shape=(batch_size, 1), dtype=np.int32)
+  span = 2 * skip_window + 1 # [ skip_window target skip_window ]
+  buffer = collections.deque(maxlen=span)
+  for _ in range(span):
+    # 最初的填充，填充进原来文本中word的频率
+    buffer.append(data[data_index])
+    # 因为data_index是全局变量，训练要很多步，后面取余
+    data_index = (data_index + 1) % len(data)
+  for i in range((int)(batch_size / num_skips)):#batch中样batch_size个样本，衣蛾target有num_skips个样本
+    target = skip_window  # target label at the center of the buffer
+    targets_to_avoid = [ skip_window ]
+    for j in range(num_skips):
+      while target in targets_to_avoid:
+        # 进行了num_skips轮，每次找到一个不在target_to_avoid中的元素，实际上就是每次找一个与target配对的word
+        target = random.randint(0, span - 1)
+      targets_to_avoid.append(target)
+      batch[i * num_skips + j] = buffer[skip_window] #batch中是连续的num_skips个target词
+      labels[i * num_skips + j, 0] = buffer[target]#label中连续的num_skip个周边词
+    buffer.append(data[data_index])#buffer是有容量限制的，之前的状态是满的，此时会将最早的元素挤出去
+    data_index = (data_index + 1) % len(data)
+  return batch, labels
+
+batch, labels = generate_batch(batch_size=8, num_skips=2, skip_window=1)
+for i in range(8):
+  print(batch[i], '->', labels[i, 0])
+  print(reverse_dictionary[batch[i]], '->', reverse_dictionary[labels[i, 0]])
+
+# Step 5: Build and train a skip-gram model.
+
+batch_size = 128
+embedding_size = 128  # 嵌入矩阵的密度，或者说是矩阵长度，batch_size要和embedding_size一致
+skip_window = 1       # How many words to consider left and right.
+num_skips = 2         # How many times to re-use an input to generate a label.
+
+
+# 构造NEG集合相关参数，集合中的元素就作为分类结果的干扰
+valid_size = 16     # Random set of words to evaluate similarity on.#随机的word集合估计相似度
+valid_window = 100  # 选择在头部分布的开发样本
+valid_examples = np.array(random.sample(xrange(valid_window), valid_size))# 从[0,valid_window]中随机的获取valid_size个数值返回
+num_sampled = 64    # 负采样的个数
+
+graph = tf.Graph()
+
+with graph.as_default():
+
+  # Input data.
+  train_inputs = tf.placeholder(tf.int32, shape=[batch_size])
+  train_labels = tf.placeholder(tf.int32, shape=[batch_size, 1])
+  valid_dataset = tf.constant(valid_examples, dtype=tf.int32)
+
+  # Construct the variables.
+  embeddings = tf.Variable(#使用唯一的随机值来初始化大矩阵，shape=[vocabulary_size, embedding_size]
+      tf.random_uniform([vocabulary_size, embedding_size], -1.0, 1.0))
+  nce_weights = tf.Variable(#每个word定义一个权重值与偏差
+      # tf.truncated_normal初始函数将根据所得到的均值和标准差，生成一个随机分布。shape=[vocabulary_size, embedding_size]
+      tf.truncated_normal([vocabulary_size, embedding_size],
+                          stddev=1.0 / math.sqrt(embedding_size)))
+  nce_biases = tf.Variable(tf.zeros([vocabulary_size]))
+
+  # Look up embeddings for inputs. 根据train_inputs中的id，寻找embeddings中的对应元素。比如，train_inputs=[1,3,5]，则找出embeddings中下标为1,3,5的向量组成一个矩阵返回。
+  embed = tf.nn.embedding_lookup(embeddings, train_inputs)#这里是从train_inputs给的索引值找到embeddings大矩阵中的对应的嵌入值
+
+  # Compute the average NCE loss for the batch.
+  # tf.nce_loss automatically draws a new sample of the negative labels each
+  # time we evaluate the loss.
+  loss = tf.reduce_mean(# reduce_mean是平均值  vocabulary_size代表可能的数目  num_sampled代表per batch随机抽样的个数
+      tf.nn.nce_loss(nce_weights, nce_biases, train_labels,embed,#这里的参数都是按batch计算的，而非具体的某个样本.同时要注意的是原文件中参数排序出错，这里修正
+                     num_sampled, vocabulary_size))
+
+  optimizer = tf.train.GradientDescentOptimizer(1.0).minimize(loss)
+
+  # 计算在minibatch和所有的embedding的cosine相似度
+  norm = tf.sqrt(tf.reduce_sum(tf.square(embeddings), 1, keep_dims=True))#tf.reduce_sum就是求和
+  normalized_embeddings = embeddings / norm# 正则化嵌入值
+  valid_embeddings = tf.nn.embedding_lookup( #NEG集嵌入值
+      normalized_embeddings, valid_dataset)#寻找NEG集合中对应的正则化后的嵌入值
+  similarity = tf.matmul(#NEG集合正则化后的嵌入值与词典集合正则化后的嵌入值的矩阵乘
+      valid_embeddings, normalized_embeddings, transpose_b=True)
+
+# Step 6: Begin training
+num_steps = 100001
+
+with tf.Session(graph=graph) as session:
+  # We must initialize all variables before we use them.
+  tf.initialize_all_variables().run()
+  print("Initialized")
+
+  average_loss = 0
+  for step in xrange(num_steps):
+    batch_inputs, batch_labels = generate_batch(
+        batch_size, num_skips, skip_window)
+    feed_dict = {train_inputs : batch_inputs, train_labels : batch_labels}
+
+    # We perform one update step by evaluating the optimizer op (including it
+    # in the list of returned values for session.run()
+    _, loss_val = session.run([optimizer, loss], feed_dict=feed_dict)
+    average_loss += loss_val
+
+    if step % 2000 == 0:
+      if step > 0:
+        average_loss = average_loss / 2000
+      # The average loss is an estimate of the loss over the last 2000 batches.
+      print("Average loss at step ", step, ": ", average_loss)
+      average_loss = 0
+
+    # 这里是构建nosie词作
+    # 注意这里的代价是很大的，没500步差不多就会减慢20%的计算
+    if step % 10000 == 0:
+      sim = similarity.eval()
+      for i in xrange(valid_size):
+        valid_word = reverse_dictionary[valid_examples[i]]
+        top_k = 8 # number of nearest neighbors#
+        nearest = (-sim[i, :]).argsort()[1:top_k+1]# 返回的是按相似度排序后元素值的索引值
+        log_str = "Nearest to %s:" % valid_word
+        for k in xrange(top_k):
+          close_word = reverse_dictionary[nearest[k]]
+          log_str = "%s %s," % (log_str, close_word)
+        print(log_str)
+  final_embeddings = normalized_embeddings.eval()
+
+# Step 7: Visualize the embeddings.
+
+def plot_with_labels(low_dim_embs, labels, filename='tsne.png'):
+  assert low_dim_embs.shape[0] >= len(labels), "More labels than embeddings"
+  plt.figure(figsize=(18, 18))  #in inches
+  for i, label in enumerate(labels):
+    x, y = low_dim_embs[i,:]
+    plt.scatter(x, y)
+    plt.annotate(label,
+                 xy=(x, y),
+                 xytext=(5, 2),
+                 textcoords='offset points',
+                 ha='right',
+                 va='bottom')
+
+  plt.savefig(filename)
+
+  try:
+    from sklearn.manifold import TSNE
+    import matplotlib.pyplot as plt
+
+    tsne = TSNE(perplexity=30, n_components=2, init='pca', n_iter=5000)
+    plot_only = 500
+    low_dim_embs = tsne.fit_transform(final_embeddings[:plot_only,:])
+    labels = list(dictionary.keys())[:plot_only]
+    plot_with_labels(low_dim_embs, labels)
+
+  except ImportError:
+    print("Please install sklearn and matplotlib to visualize embeddings.")'''
+```
+
+运行结果如下：
+
+![](http://peihao.space/img/article/ml/tsne.png)
