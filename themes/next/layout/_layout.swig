@@ -75,5 +75,10 @@
 	
 	{% if theme.leancloud_visitors.enable %}
 {% endif %}
+<!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<!-- 颗粒漂浮背景 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript">var OriginTitile=document.title,st;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="你要去哪里",clearTimeout(st)):(document.title="clinjie~~"+OriginTitile,st=setTimeout(function(){document.title=OriginTitile},3e3))})</script>
 </body>
 </html>
