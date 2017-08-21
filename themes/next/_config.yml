@@ -66,8 +66,8 @@ menu_icons:
 # ---------------------------------------------------------------
 
 # Schemes
-#scheme: Muse
-scheme: Mist
+scheme: Muse
+#scheme: Mist
 #scheme: Pisces
 
 
@@ -253,7 +253,7 @@ highlight_theme: normal
 mathjax:
   enable: true
   #per_page: true
-  cdn: //cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+  cdn: https://cdn.staticfile.org/mathjax/2.7.0-beta.0/config/TeX-AMS-MML_HTMLorMML.js
 
 
 # Swiftype Search API Key
@@ -263,10 +263,10 @@ mathjax:
 baidu_analytics: 07ad8ea412265d4e0ce713ba2e3cd40a
 
 # Duoshuo ShortName
-duoshuo_shortname: chuangwailinjie
+#duoshuo_shortname: chuangwailinjie
 
 # Disqus
-#disqus_shortname:
+disqus_shortname: clinjie
 
 # Hypercomments
 #hypercomments_id:
@@ -284,7 +284,7 @@ duoshuo_shortname: chuangwailinjie
 #add_this_id:
 
 # Share
-duoshuo_share: true
+#duoshuo_share: true
 
 # Google Webmaster tools verification setting
 # See: https://www.google.com/webmasters/
@@ -305,7 +305,7 @@ duoshuo_share: true
 # user_id must NOT be null when admin_enable is true!
 # you can visit http://dev.duoshuo.com get duoshuo user id.
 duoshuo_info:
-  ua_enable: true
+  ua_enable: false
   admin_enable: false
   user_id: 0
   #admin_nickname: Author
@@ -453,6 +453,9 @@ vendors:
 
 
 
+local_search:
+enable: true
+  
 # Assets
 css: css
 js: js

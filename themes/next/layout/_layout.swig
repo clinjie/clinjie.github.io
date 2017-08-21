@@ -24,7 +24,8 @@
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"> {%- include '_partials/header.swig' %} </div>
+      <div class="header-inner"> {%- include '_partials/header.swig' %}
+	  </div>
     </header>
 
     <main id="main" class="main">

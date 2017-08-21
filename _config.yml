@@ -6,7 +6,7 @@
 title: 窗外临街
 subtitle:
 description:
-author: 培豪
+author: clinjie
 language: zh-Hans
 timezone:
 
@@ -84,7 +84,7 @@ Plugins:
 math:
   engine: 'mathjax' # or 'katex'
   mathjax:
-    src: http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+    src: https://cdn.staticfile.org/mathjax/2.7.0-beta.0/config/TeX-AMS-MML_HTMLorMML.js
     config:
       {
         tex2jax: {
@@ -116,3 +116,10 @@ sitemap:
 
 baidusitemap:
     path: baidusitemap.xml
+	
+
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
