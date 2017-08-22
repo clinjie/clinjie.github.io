@@ -1,4 +1,4 @@
-	function getList(){
+function getList(){
 	   var imgData=getImgData();
 		ctrler(imgData);
 };
