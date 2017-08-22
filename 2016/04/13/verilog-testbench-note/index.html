@@ -1,0 +1,1144 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Verilog," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="窗外临街" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="并行块在测试中经常会用到    fork...join块。使用并行块能表示以同一个时间起点算起的多个时间的运行，并行的执行复杂的过程结构，如循环或任务。
+eg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Verilog的testbench笔记">
+<meta property="og:url" content="http://peihao.space/2016/04/13/verilog-testbench-note/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="并行块在测试中经常会用到    fork...join块。使用并行块能表示以同一个时间起点算起的多个时间的运行，并行的执行复杂的过程结构，如循环或任务。
+eg">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/fork-join.png?imageView/2/w/610/q/100">
+<meta property="og:updated_time" content="2016-04-13T13:12:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Verilog的testbench笔记">
+<meta name="twitter:description" content="并行块在测试中经常会用到    fork...join块。使用并行块能表示以同一个时间起点算起的多个时间的运行，并行的执行复杂的过程结构，如循环或任务。
+eg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://peihao.space/2016/04/13/verilog-testbench-note/"/>
+
+
+
+
+
+  <title> Verilog的testbench笔记 | 窗外临街 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">窗外临街</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photos" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+
+	  </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://peihao.space/2016/04/13/verilog-testbench-note/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="clinjie">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/img/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="窗外临街">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="窗外临街" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Verilog的testbench笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Дата создания записи" itemprop="dateCreated datePublished" datetime="2016-04-13T19:17:22+08:00">
+                2016-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Verilog/" itemprop="url" rel="index">
+                    <span itemprop="name">Verilog</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/04/13/verilog-testbench-note/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/04/13/verilog-testbench-note/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/04/13/verilog-testbench-note/" class="leancloud_visitors" data-flag-title="Verilog的testbench笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+		
+		
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="并行块">并行块</h1><p>在测试中经常会用到    <code>fork...join</code>块。使用并行块能表示以同一个时间起点算起的多个时间的运行，并行的执行复杂的过程结构，如循环或任务。</p>
+<h2 id="eg">eg</h2><a id="more"></a>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> inilne_tb;</span><br><span class="line">reg [<span class="number">7</span>:<span class="number">0</span>] data_bus;</span><br><span class="line">	initial fork</span><br><span class="line">		data_bus=<span class="number">8</span><span class="string">'b00;</span><br><span class="line">		#10 data_bus=8'</span>h45;</span><br><span class="line">		<span class="comment">//以下的两个repeat开始执行时间不同，但可以并行同时执行</span></span><br><span class="line">		<span class="string">#20</span> <span class="keyword">repeat</span>(<span class="number">10</span>) <span class="string">#10</span> data_bus=data_bus+<span class="number">1</span>;</span><br><span class="line">		<span class="string">#25</span> <span class="keyword">repeat</span>(<span class="number">5</span>) <span class="string">#20</span> data_bus=data_bus&lt;&lt;<span class="number">1</span>;</span><br><span class="line">		<span class="string">#140</span> data_bus=<span class="number">8</span><span class="string">'h0f;</span><br><span class="line">	join</span><br><span class="line">endmodule</span></span><br></pre></td></tr></table></figure>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/fork-join.png?imageView/2/w/610/q/100" alt=""></p>
+<ul>
+<li><p>0时刻对data_bus赋初始值</p>
+</li>
+<li><p>10个单位时间之后对data_bus重新赋值</p>
+</li>
+<li><p>从20单位时间开始，每10个单位时间数据自加</p>
+</li>
+<li><p>从25单位时间开始，没20个单位时间数据左移，与上一条指令并行执行</p>
+</li>
+<li><p>140单位时间再赋值</p>
+</li>
+</ul>
+<h1 id="建立时钟">建立时钟</h1><p>虽然有时候在设计中会包含时钟，但时钟通常在测试模块中。可以使用门级和行为级建立时钟模型。行为描述一般使用的人较多。</p>
+<h2 id="简单的对称方波">简单的对称方波</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">reg clk;</span><br><span class="line">always begin</span><br><span class="line">	<span class="preprocessor">#peroid/<span class="number">2</span> clk=<span class="number">0</span>;</span></span><br><span class="line">	<span class="preprocessor">#peroid/<span class="number">2</span> clk=<span class="number">1</span>;</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h2 id="简单带延迟的对称方波时钟">简单带延迟的对称方波时钟</h2><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="typename">reg</span> clk;</span><br><span class="line"><span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">	clk<span class="keyword">=</span><span class="number">0</span>;</span><br><span class="line">	<span class="value">#(peroid)</span></span><br><span class="line">	<span class="keyword">forever</span></span><br><span class="line">		<span class="value">#(peroid/2)</span> clk<span class="keyword">=</span><span class="keyword">!</span>clk;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="不规则形">不规则形</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">reg clk;</span><br><span class="line">initial begin</span><br><span class="line">	<span class="preprocessor">#(peroid+<span class="number">1</span>) clk=<span class="number">1</span>;</span></span><br><span class="line">	<span class="preprocessor">#(peroid/<span class="number">2</span>-<span class="number">1</span>)</span></span><br><span class="line">	forever begin</span><br><span class="line">		<span class="preprocessor">#(peroid/<span class="number">4</span>) clk=<span class="number">0</span>;</span></span><br><span class="line">		<span class="preprocessor">#(<span class="number">3</span>*peroid/<span class="number">4</span>) clk=<span class="number">1</span>;</span></span><br><span class="line">	end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>将会产生一个带延迟的，占空比不为1，同时投脉冲不规则的时钟。</p>
+<h1 id="Verilog高级结构">Verilog高级结构</h1><h2 id="task">task</h2><p>一般用于编写测试模块或者行为描述的模块。其中可以包含时间控制（如： #delays,@,wait）；也可以包含input、output、inout端口定义和参数；同时也可以调用其他任务或函数。</p>
+<hr>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> bus_ctrl_tb;</span><br><span class="line">	<span class="typename">reg</span>[<span class="number">7</span><span class="keyword">:</span><span class="number">0</span>] data;</span><br><span class="line">	<span class="typename">reg</span> data_valid,data_rd;</span><br><span class="line">	cpu ul(data_valid,data,data_in);</span><br><span class="line">	<span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">		<span class="comment">//在模块中调用task</span></span><br><span class="line">		cpu_driver(<span class="number">8'b0000</span>_0000)</span><br><span class="line">		cpu_driver(<span class="number">8'b0000</span>_0000)</span><br><span class="line">		cpu_driver(<span class="number">8'b0000</span>_0000)</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	<span class="comment">//定义task</span></span><br><span class="line">	<span class="keyword">task</span> cpu_driver;</span><br><span class="line">	<span class="keyword">input</span> [<span class="number">7</span><span class="keyword">:</span><span class="number">0</span>] data_in;</span><br><span class="line">		<span class="keyword">begin</span></span><br><span class="line">			<span class="keyword">#</span><span class="number">30</span> data_valid<span class="keyword">=</span><span class="number">1</span>;</span><br><span class="line">			<span class="keyword">wait</span>(data_rd<span class="keyword">=</span><span class="keyword">=</span><span class="number">1</span>);</span><br><span class="line">			<span class="keyword">#</span><span class="number">20</span> data<span class="keyword">=</span>data_in;</span><br><span class="line">			<span class="keyword">wait</span>(data_rd<span class="keyword">=</span><span class="keyword">=</span><span class="number">0</span>);</span><br><span class="line">			<span class="keyword">#</span><span class="number">20</span> data<span class="keyword">=</span><span class="number">8'hzz</span>;</span><br><span class="line">			<span class="keyword">#</span><span class="number">30</span> data_valid<span class="keyword">=</span><span class="number">0</span>;</span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">endtask</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<p>在测试模块中使用任务可以提高程序代码的效率，可以用任务把多次重复的操作包装起来。</p>
+<p>同时要注意的是，模块的任务中，用于定时控制的信号，例如clk绝对不能作为任务的输入。因为输入值只想任务内部传递第一次，而定时控制一般来讲绝对不止一次传递控制。</p>
+<p>不要在程序的不同部分同时调用一个任务。这是因为任务只有一组本地变量，同一时刻调用两次相同的任务将会导致错误。这种情况同时发生在使用定时控制的任务中。</p>
+<hr>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">parameter</span> MAX_BITS<span class="keyword">=</span><span class="number">8</span>;</span><br><span class="line"><span class="typename">reg</span>[MAX_BITS<span class="keyword">:</span><span class="number">1</span>] D;</span><br><span class="line"></span><br><span class="line"><span class="keyword">task</span> reverse_bits;</span><br><span class="line"><span class="comment">//双向总线端口被当做寄存器类型</span></span><br><span class="line"><span class="keyword">inout</span> [<span class="number">7</span><span class="keyword">:</span><span class="number">0</span>] data;</span><br><span class="line"><span class="typename">integer</span> K;</span><br><span class="line">	<span class="keyword">for</span>(K<span class="keyword">=</span><span class="number">0</span>;K<span class="keyword">&lt;</span>MAX_BITS;K<span class="keyword">=</span>K<span class="keyword">+</span><span class="number">1</span>)</span><br><span class="line">		reverse_bits[MAX_BITS<span class="keyword">-</span>(K<span class="keyword">+</span><span class="number">1</span>)]<span class="keyword">=</span>data[K];</span><br><span class="line"><span class="keyword">endtask</span></span><br><span class="line"><span class="keyword">always</span> <span class="keyword">@</span> (<span class="keyword">posedge</span> clk)</span><br><span class="line">	reverse_bits(D);</span><br></pre></td></tr></table></figure>
+<p>上面的代码可以看出，在task定义过程中，有直接使用<code>reverse_bits[MAX_BITS-(K+1)]=data[K];</code>，也就是说，在Verilog中与函数一样，task、function调用都是直接将参数代替函数名直接改变。上面的调用 <code>reverse_bits(D)</code>等价于:</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">inout [<span class="number">7</span>:<span class="number">0</span>] data;</span><br><span class="line">integer <span class="keyword">K</span>;</span><br><span class="line">	for(<span class="keyword">K</span>=<span class="number">0</span>;<span class="keyword">K</span>&lt;MAX_BITS;<span class="keyword">K</span>=<span class="keyword">K</span>+<span class="number">1</span>)</span><br><span class="line">		<span class="keyword">D</span>[MAX_BITS-(<span class="keyword">K</span>+<span class="number">1</span>)]=data[<span class="keyword">K</span>];</span><br></pre></td></tr></table></figure>
+<p>任务只含有一个双向总线（inout）端口和一个内部变量，没有其他输入端口、输出端口和定时控制，没有引用模块变量。</p>
+<p>在任务调用时候，任务的输入变量（端口）在任务内部被当做寄存器类型变量处理（D）。</p>
+<hr>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">module mult(clk,a,b,<span class="keyword">out</span>,en_mult);</span><br><span class="line">	input clk,en_mult;</span><br><span class="line">	input [<span class="number">3</span>:<span class="number">0</span>]a,b;</span><br><span class="line">	output [<span class="number">7</span>:<span class="number">0</span>] <span class="keyword">out</span>;</span><br><span class="line">	reg[<span class="number">15</span>:<span class="number">0</span>] <span class="keyword">out</span>;</span><br><span class="line">		always @ (posedge clk)</span><br><span class="line">			//任务调用</span><br><span class="line">			multme(a,b,<span class="keyword">out</span>);</span><br><span class="line">	task multme;</span><br><span class="line">		input [<span class="number">3</span>:<span class="number">0</span>] xme,tome;</span><br><span class="line">		output [<span class="number">7</span>:<span class="number">0</span>] <span class="literal">result</span>;</span><br><span class="line">		wait(en_mult)</span><br><span class="line">			<span class="literal">result</span>=xme*tome;</span><br><span class="line">	endtask</span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+<p>模块中定义的任务含有输入，输出，时间控制和一个内部变量，并且引用了一个本模块的变量。任务调用时候参数的顺序应该与任务定义声明的变量顺序相同。</p>
+<h2 id="function">function</h2><p>函数不能包含定时控制，但是可以在包含定时控制的过程块中调用函数。</p>
+<p>在模块中，使用名为func的函数时，是将它作为名为func的寄存器类型变量来处理。</p>
+<hr>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">module orand(a,b,c,<span class="keyword">d</span>,<span class="keyword">e</span>,<span class="keyword">out</span>);</span><br><span class="line">	<span class="keyword">input</span> [&amp;;0] a,b,c,<span class="keyword">d</span>,<span class="keyword">e</span>;</span><br><span class="line">	output[7:0] <span class="keyword">out</span>;</span><br><span class="line">	<span class="keyword">reg</span>[7:0] <span class="keyword">out</span>;</span><br><span class="line">	always @(a,b,c,<span class="keyword">d</span>,<span class="keyword">e</span>);</span><br><span class="line">		<span class="keyword">out</span>=func(a,b,c,<span class="keyword">d</span>,<span class="keyword">e</span>);</span><br><span class="line">	function [7:0] func;</span><br><span class="line">		<span class="keyword">input</span> [7:0] a,b,c,<span class="keyword">d</span>,<span class="keyword">e</span>;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">e</span>==1)</span><br><span class="line">			func=(a|b)&amp;(c|<span class="keyword">d</span>);</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			func=0;</span><br><span class="line">	endfunction</span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>不包含任何定时控制语句</p>
+</li>
+<li><p>至少一个输入，不能含有任何输出和总线口</p>
+</li>
+<li><p>只返回一个值，值的变量名与函数名同名，数据类型默认为reg</p>
+</li>
+<li><p>传递给函数的参数顺序与函数输入口声明的顺序相同</p>
+</li>
+<li><p>函数定义必须在模块定义内</p>
+</li>
+<li><p>函数不能调用任务（因为任务可能包含时间控制），反之可以</p>
+</li>
+<li><p>虽然函数只能返回一个值，但是他的返回值可以直接赋给一个由多个子信号拼购成的信号变量。<code>{o1,o2,o3,o4}=func(a,b,c,d,e)</code></p>
+</li>
+</ul>
+<p>在函数定义时，如果在函数名之前定义了位宽，则函数就可以返回多bit构成的矢量。如果定义函数的语句比较多时，可以使用<code>begin...end</code>块。</p>
+<p>函数名前面的位宽代表了返回值（一般就是以函数名为名的reg）的位宽。</p>
+<p>若把函数定义为整型、实型或时间类型，就可以返回相应类型的数据。可以在任何类型的表达式中调用函数。</p>
+<hr>
+<figure class="highlight scilab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">module checksub(neg,in_a,in_b);</span><br><span class="line">output neg;</span><br><span class="line">input a,b;</span><br><span class="line">reg neg;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">integer</span> <span class="title">subtr</span>;</span></span><br><span class="line">		input <span class="matrix">[<span class="number">7</span>:<span class="number">0</span>]</span> in_a,in_b;</span><br><span class="line">		subtr=in_a-in_b;</span><br><span class="line">	<span class="function"><span class="keyword">endfunction</span></span></span><br><span class="line">always @(a <span class="built_in">or</span> b)</span><br><span class="line">	begin <span class="keyword">if</span>(subtr(a,b)&lt;<span class="number">0</span>)</span><br><span class="line">			neg=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		neg=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/mp-qr.jpg" alt="clinjie wechat" style="width: 200px; max-width: 100%;"/>
+    <div>Think about u every day</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Verilog/" rel="tag"># Verilog</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/12/太聪明/" rel="next" title="太聪明">
+                <i class="fa fa-chevron-left"></i> 太聪明
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/14/router-global-functions/" rel="prev" title="Verilog的testbench笔记">
+                Verilog的testbench笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      <! -- 添加微信图标 -->
+	    
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="clinjie" />
+          <p class="site-author-name" itemprop="name">clinjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">179</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chuangwailinjie" target="_blank" title="github" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chuangwalinjie" target="_blank" title="weibo" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/peihaozhu" target="_blank" title="zhihu" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#并行块"><span class="nav-number">1.</span> <span class="nav-text">并行块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#eg"><span class="nav-number">1.1.</span> <span class="nav-text">eg</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#建立时钟"><span class="nav-number">2.</span> <span class="nav-text">建立时钟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单的对称方波"><span class="nav-number">2.1.</span> <span class="nav-text">简单的对称方波</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单带延迟的对称方波时钟"><span class="nav-number">2.2.</span> <span class="nav-text">简单带延迟的对称方波时钟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不规则形"><span class="nav-number">2.3.</span> <span class="nav-text">不规则形</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Verilog高级结构"><span class="nav-number">3.</span> <span class="nav-text">Verilog高级结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#task"><span class="nav-number">3.1.</span> <span class="nav-text">task</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#function"><span class="nav-number">3.2.</span> <span class="nav-text">function</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clinjie</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'clinjie';
+      var disqus_identifier = '2016/04/13/verilog-testbench-note/';
+
+      var disqus_title = "Verilog的testbench笔记";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("BKt7qufuU6B0ix9a9ik7kejs-gzGzoHsz", "pfDjDmIpP09Fj9QNLGzSL2Ox");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+	
+	
+
+<!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<!-- 颗粒漂浮背景 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript">var OriginTitile=document.title,st;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="你要去哪里",clearTimeout(st)):(document.title="clinjie~~"+OriginTitile,st=setTimeout(function(){document.title=OriginTitile},3e3))})</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}},"messageStyle":"none"});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.0-beta.0/config/TeX-AMS-MML_HTMLorMML.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

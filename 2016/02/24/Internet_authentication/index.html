@@ -1,0 +1,1218 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python,Requests," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="窗外临街" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Python实现上网认证
+
+在学校的同行们应该都知道，目前国内大部分高校的上网采用网络认证系统，这可以简单化不同用户的权限管理，同时对于财务处理方面也有很大的优势。国内类似的系统，例如锐捷，我接触的比较多，通过简单的B/S网页账户登录认证实现上网。这几天，我就尝试使用了抓包工具以及Pyhton的模块做了一个简单的模拟一键登录、一键下线工具。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="校园网上网认证">
+<meta property="og:url" content="http://peihao.space/2016/02/24/Internet_authentication/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="Python实现上网认证
+
+在学校的同行们应该都知道，目前国内大部分高校的上网采用网络认证系统，这可以简单化不同用户的权限管理，同时对于财务处理方面也有很大的优势。国内类似的系统，例如锐捷，我接触的比较多，通过简单的B/S网页账户登录认证实现上网。这几天，我就尝试使用了抓包工具以及Pyhton的模块做了一个简单的模拟一键登录、一键下线工具。">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/css.jpg">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/login.png">
+<meta property="og:updated_time" content="2016-02-28T14:22:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="校园网上网认证">
+<meta name="twitter:description" content="Python实现上网认证
+
+在学校的同行们应该都知道，目前国内大部分高校的上网采用网络认证系统，这可以简单化不同用户的权限管理，同时对于财务处理方面也有很大的优势。国内类似的系统，例如锐捷，我接触的比较多，通过简单的B/S网页账户登录认证实现上网。这几天，我就尝试使用了抓包工具以及Pyhton的模块做了一个简单的模拟一键登录、一键下线工具。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://peihao.space/2016/02/24/Internet_authentication/"/>
+
+
+
+
+
+  <title> 校园网上网认证 | 窗外临街 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">窗外临街</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photos" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+
+	  </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://peihao.space/2016/02/24/Internet_authentication/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="clinjie">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/img/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="窗外临街">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="窗外临街" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                校园网上网认证
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Дата создания записи" itemprop="dateCreated datePublished" datetime="2016-02-24T12:23:35+08:00">
+                2016-02-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/02/24/Internet_authentication/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/02/24/Internet_authentication/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/02/24/Internet_authentication/" class="leancloud_visitors" data-flag-title="校园网上网认证">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+		
+		
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://7xowaa.com1.z0.glb.clouddn.com/css.jpg" alt=""></p>
+<p>Python实现上网认证</p>
+<hr>
+<p>在学校的同行们应该都知道，目前国内大部分高校的上网采用网络认证系统，这可以简单化不同用户的权限管理，同时对于财务处理方面也有很大的优势。国内类似的系统，例如锐捷，我接触的比较多，通过简单的B/S网页账户登录认证实现上网。这几天，我就尝试使用了抓包工具以及Pyhton的模块做了一个简单的模拟一键登录、一键下线工具。    </p>
+<a id="more"></a>
+<h1 id="Pyhton中流行的相关模块">Pyhton中流行的相关模块</h1><h2 id="urllib">urllib</h2><ol>
+<li><p>urlencode不能直接处理unicode对象，所以如果是unicode，需要先编码，有unicode转到utf8，举例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">urllib.urlencode (<span class="string">u'bl'</span>.encode(<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib       <span class="comment">#sohu 手机主页</span></span><br><span class="line">url = <span class="string">'http://m.sohu.com/?v=3&amp;_once_=000025_v2tov3&amp;_smuid=\ICvXXapq5EfTpQTVq6Tpz'</span></span><br><span class="line">resp = urllib.urlopen(url)</span><br><span class="line">page = resp.read()</span><br><span class="line">f = open(<span class="string">'./urllib_index.html'</span>, <span class="string">'w'</span>)</span><br><span class="line">f.write(page)</span><br><span class="line"><span class="keyword">print</span> dir(resp)</span><br><span class="line"><span class="comment">#结果:</span></span><br><span class="line">[<span class="string">'doc'</span>, <span class="string">'init'</span>, <span class="string">'iter'</span>, <span class="string">'module'</span>, <span class="string">'repr'</span>, <span class="string">'close'</span>, <span class="string">'code'</span>, <span class="string">'fileno'</span>, <span class="string">'fp'</span>, <span class="string">'getcode'</span>, <span class="string">'geturl'</span>, <span class="string">'headers'</span>, <span class="string">'info'</span>, <span class="string">'next'</span>, <span class="string">'read'</span>, <span class="string">'readline'</span>, <span class="string">'readlines'</span>, <span class="string">'url'</span>]</span><br><span class="line"><span class="keyword">print</span> resp.getcode(), resp.geturl(), resp.info(), resp.headers, resp.url</span><br><span class="line"><span class="comment">#resp.url和resp.geturl()结果一样</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编解码示例 urllib.quote和urllib.urlencode都是编码，但用法不一样</p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">s = urllib.quote(<span class="string">'This is python'</span>)  <span class="comment">#编码</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'quote:\t'</span>+s    ＃空格用%<span class="number">20</span>替代</span><br><span class="line">s_un = urllib.unquote(s)    ＃解码</span><br><span class="line"><span class="keyword">print</span> <span class="string">'unquote:\t'</span>+s_un</span><br><span class="line">s_plus = urllib.quote_plus(<span class="string">'This is python'</span>)  ＃编码</span><br><span class="line"><span class="keyword">print</span> <span class="string">'quote_plus:\t'</span>+s_plus            ＃空格用＋替代</span><br><span class="line">s_unplus = urllib.unquote_plus(s_plus)       ＃解码</span><br><span class="line"><span class="keyword">print</span> <span class="string">'s_unplus:\t'</span>+s_unplus</span><br><span class="line">s_dict = &#123;<span class="string">'name'</span>: <span class="string">'dkf'</span>, <span class="string">'pass'</span>: <span class="string">'1234'</span>&#125;</span><br><span class="line">s_encode = urllib.urlencode(s_dict)    ＃编码字典转换成url参数 </span><br><span class="line"><span class="keyword">print</span> <span class="string">'s_encode:\t'</span>+s_encode</span><br><span class="line"></span><br><span class="line"><span class="comment">#结果：</span></span><br><span class="line">quote: This%<span class="number">20</span><span class="keyword">is</span>%<span class="number">20</span>python</span><br><span class="line">unquote:   This <span class="keyword">is</span> python</span><br><span class="line">quote_plus:    This+<span class="keyword">is</span>+python</span><br><span class="line">s_unplus:  This <span class="keyword">is</span> python</span><br><span class="line">s_encode:  name=dkf&amp;<span class="keyword">pass</span>=<span class="number">1234</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>urlretrieve() urlretrieve多数适用单纯的只下载的功能或者显示下载的进度等</li>
+</ol>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">'http://m.sohu.com/?v=3&amp;_once_=000025_v2tov3&amp;_\smuid=ICvXXapq5EfTpQTVq6Tpz'</span></span><br><span class="line">urllib.urlretrieve(url, <span class="string">'./retrieve_index.html'</span>)</span><br><span class="line"></span><br><span class="line">#直接把url链接网页内容下载到retrieve_index.html里了，适用于单纯的下载的功能。</span><br><span class="line">#urllib.urlretrieve(url, local_name, <span class="function"><span class="keyword">method</span>)</span></span><br></pre></td></tr></table></figure>
+<h2 id="urllib2">urllib2</h2><ol>
+<li><p>urllib2模块定义的函数和类用来获取URL（主要是HTTP的），他提供一些复杂的接口用于处理： 基本认证，重定向，Cookies等。 </p>
+</li>
+<li><p>常用方法和类 urllib2.urlopen(url[, data][, timeout]) #传url时候，用法同urllib里的urlopen,它打开URL网址，url参数可以是一个字符串url或者是一个Request对象。可选的参数timeout，阻塞操作以秒为单位，如尝试连接（如果没有指定，将使用设置的全局默认timeout值）。实际上这仅适用于HTTP，HTTPS和FTP连接。</p>
+</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">'http://m.sohu.com/?v=3&amp;_once_=000025_v2tov3&amp;_\smuid=ICvXXapq5EfTpQTVq6Tpz'</span></span><br><span class="line">resp = urllib2.<span class="function"><span class="title">urlopen</span><span class="params">(url)</span></span></span><br><span class="line">page = resp.<span class="function"><span class="title">read</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>urlopen方法也可通过建立了一个Request对象来明确指明想要获取的url。调用urlopen函数对请求的url返回一个response对象。这个response类似于一个file对象，所以用.read()函数可以操作这个response对象</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">'http://m.sohu.com/?v=3&amp;_once_=000025_v2tov3&amp;_smuid\</span><br><span class="line">=ICvXXapq5EfTpQTVq6Tpz'</span></span><br><span class="line">req = urllib2.<span class="function"><span class="title">Request</span><span class="params">(url)</span></span></span><br><span class="line">resp = urllib2.<span class="function"><span class="title">urlopen</span><span class="params">(req)</span></span></span><br><span class="line">page = resp.<span class="function"><span class="title">read</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>class urllib2.Request(url[, data][, headers][, originreqhost][, unverifiable])  </p>
+</li>
+</ol>
+<p>Request类是一个抽象的URL请求。5个参数的说明如下: </p>
+<ul>
+<li>URL——是一个字符串，其中包含一个有效的URL。 </li>
+<li><p>data——是一个字符串，指定额外的数据发送到服务器，如果没有data需要发送可以为“None”。目前使用data的HTTP请求是唯一的。当请求含有data参数时，HTTP的请求为POST，而不是GET。数据应该是缓存在一个标准的application/x-www-form-urlencoded格式中。urllib.urlencode()函数用映射或2元组，返回一个这种格式的字符串。通俗的说就是如果想向一个URL发送数据（通常这些数据是代表一些CGI脚本或者其他的web应用）。例如在网上填的form（表单）时，浏览器会POST表单的内容，这些数据需要被以标准的格式编码（encode），然后作为一个数据参数传送给Request对象。Encoding是在urlib模块中完成的，而不是在urlib2中完成的。下面是个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line">url = <span class="string">'http://www.someserver.com/cgi-bin/register.cgi'</span></span><br><span class="line">values = &#123;<span class="string">'name'</span> : <span class="string">'Michael Foord'</span>,</span><br><span class="line">       <span class="string">'location'</span> : <span class="string">'Northampton'</span>,</span><br><span class="line">       <span class="string">'language'</span> : <span class="string">'Python'</span> &#125;</span><br><span class="line">data = urllib.urlencode(values)      </span><br><span class="line">req = urllib2.Request(url, data)   <span class="comment">#send post</span></span><br><span class="line">response = urllib2.urlopen(req)</span><br><span class="line">page = response.read()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>headers——是字典类型，头字典可以作为参数在request时直接传入，也可以把每个键和值作为参数调用add_header()方法来添加。作为辨别浏览器身份的User-Agent header是经常被用来恶搞和伪装的，因为一些HTTP服务只允许某些请求来自常见的浏览器而不是脚本，或是针对不同的浏览器返回不同的版本。例如，Mozilla Firefox浏览器被识别为“Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11”。默认情况下，urlib2把自己识别为Python-urllib/x.y（这里的xy是python发行版的主要或次要的版本号，如在Python 2.6中，urllib2的默认用户代理字符串是“Python-urllib/2.6。下面的例子和上面的区别就是在请求时加了一个headers，模仿IE浏览器提交请求。</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line">url = <span class="string">'http://www.someserver.com/cgi-bin/register.cgi'</span></span><br><span class="line">user_agent = <span class="string">'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'</span></span><br><span class="line">values = &#123;<span class="string">'name'</span> : <span class="string">'Michael Foord'</span>,</span><br><span class="line">        <span class="string">'location'</span> : <span class="string">'Northampton'</span>,</span><br><span class="line">        <span class="string">'language'</span> : <span class="string">'Python'</span> &#125;</span><br><span class="line">headers = &#123; <span class="string">'User-Agent'</span> : user_agent &#125;</span><br><span class="line">data = urllib.urlencode(values)</span><br><span class="line">req = urllib2.Request(url, data, headers)</span><br><span class="line">response = urllib2.urlopen(req)</span><br><span class="line">the_page = response.read()</span><br></pre></td></tr></table></figure>
+<p>标准的headers组成是(Content-Length, Content-Type and Host)，只有在Request对象调用urlopen()（上面的例子也属于这个情况）或者OpenerDirector.open()时加入。两种情况的例子如下： 使用headers参数构造Request对象，如上例在生成Request对象时已经初始化header，而下例是Request对象调用add_header(key, val)方法附加header（Request对象的方法下面再介绍）：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import urllib2</span><br><span class="line">req = urllib2.<span class="function"><span class="title">Request</span><span class="params">(<span class="string">'http://www.example.com/'</span>)</span></span></span><br><span class="line">req.<span class="function"><span class="title">add_header</span><span class="params">(<span class="string">'Referer'</span>, <span class="string">'http://www.python.org/'</span>)</span></span>    </span><br><span class="line">#http是无状态的协议，上一次客户端的请求与下一次客户端到服务器的请求无关系的，多数省略这一步</span><br><span class="line">r = urllib2.<span class="function"><span class="title">urlopen</span><span class="params">(req)</span></span></span><br></pre></td></tr></table></figure>
+<p>OpenerDirector为每一个Request自动加上一个User-Agent header，所以第二种方法如下（urllib2.buildopener会返回一个OpenerDirector对象，关于urllib2.buildopener类下面再说）：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import urllib2</span><br><span class="line">opener = urllib2.<span class="function"><span class="title">build_opener</span><span class="params">()</span></span></span><br><span class="line">opener<span class="class">.addheaders</span> = [(<span class="string">'User-agent'</span>, <span class="string">'Mozilla/5.0'</span>)]</span><br><span class="line">opener.<span class="function"><span class="title">open</span><span class="params">(<span class="string">'http://www.example.com/'</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>urllib2.installopener(opener)和urllib2.buildopener([handler, …])　</strong>  </p>
+<p>installopener和buildopener这两个方法通常都是在一起用,也有时候buildopener单独使用来得到OpenerDirector对象。<br>installopener实例化会得到OpenerDirector 对象用来赋予全局变量opener。如果想用这个opener来调用urlopen，那么就必须实例化得到OpenerDirector；这样就可以简单的调用OpenerDirector.open()来代替urlopen()。<br>build_opener实例化也会得到OpenerDirector对象，其中参数handlers可以被BaseHandler或他的子类实例化。子类中可以通过以下实例化：ProxyHandler (如果检测代理设置用)扫描代理会用到，很重要这个, UnknownHandler, HTTPHandler, HTTPDefaultErrorHandler, HTTPRedirectHandler, FTPHandler, FileHandler, HTTPErrorProcessor。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import urllib2</span><br><span class="line">req = urllib2.<span class="function"><span class="title">Request</span><span class="params">(<span class="string">'http://www.python.org/'</span>)</span></span></span><br><span class="line">opener=urllib2.<span class="function"><span class="title">build_opener</span><span class="params">()</span></span></span><br><span class="line">urllib2.<span class="function"><span class="title">install_opener</span><span class="params">(opener)</span></span></span><br><span class="line">f = opener.<span class="function"><span class="title">open</span><span class="params">(req)</span></span></span><br></pre></td></tr></table></figure>
+<p>如上使用 urllib2.install_opener()设置 urllib2 的全局 opener。这样后面的使用会很方便，但不能做更细粒度的控制，比如想在程序中使用两个不同的 Proxy 设置等。比较好的做法是不使用 install_opener 去更改全局的设置，而只是直接调用 opener的open 方法代替全局的 urlopen 方法。</p>
+<p>说到这Opener和Handler之间的操作听起来有点晕。整理下思路就清楚了。    </p>
+<p>当获取一个URL时，可以使用一 个opener（一个urllib2.OpenerDirector实例对象，可以由build_opener实例化生成）。正常情况下程序一直通过urlopen使用默认的opener（也就是说当你使用urlopen方法时，是在隐式的使用默认的opener 对象），但也可以创建自定义的openers（通过操作 器handlers创建的opener实例）。所有的重活和麻烦都交给这些handlers来做。    </p>
+<p>每一个handler知道如何以一种特定的协议（http，ftp等等）打开url，或者如何处理打开url发生的HTTP重定向，或者包含的HTTP cookie。创建openers时如果想要安装特别的handlers来实现获取url（如获取一个处理cookie的opener，或者一个不处理重定向的opener）的话，先实例一个OpenerDirector对象，然后多次调用.add_handler(some_handler_instance)来创建一个opener。或者，你可以用build_opener，这是一个很方便的创建opener对象的函数，它只有一个函数调用 。build_opener默认会加入许多handlers，它提供了一个快速的方法添加更多东西和使默认的handler 失效。</p>
+<p>install_opener如上所述也能用于创建一个opener对象，但是这个对象是（全局）默认的opener。这意味着调用urlopen将会用到你刚创建的opener。也就是说上面的代码可以等同于下面这段。这段代码最终还是使用的默认opener。一般情况下我们用build_opener为的是生成自定义opener，没有必要调用install_opener，除非是为了方便。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import urllib2</span><br><span class="line">req = urllib2.<span class="function"><span class="title">Request</span><span class="params">(<span class="string">'http://www.python.org/'</span>)</span></span></span><br><span class="line">opener=urllib2.<span class="function"><span class="title">build_opener</span><span class="params">()</span></span>       ＃ 创建opener对象</span><br><span class="line">urllib2.<span class="function"><span class="title">install_opener</span><span class="params">(opener)</span></span>      ＃定义全局默认opener</span><br><span class="line">f = urllib2.<span class="function"><span class="title">urlopen</span><span class="params">(req)</span></span>          #urlopen使用默认opener，但是install_opener</span><br><span class="line">#已经把opener设为全局默认了，这里便是使用上面的建立的opener</span><br></pre></td></tr></table></figure>
+<ol>
+<li>如果只是单纯的下载或者显示下载进度，不对下载后的内容做处理等，比如下载图片，css，js文件等，可以用urlilb.urlretrieve（）</li>
+<li>如果是下载的请求需要填写表单，输入账号，密码等，建议用urllib2.urlopen(urllib2.Request())</li>
+<li>在对字典数据编码时候，用到的是urllib.urlencode()</li>
+</ol>
+<h2 id="urllib_and_urllib2_区别">urllib and urllib2 区别</h2><p>urllib和urllib2模块都做与请求URL相关的操作，但他们提供不同的功能。  </p>
+<p>urllib2.urlopen accepts an instance of the Request class or a url, （where as urllib.urlopen only accepts a url 中文意思就是：urllib2.urlopen可以接受一个Request对象或url在接受Request对象时候，并以此可以来设置一个URL的headers</p>
+<p>urllib.urlopen只接收一个url    </p>
+<p>urllib 有urlencode,urllib2没有，这也是为什么总是urllib，urllib2常会一起使用的原因</p>
+<h2 id="requests">requests</h2><ol>
+<li><p>Requests 使用的是 urllib3，继承了urllib2的所有特性。Requests支持HTTP连接保持和连接池，支持使用cookie保持会话，支持文件上传，支持自动确定响应内容的编码，支持国际化的 URL 和 POST 数据自动编码。 </p>
+</li>
+<li><p>举例：</p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">resp = requests.get(<span class="string">'http://www.mywebsite.com/user'</span>)</span><br><span class="line">userdata = &#123;<span class="string">"firstname"</span>: <span class="string">"John"</span>, <span class="string">"lastname"</span>: <span class="string">"Doe"</span>, <span class="string">"password"</span>: <span class="string">"jdoe123"</span>&#125;</span><br><span class="line">resp = requests.post(<span class="string">'http://www.mywebsite.com/user'</span>, params=userdata)</span><br><span class="line">resp = requests.put(<span class="string">'http://www.mywebsite.com/user/put'</span>)</span><br><span class="line">resp = requests.delete(<span class="string">'http://www.mywebsite.com/user/delete'</span>)</span><br><span class="line">resp.json()   <span class="comment"># 假如返回的是json数据</span></span><br><span class="line">resp.text     <span class="comment">#返回的不是text数据</span></span><br><span class="line">resp.headers[<span class="string">'content-type'</span>]  <span class="comment">#返回text/html;charset=utf-8</span></span><br><span class="line">f = open(<span class="string">'request_index.html'</span>, <span class="string">'w'</span>)</span><br><span class="line">f.write(page.encode(<span class="string">'utf8'</span>))          </span><br><span class="line"><span class="comment">#test 发现requests抓下来的页面必须要编码\</span></span><br><span class="line"><span class="comment">#写入,（抓下来的是unicode），urllib和urllib2抓下来可以直接写入，</span></span><br><span class="line"><span class="comment">#因为这两者抓下来的page是str</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>其他功能特性</li>
+</ol>
+<ul>
+<li>国际化域名和 URLs</li>
+<li>Keep-Alive &amp; 连接池</li>
+<li>持久的 Cookie 会话</li>
+<li>类浏览器式的 SSL 加密认证 </li>
+<li>基本/摘要式的身份认证</li>
+<li>优雅的键/值 Cookies</li>
+<li>自动解压</li>
+<li>Unicode 编码的响应体</li>
+<li>多段文件上传</li>
+<li>连接超时</li>
+<li>支持 .netrc</li>
+<li>适用于 Python 2.6—3.4</li>
+<li>线程安全</li>
+</ul>
+<ol>
+<li><p>requests不是python自带的库，需要另外安装 easy_install or pip install</p>
+</li>
+<li><p>requests缺陷:直接使用不能异步调用，速度慢（from others）。官方的urllib可以替代它。</p>
+</li>
+</ol>
+<h1 id="通过Requests模块实现">通过Requests模块实现</h1><p>最开始我尝试使用的是urllib模块，通过抓包工具获取上网认证的流程。一般正常的使用情况是，我们通过Browser的Get方式，获取服务器的Response，拿到登录界面，然后通过账户、密码的填写，表格POST传递给相应的action处理，然后在获取Response获取认证成功数据。我在做完了这一个工作之后，简化了第一步，直接构造传递表格信息，简化流程，提高运行速度。</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">POST http://<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>.<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>.<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>.<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>/eportal/userV2.do?method=login&amp;param=true&amp;wlanuserip=<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>&amp;wlanacname=<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>&amp;nasip=<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>&amp;mac=<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>&amp;t=wirelessv2&amp;url=<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>&amp;username=<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>&amp;pwd=<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span> HTTP/1.1</span><br><span class="line">Host: 172.18.6.30</span><br><span class="line">User-Agent: </span><br><span class="line">Content-Length: 67</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: <span class="keyword">*</span>/<span class="keyword">*</span></span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Connection: closed</span><br></pre></td></tr></table></figure>
+<p>通过urllib模块，我没能够将Connection这一状态保持，正常通过浏览器登录，在传递之后，肯定是保持连接存活的，但是通过Python的urllib模块，由于在模块的函数AbstractHTTPHandler.do_open()中已经固化了Connection为closed，所以很难改变。keep-alive 是http persistent connection，urllib 没有实现这个特性，所以不允许 keep-alive。试验后，上网认证必须保持keep-alive，否则的话就会提示没有这个设备，不能认证成功。    </p>
+<p>我查阅了相关资料，有几种解决方案：</p>
+<ul>
+<li><p>httplib</p>
+</li>
+<li><p>urlgrabber</p>
+</li>
+<li><p>Requests</p>
+</li>
+</ul>
+<p>最后我就尝试使用了Requests模块，相当的简单方便。学校在认证信息传递过程的POST操作过程中，并没有将先关信息加密处理，省去了我的很多工作。</p>
+<pre><code class="python">postData = {<span class="string">'username'</span> : <span class="string">'***'</span>,
+            <span class="string">'usernameHidden'</span>:<span class="string">''</span>,
+            <span class="string">'authorMode'</span>:<span class="string">''</span>,
+            <span class="string">'pwd'</span> : <span class="string">'***'</span>}<span class="comment">#自己填充</span>
+
+
+<span class="comment">#构造header，一般header至少要包含一下两项。这两项是从抓到的包里分析得出的。</span>
+headers = {<span class="string">'User-Agent'</span> : <span class="string">'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 UBrowser/5.5.10106.5 Safari/537.36'</span>,
+           <span class="string">'Referer'</span> : <span class="string">'http://172.18.6.30/'</span>,
+           <span class="string">'Connection'</span>:<span class="string">'keep-alive'</span>,
+           <span class="string">'Accept'</span>:<span class="string">'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'</span>,
+           <span class="string">'Accept-Encoding'</span>:<span class="string">'gzip, deflate'</span>}
+
+posturl=<span class="string">'http://172.18.6.30/eportal/userV2.do?method=login&amp;param=true&amp;wlanuserip=4a74b7a4b9aa0b72c9f20758e1b35282&amp;wlanacname=353477f414861cdd&amp;ssid=15e792de8d103cfd&amp;nasip=704b71fc82aa0c88911e9f71944eba43&amp;mac=aad9ba78888755209ff8e82016aa5765&amp;t=wireless-v2&amp;url=f58cd7a67bbfecbcf3027f3e4bf7b3807231ca007bf7eab9a0a21ad866eb54c0ca6c6fc25773bb30&amp;username=***&amp;pwd=***'</span>
+<span class="comment">#上面的url是通过抓包获得</span>
+</code></pre>
+<p>然后做了一个简单的UI，打包成win平台可执行程序</p>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/login.png" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/mp-qr.jpg" alt="clinjie wechat" style="width: 200px; max-width: 100%;"/>
+    <div>Think about u every day</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/Requests/" rel="tag"># Requests</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/12/py_PIL/" rel="next" title="使用PIL模块创建验证码文件">
+                <i class="fa fa-chevron-left"></i> 使用PIL模块创建验证码文件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/25/NoC/" rel="prev" title="NoC小序">
+                NoC小序 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      <! -- 添加微信图标 -->
+	    
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="clinjie" />
+          <p class="site-author-name" itemprop="name">clinjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">179</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chuangwailinjie" target="_blank" title="github" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chuangwalinjie" target="_blank" title="weibo" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/peihaozhu" target="_blank" title="zhihu" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pyhton中流行的相关模块"><span class="nav-number">1.</span> <span class="nav-text">Pyhton中流行的相关模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#urllib"><span class="nav-number">1.1.</span> <span class="nav-text">urllib</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#urllib2"><span class="nav-number">1.2.</span> <span class="nav-text">urllib2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#urllib_and_urllib2_区别"><span class="nav-number">1.3.</span> <span class="nav-text">urllib and urllib2 区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#requests"><span class="nav-number">1.4.</span> <span class="nav-text">requests</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过Requests模块实现"><span class="nav-number">2.</span> <span class="nav-text">通过Requests模块实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clinjie</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'clinjie';
+      var disqus_identifier = '2016/02/24/Internet_authentication/';
+
+      var disqus_title = "校园网上网认证";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("BKt7qufuU6B0ix9a9ik7kejs-gzGzoHsz", "pfDjDmIpP09Fj9QNLGzSL2Ox");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+	
+	
+
+<!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<!-- 颗粒漂浮背景 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript">var OriginTitile=document.title,st;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="你要去哪里",clearTimeout(st)):(document.title="clinjie~~"+OriginTitile,st=setTimeout(function(){document.title=OriginTitile},3e3))})</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}},"messageStyle":"none"});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.0-beta.0/config/TeX-AMS-MML_HTMLorMML.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

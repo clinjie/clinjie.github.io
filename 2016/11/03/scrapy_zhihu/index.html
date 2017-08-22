@@ -1,0 +1,1108 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Scrapy,python," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="窗外临街" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="介绍两种直接爬取知乎的方法，一种是通过CrawlSpider类，从Question页面开始，通过Rule自动填充带爬取页面；第二种是登录知乎首页之后，通过模拟js下拉页面发送ajax请求解析返回json数据填充原有的zhihu首页爬取。实际上还有另外一种，我们使用scrapy splash模块或者selenium工具模拟js操作，这种方法相比第二种方法更直接、简便，之后的文章会有介绍。
+在做这些之">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scrapy爬取知乎两种思路">
+<meta property="og:url" content="http://peihao.space/2016/11/03/scrapy_zhihu/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="介绍两种直接爬取知乎的方法，一种是通过CrawlSpider类，从Question页面开始，通过Rule自动填充带爬取页面；第二种是登录知乎首页之后，通过模拟js下拉页面发送ajax请求解析返回json数据填充原有的zhihu首页爬取。实际上还有另外一种，我们使用scrapy splash模块或者selenium工具模拟js操作，这种方法相比第二种方法更直接、简便，之后的文章会有介绍。
+在做这些之">
+<meta property="og:updated_time" content="2016-11-03T09:11:35.071Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scrapy爬取知乎两种思路">
+<meta name="twitter:description" content="介绍两种直接爬取知乎的方法，一种是通过CrawlSpider类，从Question页面开始，通过Rule自动填充带爬取页面；第二种是登录知乎首页之后，通过模拟js下拉页面发送ajax请求解析返回json数据填充原有的zhihu首页爬取。实际上还有另外一种，我们使用scrapy splash模块或者selenium工具模拟js操作，这种方法相比第二种方法更直接、简便，之后的文章会有介绍。
+在做这些之">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://peihao.space/2016/11/03/scrapy_zhihu/"/>
+
+
+
+
+
+  <title> Scrapy爬取知乎两种思路 | 窗外临街 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">窗外临街</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photos" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+
+	  </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://peihao.space/2016/11/03/scrapy_zhihu/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="clinjie">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/img/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="窗外临街">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="窗外临街" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Scrapy爬取知乎两种思路
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Дата создания записи" itemprop="dateCreated datePublished" datetime="2016-11-03T16:28:30+08:00">
+                2016-11-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/11/03/scrapy_zhihu/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/03/scrapy_zhihu/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/03/scrapy_zhihu/" class="leancloud_visitors" data-flag-title="Scrapy爬取知乎两种思路">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+		
+		
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>介绍两种直接爬取知乎的方法，一种是通过CrawlSpider类，从Question页面开始，通过Rule自动填充带爬取页面；第二种是登录知乎首页之后，通过模拟js下拉页面发送ajax请求解析返回json数据填充原有的zhihu首页爬取。实际上还有另外一种，我们使用scrapy splash模块或者selenium工具模拟js操作，这种方法相比第二种方法更直接、简便，之后的文章会有介绍。</p>
+<p>在做这些之前，首先你要设置好item的feed以及通用的header。这些在我其他的一些文章中有提到过</p>
+<a id="more"></a>
+<h1 id="爬取question页面">爬取question页面</h1><p>知乎的问题页面是不需要登录就可以直接爬取的，有次我尝试登录失败后，返回了错误代码，但是发现这并未影响继续对问题页面的爬虫。</p>
+<p>为题页面的url一般类似<code>/question/\d{8}</code>，收尾是8个数字，问题页面会随机出现与本问题有类似、相关共性的其他问题url，这就让我们使用CrawlSpider类有了可能。关于CrawlSpider的前置学习，请参考：<a href="http://peihao.space/2016/10/31/scrapy_notes/">Scrapy笔记</a></p>
+<p>通过使用CrawlSpider类支持的rules，制定自动提取的问题界面url规则：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rules = (Rule(LinkExtractor(allow = [<span class="string">r'/question/\d&#123;8&#125;$'</span>,<span class="string">r'https://www.zhihu.com/question/\d&#123;8&#125;$'</span> ]), callback = <span class="string">'parse_item'</span>, follow = <span class="keyword">True</span>))</span><br></pre></td></tr></table></figure>
+<p>上面的规则允许提取符合为题界面的absolute url或者relative url填充到爬虫队列中，并设置了请求这些url之后response的处理方法，<code>parse_item(self,response)</code>，这里要再说一次，callback直接写parse_item，不要画蛇添足self.parse。</p>
+<p>设置一个你感兴趣的问题，放入到start_urls列表中，Scrapy会自动在make_requests_from_url方法执行时搜索符合规则的url，当我们执行<code>scrapy crawl spidernamestart_request</code>后，程序开始调用start_requests方法，方法将start_urls中的url分别调用make_requests_from_url结束。如果我们不是直接就开始对start_url中的url进行解析，可以重写start_requests，并指定requests的回调函数。</p>
+<p>做完这些之后，我们就可以仅仅处理item解析的相关操作，不用管获取新的url内容，至于爬取的为题是不是我们感兴趣的，就要看知乎的推荐算法怎么养了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</span><br><span class="line"><span class="keyword">from</span> scrapy.http <span class="keyword">import</span> Request</span><br><span class="line"><span class="keyword">from</span> douban.items <span class="keyword">import</span> ZhihuItem</span><br><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> CrawlSpider, Rule</span><br><span class="line"><span class="keyword">from</span> scrapy.linkextractors <span class="keyword">import</span> LinkExtractor</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZhihuSipder</span><span class="params">(CrawlSpider)</span> :</span></span><br><span class="line">	name = <span class="string">"zhihu"</span></span><br><span class="line">	allowed_domains = [<span class="string">"zhihu.com"</span>]</span><br><span class="line">	start_urls = [</span><br><span class="line">		<span class="string">"https://www.zhihu.com/question/41472220"</span></span><br><span class="line">	]</span><br><span class="line">	rules = (Rule(LinkExtractor(allow = [<span class="string">r'/question/\d&#123;8&#125;$'</span>,<span class="string">r'https://www.zhihu.com/question/\d&#123;8&#125;$'</span> ]), callback = <span class="string">'parse_item'</span>, follow = <span class="keyword">True</span>),)</span><br><span class="line">	headers = &#123;</span><br><span class="line">	<span class="string">"Accept"</span>: <span class="string">"*/*"</span>,</span><br><span class="line">	<span class="string">"Accept-Encoding"</span>: <span class="string">"gzip,deflate"</span>,</span><br><span class="line">	<span class="string">"Accept-Language"</span>: <span class="string">"en-US,en;q=0.8,zh-TW;q=0.6,zh;q=0.4"</span>,</span><br><span class="line">	<span class="string">"Connection"</span>: <span class="string">"keep-alive"</span>,</span><br><span class="line">	<span class="string">"Content-Type"</span>:<span class="string">" application/x-www-form-urlencoded; charset=UTF-8"</span>,</span><br><span class="line">	<span class="string">"User-Agent"</span>: <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36"</span>,</span><br><span class="line">	<span class="string">"Referer"</span>: <span class="string">"http://www.zhihu.com/"</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self, response)</span>:</span></span><br><span class="line">		problem = Selector(response)</span><br><span class="line">		item = ZhihuItem()</span><br><span class="line">		item[<span class="string">'url'</span>] = response.url</span><br><span class="line">		item[<span class="string">'name'</span>] = problem.xpath(<span class="string">'//span[@class="name"]/text()'</span>).extract()</span><br><span class="line">		item[<span class="string">'title'</span>] = problem.xpath(<span class="string">'//span[@class="zm-editable-content"]/text()'</span>).extract()</span><br><span class="line">		item[<span class="string">'description'</span>] = problem.xpath(<span class="string">'//div[@class="zm-editable-content"]/text()'</span>).extract()</span><br><span class="line">		item[<span class="string">'answer'</span>]= problem.xpath(<span class="string">'//div[@class="zm-editable-content clearfix"]/text()'</span>).extract()</span><br><span class="line">		<span class="keyword">return</span> item</span><br></pre></td></tr></table></figure>
+<h1 id="登陆模拟ajax爬取主页">登陆模拟ajax爬取主页</h1><p>这种方法对于我们来讲可能更加准确，因为他是在zhihu.com主页显示的我们关注过的问题新高票答案，以及关注的领域专栏专栏文章。</p>
+<p>由于是一直在<code>www.zhihu.com</code>页面是操作，没有爬取其他页面，所以在使用CrawlSpider类就不太合适了。直接使用原始的scrapy.spider类。</p>
+<p>关于知乎的登录，可以参考文章<a href="http://www.jianshu.com/p/b7f41df6202d" target="_blank" rel="external">简书-模拟登陆</a></p>
+<p>当然上面文章因为时间较早，zhihu的登录模块已经改了一些东西，但是具体的思路和流程还是可以继续用的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#重写 start_requests方法，登录登录面，注意登录界面与旧版不同</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">start_requests</span><span class="params">(self)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> [Request(<span class="string">"https://www.zhihu.com/#signin"</span>, meta = &#123;<span class="string">'cookiejar'</span> : <span class="number">1</span>&#125;, callback = self.post_login)]</span><br><span class="line"></span><br><span class="line"><span class="comment">#处理知乎防爬虫_xsrf字段 ，使用formRequest发送post信息，注意form的提交url与旧版的不同</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">post_login</span><span class="params">(self, response)</span>:</span></span><br><span class="line">	print(<span class="string">'Preparing login'</span>)</span><br><span class="line">	<span class="comment">#下面这句话用于抓取请求网页后返回网页中的_xsrf字段的文字, 用于成功提交表单</span></span><br><span class="line">	self.xsrf = Selector(response).xpath(<span class="string">'//input[@name="_xsrf"]/@value'</span>).extract()[<span class="number">0</span>]</span><br><span class="line">    <span class="comment">#FormRequeset.from_response是Scrapy提供的一个函数, 用于post表单</span></span><br><span class="line">    <span class="comment">#登陆成功后, 会调用after_login回调函数</span></span><br><span class="line">	<span class="keyword">return</span> [FormRequest(url=<span class="string">"https://www.zhihu.com/login/email"</span>,</span><br><span class="line">						meta = &#123;<span class="string">'cookiejar'</span> : response.meta[<span class="string">'cookiejar'</span>]&#125;,</span><br><span class="line">						formdata = &#123;</span><br><span class="line">						<span class="string">'_xsrf'</span>: self.xsrf,</span><br><span class="line">						<span class="string">'email'</span>: <span class="string">'******'</span>,</span><br><span class="line">						<span class="string">'password'</span>: <span class="string">'******'</span>,</span><br><span class="line">						<span class="string">'remember_me'</span>: <span class="string">'true'</span></span><br><span class="line">						&#125;,</span><br><span class="line">						headers=self.headers,</span><br><span class="line">						callback = self.after_login,</span><br><span class="line">						dont_filter = <span class="keyword">True</span></span><br><span class="line">						)]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">after_login</span><span class="params">(self, response)</span>:</span></span><br><span class="line">	<span class="comment">#这里注意在header中加入两个字段</span></span><br><span class="line">	self.headers[<span class="string">'X-Xsrftoken'</span>]=self.xsrf</span><br><span class="line">	self.headers[<span class="string">'X-Requested-With'</span>]=<span class="string">"XMLHttpRequest"</span></span><br><span class="line">	<span class="keyword">return</span> Request(<span class="string">'https://www.zhihu.com'</span>,meta = &#123;<span class="string">'cookiejar'</span> : response.meta[<span class="string">'cookiejar'</span>]&#125;, callback =self.parse,dont_filter = <span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>此时我们可以抓取zhihu首次返回的大概10个问题信息，更多的信息需要下拉鼠标ajax发送请求才会返回。</p>
+<p>我们通过珠宝工具找到相应的post信息，模拟操作：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">FormRequest(url=<span class="string">"https://www.zhihu.com/node/TopStory2FeedList"</span>,</span><br><span class="line">							meta = &#123;<span class="string">'cookiejar'</span> : response.meta[<span class="string">'cookiejar'</span>]&#125;,</span><br><span class="line">							formdata = &#123;</span><br><span class="line">							<span class="string">'params'</span>: <span class="string">'&#123;"offset":%d,"start":%s&#125;'</span> % (self.count*<span class="number">10</span>,str(self.count*<span class="number">10</span>-<span class="number">1</span>)),</span><br><span class="line">							<span class="string">'method'</span>: <span class="string">'next'</span>,</span><br><span class="line">							&#125;,</span><br><span class="line">							headers=self.headers,</span><br><span class="line">							callback = self.parse,</span><br><span class="line">							dont_filter = <span class="keyword">True</span></span><br><span class="line">							)</span><br></pre></td></tr></table></figure>
+<p>依然通过FormRequest提交Post信息，注意formdata的params键值为dict，要加上括号，原因可以在前一篇文章中找到答案。offset是获取的问题数目，start是新获取问题的index</p>
+<p>刚开始请求时一直提示Bad Request信息，最后发现一定要在header中设置之前获取的_xsrf。</p>
+<p>服务器端根据我们的params字段返回不同的bytes形式json数据，我们需要拿到里面的摸个键值，所以要将bytes解码为utf-8，拿到之后在编码为utf-8，因为response只处理bytes形式。</p>
+<p>最后，因为response使用xpath方法是对response.text属性操作，当我们获取新的response之后就无法再改变response.text（在python中使用<code>@property</code>标注的属性无法更改）但是我们可以通过response内置的response._set_body()方法修改response的body值，不能使用内置的xpath方法，就改用原始的lxml模块提供的xpath工具，毕竟scrapy内置的xpath底层也是使用lxml模块提供支持，大同小异。其他的一些问题就比较小了，不在这里一一讲：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy.http <span class="keyword">import</span> Request, FormRequest</span><br><span class="line"><span class="keyword">from</span> douban.items <span class="keyword">import</span> ZhihuAnswerItem</span><br><span class="line"><span class="keyword">import</span> scrapy,json,re</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZhihuSipder</span><span class="params">(scrapy.Spider)</span> :</span></span><br><span class="line">	name = <span class="string">"zhihuanswer"</span></span><br><span class="line">	<span class="comment">#allowed_domains = ["zhihu.com"]</span></span><br><span class="line">	start_urls = [</span><br><span class="line">		<span class="string">"https://www.zhihu.com"</span></span><br><span class="line">	]</span><br><span class="line">	headers = &#123;</span><br><span class="line">	......</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	xsrf=<span class="string">""</span></span><br><span class="line">	moreinfo=<span class="keyword">False</span></span><br><span class="line">	count=<span class="number">0</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">start_requests</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> [Request(<span class="string">"https://www.zhihu.com/#signin"</span>, meta = &#123;<span class="string">'cookiejar'</span> : <span class="number">1</span>&#125;, callback = self.post_login)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">post_login</span><span class="params">(self, response)</span>:</span></span><br><span class="line">		print(<span class="string">'Preparing login'</span>)</span><br><span class="line">		self.xsrf = Selector(response).xpath(<span class="string">'//input[@name="_xsrf"]/@value'</span>).extract()[<span class="number">0</span>]</span><br><span class="line">		print(self.xsrf)</span><br><span class="line">        <span class="comment">#FormRequeset.from_response是Scrapy提供的一个函数, 用于post表单</span></span><br><span class="line">        <span class="comment">#登陆成功后, 会调用after_login回调函数</span></span><br><span class="line">		<span class="keyword">return</span> [FormRequest(url=<span class="string">"https://www.zhihu.com/login/email"</span>,</span><br><span class="line">							meta = &#123;<span class="string">'cookiejar'</span> : response.meta[<span class="string">'cookiejar'</span>]&#125;,</span><br><span class="line">							formdata = &#123;</span><br><span class="line">							<span class="string">'_xsrf'</span>: self.xsrf,</span><br><span class="line">							<span class="string">'email'</span>: <span class="string">'******'</span>,</span><br><span class="line">							<span class="string">'password'</span>: <span class="string">'******'</span>,</span><br><span class="line">							<span class="string">'remember_me'</span>: <span class="string">'true'</span></span><br><span class="line">							&#125;,</span><br><span class="line">							headers=self.headers,</span><br><span class="line">							callback = self.after_login,</span><br><span class="line">							dont_filter = <span class="keyword">True</span></span><br><span class="line">							)]</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">after_login</span><span class="params">(self, response)</span>:</span></span><br><span class="line">		print(response.body)</span><br><span class="line">		self.headers[<span class="string">'X-Xsrftoken'</span>]=self.xsrf</span><br><span class="line">		self.headers[<span class="string">'X-Requested-With'</span>]=<span class="string">"XMLHttpRequest"</span></span><br><span class="line">		<span class="keyword">return</span> Request(<span class="string">'https://www.zhihu.com'</span>,meta = &#123;<span class="string">'cookiejar'</span> : response.meta[<span class="string">'cookiejar'</span>]&#125;, callback =self.parse,dont_filter = <span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></span><br><span class="line">		<span class="keyword">if</span> self.moreinfo:</span><br><span class="line">			<span class="comment">#使用模拟ajax发送post请求接受的response  编码抓换解析相关  </span></span><br><span class="line">			f=json.loads(response.body.decode(<span class="string">'utf-8'</span>))</span><br><span class="line">			<span class="keyword">for</span> item <span class="keyword">in</span> range(<span class="number">1</span>,len(f[<span class="string">'msg'</span>])-<span class="number">1</span>):</span><br><span class="line">				f[<span class="string">'msg'</span>][<span class="number">0</span>]=f[<span class="string">'msg'</span>][<span class="number">0</span>]+f[<span class="string">'msg'</span>][item]</span><br><span class="line">			fs=f[<span class="string">'msg'</span>][<span class="number">0</span>].encode(<span class="string">'utf-8'</span>)</span><br><span class="line">			response._set_body(fs)</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			self.moreinfo=<span class="keyword">True</span></span><br><span class="line">		html=etree.HTML(response.body.decode(<span class="string">'utf-8'</span>),parser=etree.HTMLParser(encoding=<span class="string">'utf-8'</span>))</span><br><span class="line">		<span class="keyword">for</span> p <span class="keyword">in</span> html.xpath(<span class="string">'//div[@class="feed-main"]'</span>):</span><br><span class="line">			url=p.xpath(<span class="string">'div[2]/h2[@class="feed-title"]/a/@href'</span>)</span><br><span class="line">			<span class="keyword">if</span> url:url=url[<span class="number">0</span>]</span><br><span class="line">			<span class="comment"># 通过决定是否使用if not re.findall('zhuanlan',url) 接受专栏文章或者问题回答，或者删掉这部分，全部接受</span></span><br><span class="line">			<span class="keyword">if</span> re.findall(<span class="string">'zhuanlan'</span>,url):<span class="keyword">continue</span></span><br><span class="line">			item = ZhihuAnswerItem()</span><br><span class="line">			item[<span class="string">'url'</span>] = url</span><br><span class="line">			name=p.xpath(<span class="string">'div[2]/div[@class="expandable entry-body"]/div[@class="zm-item-answer-author-info"]/span/span/a/text()'</span>)</span><br><span class="line">			item[<span class="string">'name'</span>] = name <span class="keyword">if</span> name <span class="keyword">else</span> <span class="string">'匿名用户'</span></span><br><span class="line">			item[<span class="string">'question'</span>] = p.xpath(<span class="string">'div[2]/h2[@class="feed-title"]/a/text()'</span>)</span><br><span class="line">			item[<span class="string">'answer'</span>]= p.xpath(<span class="string">'div[2]/div[@class="expandable entry-body"]/div[@class="zm-item-rich-text expandable js-collapse-body"]/div[@class="zh-summary summary clearfix"]/text()'</span>)</span><br><span class="line">			<span class="keyword">yield</span> item</span><br><span class="line">		</span><br><span class="line">		<span class="comment">#维持不同的params</span></span><br><span class="line">		self.count=self.count+<span class="number">1</span></span><br><span class="line">		<span class="keyword">yield</span> FormRequest(url=<span class="string">"https://www.zhihu.com/node/TopStory2FeedList"</span>,</span><br><span class="line">							meta = &#123;<span class="string">'cookiejar'</span> : response.meta[<span class="string">'cookiejar'</span>]&#125;,</span><br><span class="line">							formdata = &#123;</span><br><span class="line">							<span class="string">'params'</span>: <span class="string">'&#123;"offset":%d,"start":%s&#125;'</span> % (self.count*<span class="number">10</span>,str(self.count*<span class="number">10</span>-<span class="number">1</span>)),</span><br><span class="line">							<span class="string">'method'</span>: <span class="string">'next'</span>,</span><br><span class="line">							&#125;,</span><br><span class="line">							headers=self.headers,</span><br><span class="line">							callback = self.parse,</span><br><span class="line">							dont_filter = <span class="keyword">True</span></span><br><span class="line">							)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/mp-qr.jpg" alt="clinjie wechat" style="width: 200px; max-width: 100%;"/>
+    <div>Think about u every day</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Scrapy/" rel="tag"># Scrapy</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/02/scrapy_formrequest/" rel="next" title="Scrapy解决formrequest中formdata为dict问题">
+                <i class="fa fa-chevron-left"></i> Scrapy解决formrequest中formdata为dict问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/05/today/" rel="prev" title="Today">
+                Today <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      <! -- 添加微信图标 -->
+	    
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="clinjie" />
+          <p class="site-author-name" itemprop="name">clinjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">179</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chuangwailinjie" target="_blank" title="github" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chuangwalinjie" target="_blank" title="weibo" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/peihaozhu" target="_blank" title="zhihu" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#爬取question页面"><span class="nav-number">1.</span> <span class="nav-text">爬取question页面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#登陆模拟ajax爬取主页"><span class="nav-number">2.</span> <span class="nav-text">登陆模拟ajax爬取主页</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clinjie</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'clinjie';
+      var disqus_identifier = '2016/11/03/scrapy_zhihu/';
+
+      var disqus_title = "Scrapy爬取知乎两种思路";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("BKt7qufuU6B0ix9a9ik7kejs-gzGzoHsz", "pfDjDmIpP09Fj9QNLGzSL2Ox");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+	
+	
+
+<!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<!-- 颗粒漂浮背景 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript">var OriginTitile=document.title,st;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="你要去哪里",clearTimeout(st)):(document.title="clinjie~~"+OriginTitile,st=setTimeout(function(){document.title=OriginTitile},3e3))})</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}},"messageStyle":"none"});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.0-beta.0/config/TeX-AMS-MML_HTMLorMML.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

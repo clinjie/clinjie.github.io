@@ -1,0 +1,1180 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ML," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="窗外临街" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="机器学习可以根据样本是否有标签分类为有监督学习与无监督学习，前面介绍的基本都是有监督学习。无监督学习中，目标通过对无标记训练样本的学习来揭示数据的内在性质及规律。
+聚类试图将数据集中的样本划分为若干个通常不相交的子集，每个子集称为一个簇（cluster）。通过这样的划分，每个簇可能对应与一些潜在的类别。这些类别两两不相交，并起来是整个数据集，聚类的结果就是产生一个标签结果序列。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聚类">
+<meta property="og:url" content="http://peihao.space/2017/03/08/ml-clustering/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="机器学习可以根据样本是否有标签分类为有监督学习与无监督学习，前面介绍的基本都是有监督学习。无监督学习中，目标通过对无标记训练样本的学习来揭示数据的内在性质及规律。
+聚类试图将数据集中的样本划分为若干个通常不相交的子集，每个子集称为一个簇（cluster）。通过这样的划分，每个簇可能对应与一些潜在的类别。这些类别两两不相交，并起来是整个数据集，聚类的结果就是产生一个标签结果序列。">
+<meta property="og:image" content="http://peihao.space/img/article/ml/ml-intro8-1.png">
+<meta property="og:updated_time" content="2017-03-08T02:33:48.630Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="聚类">
+<meta name="twitter:description" content="机器学习可以根据样本是否有标签分类为有监督学习与无监督学习，前面介绍的基本都是有监督学习。无监督学习中，目标通过对无标记训练样本的学习来揭示数据的内在性质及规律。
+聚类试图将数据集中的样本划分为若干个通常不相交的子集，每个子集称为一个簇（cluster）。通过这样的划分，每个簇可能对应与一些潜在的类别。这些类别两两不相交，并起来是整个数据集，聚类的结果就是产生一个标签结果序列。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://peihao.space/2017/03/08/ml-clustering/"/>
+
+
+
+
+
+  <title> 聚类 | 窗外临街 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">窗外临街</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photos" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+
+	  </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://peihao.space/2017/03/08/ml-clustering/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="clinjie">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/img/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="窗外临街">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="窗外临街" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                聚类
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Дата создания записи" itemprop="dateCreated datePublished" datetime="2017-03-08T13:18:42+08:00">
+                2017-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index">
+                    <span itemprop="name">ML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/03/08/ml-clustering/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/08/ml-clustering/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/08/ml-clustering/" class="leancloud_visitors" data-flag-title="聚类">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+		
+		
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>机器学习可以根据样本是否有标签分类为有监督学习与无监督学习，前面介绍的基本都是有监督学习。无监督学习中，目标通过对无标记训练样本的学习来揭示数据的内在性质及规律。</p>
+<p>聚类试图将数据集中的样本划分为若干个通常不相交的子集，每个子集称为一个簇（cluster）。通过这样的划分，每个簇可能对应与一些潜在的类别。这些类别两两不相交，并起来是整个数据集，聚类的结果就是产生一个标签结果序列。 <a id="more"></a></p>
+<h1 id="性能度量">性能度量</h1><p>对聚类来讲，我们需要通过某种性能来评估聚类效果的好坏；若明确了最终要使用的性能度量，可以直接将其作为聚类过程的优化目标。</p>
+<p>聚类性能度量大致有两类，一类是将聚类结果与某个参考模型进行比较，称为外部指标；另一类是直接考察聚类结果而不利用任何参考模型，称为内部指标。</p>
+<h2 id="外部指标">外部指标</h2><p>对数据集$D={x_1,x_2,…,x_m}$，假定通过聚类给出额簇划分为$C={C_1,C_2,…,C_k}$，参考模型给出的簇划分为$C^`={C_1^T,C_2^T,…,C_s^T}$。相应的，令$\lambda$与$\lambda^T$分别表示与C和$C^T$对应的簇标记向量。注意的是，参考模型给出的划分类别数量不一定等于通过聚类得到的数量。</p>
+<p>样本两两配对：</p>
+<ol>
+<li><p>$a=\mid SS \mid ,SS={(x_i,x_j)\mid \lambda_i = \lambda_j,\lambda_i^T=\lambda_j^T,i&lt;j}$</p>
+</li>
+<li><p>$b=\mid SS \mid ,SD={(x_i,x_j)\mid \lambda_i = \lambda_j,\lambda_i^T\neq \lambda_j^T,i&lt;j}$</p>
+</li>
+<li><p>$c=\mid SS \mid ,DS={(x_i,x_j)\mid \lambda_i \neq \lambda_j,\lambda_i^T=\lambda_j^T,i&lt;j}$</p>
+</li>
+<li><p>$a=\mid SS \mid ,DD={(x_i,x_j)\mid \lambda_i \neq \lambda_j,\lambda_i^T \neq \lambda_j^T,i&lt;j}$</p>
+</li>
+</ol>
+<p>集合SS包含了C中隶属于相同簇且在$C^`$中也隶属于相同簇的样本对，集合SD包含了在C中隶属于相同簇但在$C^T$中隶属于不同簇的样本对</p>
+<ol>
+<li><p>Jaccard系数：$JC=\frac{a}{a+b+c}$</p>
+</li>
+<li><p>FM指数：$FMI=\sqrt{\frac{a}{a+b}\frac{a}{a+c}}$</p>
+</li>
+<li><p>Rand指数：$RI=\frac{2(a+d)}{m(m-1)}$</p>
+</li>
+</ol>
+<p>上述性能度量的结果值均在[0,1]区间，值越大越好。</p>
+<h2 id="内部指标">内部指标</h2><p>考虑聚类结果的簇划分$C={C_1,C_2,…,C_k}$，定义</p>
+<ol>
+<li><p>$avg(C)=\frac{2}{\mid C \mid(\mid C \mid -1)}\sum_{1 \leq i &lt; j \leq \mid C \mid}dist(x_i,x_j)$</p>
+</li>
+<li><p>$diam(C)=\max_{1 \leq i &lt;j \leq \mid C \mid}dist(x_i,x_j)$;</p>
+</li>
+<li><p>$d_\min(C_i,C_j)=\min_{x_i \in C_i , x_j \in C_j} dist(x_i,x_j)$</p>
+</li>
+<li><p>$d_cen(C_i,C_j)=dist(\mu_i,\mu_j)$</p>
+</li>
+</ol>
+<p>上面的式子中，dist计算两个样本之间的距离；$\mu$代表簇的中心点$\mu=\frac{\sum_{1 \leq i \leq \mid C \mid x_i}}{\mid C \mid}$；avg(C)uiying与簇内样本间的平均距离，diam(C)对应与簇C内样本间的最远距离，$d_min(C_i,C<em>j)$对应与簇i和簇j最近样本间的距离；$d</em>{cen}(C_i,C_j)$对应与簇i和j中心点间的距离。</p>
+<p>基于上面的指标，推出下面几个内部指标：</p>
+<ol>
+<li><p>$DBI=\frac{1}{k}\sum\limits_{i=1}^k\max\limits_{j \neq i}(\frac{avg(C_i)+avg(C_j)}{d_{cen}(\mu_i,\mu_j)})$</p>
+</li>
+<li><p>$DI=\min\limits_{1 \leq i \leq k}{ \min\limits_{j \neq i}(\frac{d_{min}(C_i,C_j)}{\max_{1\leq l \leq k diam(C_l)}}) }$</p>
+</li>
+</ol>
+<p>显然，DBI的值越小越好，DI值越大越好</p>
+<h1 id="距离计算">距离计算</h1><p>在讨论距离计算的时候，属性是否定义了”序”关系很重要。例如定义域为${ 1,2,3 }$能直接在属性值上计算距离，这样的属性成为有序属性；而定义域为{ 飞机、火车、轮船 }这样的离散属性则不能直接在属性值上计算距离，称为无序属性。</p>
+<p>对有序属性的距离计算，通常使用Minkowski distance：$dist_{mk}(x_i,x_j)=(\sum\limits_{u=1}^n \mid x_{iu}-x_{ju} \mid^p)^{\frac{1}{p}}$</p>
+<p>对无需属性采用VDM算式：$VDM_p(a,b)=\sum\limits_{i=1}^k\mid \frac{m_{u,a,i}}{m_{u,a}}-\frac{m_{u,b,i}}{m_u,b} \mid ^p$</p>
+<p>其中$m_{u,a} m_{u,a,i}$分别表示在属性u上取值a的样本数以及在第i个样本簇中属性u上取值为a的样本数。k为样本簇数</p>
+<p>混合处理，假定有$n_c$个有序属性以及$n-n_c$个无序属性：</p>
+<p>$MinkorDM_p(x_i,x_j)=(\sum\limits_{u=1}^{n_c}\mid x_{iu}-x_{ju} \mid ^p +\sum\limits_{u=n_c+1}^n VDM_p(x_{iu},x_{ju}))^{\frac{1}{p}}$</p>
+<p>属性重要性不同时，可以加权处理</p>
+<h1 id="原型聚类">原型聚类</h1><p>原型聚类算法假设聚类结构能够通过一组原型刻画，通常情况下算法先对原型进行初始化，然后对原型进行迭代更新。</p>
+<h2 id="k均值算法">k均值算法</h2><p>给定样本集$D={x_1,x_2,…,x_m}$，k均值算法针对聚类所得簇划分${ C_1,C_2,…,C_k }$最小化平方误差。$E=\sum\limits_{i=1}^k\sum\limits_{x \in C_i}\mid\mid x-\mu_i \mid\mid_2^2$</p>
+<p>其中$\mu_i=\frac{\sum_{x \in C_i}\vec{x}}{\mid C_i \mid}$是簇$C_i$的均值向量。上式在一定程度上刻画了簇内样本围绕簇均值向量的紧密吃呢孤独，E值越小则簇内样本相似度越高。k均值采用贪心策略，通过迭代优化来近似求解上式。</p>
+<h2 id="学习向量量化">学习向量量化</h2><p>学习向量量化（LVQ）试图找到一组原型向量来刻画聚类结构，它假设数据样本带有类别标记，学习过程利用样本的这些监督信息来辅助聚类。</p>
+<p>算法首先对原型向量进行优化，然后对原型向量进行迭代优化。在每一轮的迭代中，算法随机选取一个有标记训练样本，找出与其距离最近的原型向量，并根据两者的类别标记是否一致来对原型向量进行更新。</p>
+<p>在更新原型向量上，对样本$x_i$，若最近的原型向量$p_i$与$x_j$的类别标记相同，则令$p_i$向$x_j$方向靠拢；否则更新原型向量与$x_j$之间距离增大，远离$x_j$</p>
+<h2 id="高斯混合聚类">高斯混合聚类</h2><p>统计学习的模型有两种，一种是概率模型，一种是非概率模型。所谓概率模型，是指训练模型的形式是P(Y|X)。输入是X，输出是Y，训练后模型得到的输出不是一个具体的值，而是一系列的概率值（对应于分类问题来说，就是输入X对应于各个不同Y（类）的概率），然后我们选取概率最大的那个类作为判决对象（软分类–soft assignment）。所谓非概率模型，是指训练模型是一个决策函数Y=f(X)，输入数据X是多少就可以投影得到唯一的Y，即判决结果（硬分类–hard assignment）。</p>
+<p>高斯混合模型GMM就是指对样本的概率密度分布进行估计，而估计采用的模型（训练模型）就是几个高斯模型的加权和。每个高斯模型代表一个聚类。对样本中的数据分别在几个高斯模型上进行投影，就会分别得到在各个类上的概率，选取概率最大的类作为判决结果。</p>
+<p><code>理论上可以通过增加模型的数量，用GMM近似任何概率分布</code></p>
+<p>混合高斯模型定义：$p(x)=\sum_{k=1}^k \pi_kp(x \mid k)$</p>
+<p>其中k为模型的个数；$\pi_k$为第k个高斯的权重；$p(x\mid k)$则为第k个高斯概率密度，其均值为$\mu_k$，方差为$\theta_k$。对此概率密度的估计就是要求出$\pi_k,\mu_k,\theta_k$。当求出p(x)的表达式后，求和式的各项的结果就分别代表样本x属于各个类的概率。</p>
+<p>在做参数估计的时候，常采用的是最大似然方法。最大似然法就是使样本点在估计的概率密度函数上的概率值最大。由于概率值一般都很小，N 很大的时候, 连乘的结果非常小，容易造成浮点数下溢。所以我们通常取log，将目标改写成：$\max\sum\limits_{i=1}^N log(\sum\limits_{k=1}^K\pi_kN(x_i \mid \mu_k,\theta_k))$</p>
+<p>一般用来做参数估计的时候，我们都是通过对待求变量进行求导来求极值，在上式中，log函数中又有求和，你想用求导的方法算的话方程组将会非常复杂，没有闭合解。可以采用的求解方法是EM算法——将求解分为两步：第一步,假设知道各个高斯模型的参数（可以初始化一个，或者基于上一步迭代结果），去估计每个高斯模型的权值；第二步,基于估计的权值，回过头再去确定高斯模型的参数。重复这两个步骤，直到波动很小，近似达到极值（注意这里是极值不是最值，EM算法会陷入局部最优）。具体表达如下：</p>
+<p>E：对滴i个样本$x_i$来说，它由第k个模型生成的概率为：$\vec{w_i}(k)=\frac{\pi_kN(x_i \mid \mu_k,\theta_k)}{\sum\limits_{j=1}^K \pi_jN(x_i \mid \mu_j,\theta_j)}$</p>
+<p>在这一步，假设高斯模型的参数是已知的，有上一步迭代而来或者由初始值决定</p>
+<p>M：得到每个点的生成概率以后，对样本$x_i$来说，他的$\vec{w}_i(k)x_i$的值是由第k个高斯模型产生的。换句话说，第k个高斯模型很产生了$\vec{w}_i(k)x_i(i=1……N)$这些数据。这样在估计第k个高斯模型参数时，我们就用$\vec{w}_i(k)x_i(i=1……N)$这些数据去做参数估计：</p>
+<p>$\mu_k=\frac{\sum\limits_{i=1}^N \vec{w}_i (k)x_i}{N}$</p>
+<p>$\theta_k=\frac{\sum\limits_{i=1}^N\vec{w}_i(k)(x_i-\mu_k)(x_i-\mu_k)^T}{N_k}$</p>
+<p>$N_k=\sum\limits_{i=1}^N\vec{w}_i(k)$</p>
+<p>重复E和M知道算法收敛</p>
+<h1 id="密度聚类">密度聚类</h1><ol>
+<li><p>$\epsilon$邻域：对象O的是与O为中心，$\epsilon$为半径的空间，参数$\epsilon &gt; 0$，是用户指定每个对象的领域半径值。</p>
+</li>
+<li><p>MinPts（领域密度阀值）：对象的$\epsilon$邻域的对象数量。</p>
+</li>
+<li><p>核心对象：如果对象O的$\epsilon$邻域对象数量至少包含MinPts个对象，则该对象是核心对象。</p>
+</li>
+<li><p>直接密度可达：如果对象p在核心对象q的$\epsilon$邻域内，则p是从q直接密度可达的。</p>
+</li>
+<li><p>密度可达：在DBSCAN中，p是从q(核心对象)密度可达的，如果存在对象链$(p_1,p_2,…,p_n)$，使得$p_1=x_i,p_n=x_j$,且有$p_{i+1}$由$p_i$直接密度直达</p>
+</li>
+<li><p>密度相连：对$x_i$和$x_j$，若存在$x_k$使得$x_i,x_j$均由$x_k$密度可达，则两者密度相连。</p>
+</li>
+</ol>
+<p><img src="http://peihao.space/img/article/ml/ml-intro8-1.png" alt=""></p>
+<p>DBSCAN算法先任选数据集中的一个核心对象为种子，再由此出发确定相应的聚类簇。具体的，现根据给定的邻域参数$(\epsilon,MinPys)$找出所有的核心对象；然后以任意核心对象为出发点，找出由其密度可达的样本生成聚类簇，知道所有核心对象均被访问过为止。</p>
+<h1 id="层次聚类">层次聚类</h1><p>层次聚类试图在不同层次对数据集进行划分，从而形成树形的聚类结构。数据集的划分可采用自底向上的聚合策略，也可选择自顶下下的分析策略。</p>
+<p>AGNES是一种自底向上聚合策略的层次聚合算法。他先将数据集合中每个样本看作一个初始聚类簇，然后再算法运行的每一步中找出距离最近的两个聚类簇合并，该过程不断重复，直至达到预设的聚类簇个数。</p>
+<p>算法的关键是如何找到最近的两个聚类簇，然后不断的进行合并。给定聚类簇$C_i$和$C_j$，通过下面的式子计算距离：</p>
+<p>最小距离： $d_min(C_i,C_j)=\min\limits_{x \in C_,z \in C_j} dist(x,z)$</p>
+<p>最大距离： $d_max(C_i,C_j)=\max\limits_{x \in C_,z \in C_j} dist(x,z)$</p>
+<p>平均距离： $d_avg(C_i,C_j)=\frac{\sum\limits_{x \in C_i}\sum\limits_{z \in C_j}dist(x,z)}{\mid C_i \mid \mid C_j \mid}$</p>
+<p>当使用不同的距离公式作为算法的因数时，算法分别被称为单链接，全连接以及均链接。算法首先对仅含一个样本样本的初始聚类簇和相应的距离矩阵进行初始化；然后不断合并距离最近的聚类簇，并对合并得到的新聚类簇距离矩阵进行更新；不断重复，直到聚类簇数量减少到预设目标。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/mp-qr.jpg" alt="clinjie wechat" style="width: 200px; max-width: 100%;"/>
+    <div>Think about u every day</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ML/" rel="tag"># ML</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/07/ml-integration/" rel="next" title="集成学习">
+                <i class="fa fa-chevron-left"></i> 集成学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/09/ml-dimension-reduction/" rel="prev" title="降维">
+                降维 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      <! -- 添加微信图标 -->
+	    
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="clinjie" />
+          <p class="site-author-name" itemprop="name">clinjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">179</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chuangwailinjie" target="_blank" title="github" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chuangwalinjie" target="_blank" title="weibo" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/peihaozhu" target="_blank" title="zhihu" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#性能度量"><span class="nav-number">1.</span> <span class="nav-text">性能度量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#外部指标"><span class="nav-number">1.1.</span> <span class="nav-text">外部指标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内部指标"><span class="nav-number">1.2.</span> <span class="nav-text">内部指标</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#距离计算"><span class="nav-number">2.</span> <span class="nav-text">距离计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原型聚类"><span class="nav-number">3.</span> <span class="nav-text">原型聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#k均值算法"><span class="nav-number">3.1.</span> <span class="nav-text">k均值算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学习向量量化"><span class="nav-number">3.2.</span> <span class="nav-text">学习向量量化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯混合聚类"><span class="nav-number">3.3.</span> <span class="nav-text">高斯混合聚类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#密度聚类"><span class="nav-number">4.</span> <span class="nav-text">密度聚类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#层次聚类"><span class="nav-number">5.</span> <span class="nav-text">层次聚类</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clinjie</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'clinjie';
+      var disqus_identifier = '2017/03/08/ml-clustering/';
+
+      var disqus_title = "聚类";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("BKt7qufuU6B0ix9a9ik7kejs-gzGzoHsz", "pfDjDmIpP09Fj9QNLGzSL2Ox");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+	
+	
+
+<!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<!-- 颗粒漂浮背景 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript">var OriginTitile=document.title,st;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="你要去哪里",clearTimeout(st)):(document.title="clinjie~~"+OriginTitile,st=setTimeout(function(){document.title=OriginTitile},3e3))})</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}},"messageStyle":"none"});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.0-beta.0/config/TeX-AMS-MML_HTMLorMML.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

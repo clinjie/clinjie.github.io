@@ -1,0 +1,1154 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ML," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="窗外临街" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="仅适用基于Hierarchical Softmax。
+edit. 适用Negative Smapling
+资源
+word2vec通过训练将每个词映射成K维实数向量。通过词之间的距离，比如cosine相似度，欧式距离等来判断他们之间的语义相似度。根据词频使用哈弗慢编码，使得所有词频相似的词隐藏层的激活内容基本一致。出现频率越高的词语，他们激活的隐藏层数目越少，这样有效的降低了计算的复杂度。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="word2vec">
+<meta property="og:url" content="http://peihao.space/2017/03/28/word2vec/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="仅适用基于Hierarchical Softmax。
+edit. 适用Negative Smapling
+资源
+word2vec通过训练将每个词映射成K维实数向量。通过词之间的距离，比如cosine相似度，欧式距离等来判断他们之间的语义相似度。根据词频使用哈弗慢编码，使得所有词频相似的词隐藏层的激活内容基本一致。出现频率越高的词语，他们激活的隐藏层数目越少，这样有效的降低了计算的复杂度。">
+<meta property="og:image" content="http://peihao.space/img/article/ml/word1.png">
+<meta property="og:image" content="http://peihao.space/img/article/ml/word2.png">
+<meta property="og:image" content="http://peihao.space/img/article/ml/word3.png">
+<meta property="og:image" content="http://peihao.space/img/article/ml/word4.png">
+<meta property="og:image" content="http://peihao.space/img/article/ml/word5.png">
+<meta property="og:image" content="http://peihao.space/img/article/ml/tsne.png">
+<meta property="og:updated_time" content="2017-03-29T15:03:51.002Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="word2vec">
+<meta name="twitter:description" content="仅适用基于Hierarchical Softmax。
+edit. 适用Negative Smapling
+资源
+word2vec通过训练将每个词映射成K维实数向量。通过词之间的距离，比如cosine相似度，欧式距离等来判断他们之间的语义相似度。根据词频使用哈弗慢编码，使得所有词频相似的词隐藏层的激活内容基本一致。出现频率越高的词语，他们激活的隐藏层数目越少，这样有效的降低了计算的复杂度。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://peihao.space/2017/03/28/word2vec/"/>
+
+
+
+
+
+  <title> word2vec | 窗外临街 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">窗外临街</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photos" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+
+	  </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://peihao.space/2017/03/28/word2vec/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="clinjie">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/img/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="窗外临街">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="窗外临街" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                word2vec
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Дата создания записи" itemprop="dateCreated datePublished" datetime="2017-03-28T19:18:42+08:00">
+                2017-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index">
+                    <span itemprop="name">ML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/03/28/word2vec/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/28/word2vec/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/28/word2vec/" class="leancloud_visitors" data-flag-title="word2vec">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+		
+		
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>仅适用基于Hierarchical Softmax。</p>
+<p>edit. 适用Negative Smapling</p>
+<p><a href="http://download.csdn.net/detail/peihaozhu/9796105" target="_blank" rel="external">资源</a></p>
+<p>word2vec通过训练将每个词映射成K维实数向量。通过词之间的距离，比如cosine相似度，欧式距离等来判断他们之间的语义相似度。根据词频使用哈弗慢编码，使得所有词频相似的词隐藏层的激活内容基本一致。出现频率越高的词语，他们激活的隐藏层数目越少，这样有效的降低了计算的复杂度。<br><a id="more"></a></p>
+<blockquote>
+<p>用one-hot来通俗简单的理解，有三个词“麦克风”、“话筒”、“杯子”，用one-hot编码，三个词对应[1, 0, 0]， [0, 1, 0]，[0, 0, 1]。当成千上万的词语，会造成每个词向量含有很多0，也就是稀疏编码，所以我们需要降维。比如说，上面的三个词语可以表示为[0, 1]， [0.4, 0.9]，[1, 0]。这里要注意的是“麦克风”和“话筒”的意思很接近，所以它们对应的向量也很接近，即空间距离短，向量夹角小。</p>
+</blockquote>
+<p><img src="http://peihao.space/img/article/ml/word1.png" alt=""></p>
+<p><strong>分布式假设，其核心思想为出现于上下文情景中的词汇都有相类似的语义。</strong></p>
+<p>word2vec中用到的两个重要模型-CBOW（Continuous Bag-of-Words Model）模型和Skip-gram（Contunuous Skip-gram）模型。</p>
+<p>两个模型都包含三层：输入层、投影层和输出层。前者是在已知当前词$w_t$的上下文$w_{t-2},w_{t-1},w_{t+1},w_{t+2}$的前提下预测当前词$w_t$，即$P(w_t \mid w_{t-2},w_{t-1},w_{t+1},w_{t+2})$；后者恰恰相反，在已知当前词$w_t$的前提下，预测上下文$w_{t-2},w_{t-1},w_{t+1},w_{t+2}$,也就是$P(w_{t-2},w_{t-1},w_{t+1},w_{t+2} \mid w_t)$</p>
+<p><img src="http://peihao.space/img/article/ml/word2.png" alt=""></p>
+<h1 id="CBOW模型">CBOW模型</h1><p>CBOW模型包括三层：输入层投影层和输出层。</p>
+<p><img src="http://peihao.space/img/article/ml/word3.png" alt=""><br>上面讲过CBOW模型网络结构是通过上下文context对当前词target做预测，求$P(w_t \mid w_{t-1},w_{t+1})$。</p>
+<p>这里是假设Context(w)由w前后各c个词构成</p>
+<ol>
+<li><p>输入层：包含Context(w)中2c个词的词向量$v(Context(w)_1),v(Context(w)_2),…,v(Context(w)_{2c})$，$Context(w) \in R^m$，这里，m的含义同上表示词向量的长度。</p>
+</li>
+<li><p>投影层：将输出层的2c个向量做求和累加，即$x_w=\sum_{i=1}^{2c}v(Countext(w)_i) \in R^m$</p>
+</li>
+<li><p>输出层：输出层对应一个二叉树，以语聊中出现的词当叶子节点，以各次在语聊中出现的次数当权值构造出来哈夫曼树。在哈夫曼树中，叶子节点一共$\mid D \mid$个，分别对应词典D中词，非叶子结点N-1个</p>
+</li>
+</ol>
+<p>取一个适当大小的窗口当做context window，输入层读入窗口内的词，将它们的向量（K维，初始随机）加和在一起，形成隐藏层K个节点。输出层是一个巨大的二叉树，叶节点代表语料里所有的词（语料含有V个独立的词，则二叉树有|V|个叶节点）。而这整颗二叉树构建的算法就是Huffman树。这样，对于叶节点的每一个词，就会有一个全局唯一的编码，形如”010011”，不妨记左子树为1，右子树为0。接下来，隐层的每一个节点都会跟二叉树的内节点有连边，于是对于二叉树的每一个内节点都会有K条连边，每条边上也会有权值。</p>
+<p>对于语料库中的某个词$w_$t，对应着二叉树的某个叶子节点，因此它必然有一个二进制编码，如”010011”。在训练阶段，当给定上下文，要预测后面的词$w_t$的时候，我们就从二叉树的根节点开始遍历，这里的目标就是预测这个词的二进制编号的每一位。即对于给定的上下文，我们的目标是使得预测词的二进制编码概率最大。形象地说，我们希望在根节点，词向量和与根节点相连经过logistic计算得到bit=1的概率尽量接近0，在第二层，希望其bit=1的概率尽量接近1，这么一直下去，我们把一路上计算得到的概率相乘，即得到目标词$w_t$在当前网络下的概率$P(w_t\mid w_{t-1},w_{t+1})$。显而易见，按照目标词的二进制编码计算到最后的概率值就是归一化的.</p>
+<p>模型的目标式子$p(w \mid Context(w))=\prod\limits_{j=2}^N p(d_j^w \mid x_w,\theta_{j-1}^w)$,用<strong>SGD</strong>训练优化模型，过程中更新相关的参数值（输入之后的加和向量值$x$，哈夫曼树中的内部节点向量$\theta$,以及原始的输入context中的所有向量参数$w$），每次取出一个样本$(context(w),w)$做训练，就要对整体的参数进行更新一次。对于$\theta$和$x$的值，通过SGD求偏导更新，而没有直接参与训练预测的原始context输入词向量$w$，我们通过$x$这个所有context词的加和向量来更新词向量$w$。把梯度贡献的更新项分配到所有输入中。</p>
+<h1 id="Skip-gram">Skip-gram</h1><blockquote>
+<p>Skip-Gram模型采取CBOW的逆过程的动机在于：CBOW算法对于很多分布式信息进行了平滑处理（例如将一整段上下文信息视为一个单一观察量）。很多情况下，对于小型的数据集，这一处理是有帮助的。相形之下，Skip-Gram模型将每个“上下文-目标词汇”的组合视为一个新观察量，这种做法在大型数据集中会更为有效。</p>
+</blockquote>
+<p>Skip-gram模型包括两层：输入层和输出层，相比CBOW，少了投影层，因为它不需要对所有的context词进行特征向量相加。</p>
+<p><img src="http://peihao.space/img/article/ml/word4.png" alt=""></p>
+<ol>
+<li><p>输入层：目标词的词向量$v(w) \in R^m$</p>
+</li>
+<li><p>输出层：与CBOW类似，输出层十一颗哈夫曼树</p>
+</li>
+</ol>
+<p>大体上来讲，Skip-Gramm与CBOW的流程相反，通过目标词对context进行预测，Skip-Gramm将其定义为$p(Context(w)\mid w)=\prod\limits_{w \in Context(w)} p(u \mid w)$，而上市中的$p(u \mid w)$可以按照上面的思想，通过哈夫曼树的路径节点乘积确定：$p(u \mid w)=\prod\limits_{j=2}^{l^u} p(d_j^u \mid v(w),\theta_{j-1}^u)$</p>
+<p>之后就是对公式进行MLE的SGD优化。要注意的是，因为这里是要对context词进行预测，所以要从哈夫曼树的根部到叶子结点，进行$\mid context \mid$次。每次预测之后，都要处理完一个Context中的一个词之后，就要更新输入词的特征向量。</p>
+<hr>
+<p>下面开始介绍基于Negative Smapling的模型，翻译过来就是负采样模型，是由NCE（Noise Contrastive Estimation）的一个简化版本，目的是用来提高训练速度并改善词向量的质量。与上面介绍的基于Hierarchical Softmax的CBOW和Skip-gram相比，这种不使用复杂的哈夫曼树，而使用相对简单的随机负采样。因为在计算损失函数的时候，只是有我们挑选出来的k个noise word，而非整个的语料库V，这使得训练非常快。大幅度提高性能。</p>
+<p>假设要求的未知的概率密度函数为X，已知的概率密度是Y，如果知道了X与Y的关系，那么X也就可以求出来。本质就是利用已知的概率密度估计未知的概率密度函数。</p>
+<h1 id="负采样">负采样</h1><p>算法主要讲对于一个给定的词w，如何生成$NEG(w)$。</p>
+<p>词典$D$中的词在语料$C$中出现的次数有高有低，高频词应该被选为负样本的概率应该高点，低的反之，本质上是一个带权采样，这就是大体的要求。</p>
+<p>记$l_0=0,l_k=\sum\limits_{j=1}^k len(w_j),k=1,2,3…,N$，这里$w_j$表示词典D中的第j个词，则以${l_j}^N_{j=0}$为部分节点可得到区间$[0,1]$上的一个等距划分，$I_i=(l_{i-1},l_i],i=1,2,…,N$为N个剖分区间。</p>
+<p>进一步的引入区间$[0,1]$上的等距离剖分，剖分节点为${m_j}_{j=0}^M$，其中$M &gt; &gt; N$</p>
+<p><img src="http://peihao.space/img/article/ml/word5.png" alt=""></p>
+<p>将内部剖分节点${m_j}^{M-1}_{j=1}$投影到非等距剖分上，则可建立${m_j}^{M-1}_{j=1}$与区间${I_j}^N_{j=1}$的映射关系。之后每次生成一个$[1,M-1]$间的堆积整数r，通过映射关系就能确定选择那个词作负样本。注意万一选中的就是w自己，则跳过。</p>
+<h1 id="基于负采样的CBOW">基于负采样的CBOW</h1><p>在CBOW模型中，一直词w的上下文Context(w)，需要预测w，因此对于给定的Countext(w)，词w就是一个正样本，其他词就是负样本（分类问题）。</p>
+<p>假定现在选好了关于Countext(w)的负采样集$NEG(w) \neq \emptyset$，并且<br>$$L^w(\hat{w})=<br>\begin{cases}<br>1,\hat{w}=w;\0,\hat{w}=w<br>\end{cases}<br>$$</p>
+<p>表示词$\hat{w}$的标签，即正样本的标签为1，负样本的标签为0.</p>
+<p>对于一个给定的正样本（Context（w）,w），<strong>我们希望最大化</strong>$$g(w)=\prod_{u \in {w} \bigcup NEG(w)} p(u \mid Context(w))$$</p>
+<p>其中<br>$$p(u\mid Context(w))=<br>\begin{cases}<br>\sigma(x^T_w\theta^u),\ \ L^w(u)=1;\ \  1-\sigma(x^T_w\theta^u), \ \ L^w(u)=0<br>\end{cases}<br>$$</p>
+<p>这里$x_w$表示Context(w)中各词的词向量之和，而$\theta^u \in R^m$表示词u对应的一个辅助向量，其实就是word-embeding中的嵌入值。</p>
+<p>$\sigma(x_w^T \theta^w)$表示当上下文为Context(w)时，预测中心词为w的概率，而$\sigma(x^T_w\theta^u)\, u \in NEG(w)$则表示上下文为Context(w)时，预测中心词为u的概率。式子$g(w)$表示，所有在NEG集合加上实际的中心词w概率相乘，最大化这个式子，每一项，如果是实际的中心词w，最大化$p$，如果属于NEG集合，最大化$(1-p)$。增大正样本的概率同时降低负样本的概率。</p>
+<p>之后的内容就是使用SGD对求解最大化这个公式进行训练，参数的更新，包括$\theta$对应词的嵌入，$x$对应Context(w)中各词的词向量之和，以及通过$x$更新最初的输入词$w$的向量，对于整个数据集，当梯度下降的过程中不断地更新参数，对应产生的效果就是不断地移动每个单词的嵌套向量，直到可以把真实单词和噪声单词很好得区分开。</p>
+<h1 id="基于负采样的Skip-gram">基于负采样的Skip-gram</h1><p>对于一个给定的样本$(w,Context(w))$，我们希望最大化$$g(w)=\prod\limits_{\hat{w} \in Context(w)}\prod\limits_{u \in {w} \bigcup NEG^{\hat{w}}(w)} p(u\mid \hat{w})$$</p>
+<p>其中$$p(u\mid \hat{w})=\begin{cases}\sigma(v(\hat{w})^T\theta^u, \ \ L^w(u)=1; \  \1-\sigma(v(\hat{w})^T\theta^u, \ \ L^w(u)=0 \end{cases}$$</p>
+<p>这里$NEG^{\hat{w}}(w)$表示处理词$\hat{w}$时候生成的负样本子集，于是对于一个给定的语料库C，函数$$G=\prod\limits_{w\in C}g(w)$$<br>作为整体优化的目标，然后为了变成和项，我们取对数等等。</p>
+<p>之后的步骤就跟原来一样。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> tensorflow.python.platform</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">from</span> six.moves <span class="keyword">import</span> xrange</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"><span class="keyword">import</span> zipfile</span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 1: Download the data.</span></span><br><span class="line">url = <span class="string">'http://mattmahoney.net/dc/'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">maybe_download</span><span class="params">(filename, expected_bytes)</span>:</span></span><br><span class="line">  <span class="string">"""Download a file if not present, and make sure it's the right size."""</span></span><br><span class="line">  <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(filename):</span><br><span class="line">    filename, _ = urllib.request.urlretrieve(url + filename, filename)</span><br><span class="line">  <span class="comment"># 文件信息获取</span></span><br><span class="line">  statinfo = os.stat(filename)</span><br><span class="line">  <span class="keyword">if</span> statinfo.st_size == expected_bytes:</span><br><span class="line">    print(<span class="string">'Found and verified'</span>, filename)</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    print(statinfo.st_size)</span><br><span class="line">    <span class="keyword">raise</span> Exception(</span><br><span class="line">        <span class="string">'Failed to verify '</span> + filename + <span class="string">'. Can you get to it with a browser?'</span>)</span><br><span class="line">  <span class="keyword">return</span> filename</span><br><span class="line"></span><br><span class="line">filename = maybe_download(<span class="string">'text8.zip'</span>, <span class="number">31344016</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Read the data into a string.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_data</span><span class="params">(filename)</span>:</span></span><br><span class="line">  f = zipfile.ZipFile(filename)</span><br><span class="line">  <span class="comment"># 获取压缩文件中的文件列表，返回第一个文件内容，根据空格进行分割成列表。</span></span><br><span class="line">  <span class="keyword">for</span> name <span class="keyword">in</span> f.namelist():</span><br><span class="line">  	<span class="keyword">return</span> f.read(name).split()</span><br><span class="line">  f.close()</span><br><span class="line"></span><br><span class="line">words = read_data(filename)</span><br><span class="line">print(<span class="string">'Data size'</span>, len(words))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 2: Build the dictionary and replace rare words with UNK token.#将稀少的词使用UNK替换</span></span><br><span class="line">vocabulary_size = <span class="number">50000</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_dataset</span><span class="params">(words)</span>:</span></span><br><span class="line">  count = [[<span class="string">'UNK'</span>, -<span class="number">1</span>]]<span class="comment"># 词'UNK'代表UnKnow</span></span><br><span class="line">  <span class="comment"># 将count扩展，使用collections模块的计数器，根据出现次数的多少进行排序然后填充进count，排序之后UNK为第一位。s.most_common(n)方法返回对象s的Top n数据，没有指定的话，返回全部</span></span><br><span class="line">  count.extend(collections.Counter(words).most_common(vocabulary_size - <span class="number">1</span>))</span><br><span class="line">  dictionary = dict()</span><br><span class="line">  <span class="keyword">for</span> word, _ <span class="keyword">in</span> count:<span class="comment">#count中按item有两个内容：str以及对应的times频率。定义一个字典对象，键为str，对应的值为上面count中按str频率高低的排名例如 the:1,of:2。。。</span></span><br><span class="line">    dictionary[word] = len(dictionary)</span><br><span class="line">  data = list()</span><br><span class="line">  unk_count = <span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">    <span class="keyword">if</span> word <span class="keyword">in</span> dictionary:</span><br><span class="line">      index = dictionary[word]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      index = <span class="number">0</span>  <span class="comment"># dictionary['UNK'] 注意之前在dictionary中根据排序，UNK还是在第一位，对应的值为0</span></span><br><span class="line">      unk_count = unk_count + <span class="number">1</span></span><br><span class="line">    <span class="comment"># index代表了词对应的排名，出现一次，填充进data中一次。data中包含的是原来文件中词对应的排名列表</span></span><br><span class="line">    data.append(index)</span><br><span class="line">  count[<span class="number">0</span>][<span class="number">1</span>] = unk_count <span class="comment"># count是一个二维的元祖，一个元素是'UNK':times，count[0][1]代表的就是UNK对应的频率</span></span><br><span class="line">  reverse_dictionary = dict(zip(dictionary.values(), dictionary.keys()))<span class="comment">#键值对reverse</span></span><br><span class="line">  <span class="keyword">return</span> data, count, dictionary, reverse_dictionary</span><br><span class="line"></span><br><span class="line">data, count, dictionary, reverse_dictionary = build_dataset(words)</span><br><span class="line"><span class="keyword">del</span> words  <span class="comment"># Hint to reduce memory.</span></span><br><span class="line">print(<span class="string">'Most common words (+UNK)'</span>, count[:<span class="number">5</span>])<span class="comment"># 输出频率最高的5个词</span></span><br><span class="line">print(<span class="string">'Sample data'</span>, data[:<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line">data_index = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 4: Function to generate a training batch for the skip-gram model.</span></span><br><span class="line"><span class="comment"># num_skips 训练样本的源端要使用几次，出于n-skip算法的原因，一个中心词要对应多个周边词，也就是说一个中心词target要预测几次周边词，对应的词的数量</span></span><br><span class="line"><span class="comment"># skip_window 左右各考虑多少个词，skip_windows*2=num_skips</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_batch</span><span class="params">(batch_size, num_skips, skip_window)</span>:</span></span><br><span class="line">  <span class="keyword">global</span> data_index</span><br><span class="line">  <span class="keyword">assert</span> batch_size % num_skips == <span class="number">0</span></span><br><span class="line">  <span class="keyword">assert</span> num_skips &lt;= <span class="number">2</span> * skip_window</span><br><span class="line">  <span class="comment"># ndarray本质是数组，其不同于一般的数组，或者Python 的list的地方在于它可以有N 维（dimentions），也可简单理解为数组里面嵌套数组。</span></span><br><span class="line">  batch = np.ndarray(shape=(batch_size), dtype=np.int32)</span><br><span class="line">  labels = np.ndarray(shape=(batch_size, <span class="number">1</span>), dtype=np.int32)</span><br><span class="line">  span = <span class="number">2</span> * skip_window + <span class="number">1</span> <span class="comment"># [ skip_window target skip_window ]</span></span><br><span class="line">  buffer = collections.deque(maxlen=span)</span><br><span class="line">  <span class="keyword">for</span> _ <span class="keyword">in</span> range(span):</span><br><span class="line">    <span class="comment"># 最初的填充，填充进原来文本中word的频率</span></span><br><span class="line">    buffer.append(data[data_index])</span><br><span class="line">    <span class="comment"># 因为data_index是全局变量，训练要很多步，后面取余</span></span><br><span class="line">    data_index = (data_index + <span class="number">1</span>) % len(data)</span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range((int)(batch_size / num_skips)):<span class="comment">#batch中样batch_size个样本，衣蛾target有num_skips个样本</span></span><br><span class="line">    target = skip_window  <span class="comment"># target label at the center of the buffer</span></span><br><span class="line">    targets_to_avoid = [ skip_window ]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(num_skips):</span><br><span class="line">      <span class="keyword">while</span> target <span class="keyword">in</span> targets_to_avoid:</span><br><span class="line">        <span class="comment"># 进行了num_skips轮，每次找到一个不在target_to_avoid中的元素，实际上就是每次找一个与target配对的word</span></span><br><span class="line">        target = random.randint(<span class="number">0</span>, span - <span class="number">1</span>)</span><br><span class="line">      targets_to_avoid.append(target)</span><br><span class="line">      batch[i * num_skips + j] = buffer[skip_window] <span class="comment">#batch中是连续的num_skips个target词</span></span><br><span class="line">      labels[i * num_skips + j, <span class="number">0</span>] = buffer[target]<span class="comment">#label中连续的num_skip个周边词</span></span><br><span class="line">    buffer.append(data[data_index])<span class="comment">#buffer是有容量限制的，之前的状态是满的，此时会将最早的元素挤出去</span></span><br><span class="line">    data_index = (data_index + <span class="number">1</span>) % len(data)</span><br><span class="line">  <span class="keyword">return</span> batch, labels</span><br><span class="line"></span><br><span class="line">batch, labels = generate_batch(batch_size=<span class="number">8</span>, num_skips=<span class="number">2</span>, skip_window=<span class="number">1</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">8</span>):</span><br><span class="line">  print(batch[i], <span class="string">'-&gt;'</span>, labels[i, <span class="number">0</span>])</span><br><span class="line">  print(reverse_dictionary[batch[i]], <span class="string">'-&gt;'</span>, reverse_dictionary[labels[i, <span class="number">0</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 5: Build and train a skip-gram model.</span></span><br><span class="line"></span><br><span class="line">batch_size = <span class="number">128</span></span><br><span class="line">embedding_size = <span class="number">128</span>  <span class="comment"># 嵌入矩阵的密度，或者说是矩阵长度，batch_size要和embedding_size一致</span></span><br><span class="line">skip_window = <span class="number">1</span>       <span class="comment"># How many words to consider left and right.</span></span><br><span class="line">num_skips = <span class="number">2</span>         <span class="comment"># How many times to re-use an input to generate a label.</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构造NEG集合相关参数，集合中的元素就作为分类结果的干扰</span></span><br><span class="line">valid_size = <span class="number">16</span>     <span class="comment"># Random set of words to evaluate similarity on.#随机的word集合估计相似度</span></span><br><span class="line">valid_window = <span class="number">100</span>  <span class="comment"># 选择在头部分布的开发样本</span></span><br><span class="line">valid_examples = np.array(random.sample(xrange(valid_window), valid_size))<span class="comment"># 从[0,valid_window]中随机的获取valid_size个数值返回</span></span><br><span class="line">num_sampled = <span class="number">64</span>    <span class="comment"># 负采样的个数</span></span><br><span class="line"></span><br><span class="line">graph = tf.Graph()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> graph.as_default():</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Input data.</span></span><br><span class="line">  train_inputs = tf.placeholder(tf.int32, shape=[batch_size])</span><br><span class="line">  train_labels = tf.placeholder(tf.int32, shape=[batch_size, <span class="number">1</span>])</span><br><span class="line">  valid_dataset = tf.constant(valid_examples, dtype=tf.int32)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Construct the variables.</span></span><br><span class="line">  embeddings = tf.Variable(<span class="comment">#使用唯一的随机值来初始化大矩阵，shape=[vocabulary_size, embedding_size]</span></span><br><span class="line">      tf.random_uniform([vocabulary_size, embedding_size], -<span class="number">1.0</span>, <span class="number">1.0</span>))</span><br><span class="line">  nce_weights = tf.Variable(<span class="comment">#每个word定义一个权重值与偏差</span></span><br><span class="line">      <span class="comment"># tf.truncated_normal初始函数将根据所得到的均值和标准差，生成一个随机分布。shape=[vocabulary_size, embedding_size]</span></span><br><span class="line">      tf.truncated_normal([vocabulary_size, embedding_size],</span><br><span class="line">                          stddev=<span class="number">1.0</span> / math.sqrt(embedding_size)))</span><br><span class="line">  nce_biases = tf.Variable(tf.zeros([vocabulary_size]))</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Look up embeddings for inputs. 根据train_inputs中的id，寻找embeddings中的对应元素。比如，train_inputs=[1,3,5]，则找出embeddings中下标为1,3,5的向量组成一个矩阵返回。</span></span><br><span class="line">  embed = tf.nn.embedding_lookup(embeddings, train_inputs)<span class="comment">#这里是从train_inputs给的索引值找到embeddings大矩阵中的对应的嵌入值</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Compute the average NCE loss for the batch.</span></span><br><span class="line">  <span class="comment"># tf.nce_loss automatically draws a new sample of the negative labels each</span></span><br><span class="line">  <span class="comment"># time we evaluate the loss.</span></span><br><span class="line">  loss = tf.reduce_mean(<span class="comment"># reduce_mean是平均值  vocabulary_size代表可能的数目  num_sampled代表per batch随机抽样的个数</span></span><br><span class="line">      tf.nn.nce_loss(nce_weights, nce_biases, train_labels,embed,<span class="comment">#这里的参数都是按batch计算的，而非具体的某个样本.同时要注意的是原文件中参数排序出错，这里修正</span></span><br><span class="line">                     num_sampled, vocabulary_size))</span><br><span class="line"></span><br><span class="line">  optimizer = tf.train.GradientDescentOptimizer(<span class="number">1.0</span>).minimize(loss)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 计算在minibatch和所有的embedding的cosine相似度</span></span><br><span class="line">  norm = tf.sqrt(tf.reduce_sum(tf.square(embeddings), <span class="number">1</span>, keep_dims=<span class="keyword">True</span>))<span class="comment">#tf.reduce_sum就是求和</span></span><br><span class="line">  normalized_embeddings = embeddings / norm<span class="comment"># 正则化嵌入值</span></span><br><span class="line">  valid_embeddings = tf.nn.embedding_lookup( <span class="comment">#NEG集嵌入值</span></span><br><span class="line">      normalized_embeddings, valid_dataset)<span class="comment">#寻找NEG集合中对应的正则化后的嵌入值</span></span><br><span class="line">  similarity = tf.matmul(<span class="comment">#NEG集合正则化后的嵌入值与词典集合正则化后的嵌入值的矩阵乘</span></span><br><span class="line">      valid_embeddings, normalized_embeddings, transpose_b=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 6: Begin training</span></span><br><span class="line">num_steps = <span class="number">100001</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session(graph=graph) <span class="keyword">as</span> session:</span><br><span class="line">  <span class="comment"># We must initialize all variables before we use them.</span></span><br><span class="line">  tf.initialize_all_variables().run()</span><br><span class="line">  print(<span class="string">"Initialized"</span>)</span><br><span class="line"></span><br><span class="line">  average_loss = <span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> step <span class="keyword">in</span> xrange(num_steps):</span><br><span class="line">    batch_inputs, batch_labels = generate_batch(</span><br><span class="line">        batch_size, num_skips, skip_window)</span><br><span class="line">    feed_dict = &#123;train_inputs : batch_inputs, train_labels : batch_labels&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># We perform one update step by evaluating the optimizer op (including it</span></span><br><span class="line">    <span class="comment"># in the list of returned values for session.run()</span></span><br><span class="line">    _, loss_val = session.run([optimizer, loss], feed_dict=feed_dict)</span><br><span class="line">    average_loss += loss_val</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> step % <span class="number">2000</span> == <span class="number">0</span>:</span><br><span class="line">      <span class="keyword">if</span> step &gt; <span class="number">0</span>:</span><br><span class="line">        average_loss = average_loss / <span class="number">2000</span></span><br><span class="line">      <span class="comment"># The average loss is an estimate of the loss over the last 2000 batches.</span></span><br><span class="line">      print(<span class="string">"Average loss at step "</span>, step, <span class="string">": "</span>, average_loss)</span><br><span class="line">      average_loss = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 这里是构建nosie词作</span></span><br><span class="line">    <span class="comment"># 注意这里的代价是很大的，没500步差不多就会减慢20%的计算</span></span><br><span class="line">    <span class="keyword">if</span> step % <span class="number">10000</span> == <span class="number">0</span>:</span><br><span class="line">      sim = similarity.eval()</span><br><span class="line">      <span class="keyword">for</span> i <span class="keyword">in</span> xrange(valid_size):</span><br><span class="line">        valid_word = reverse_dictionary[valid_examples[i]]</span><br><span class="line">        top_k = <span class="number">8</span> <span class="comment"># number of nearest neighbors#</span></span><br><span class="line">        nearest = (-sim[i, :]).argsort()[<span class="number">1</span>:top_k+<span class="number">1</span>]<span class="comment"># 返回的是按相似度排序后元素值的索引值</span></span><br><span class="line">        log_str = <span class="string">"Nearest to %s:"</span> % valid_word</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> xrange(top_k):</span><br><span class="line">          close_word = reverse_dictionary[nearest[k]]</span><br><span class="line">          log_str = <span class="string">"%s %s,"</span> % (log_str, close_word)</span><br><span class="line">        print(log_str)</span><br><span class="line">  final_embeddings = normalized_embeddings.eval()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 7: Visualize the embeddings.</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_with_labels</span><span class="params">(low_dim_embs, labels, filename=<span class="string">'tsne.png'</span>)</span>:</span></span><br><span class="line">  <span class="keyword">assert</span> low_dim_embs.shape[<span class="number">0</span>] &gt;= len(labels), <span class="string">"More labels than embeddings"</span></span><br><span class="line">  plt.figure(figsize=(<span class="number">18</span>, <span class="number">18</span>))  <span class="comment">#in inches</span></span><br><span class="line">  <span class="keyword">for</span> i, label <span class="keyword">in</span> enumerate(labels):</span><br><span class="line">    x, y = low_dim_embs[i,:]</span><br><span class="line">    plt.scatter(x, y)</span><br><span class="line">    plt.annotate(label,</span><br><span class="line">                 xy=(x, y),</span><br><span class="line">                 xytext=(<span class="number">5</span>, <span class="number">2</span>),</span><br><span class="line">                 textcoords=<span class="string">'offset points'</span>,</span><br><span class="line">                 ha=<span class="string">'right'</span>,</span><br><span class="line">                 va=<span class="string">'bottom'</span>)</span><br><span class="line"></span><br><span class="line">  plt.savefig(filename)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">from</span> sklearn.manifold <span class="keyword">import</span> TSNE</span><br><span class="line">    <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">    tsne = TSNE(perplexity=<span class="number">30</span>, n_components=<span class="number">2</span>, init=<span class="string">'pca'</span>, n_iter=<span class="number">5000</span>)</span><br><span class="line">    plot_only = <span class="number">500</span></span><br><span class="line">    low_dim_embs = tsne.fit_transform(final_embeddings[:plot_only,:])</span><br><span class="line">    labels = list(dictionary.keys())[:plot_only]</span><br><span class="line">    plot_with_labels(low_dim_embs, labels)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">except</span> ImportError:</span><br><span class="line">    print(<span class="string">"Please install sklearn and matplotlib to visualize embeddings."</span>)<span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="http://peihao.space/img/article/ml/tsne.png" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/mp-qr.jpg" alt="clinjie wechat" style="width: 200px; max-width: 100%;"/>
+    <div>Think about u every day</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ML/" rel="tag"># ML</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/26/tf-cifar/" rel="next" title="TensorFlow简单使用Cifar数据集">
+                <i class="fa fa-chevron-left"></i> TensorFlow简单使用Cifar数据集
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      <! -- 添加微信图标 -->
+	    
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="clinjie" />
+          <p class="site-author-name" itemprop="name">clinjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">179</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chuangwailinjie" target="_blank" title="github" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chuangwalinjie" target="_blank" title="weibo" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/peihaozhu" target="_blank" title="zhihu" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CBOW模型"><span class="nav-number">1.</span> <span class="nav-text">CBOW模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Skip-gram"><span class="nav-number">2.</span> <span class="nav-text">Skip-gram</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#负采样"><span class="nav-number">3.</span> <span class="nav-text">负采样</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于负采样的CBOW"><span class="nav-number">4.</span> <span class="nav-text">基于负采样的CBOW</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于负采样的Skip-gram"><span class="nav-number">5.</span> <span class="nav-text">基于负采样的Skip-gram</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clinjie</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'clinjie';
+      var disqus_identifier = '2017/03/28/word2vec/';
+
+      var disqus_title = "word2vec";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("BKt7qufuU6B0ix9a9ik7kejs-gzGzoHsz", "pfDjDmIpP09Fj9QNLGzSL2Ox");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+	
+	
+
+<!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<!-- 颗粒漂浮背景 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript">var OriginTitile=document.title,st;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="你要去哪里",clearTimeout(st)):(document.title="clinjie~~"+OriginTitile,st=setTimeout(function(){document.title=OriginTitile},3e3))})</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}},"messageStyle":"none"});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.0-beta.0/config/TeX-AMS-MML_HTMLorMML.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

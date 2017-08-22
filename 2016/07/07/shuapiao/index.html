@@ -1,0 +1,1105 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python,多线程," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="窗外临街" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="需求最近突然有朋友对投票刷票有需求，正好自己空了下来，就帮他写了个简单的多线程投票脚本。因为不想考虑过多的session、cookie以及post data，所以直接使用了自动化工具Selenium
+简单地说，Selenium就是一个通过执行预先设置的Browser的指令，解放双手，提高工作效率。
+不同于通用的流行python网络模块，Selenium更像是市面上流行的按键精灵类似的软件，通过设定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多线程刷票">
+<meta property="og:url" content="http://peihao.space/2016/07/07/shuapiao/index.html">
+<meta property="og:site_name" content="窗外临街">
+<meta property="og:description" content="需求最近突然有朋友对投票刷票有需求，正好自己空了下来，就帮他写了个简单的多线程投票脚本。因为不想考虑过多的session、cookie以及post data，所以直接使用了自动化工具Selenium
+简单地说，Selenium就是一个通过执行预先设置的Browser的指令，解放双手，提高工作效率。
+不同于通用的流行python网络模块，Selenium更像是市面上流行的按键精灵类似的软件，通过设定">
+<meta property="og:updated_time" content="2016-07-08T15:20:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多线程刷票">
+<meta name="twitter:description" content="需求最近突然有朋友对投票刷票有需求，正好自己空了下来，就帮他写了个简单的多线程投票脚本。因为不想考虑过多的session、cookie以及post data，所以直接使用了自动化工具Selenium
+简单地说，Selenium就是一个通过执行预先设置的Browser的指令，解放双手，提高工作效率。
+不同于通用的流行python网络模块，Selenium更像是市面上流行的按键精灵类似的软件，通过设定">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://peihao.space/2016/07/07/shuapiao/"/>
+
+
+
+
+
+  <title> 多线程刷票 | 窗外临街 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">窗外临街</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photos" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+
+	  </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://peihao.space/2016/07/07/shuapiao/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="clinjie">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/img/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="窗外临街">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="窗外临街" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                多线程刷票
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Дата создания записи" itemprop="dateCreated datePublished" datetime="2016-07-07T22:24:06+08:00">
+                2016-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/07/07/shuapiao/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/07/07/shuapiao/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/07/shuapiao/" class="leancloud_visitors" data-flag-title="多线程刷票">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+		
+		
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="需求">需求</h1><p>最近突然有朋友对投票刷票有需求，正好自己空了下来，就帮他写了个简单的多线程投票脚本。因为不想考虑过多的session、cookie以及post data，所以直接使用了自动化工具<a href="http://peihao.space/2016/02/27/selenium/">Selenium</a></p>
+<p>简单地说，Selenium就是一个通过执行预先设置的Browser的指令，解放双手，提高工作效率。</p>
+<p>不同于通用的流行python网络模块，Selenium更像是市面上流行的按键精灵类似的软件，通过设定特定的工作流程，保证任务的完成。任务的实际执行者是Browser本身。</p>
+<p>Selenium对网页的request、response、解析等操作都是另外的伪浏览器进程执行，然后将获取的数据返回。而传统的python网络模块则通过python进程，对网页请求、回应。显然网络模块会更加高效，而对于普通人，Selenium的操作更加直观。</p>
+<a id="more"></a>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  	<span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"tit"</span>&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"r"</span>&gt;</span>总票数：<span class="tag">&lt;<span class="title">strong</span>&gt;</span>xxxxxx<span class="tag">&lt;/<span class="title">strong</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;<span class="title">h5</span>&gt;</span>标题: 201x年x月份优秀论文评选投票<span class="tag">&lt;/<span class="title">h5</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"c_box wrap"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"hidden"</span> <span class="attribute">name</span>=<span class="value">"subjectid"</span> <span class="attribute">value</span>=<span class="value">"7"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">table</span> <span class="attribute">width</span>=<span class="value">"100%"</span> <span class="attribute">border</span>=<span class="value">"1"</span> <span class="attribute">cellspacing</span>=<span class="value">"0"</span> <span class="attribute">cellpadding</span>=<span class="value">"0"</span> <span class="attribute">class</span>=<span class="value">"tp"</span>&gt;</span></span><br><span class="line">     	       	             <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">           	<span class="tag">&lt;<span class="title">th</span>&gt;</span>1<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tp_tit"</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"radio[]"</span> <span class="attribute">id</span>=<span class="value">"radio"</span> <span class="attribute">value</span>=<span class="value">"186"</span>  /&gt;</span><span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"ls"</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tdcol3"</span>&gt;</span><span class="tag">&lt;<span class="title">font</span> <span class="attribute">color</span>=<span class="value">red</span>&gt;</span>******<span class="tag">&lt;/<span class="title">font</span>&gt;</span> 票<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">             	             <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">           	<span class="tag">&lt;<span class="title">th</span>&gt;</span>2<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tp_tit"</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"radio[]"</span> <span class="attribute">id</span>=<span class="value">"radio"</span> <span class="attribute">value</span>=<span class="value">"187"</span>  /&gt;</span><span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"ls"</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tdcol3"</span>&gt;</span><span class="tag">&lt;<span class="title">font</span> <span class="attribute">color</span>=<span class="value">red</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">font</span>&gt;</span> 票<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">             	             <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">           	<span class="tag">&lt;<span class="title">th</span>&gt;</span>3<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tp_tit"</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"radio[]"</span> <span class="attribute">id</span>=<span class="value">"radio"</span> <span class="attribute">value</span>=<span class="value">"188"</span>  /&gt;</span><span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"ls"</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tdcol3"</span>&gt;</span><span class="tag">&lt;<span class="title">font</span> <span class="attribute">color</span>=<span class="value">red</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">font</span>&gt;</span> 票<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">             	             <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">           	<span class="tag">&lt;<span class="title">th</span>&gt;</span>4<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tp_tit"</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"radio[]"</span> <span class="attribute">id</span>=<span class="value">"radio"</span> <span class="attribute">value</span>=<span class="value">"189"</span>  /&gt;</span><span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"ls"</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tdcol3"</span>&gt;</span><span class="tag">&lt;<span class="title">font</span> <span class="attribute">color</span>=<span class="value">red</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">font</span>&gt;</span> 票<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">             	             <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">           	<span class="tag">&lt;<span class="title">th</span>&gt;</span>5<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tp_tit"</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"radio[]"</span> <span class="attribute">id</span>=<span class="value">"radio"</span> <span class="attribute">value</span>=<span class="value">"190"</span>  /&gt;</span><span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"ls"</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tdcol3"</span>&gt;</span><span class="tag">&lt;<span class="title">font</span> <span class="attribute">color</span>=<span class="value">red</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">font</span>&gt;</span> 票<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">             	             <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">           	<span class="tag">&lt;<span class="title">th</span>&gt;</span>6<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tp_tit"</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"radio[]"</span> <span class="attribute">id</span>=<span class="value">"radio"</span> <span class="attribute">value</span>=<span class="value">"191"</span>  /&gt;</span><span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"ls"</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tdcol3"</span>&gt;</span><span class="tag">&lt;<span class="title">font</span> <span class="attribute">color</span>=<span class="value">red</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">font</span>&gt;</span> 票<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">             	             <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">           	<span class="tag">&lt;<span class="title">th</span>&gt;</span>7<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tp_tit"</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"radio[]"</span> <span class="attribute">id</span>=<span class="value">"radio"</span> <span class="attribute">value</span>=<span class="value">"192"</span>  /&gt;</span><span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"ls"</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tdcol3"</span>&gt;</span><span class="tag">&lt;<span class="title">font</span> <span class="attribute">color</span>=<span class="value">red</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">font</span>&gt;</span> 票<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">             	             <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">           	<span class="tag">&lt;<span class="title">th</span>&gt;</span>8<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tp_tit"</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"radio[]"</span> <span class="attribute">id</span>=<span class="value">"radio"</span> <span class="attribute">value</span>=<span class="value">"193"</span>  /&gt;</span><span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"ls"</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tdcol3"</span>&gt;</span><span class="tag">&lt;<span class="title">font</span> <span class="attribute">color</span>=<span class="value">red</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">font</span>&gt;</span> 票<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">             	             <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">           	<span class="tag">&lt;<span class="title">th</span>&gt;</span>9<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tp_tit"</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"radio[]"</span> <span class="attribute">id</span>=<span class="value">"radio"</span> <span class="attribute">value</span>=<span class="value">"194"</span>  /&gt;</span><span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"ls"</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tdcol3"</span>&gt;</span><span class="tag">&lt;<span class="title">font</span> <span class="attribute">color</span>=<span class="value">red</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">font</span>&gt;</span> 票<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">             	             <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">           	<span class="tag">&lt;<span class="title">th</span>&gt;</span>10<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tp_tit"</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"radio[]"</span> <span class="attribute">id</span>=<span class="value">"radio"</span> <span class="attribute">value</span>=<span class="value">"195"</span>  /&gt;</span><span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"ls"</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">td</span> <span class="attribute">class</span>=<span class="value">"tdcol3"</span>&gt;</span><span class="tag">&lt;<span class="title">font</span> <span class="attribute">color</span>=<span class="value">red</span>&gt;</span>*********<span class="tag">&lt;/<span class="title">font</span>&gt;</span> 票<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">      </span><br><span class="line">      <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="分析">分析</h1><p>如上代码所示，在本次投票中，所有的候选人名单都包含在<code>checkbox</code>。我们首先在Selenium中使用Browser Driver定位到需要选中的某个或某几个<code>checkbox</code>，然后将这些<code>checkbox</code>选中。</p>
+<p>与以前不同的是，投票网页的<code>checkbox</code>的<code>input</code>标签中，<code>id</code>、<code>name</code>属性都是完全一致的。所以无法通过简单的<code>ById</code>或<code>ByName</code>直接定位。</p>
+<p>之后通过绝对地址的次序依次抽丝剥茧获取Xpath,调试出错，不知道什么问题&gt;GG&lt;。然后就发现了input标签中的<code>value</code>属性每个值都不一样。</p>
+<p>例如获取第10个input元素的Xpath<code>//input[@value=&quot;195&quot;]</code></p>
+<p>剩下的问题就水到渠成了。放上代码：</p>
+<h1 id="实现">实现</h1><h2 id="Selenium实现">Selenium实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(args)</span>:</span></span><br><span class="line">    c = webdriver.PhantomJS() <span class="comment"># Get local session of PhantomJS</span></span><br><span class="line">    c.get(<span class="string">"http://www.hiahiahia.com.cn/index.php?m=vote&amp;c=index&amp;a=show&amp;show_type=1&amp;subjectid=7&amp;siteid"</span>) <span class="comment"># Load page</span></span><br><span class="line">    ele=c.find_element_by_xpath(<span class="string">'//input[@value="195"]'</span>)</span><br><span class="line">    ele.click()</span><br><span class="line">    print(<span class="string">'开始刷票，次序：'</span>+args)</span><br><span class="line">    submit=c.find_element_by_xpath(<span class="string">'//*[@id="myform"]/div[2]/button'</span>)</span><br><span class="line">    submit.click()</span><br></pre></td></tr></table></figure>
+<h2 id="多线程">多线程</h2><p>套上多线程模板：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line">threads=[]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">20</span>):</span><br><span class="line">    t=threading.Thread(target=func,args=&#123;str(i)&#125;)</span><br><span class="line">    threads.append(t)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> threads:</span><br><span class="line">    item.setDaemon(<span class="keyword">True</span>)</span><br><span class="line">    item.start()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> threads:</span><br><span class="line">    item.join()</span><br></pre></td></tr></table></figure>
+<h2 id="requests">requests</h2><p>使用Selenium的效率实在不敢恭维，如果再加上多线程限制，在虚拟机中开大数目的伪浏览器资源，程序很容易崩溃。所以通过抓包之后改成了使用requests模块直接传递数据。</p>
+<p><code>requests.Session()</code>类中自动维持cookies、headers、keep-alive等机制，但是在本次测试中，直接使用都无法达到效果，最后发现在初次get页面时，requests.Session不能直接获取维护cookies。所以改成自己封装cookies。代码如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">session=requests.Session()</span><br><span class="line"></span><br><span class="line">headers = &#123;'Content-type': 'application/x-www-form-urlencoded',</span><br><span class="line">           'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 UBrowser/5.6.14087.9 Safari/537.36'</span><br><span class="line">           ,'Accept-Encoding':'gzip, deflate'</span><br><span class="line">           ,'Accept':"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"&#125;</span><br><span class="line">session.headers.update(headers)</span><br><span class="line">m=vote&amp;c=index&amp;a=show&amp;show_type=1&amp;subjectid=7&amp;siteid'</span><br><span class="line">cookies=&#123;'logtime':'Yes'</span><br><span class="line">         ,'Hm_lvt_f8de16968aad3ba4868c06590fea9fb5':'1467943093'&#125;</span><br><span class="line">payload = &#123;'radio[]':'193','subjectid':'7'&#125;</span><br><span class="line">url='http://www.zzzzzzz.com.cn/index.php?m=vote&amp;c=index&amp;a=post&amp;subjectid=7&amp;siteid'</span><br><span class="line">dom=requests.post(url,data=payload,cookies=cookies)</span><br><span class="line">session.close()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/mp-qr.jpg" alt="clinjie wechat" style="width: 200px; max-width: 100%;"/>
+    <div>Think about u every day</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/04/dfs_bfs/" rel="next" title="图的遍历">
+                <i class="fa fa-chevron-left"></i> 图的遍历
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/08/matlab1/" rel="prev" title="Matlab学习">
+                Matlab学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      <! -- 添加微信图标 -->
+	    
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="clinjie" />
+          <p class="site-author-name" itemprop="name">clinjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">179</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chuangwailinjie" target="_blank" title="github" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chuangwalinjie" target="_blank" title="weibo" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/peihaozhu" target="_blank" title="zhihu" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#需求"><span class="nav-number">1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Selenium实现"><span class="nav-number">3.1.</span> <span class="nav-text">Selenium实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程"><span class="nav-number">3.2.</span> <span class="nav-text">多线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#requests"><span class="nav-number">3.3.</span> <span class="nav-text">requests</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clinjie</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'clinjie';
+      var disqus_identifier = '2016/07/07/shuapiao/';
+
+      var disqus_title = "多线程刷票";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("BKt7qufuU6B0ix9a9ik7kejs-gzGzoHsz", "pfDjDmIpP09Fj9QNLGzSL2Ox");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+	
+	
+
+<!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<!-- 颗粒漂浮背景 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript">var OriginTitile=document.title,st;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="你要去哪里",clearTimeout(st)):(document.title="clinjie~~"+OriginTitile,st=setTimeout(function(){document.title=OriginTitile},3e3))})</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}},"messageStyle":"none"});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.0-beta.0/config/TeX-AMS-MML_HTMLorMML.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
