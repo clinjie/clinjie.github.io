@@ -266,10 +266,13 @@ baidu_analytics: 07ad8ea412265d4e0ce713ba2e3cd40a
 #duoshuo_shortname: chuangwailinjie
 
 # Disqus
-disqus_shortname: clinjie
+#disqus_shortname: clinjie
 
 # Hypercomments
 #hypercomments_id:
+
+
+youyan_uid: 2142203
 
 # Baidu Share
 # Available value:
@@ -310,6 +313,7 @@ duoshuo_info:
   user_id: 0
   #admin_nickname: Author
 
+  
 
 # Facebook SDK Support.
 # https://github.com/iissnan/hexo-theme-next/pull/410

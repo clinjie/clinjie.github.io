@@ -85,7 +85,7 @@ public void writeContent(){
 		
 		//在上面的Section中添加Item，包括name、sex、age
 		IniItem nameItem = new IniItem( "name" );
-		nameItem.setValue("培豪");
+		nameItem.setValue("clinjie");
 		dataSection.addItem( nameItem );
 
 		IniItem ageItem = new IniItem( "age" );
