@@ -74,7 +74,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="窗外临街" type="application/atom+xml" />
+  <link rel="alternate" href="/atom.xml" title="临街小站" type="application/atom+xml" />
 
 
 
@@ -91,7 +91,7 @@ Tornado在设计之初就考虑到了性能因素，旨在解决C10K问题，这
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tornodo入门">
 <meta property="og:url" content="http://peihao.space/2016/11/14/tornado/index.html">
-<meta property="og:site_name" content="窗外临街">
+<meta property="og:site_name" content="临街小站">
 <meta property="og:description" content="引言首先来谈谈c10k问题。所谓c10k问题，指的是服务器同时支持成千上万个客户端的问题，也就是concurrent 10000 connection。由于硬件成本的大幅度降低和硬件技术的进步，如果一台服务器同时能够服务更多的客户端，那么也就意味着服务每一个客户端的成本大幅度降低，从这个角度来看，c10k问题显得非常有意义。
 Tornado在设计之初就考虑到了性能因素，旨在解决C10K问题，这样的">
 <meta property="og:updated_time" content="2016-11-15T15:39:01.174Z">
@@ -132,7 +132,7 @@ Tornado在设计之初就考虑到了性能因素，旨在解决C10K问题，这
 
 
 
-  <title> Tornodo入门 | 窗外临街 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Tornodo入门 | 临街小站 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -173,7 +173,7 @@ Tornado在设计之初就考虑到了性能因素，旨在解决C10K问题，这
   <div class="custom-logo-site-title">
     <a href="/"  class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <span class="site-title">窗外临街</span>
+      <span class="site-title">临街小站</span>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -296,9 +296,9 @@ Tornado在设计之初就考虑到了性能因素，旨在解决C10K问题，这
   </span>
 
   <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="窗外临街">
+    <meta itemprop="name" content="临街小站">
     <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="窗外临街" src="">
+      <img style="display:none;" itemprop="url image" alt="临街小站" src="">
     </span>
   </span>
 
@@ -355,13 +355,6 @@ Tornado在设计之初就考虑到了性能因素，旨在解决C10K问题，这
           
 
           
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2016/11/14/tornado/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/14/tornado/" itemprop="commentCount"></span>
-                </a>
-              </span>
             
           
 
@@ -512,17 +505,11 @@ Tornado在设计之初就考虑到了性能因素，旨在解决C10K问题，这
 
 
           
-  <div class="comments" id="comments">
-    
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
-    
-  </div>
-
+    <div class="comments" id="comments">
+       
+            <div id="uyan_frame"></div>
+       
+    </div>
 
         </div>
         
@@ -789,40 +776,24 @@ Tornado在设计之初就考虑到了性能因素，旨在解决C10K问题，这
 
   
 
+    
+      
+    
+
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2142203"></script>
+        <!-- UY END -->
+
+
+
 
 
   
 
-    <script type="text/javascript">
-      var disqus_shortname = 'clinjie';
-      var disqus_identifier = '2016/11/14/tornado/';
-
-      var disqus_title = "Tornodo入门";
 
 
-      function run_disqus_script(disqus_script) {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      }
 
-      run_disqus_script('count.js');
-
-      
-        var disqus_config = function () {
-            this.page.url = disqus_url;
-            this.page.identifier = disqus_identifier;
-            this.page.title = disqus_title;
-        };
-        run_disqus_script('embed.js');
-      
-
-    </script>
-  
-
-
+	
 
 
 
