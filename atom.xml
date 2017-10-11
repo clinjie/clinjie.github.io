@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peihao.space/"/>
-  <updated>2017-03-29T15:03:51.002Z</updated>
+  <updated>2017-10-09T12:53:28.581Z</updated>
   <id>http://peihao.space/</id>
   
   <author>
@@ -14,6 +14,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>秋</title>
+    <link href="http://peihao.space/2017/10/09/aut/"/>
+    <id>http://peihao.space/2017/10/09/aut/</id>
+    <published>2017-10-09T11:36:28.000Z</published>
+    <updated>2017-10-09T12:53:28.581Z</updated>
+    
+    <content type="html">&lt;center&gt;&lt;br&gt;&lt;br&gt;清秋氲旒，夜阑潇潇&lt;br&gt;&lt;br&gt;&lt;/center&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;center&gt;&lt;br&gt;&lt;br&gt;清秋氲旒，夜阑潇潇&lt;br&gt;&lt;br&gt;&lt;/center&gt;
+
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://peihao.space/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="随笔" scheme="http://peihao.space/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>夏</title>
+    <link href="http://peihao.space/2017/06/09/summer/"/>
+    <id>http://peihao.space/2017/06/09/summer/</id>
+    <published>2017-06-09T07:36:28.000Z</published>
+    <updated>2017-10-09T11:19:12.897Z</updated>
+    
+    <content type="html">&lt;center&gt;&lt;br&gt;&lt;br&gt;盛夏流苏，光影斑斑&lt;br&gt;&lt;br&gt;&lt;/center&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;center&gt;&lt;br&gt;&lt;br&gt;盛夏流苏，光影斑斑&lt;br&gt;&lt;br&gt;&lt;/center&gt;
+
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://peihao.space/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="随笔" scheme="http://peihao.space/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
   
   <entry>
     <title>word2vec</title>
@@ -1187,6 +1235,74 @@
   </entry>
   
   <entry>
+    <title>ML学习-决策树</title>
+    <link href="http://peihao.space/2017/03/04/ml-intro4/"/>
+    <id>http://peihao.space/2017/03/04/ml-intro4/</id>
+    <published>2017-03-04T05:18:42.000Z</published>
+    <updated>2017-03-05T04:33:47.459Z</updated>
+    
+    <content type="html">&lt;p&gt;决策树（decision tree）是一种常见的机器学习方法。目标是生成一个具有强泛化能力的（对未遇到的样本有很高的适应性）树形结构。&lt;/p&gt;
+&lt;p&gt;决策树包含一个根结点，若干内部结点以及若干叶子结点。叶子结点对应了确定的判断结果，其余的结点都是一个个的属性测试，属性测试分成的不同情况就是当前结点的子结点。决策树是一个递归的过程。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://peihao.space/img/article/ml/ml-intro4-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;决策树生成学习的过程中，最重要的就是如何选择最优的划分属性。一般而言，随着划分过程的不断进行，决策树分支结点包含的样本应该尽可能的靠近。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;信息熵&quot;&gt;信息熵&lt;/h1&gt;&lt;p&gt;信息熵（information entropy）是度量样本集合纯度最常用的一种指标。假设当前样本集合D中第k类样本比例为$p_{k}$(k=1,2,3,…,|y|)$，则D的信息熵为&lt;/p&gt;
+&lt;p&gt;$Ent(D)=-\sum\limits_{k=1}^{|y|}p_{k=1}log_2p_{k}$&lt;/p&gt;
+&lt;p&gt;Ent(D)的值越小，则D的纯度越高.&lt;/p&gt;
+&lt;h2 id=&quot;信息增益&quot;&gt;信息增益&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;假定离散属性a有V个可能的取指{$a^1,a^2,…,a^V$},若使用a来对样本集合D进行划分，则会产生V个分支结点，其中第v个节点包含了D中所有在属性a上取指为$a^V$的样本，记为$D^v$。根据上师酸楚$D^v$的信息熵，然后考虑不同分支结点包含的样本数目不同，给分支结点赋予权重$|D^v|/|D|$，即样本越多，分支结点的影响越大，此时使用一个统一的计算公式算得属性啊对样本集D进行划分得到的”信息增益”（information gain）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;$Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{D^v}{D}Ent(D^v)$&lt;/p&gt;
+&lt;p&gt;一般而言，信息增益越大，意味着使用属性啊来划分所获得的纯度提升越大。所以，可以使用信息增益Gain作为属性划分的指标。&lt;/p&gt;
+&lt;h2 id=&quot;基尼指数&quot;&gt;基尼指数&lt;/h2&gt;&lt;p&gt;CART决策树使用“基尼指数”选择划分属性。&lt;/p&gt;
+&lt;p&gt;数据集D的纯度可用基尼值来度量：&lt;/p&gt;
+&lt;p&gt;$Gini(D)=\sum\limits_k^{|y|}\sum\limits_{j\neq k}p_kp_j$&lt;/p&gt;
+&lt;p&gt;$=1-\sum\limits_k^{|y|}p_{k}^2$&lt;/p&gt;
+&lt;p&gt;直观来讲，Gini（D）反映了从数据D中随机抽取两个样本，类别标记不一致的概率。因此Gini（D）越小，数据集D的纯度越高。&lt;/p&gt;
+&lt;p&gt;属性a的基尼指数定义为：&lt;/p&gt;
+&lt;p&gt;$Gini_index(D,a)=\sum\limits_v^{V}\frac{|D^v|}{|D|}Gini(D^v)$&lt;/p&gt;
+&lt;p&gt;计算属性集合A所有属性的基尼指数，取最小值得属性作为最优划分&lt;/p&gt;
+&lt;h1 id=&quot;剪枝处理&quot;&gt;剪枝处理&lt;/h1&gt;&lt;p&gt;剪枝（pruning）是决策树学习算法中对付“过拟合”的主要手段。过拟合的定义可以参考系列的第一篇。决策树算法经常会由于过拟合造成分支过多，在泛化性能上造成影响。&lt;/p&gt;
+&lt;p&gt;决策树剪枝基本策略有两种：预剪枝（prepruning）和后剪枝（postpruning）。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;预剪枝：在生成决策树的过程中，对每个结点在划分前进行估计，若当前划分不能对决策树带来泛化性能上的提升，则停止划分并将当前节点标记为叶结点。（训练开销短，保留子树少，易造成欠拟合）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;后剪枝：决策树生成后自底向上的对内部结点进行考察。如果当前结点子树替换成叶子结点可以在泛化能力上得到提升，则将子树替换。（训练开销长，保留子树多，欠拟合风险小）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这里使用集精度作为泛化能力的指标。&lt;/p&gt;
+&lt;p&gt;需要注意的是，虽然在当时结点的集精度没有下降（也就是泛化能力未降低），但是很可能在之后进一步的展开，有欠拟合的风险。&lt;/p&gt;
+&lt;h1 id=&quot;连续值与缺省值处理&quot;&gt;连续值与缺省值处理&lt;/h1&gt;&lt;h2 id=&quot;连续&quot;&gt;连续&lt;/h2&gt;&lt;p&gt;由于连续属性的可取值数目不再有限，因此，不能直接根据连续属性的可取值来对结点进行划分。此时可以使用连续属性离散化技术。&lt;/p&gt;
+&lt;p&gt;最简单的策略是采用二分法(bi-partition)对连续属性进行处理。&lt;/p&gt;
+&lt;p&gt;给定样本集D和连续属性a,假定在D上出现了n个不同的取值，将这些值从小到大进行排序，记为${a^1,a^2,…,a^n}$.基于划分点t可将D分为子集$D_t^-$和$D_t^+$其中$D_t^-$包含那些在属性上取值不大于t的样本，而$D_t^+$则包含那些在属性a上取值大于t的样本。&lt;/p&gt;
+&lt;p&gt;对相邻的属性取值[$a^i，a^{i+1}$]来说结果是相同的，因此在此区间都取值$\frac{a^i+a^{i+1}}{2}$&lt;/p&gt;
+&lt;p&gt;对n-1个区间取指作为划分点，分别测试选取最优。&lt;/p&gt;
+&lt;p&gt;$Gain(D,a)=\max\limits_{t\in T_a}Gain(D,a,t)$&lt;/p&gt;
+&lt;p&gt;$=\max\limits_{t\in T_a}Ent(D)-\sum\limits_{\lambda \in {-,+}}\frac{\mid D_t^{\lambda}\mid}{\mid D \mid}Ent(D_t^{\lambda})$&lt;/p&gt;
+&lt;p&gt;Gain(D,a,t)是样本集D基于划分点t二分后的信息增益，我们可以使用Gain(D,a,t)最大化的划分点&lt;/p&gt;
+&lt;h2 id=&quot;缺省&quot;&gt;缺省&lt;/h2&gt;&lt;p&gt;嗯，本部分也暂时缺省&lt;/p&gt;
+&lt;h1 id=&quot;多变量决策树&quot;&gt;多变量决策树&lt;/h1&gt;&lt;p&gt;我们把每个属性视为坐标空间的一个坐标轴，则d个属性描述的样本就对赢了d维空间中的一个数据点。对样本的分类也就是在这个坐标空间中寻找不同样本之间的分类边界。&lt;/p&gt;
+&lt;p&gt;决策树形成的分类边界有一个明显的特点：轴平行（axis-parallel），即分类边界由若干个与坐标轴平行的分段组成。&lt;/p&gt;
+&lt;p&gt;使用斜划分边界可以将决策树模型简化。此时，非叶节点不仅是针对某个属性，而是属性的线性组合进行测试。与传统的决策树不同，多变量决策树试图建立一个合适的线性分类器。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;决策树（decision tree）是一种常见的机器学习方法。目标是生成一个具有强泛化能力的（对未遇到的样本有很高的适应性）树形结构。&lt;/p&gt;
+&lt;p&gt;决策树包含一个根结点，若干内部结点以及若干叶子结点。叶子结点对应了确定的判断结果，其余的结点都是一个个的属性测试，属性测试分成的不同情况就是当前结点的子结点。决策树是一个递归的过程。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://peihao.space/img/article/ml/ml-intro4-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;决策树生成学习的过程中，最重要的就是如何选择最优的划分属性。一般而言，随着划分过程的不断进行，决策树分支结点包含的样本应该尽可能的靠近。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ML" scheme="http://peihao.space/categories/ML/"/>
+    
+    
+      <category term="ML" scheme="http://peihao.space/tags/ML/"/>
+    
+  </entry>
+  
+  <entry>
     <title>ML学习-神经网络</title>
     <link href="http://peihao.space/2017/03/04/ml-intro5/"/>
     <id>http://peihao.space/2017/03/04/ml-intro5/</id>
@@ -1270,164 +1386,6 @@
     
       &lt;h1 id=&quot;神经元&quot;&gt;神经元&lt;/h1&gt;&lt;p&gt;Neural Network&lt;a href=&quot;ufldl.stanford.edu/wiki/index.php/神经网络&quot;&gt;神经网络&lt;/a&gt;：是由具有适应性的简单单元组成的广泛并进行互联的网络，他的组织能够模拟生物神经系统对真实的世界物体做出的交互反应&lt;/p&gt;
 &lt;p&gt;神经网络由一个个神经元（neuron）互联组成，神经元可以看作一个处理函数，当这个函数的输入超过某一个阈值，经过处理后单元会向其他单元发送信号。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="ML" scheme="http://peihao.space/categories/ML/"/>
-    
-    
-      <category term="ML" scheme="http://peihao.space/tags/ML/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ML学习-决策树</title>
-    <link href="http://peihao.space/2017/03/04/ml-intro4/"/>
-    <id>http://peihao.space/2017/03/04/ml-intro4/</id>
-    <published>2017-03-04T05:18:42.000Z</published>
-    <updated>2017-03-05T04:33:47.459Z</updated>
-    
-    <content type="html">&lt;p&gt;决策树（decision tree）是一种常见的机器学习方法。目标是生成一个具有强泛化能力的（对未遇到的样本有很高的适应性）树形结构。&lt;/p&gt;
-&lt;p&gt;决策树包含一个根结点，若干内部结点以及若干叶子结点。叶子结点对应了确定的判断结果，其余的结点都是一个个的属性测试，属性测试分成的不同情况就是当前结点的子结点。决策树是一个递归的过程。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://peihao.space/img/article/ml/ml-intro4-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;决策树生成学习的过程中，最重要的就是如何选择最优的划分属性。一般而言，随着划分过程的不断进行，决策树分支结点包含的样本应该尽可能的靠近。&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h1 id=&quot;信息熵&quot;&gt;信息熵&lt;/h1&gt;&lt;p&gt;信息熵（information entropy）是度量样本集合纯度最常用的一种指标。假设当前样本集合D中第k类样本比例为$p_{k}$(k=1,2,3,…,|y|)$，则D的信息熵为&lt;/p&gt;
-&lt;p&gt;$Ent(D)=-\sum\limits_{k=1}^{|y|}p_{k=1}log_2p_{k}$&lt;/p&gt;
-&lt;p&gt;Ent(D)的值越小，则D的纯度越高.&lt;/p&gt;
-&lt;h2 id=&quot;信息增益&quot;&gt;信息增益&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;假定离散属性a有V个可能的取指{$a^1,a^2,…,a^V$},若使用a来对样本集合D进行划分，则会产生V个分支结点，其中第v个节点包含了D中所有在属性a上取指为$a^V$的样本，记为$D^v$。根据上师酸楚$D^v$的信息熵，然后考虑不同分支结点包含的样本数目不同，给分支结点赋予权重$|D^v|/|D|$，即样本越多，分支结点的影响越大，此时使用一个统一的计算公式算得属性啊对样本集D进行划分得到的”信息增益”（information gain）&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;$Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{D^v}{D}Ent(D^v)$&lt;/p&gt;
-&lt;p&gt;一般而言，信息增益越大，意味着使用属性啊来划分所获得的纯度提升越大。所以，可以使用信息增益Gain作为属性划分的指标。&lt;/p&gt;
-&lt;h2 id=&quot;基尼指数&quot;&gt;基尼指数&lt;/h2&gt;&lt;p&gt;CART决策树使用“基尼指数”选择划分属性。&lt;/p&gt;
-&lt;p&gt;数据集D的纯度可用基尼值来度量：&lt;/p&gt;
-&lt;p&gt;$Gini(D)=\sum\limits_k^{|y|}\sum\limits_{j\neq k}p_kp_j$&lt;/p&gt;
-&lt;p&gt;$=1-\sum\limits_k^{|y|}p_{k}^2$&lt;/p&gt;
-&lt;p&gt;直观来讲，Gini（D）反映了从数据D中随机抽取两个样本，类别标记不一致的概率。因此Gini（D）越小，数据集D的纯度越高。&lt;/p&gt;
-&lt;p&gt;属性a的基尼指数定义为：&lt;/p&gt;
-&lt;p&gt;$Gini_index(D,a)=\sum\limits_v^{V}\frac{|D^v|}{|D|}Gini(D^v)$&lt;/p&gt;
-&lt;p&gt;计算属性集合A所有属性的基尼指数，取最小值得属性作为最优划分&lt;/p&gt;
-&lt;h1 id=&quot;剪枝处理&quot;&gt;剪枝处理&lt;/h1&gt;&lt;p&gt;剪枝（pruning）是决策树学习算法中对付“过拟合”的主要手段。过拟合的定义可以参考系列的第一篇。决策树算法经常会由于过拟合造成分支过多，在泛化性能上造成影响。&lt;/p&gt;
-&lt;p&gt;决策树剪枝基本策略有两种：预剪枝（prepruning）和后剪枝（postpruning）。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;预剪枝：在生成决策树的过程中，对每个结点在划分前进行估计，若当前划分不能对决策树带来泛化性能上的提升，则停止划分并将当前节点标记为叶结点。（训练开销短，保留子树少，易造成欠拟合）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;后剪枝：决策树生成后自底向上的对内部结点进行考察。如果当前结点子树替换成叶子结点可以在泛化能力上得到提升，则将子树替换。（训练开销长，保留子树多，欠拟合风险小）&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;这里使用集精度作为泛化能力的指标。&lt;/p&gt;
-&lt;p&gt;需要注意的是，虽然在当时结点的集精度没有下降（也就是泛化能力未降低），但是很可能在之后进一步的展开，有欠拟合的风险。&lt;/p&gt;
-&lt;h1 id=&quot;连续值与缺省值处理&quot;&gt;连续值与缺省值处理&lt;/h1&gt;&lt;h2 id=&quot;连续&quot;&gt;连续&lt;/h2&gt;&lt;p&gt;由于连续属性的可取值数目不再有限，因此，不能直接根据连续属性的可取值来对结点进行划分。此时可以使用连续属性离散化技术。&lt;/p&gt;
-&lt;p&gt;最简单的策略是采用二分法(bi-partition)对连续属性进行处理。&lt;/p&gt;
-&lt;p&gt;给定样本集D和连续属性a,假定在D上出现了n个不同的取值，将这些值从小到大进行排序，记为${a^1,a^2,…,a^n}$.基于划分点t可将D分为子集$D_t^-$和$D_t^+$其中$D_t^-$包含那些在属性上取值不大于t的样本，而$D_t^+$则包含那些在属性a上取值大于t的样本。&lt;/p&gt;
-&lt;p&gt;对相邻的属性取值[$a^i，a^{i+1}$]来说结果是相同的，因此在此区间都取值$\frac{a^i+a^{i+1}}{2}$&lt;/p&gt;
-&lt;p&gt;对n-1个区间取指作为划分点，分别测试选取最优。&lt;/p&gt;
-&lt;p&gt;$Gain(D,a)=\max\limits_{t\in T_a}Gain(D,a,t)$&lt;/p&gt;
-&lt;p&gt;$=\max\limits_{t\in T_a}Ent(D)-\sum\limits_{\lambda \in {-,+}}\frac{\mid D_t^{\lambda}\mid}{\mid D \mid}Ent(D_t^{\lambda})$&lt;/p&gt;
-&lt;p&gt;Gain(D,a,t)是样本集D基于划分点t二分后的信息增益，我们可以使用Gain(D,a,t)最大化的划分点&lt;/p&gt;
-&lt;h2 id=&quot;缺省&quot;&gt;缺省&lt;/h2&gt;&lt;p&gt;嗯，本部分也暂时缺省&lt;/p&gt;
-&lt;h1 id=&quot;多变量决策树&quot;&gt;多变量决策树&lt;/h1&gt;&lt;p&gt;我们把每个属性视为坐标空间的一个坐标轴，则d个属性描述的样本就对赢了d维空间中的一个数据点。对样本的分类也就是在这个坐标空间中寻找不同样本之间的分类边界。&lt;/p&gt;
-&lt;p&gt;决策树形成的分类边界有一个明显的特点：轴平行（axis-parallel），即分类边界由若干个与坐标轴平行的分段组成。&lt;/p&gt;
-&lt;p&gt;使用斜划分边界可以将决策树模型简化。此时，非叶节点不仅是针对某个属性，而是属性的线性组合进行测试。与传统的决策树不同，多变量决策树试图建立一个合适的线性分类器。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;决策树（decision tree）是一种常见的机器学习方法。目标是生成一个具有强泛化能力的（对未遇到的样本有很高的适应性）树形结构。&lt;/p&gt;
-&lt;p&gt;决策树包含一个根结点，若干内部结点以及若干叶子结点。叶子结点对应了确定的判断结果，其余的结点都是一个个的属性测试，属性测试分成的不同情况就是当前结点的子结点。决策树是一个递归的过程。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://peihao.space/img/article/ml/ml-intro4-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;决策树生成学习的过程中，最重要的就是如何选择最优的划分属性。一般而言，随着划分过程的不断进行，决策树分支结点包含的样本应该尽可能的靠近。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="ML" scheme="http://peihao.space/categories/ML/"/>
-    
-    
-      <category term="ML" scheme="http://peihao.space/tags/ML/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>线性模型</title>
-    <link href="http://peihao.space/2017/03/03/ml-intro3/"/>
-    <id>http://peihao.space/2017/03/03/ml-intro3/</id>
-    <published>2017-03-03T04:05:50.000Z</published>
-    <updated>2017-03-05T03:11:01.276Z</updated>
-    
-    <content type="html">&lt;p&gt;示例有d个属性$(x_1 ; x_2 ; x_3… ; x_d)$描述，线性模型试图学得一个通过属性的线性组合来进行预测的函数。&lt;/p&gt;
-&lt;p&gt;$f(x)=w_1x_1+w_2x_2+…+w_dx_d+b$，w和b确定后，模型就确定了。w直观表达了各属性在预测中的重要性。&lt;/p&gt;
-&lt;h1 id=&quot;线性回归&quot;&gt;线性回归&lt;/h1&gt;&lt;p&gt;线性回归试图学得$f(x_i)=wx_i+b$，使得$f(x_i) \approx y_i$&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;确定w和b的关键是衡量f(x)与y之间的关系。我们可以通过使用均方误差最小化作为衡量标准。&lt;/p&gt;
-&lt;h1 id=&quot;对数几率回归&quot;&gt;对数几率回归&lt;/h1&gt;&lt;p&gt;对数几率回归实际上针对的是分类任务，将分类任务的真实标记y和回归模型的预测值联系起来。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://peihao.space/img/article/ml/ml-intro3-1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;分类任务，通过类阶跃函数（阶跃函数不连续），把连续的值近似的分成两类（0或1），并且在坐标原点处变得很陡。&lt;/p&gt;
-&lt;h1 id=&quot;线性判别分析&quot;&gt;线性判别分析&lt;/h1&gt;&lt;p&gt;Linear Discriminant Analysis是一种经典的线性学习方法：给定训练样例集，设法将样例投射到一条直线上，1. 使得同样样例的投影点尽可能的接近，2. 异类样例投射点尽可能远。对测试集预测时，将对象投射到直线上预测。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://peihao.space/img/article/ml/ml-intro3-2.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;要实现上面的两个目标，分别考虑：对于同类样本投射点接近，计算同类样本点的均值方差A；异类点则考虑两个样本簇中心点的距离差最大&lt;code&gt;|xa-xb|²&lt;/code&gt;，然后使用单一的数值，J=A/B，使J尽可能的大。&lt;/p&gt;
-&lt;h1 id=&quot;多分类策略&quot;&gt;多分类策略&lt;/h1&gt;&lt;p&gt;这里简单介绍通过二分策略实现多分类策略，常用的有三种方法，核心是拆解的策略区别：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;一对一（OvO）：任意两个对象亮亮配对，产生N*(N-1)/2个预测结果，在这些结果中投票，预测结果最多的视为最终结果&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;一对多（OvR）：每次从训练集中挑选一个不重复的样例作为正例，其余N-1个样例作为反例，进行N次训练。如果某次训练的结果预测为正类，此次训练的样例即为结果；若有多个样例被预测为正例，考虑事先设置的置信度，选择置信度最大的&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;多对多（MvM）：每次将若干类作为正类，若干类作为反类。这里提供一种常用的MvM拆分模式，就错输出吗ECOC。ECOC进行M次的划分，也就是M次分类器。分别对测试样本进行预测，这些预测标记组成一个编码，然后编码与每个类别各自的编码进行比较，返回其中距离和最小的作为最终预测结果。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;示例有d个属性$(x_1 ; x_2 ; x_3… ; x_d)$描述，线性模型试图学得一个通过属性的线性组合来进行预测的函数。&lt;/p&gt;
-&lt;p&gt;$f(x)=w_1x_1+w_2x_2+…+w_dx_d+b$，w和b确定后，模型就确定了。w直观表达了各属性在预测中的重要性。&lt;/p&gt;
-&lt;h1 id=&quot;线性回归&quot;&gt;线性回归&lt;/h1&gt;&lt;p&gt;线性回归试图学得$f(x_i)=wx_i+b$，使得$f(x_i) \approx y_i$&lt;br&gt;
-    
-    </summary>
-    
-      <category term="ML" scheme="http://peihao.space/categories/ML/"/>
-    
-    
-      <category term="ML" scheme="http://peihao.space/tags/ML/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>模型评估与选择</title>
-    <link href="http://peihao.space/2017/03/01/ml-intro2/"/>
-    <id>http://peihao.space/2017/03/01/ml-intro2/</id>
-    <published>2017-03-01T04:05:50.000Z</published>
-    <updated>2017-03-01T02:54:56.183Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;误差与拟合&quot;&gt;误差与拟合&lt;/h1&gt;&lt;h2 id=&quot;误差&quot;&gt;误差&lt;/h2&gt;&lt;p&gt;学习器的实际预测输出与样本的真是输出之间的差异称为”误差”&lt;/p&gt;
-&lt;p&gt;学习器在训练集上的误差叫”训练误差”&lt;/p&gt;
-&lt;p&gt;学习器在新样本的误差叫”泛化误差”（重要）&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;拟合&quot;&gt;拟合&lt;/h2&gt;&lt;p&gt;我们实际希望的，是在新样本上能表现得很好的学习器.为了达到这个 目的，应该从训练样本中尽可能学出适用于所有潜在样本的“普遍规律”，这样才能在遇到新样本时做出正确的判别。&lt;/p&gt;
-&lt;p&gt;然而，当学习器把训练样本学得“太好”了的时候，很可能已经把训练样本自身的一些特点当作了所有潜在样本都会具有的普适性质，这样就会导致泛化性能下降。这种现象在机器学习中称为“过合”（overfitting).&lt;/p&gt;
-&lt;p&gt;与“过拟合”相对的是“欠拟合”（underfitting),这是指对训练样本的一般性质尚未学好。&lt;/p&gt;
-&lt;h1 id=&quot;评估方法&quot;&gt;评估方法&lt;/h1&gt;&lt;h2 id=&quot;留出法&quot;&gt;留出法&lt;/h2&gt;&lt;p&gt;将整体数据划分为两个互斥的数据集合，分别作为测试集与训练集。注意测试集与训练集要尽量保证层次、类别上的相似。可以进行多次留出法，然后取误差的平均值。一般取2/3或者3/4的数据作为训练集。&lt;/p&gt;
-&lt;h2 id=&quot;交叉验证&quot;&gt;交叉验证&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;同样是将数据集合互斥划分，这里互斥的划分为k份，相互之间保持层次分布的平衡。&lt;/li&gt;
-&lt;li&gt;每次使用k-1份数据作为训练集，余下的作为预测集&lt;/li&gt;
-&lt;li&gt;进行k次实验，取平均误差值&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;自助法&quot;&gt;自助法&lt;/h2&gt;&lt;p&gt;上述的两种方法有一个共同的缺陷就是都把训练集合与整体的样本集合规模有偏差，而且由于每次的偏差不同，造成无法预料的影响。&lt;/p&gt;
-&lt;p&gt;自助法：给定包含m个样本的数据集D，对他进行采样产生数据集d。每次随机的从D中跳一个样本复制到d中，进行m次，生成了包含m个样本的数据集d。显然，d中可能包含多个重复的样本数据。经过计算，m取无限大时，d中大概有D的63%数据。&lt;/p&gt;
-&lt;p&gt;之后我们使用d作为训练样本，而D\d作为测试集合。这样，实际的训练与测试都使用了m个样本，且保证了D\d有3成多的非训练样本。&lt;/p&gt;
-&lt;h1 id=&quot;性能度量&quot;&gt;性能度量&lt;/h1&gt;&lt;p&gt;这里主要介绍两个属性：P（查准率precision）与R（查全率recall）&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;查全率＝（检索出的相关信息量/系统中的相关信息总量）*100%  用户感兴趣的信息中有多少被检索出来&lt;/li&gt;
-&lt;li&gt;查准率＝（检索出的相关信息量/检索出的信息总量）*100%  检索出的信息有多少比例是用户感兴趣的&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;查全率是衡量检索系统和检索者检出相关信息的能力，查准率是衡量检索系统和检索者拒绝非相关信息的能力。&lt;/p&gt;
-&lt;p&gt;实验证明，在查全率和查准率之间存在着相反的相互依赖关系–如果提高输出的查全率，就会降低其查准率，反之亦然。&lt;/p&gt;
-&lt;p&gt;以P作为纵轴，R作为横轴作图，简称”P-R曲线”。若一个学习方法的P-R曲线完全包括另外一个，则断言此学习方法更优秀。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;误差与拟合&quot;&gt;误差与拟合&lt;/h1&gt;&lt;h2 id=&quot;误差&quot;&gt;误差&lt;/h2&gt;&lt;p&gt;学习器的实际预测输出与样本的真是输出之间的差异称为”误差”&lt;/p&gt;
-&lt;p&gt;学习器在训练集上的误差叫”训练误差”&lt;/p&gt;
-&lt;p&gt;学习器在新样本的误差叫”泛化误差”（重要）&lt;br&gt;
     
     </summary>
     
