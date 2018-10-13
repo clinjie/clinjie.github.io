@@ -1,6 +1,5 @@
 title: Django介绍
 date: 2016-09-6 20:24:06
-toc: true
 tags:
 - python
 categories: python

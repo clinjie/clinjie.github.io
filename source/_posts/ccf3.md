@@ -1,7 +1,6 @@
 title: 2015.9CCF认证试题（3）
 date: 2015-11-30 17:37:22
 tags: algorithm
-toc: true
 categories: algorithm
 ---
 

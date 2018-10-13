@@ -1,6 +1,5 @@
 title: FTP
 date: 2016-02-27 13:42:14
-toc: true
 tags: FTP
 categories: 日常  
 ---

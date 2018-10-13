@@ -1,7 +1,6 @@
 title: DP介绍-二维苹果收集
 date: 2016-04-26 23:17:22
 tags: algorithm
-toc: true
 categories: algorithm
 ---
 

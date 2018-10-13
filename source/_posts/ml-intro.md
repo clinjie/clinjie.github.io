@@ -1,6 +1,5 @@
 title: ML相关术语
 date: 2017-02-28 11:00:13
-toc: true
 tags: ML
 categories: ML
 ---

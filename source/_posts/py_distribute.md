@@ -1,6 +1,5 @@
 title: 分布式进程
 date: 2016-1-12 21:57:53
-toc: true
 tags: python
 categories: python
 ---

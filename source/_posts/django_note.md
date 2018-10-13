@@ -1,6 +1,5 @@
 title: Django笔记
 date: 2016-10-14 22:24:06
-toc: true
 tags:
 - python
 - django

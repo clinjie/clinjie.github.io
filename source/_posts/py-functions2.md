@@ -1,6 +1,5 @@
 title: py中函数的使用（二）
 date: 2016-10-08 15:01:15
-toc: true
 tags: python
 categories: python
 ---

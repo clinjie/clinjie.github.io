@@ -1,6 +1,5 @@
 title: 模型评估与选择
 date: 2017-03-1 12:05:50
-toc: true
 tags: ML
 categories: ML
 ---

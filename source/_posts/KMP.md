@@ -1,6 +1,5 @@
 title: KMP笔记
 date: 2016-07-11 12:24:06
-toc: true
 tags:
 - algorithm
 - 模式匹配

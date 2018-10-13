@@ -1,6 +1,5 @@
 title: 系统结构读书笔记
 date: 2016-12-05 17:08:08
-toc: true
 tags: 体系结构
 categories: 体系结构
 ---

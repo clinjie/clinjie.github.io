@@ -1,5 +1,4 @@
 title: Virtual Channel Ruter
-toc: true
 date: 2016-04-01 12:23:35
 tags: 
 - NoC

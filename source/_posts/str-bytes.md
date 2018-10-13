@@ -1,5 +1,4 @@
 title: Python中的str与bytes
-toc: true
 date: 2016-01-02 12:23:35
 tags: 
 - Python

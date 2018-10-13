@@ -1,6 +1,5 @@
 title: 进程线程
 date: 2016-1-11 21:57:53
-toc: true
 tags: python
 categories: python
 ---

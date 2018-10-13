@@ -1,7 +1,6 @@
 title: DP介绍-最长递增子序列
 date: 2016-04-23 17:17:22
 tags: algorithm
-toc: true
 categories: algorithm
 ---
 

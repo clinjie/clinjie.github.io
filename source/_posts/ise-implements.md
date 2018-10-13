@@ -1,6 +1,5 @@
 title: 基于ISE的实现
 date: 2015-04-12 14:17:22
-toc: true
 tags: Verilog
 categories: Verilog
 ---

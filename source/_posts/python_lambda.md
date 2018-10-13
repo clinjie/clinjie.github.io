@@ -1,6 +1,5 @@
 title: Lambda
 date: 2016-01-26 17:28:30
-toc: true
 tags:
 - python
 - lambda

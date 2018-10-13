@@ -1,6 +1,5 @@
 title: Router源代码架构--Filt_sink
 date: 2016-04-15 22:17:22
-toc: true
 tags: Verilog
 categories: Verilog
 ---

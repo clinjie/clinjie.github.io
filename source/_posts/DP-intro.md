@@ -1,7 +1,6 @@
 title: DP介绍
 date: 2016-04-22 17:17:22
 tags: algorithm
-toc: true
 categories: algorithm
 ---
 

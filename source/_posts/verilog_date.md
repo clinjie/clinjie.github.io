@@ -1,6 +1,5 @@
 title: verilog笔记
 date: 2016-03-24 15:23:35
-toc: true
 tags: 
 - Verilog HDL
 categories: Verilog

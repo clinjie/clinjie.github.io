@@ -1,6 +1,5 @@
 title: TensorFlow简单使用Cifar数据集
 date: 2017-03-26 22:18:42
-toc: true
 tags: Tensorflow
 categories: Tensorflow
 ---

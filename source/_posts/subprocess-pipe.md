@@ -1,6 +1,5 @@
 title: subprocess模块的使用
 date: 2016-12-18 22:09:48
-toc: true
 tags: python
 categories: python
 ---

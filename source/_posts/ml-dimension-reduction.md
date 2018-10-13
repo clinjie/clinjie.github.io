@@ -1,6 +1,5 @@
 title: 降维
 date: 2017-03-09 10:36:28
-toc: true
 tags: ML
 categories: ML
 ---

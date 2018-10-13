@@ -41,7 +41,7 @@ future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: true
+  auto_detect: false
   tab_replace:
 
 # Category & Tag
@@ -70,7 +70,7 @@ theme: next
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: git@github.com:chuangwailinjie/chuangwailinjie.github.io.git
+  repository: git@github.com:clinjie/clinjie.github.io.git
   branch: master
 
 # Extensions

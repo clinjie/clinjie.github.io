@@ -1,7 +1,6 @@
 title: Selenium模拟选课
 date: 2016-09-13 22:23:35
 tags: Python
-toc: true
 categories: Python 
 ---
 

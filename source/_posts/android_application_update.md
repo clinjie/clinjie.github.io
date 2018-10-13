@@ -1,6 +1,5 @@
 title: Android Application版本更新
 date: 2016-07-30 22:24:06
-toc: true
 tags:
 - android
 categories: android

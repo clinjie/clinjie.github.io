@@ -1,6 +1,5 @@
 title: 基于Xilinx的Synthesize
 date: 2016-04-18 14:17:22
-toc: true
 tags: Verilog
 categories: Verilog
 ---

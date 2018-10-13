@@ -1,6 +1,5 @@
 title: 图的遍历
 date: 2016-07-04 22:24:06
-toc: true
 tags: algorithm
 categories: algorithm
 ---

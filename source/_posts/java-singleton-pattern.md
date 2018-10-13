@@ -1,6 +1,5 @@
 title: Java单例模式
 date: 2016-10-04 19:12:37
-toc: true
 tags: java
 categories: java
 ---

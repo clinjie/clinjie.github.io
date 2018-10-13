@@ -1,5 +1,4 @@
 title: 缓存与XY路由算法
-toc: true
 date: 2016-03-31 22:23:35
 tags: 
 - NoC

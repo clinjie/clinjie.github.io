@@ -1,6 +1,5 @@
 title: tornado2
 date: 2016-11-16 20:13:29
-toc: true
 tags: tornado
 categories: tornado
 ---

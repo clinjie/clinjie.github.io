@@ -1,6 +1,5 @@
 title: 梯度坐标下降
 date: 2017-03-17 11:22:09
-toc: true
 tags: 数学
 categories: 数学
 ---

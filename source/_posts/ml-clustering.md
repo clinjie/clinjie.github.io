@@ -1,6 +1,5 @@
 title: 聚类
 date: 2017-03-08 13:18:42
-toc: true
 tags: ML
 categories: ML
 ---

@@ -1,6 +1,5 @@
 title: 线性模型
 date: 2017-03-3 12:05:50
-toc: true
 tags: ML
 categories: ML
 ---

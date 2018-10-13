@@ -1,6 +1,5 @@
 title: Verilog小叙(二)
 date: 2016-03-08 22:23:35
-toc: true
 tags: 
 - Verilog HDL
 - 仿真

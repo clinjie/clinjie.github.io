@@ -1,6 +1,5 @@
 title: （转载）CNN卷积神经网络
 date: 2017-03-22 22:18:42
-toc: true
 tags: ML
 categories: ML
 ---

@@ -1,6 +1,5 @@
 title: Python学习(一)
 date: 2015-12-20 22:39:55
-toc: true
 tags: 
 - python
 categories: python

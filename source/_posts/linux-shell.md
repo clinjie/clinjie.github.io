@@ -1,6 +1,5 @@
 title: linux常用命令
 date: 2015-11-22 19:40:22
-toc: true
 tags: linux
 categories: linux
 ---

@@ -1,6 +1,5 @@
 title: py中函数的使用
 date: 2016-10-07 15:01:15
-toc: true
 tags: python
 categories: python
 ---

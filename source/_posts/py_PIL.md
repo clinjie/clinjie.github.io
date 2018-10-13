@@ -1,6 +1,5 @@
 title: 使用PIL模块创建验证码文件
 date: 2016-2-12 21:57:53
-toc: true
 tags: python
 categories: python
 ---

@@ -1,6 +1,5 @@
 title: 初窥Scrapy(Py3.x)
 date: 2016-02-28 22:23:35
-toc: true
 tags: 
 - Python
 - Scrapy

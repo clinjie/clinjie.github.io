@@ -1,6 +1,5 @@
 title: Python中的map_reduce
 date: 2016-03-07 22:23:35
-toc: true
 tags: 
 - Python
 categories: Python

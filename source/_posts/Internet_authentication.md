@@ -1,11 +1,9 @@
 title: 校园网上网认证
 date: 2016-02-24 12:23:35
-toc: true
 tags: 
 - Python
 - Requests
 categories: Python
-toc: true
 ---
 
 ![](http://7xowaa.com1.z0.glb.clouddn.com/css.jpg)

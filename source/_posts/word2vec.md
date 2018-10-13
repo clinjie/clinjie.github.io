@@ -1,6 +1,5 @@
 title: word2vec
 date: 2017-03-28 19:18:42
-toc: true
 tags: ML
 categories: ML
 ---

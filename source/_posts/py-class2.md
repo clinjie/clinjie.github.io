@@ -1,6 +1,5 @@
 title: python-OO
 date: 2016-1-2 20:43:42
-toc: true
 tags: python
 categories: python
 ---

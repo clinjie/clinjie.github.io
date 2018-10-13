@@ -1,6 +1,5 @@
 title: 二维码与Python
 date: 2016-1-30 22:35:02
-toc: true
 tags: 
 - Python
 - 二维码

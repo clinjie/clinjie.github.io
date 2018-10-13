@@ -1,6 +1,5 @@
 title: router-source-analysis
 date: 2016-04-04 20:17:22
-toc: true
 tags: NoC
 categories: NoC
 ---

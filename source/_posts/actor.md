@@ -1,7 +1,6 @@
 title: 演员电影评分排序
 date: 2016-02-28 22:23:35
 tags: python
-toc: true
 categories: python
 ---
 

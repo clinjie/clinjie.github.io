@@ -1,6 +1,5 @@
 title: error机制
 date: 2016-1-10 21:57:53
-toc: true
 tags: python
 categories: python
 ---

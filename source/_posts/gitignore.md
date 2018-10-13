@@ -1,6 +1,5 @@
 title: gitignore忽略规则
 date: 2016-04-05 16:17:22
-toc: true
 tags: Git
 categories: Git
 ---

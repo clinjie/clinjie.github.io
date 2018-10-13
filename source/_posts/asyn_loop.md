@@ -1,6 +1,5 @@
 title: 阻塞/非阻塞&同步/异步
 date: 2016-11-14 23:28:30
-toc: true
 tags:
 - 网络
 categories: 网络

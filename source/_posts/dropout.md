@@ -1,6 +1,5 @@
 title: Dropout
 date: 2017-03-23 22:18:42
-toc: true
 tags: ML
 categories: ML
 ---

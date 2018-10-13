@@ -1,6 +1,5 @@
 title: Python CGI初体验
 date: 2016-1-25 16:36:28
-toc: true
 tags: 
 - cgi
 - python

@@ -1,5 +1,4 @@
 title: NoC路由算法
-toc: true
 date: 2016-04-03 12:23:35
 tags: 
 - NoC

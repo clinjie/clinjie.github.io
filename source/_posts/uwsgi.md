@@ -1,6 +1,5 @@
 title: uwsgi
 date: 2016-11-16 11:27:38
-toc: true
 tags: 网络
 categories: 网络
 ---

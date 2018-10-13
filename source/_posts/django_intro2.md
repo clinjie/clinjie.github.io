@@ -1,6 +1,5 @@
 title: Django初识2
 date: 2016-09-10 22:24:06
-toc: true
 tags:
 - python
 categories: python

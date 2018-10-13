@@ -1,7 +1,6 @@
 title: Selenium模拟测试教务数据
 date: 2016-02-27 22:23:35
 tags: Python
-toc: true
 categories: Python 
 ---
 

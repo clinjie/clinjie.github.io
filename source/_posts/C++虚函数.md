@@ -1,6 +1,5 @@
 title: C++虚函数
 date: 2015-08-05 16:39:55
-toc: true
 tags: 
 - 基础知识
 - C++

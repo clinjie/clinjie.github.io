@@ -1,6 +1,5 @@
 title: 贝叶斯Bayesian
 date: 2017-03-06 13:18:42
-toc: true
 tags: ML
 categories: ML
 ---

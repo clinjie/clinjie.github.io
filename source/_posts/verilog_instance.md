@@ -1,6 +1,5 @@
 title: verilog实例
 date: 2016-03-23 15:23:35
-toc: true
 tags: 
 - Verilog HDL
 categories: Verilog

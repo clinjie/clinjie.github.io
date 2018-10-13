@@ -1,7 +1,6 @@
 title: session教务数据
 date: 2016-03-08 22:23:35
 tags: Python
-toc: true
 categories: Python 
 ---
 

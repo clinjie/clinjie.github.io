@@ -1,6 +1,5 @@
 title: MAP、SRM、ERM与MLE
 date: 2017-03-20 11:22:09
-toc: true
 tags: 数学
 categories: 数学
 ---

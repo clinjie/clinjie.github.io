@@ -1,6 +1,5 @@
 title: ISE数字设计入门体验
 date: 2016-04-09 23:17:22
-toc: true
 tags: ISE
 categories: ISE
 ---

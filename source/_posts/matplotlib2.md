@@ -1,6 +1,5 @@
 title: Matplotlib快速绘图（2）
 date: 2016-04-01 23:27:51
-toc: true
 tags: matplotlib
 categories: matplotlib
 ---

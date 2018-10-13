@@ -1,6 +1,5 @@
 title: 对偶问题
 date: 2017-03-16 17:22:09
-toc: true
 tags: 数学
 categories: 数学
 ---

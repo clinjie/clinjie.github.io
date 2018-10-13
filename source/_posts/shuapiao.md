@@ -1,6 +1,5 @@
 title: 多线程刷票
 date: 2016-07-07 22:24:06
-toc: true
 tags:
 - python
 - 多线程

@@ -1,6 +1,5 @@
 title: Verilog的testbench笔记
 date: 2016-04-13 19:17:22
-toc: true
 tags: Verilog
 categories: Verilog
 ---

@@ -1,6 +1,5 @@
 title: AC自动机
 date: 2016-01-21 22:24:06
-toc: true
 tags:
 - algorithm
 - 模式匹配

@@ -1,6 +1,5 @@
 title: tarjan强连通分量
 date: 2015-12-02 22:24:06
-toc: true
 tags: algorithm
 categories: algorithm
 ---

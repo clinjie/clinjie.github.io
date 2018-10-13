@@ -1,6 +1,5 @@
 title: 抓取豆瓣电影信息
 date: 2016-01-22 21:28:30
-toc: true
 tags:
 - python
 categories: python

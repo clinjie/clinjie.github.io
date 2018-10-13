@@ -1,6 +1,5 @@
 title: ML学习-SVM
 date: 2017-03-05 13:18:42
-toc: true
 tags: ML
 categories: ML
 ---

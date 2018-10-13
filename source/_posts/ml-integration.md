@@ -1,6 +1,5 @@
 title: 集成学习
 date: 2017-03-07 13:18:42
-toc: true
 tags: ML
 categories: ML
 ---

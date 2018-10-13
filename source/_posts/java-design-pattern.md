@@ -1,6 +1,5 @@
 title: Java设计模式
 date: 2016-10-03 19:12:37
-toc: true
 tags: java
 categories: java
 ---

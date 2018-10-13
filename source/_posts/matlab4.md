@@ -1,6 +1,5 @@
 title: Matlab学习(四)
 date: 2016-07-10 12:24:06
-toc: true
 tags:
 - matlab
 categories: matlab

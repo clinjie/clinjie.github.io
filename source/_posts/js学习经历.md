@@ -1,6 +1,5 @@
 title: js
 date: 2015-12-13 22:35:02
-toc: true
 tags: 
 - Front End
 - JQuery

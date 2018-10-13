@@ -1,6 +1,5 @@
 title: tornado安全技巧
 date: 2016-11-24 12:28:30
-toc: true
 tags: python
 categories: python
 ---

@@ -1,7 +1,6 @@
 title: Android Sdk获取更新
 date: 2016-04-21 17:17:22
 tags: android
-toc: true
 categories: android
 ---
 

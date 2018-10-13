@@ -1,6 +1,5 @@
 title: NoC小序
 date: 2016-02-25 16:14:42
-toc: true
 tags: noc
 categories: 片上网络
 ---

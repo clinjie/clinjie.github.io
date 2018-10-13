@@ -1,6 +1,5 @@
 title: Tornodo入门
 date: 2016-11-14 22:28:30
-toc: true
 tags:
 - python
 - Tornodo

@@ -1,6 +1,5 @@
 title: 序列化
 date: 2016-1-10 22:57:53
-toc:
 tags: python
 categories: python
 ---
