@@ -1,10 +1,16 @@
 'use strict';
 
-var util = require('util');
+const util = require('util');
 
-// this solves circular reference in object
-function inspectObject(object, options){
+// this format object as string, resolves circular reference
+function inspectObject(object, options) {
   return util.inspect(object, options);
 }
 
+// wrapper to log to console
+function log(...args) {
+  return console.log.apply(null, args);
+}
+
 exports.inspectObject = inspectObject;
+exports.log = log;

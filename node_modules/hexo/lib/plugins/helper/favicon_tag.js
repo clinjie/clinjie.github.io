@@ -1,8 +1,7 @@
 'use strict';
 
-function faviconTagHelper(path){
-  /* jshint validthis: true */
-  return '<link rel="shortcut icon" href="' + this.url_for(path) + '">';
+function faviconTagHelper(path) {
+  return `<link rel="shortcut icon" href="${this.url_for(path)}">`;
 }
 
 module.exports = faviconTagHelper;

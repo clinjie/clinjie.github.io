@@ -28,14 +28,14 @@ word2vec从大量文本语料中以无监督的方式学习语义信息，即通
 
 ## Skip-gram/CBOW
 
-![](http://opu8lkq3n.bkt.clouddn.com/18-4-20/67314351.jpg)
+![](/img/clinjie/18-4-20/67314351.jpg)
 
 一个word作为输入，预测周围的上下文，模型叫做Skip-gram模型；
 一个word的上下文（窗口）作为输入，预测这个word本身，模型叫做CBOW模型
 
 先以Skip-gram为例，一个word x作为输入，预测周围的一个word y为输出
 
-![](http://opu8lkq3n.bkt.clouddn.com/18-4-20/46209492.jpg)
+![](/img/clinjie/18-4-20/46209492.jpg)
 
 x是上面提到的经过onehot-encoder形式的输入，y是在V（词典的size）个词上输出的概率，期望形式是y真实的onehot-encoder
 

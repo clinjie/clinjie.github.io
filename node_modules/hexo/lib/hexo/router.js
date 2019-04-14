@@ -1,13 +1,12 @@
 'use strict';
 
-var EventEmitter = require('events').EventEmitter;
-var Promise = require('bluebird');
-var Stream = require('stream');
-var util = require('util');
-var through2 = require('through2');
-var Readable = Stream.Readable;
+const EventEmitter = require('events').EventEmitter;
+const Promise = require('bluebird');
+const Stream = require('stream');
+const util = require('util');
+const Readable = Stream.Readable;
 
-function Router(){
+function Router() {
   EventEmitter.call(this);
 
   this.routes = {};
@@ -15,7 +14,7 @@ function Router(){
 
 util.inherits(Router, EventEmitter);
 
-Router.format = Router.prototype.format = function(path){
+Router.format = Router.prototype.format = path => {
   path = path || '';
   if (typeof path !== 'string') throw new TypeError('path must be a string!');
 
@@ -25,20 +24,20 @@ Router.format = Router.prototype.format = function(path){
     .replace(/\?.*$/, ''); // Remove query string
 
   // Appends `index.html` to the path with trailing slash
-  if (!path || path[path.length - 1] === '/'){
+  if (!path || path[path.length - 1] === '/') {
     path += 'index.html';
   }
 
   return path;
 };
 
-Router.prototype.list = function(){
-  var routes = this.routes;
-  var keys = Object.keys(routes);
-  var arr = [];
-  var key;
+Router.prototype.list = function() {
+  const routes = this.routes;
+  const keys = Object.keys(routes);
+  const arr = [];
+  let key;
 
-  for (var i = 0, len = keys.length; i < len; i++){
+  for (let i = 0, len = keys.length; i < len; i++) {
     key = keys[i];
     if (routes[key]) arr.push(key);
   }
@@ -46,39 +45,39 @@ Router.prototype.list = function(){
   return arr;
 };
 
-Router.prototype.get = function(path){
+Router.prototype.get = function(path) {
   if (typeof path !== 'string') throw new TypeError('path must be a string!');
 
-  var data = this.routes[this.format(path)];
+  const data = this.routes[this.format(path)];
   if (data == null) return;
 
   return new RouteStream(data);
 };
 
-Router.prototype.isModified = function(path){
+Router.prototype.isModified = function(path) {
   if (typeof path !== 'string') throw new TypeError('path must be a string!');
 
-  var data = this.routes[this.format(path)];
+  const data = this.routes[this.format(path)];
   return data ? data.modified : false;
 };
 
-Router.prototype.set = function(path, data){
+Router.prototype.set = function(path, data) {
   if (typeof path !== 'string') throw new TypeError('path must be a string!');
   if (data == null) throw new TypeError('data is required!');
 
-  var obj;
+  let obj;
 
-  if (typeof data === 'object' && data.data != null){
+  if (typeof data === 'object' && data.data != null) {
     obj = data;
   } else {
     obj = {
-      data: data,
+      data,
       modified: true
     };
   }
 
-  if (typeof obj.data === 'function'){
-    if (obj.data.length){
+  if (typeof obj.data === 'function') {
+    if (obj.data.length) {
       obj.data = Promise.promisify(obj.data);
     } else {
       obj.data = Promise.method(obj.data);
@@ -97,7 +96,7 @@ Router.prototype.set = function(path, data){
   return this;
 };
 
-Router.prototype.remove = function(path){
+Router.prototype.remove = function(path) {
   if (typeof path !== 'string') throw new TypeError('path must be a string!');
   path = this.format(path);
 
@@ -107,7 +106,7 @@ Router.prototype.remove = function(path){
   return this;
 };
 
-function RouteStream(data){
+function RouteStream(data) {
   Readable.call(this, {objectMode: true});
 
   this._data = data.data;
@@ -117,10 +116,10 @@ function RouteStream(data){
 
 util.inherits(RouteStream, Readable);
 
-RouteStream.prototype._read = function(){
-  var data = this._data;
+RouteStream.prototype._read = function() {
+  const data = this._data;
 
-  if (typeof data !== 'function'){
+  if (typeof data !== 'function') {
     this.push(data);
     this.push(null);
     return;
@@ -130,30 +129,33 @@ RouteStream.prototype._read = function(){
   if (this._ended) return false;
   this._ended = true;
 
-  var self = this;
+  const self = this;
 
-  data().then(function(data){
-    if (data instanceof Stream && data.readable){
-      data.pipe(through2(function(chunk, enc, callback){
-        self.push(chunk);
-        callback();
-      }, function(callback){
+  data().then(data => {
+    if (data instanceof Stream && data.readable) {
+      data.on('data', d => {
+        self.push(d);
+      });
+
+      data.on('end', () => {
         self.push(null);
-        callback();
-      })).on('error', function(err){
+      });
+
+      data.on('error', err => {
         self.emit('error', err);
       });
-    } else if (data instanceof Buffer || typeof data === 'string'){
+    } else if (data instanceof Buffer || typeof data === 'string') {
       self.push(data);
       self.push(null);
-    } else if (typeof data === 'object'){
+    } else if (typeof data === 'object') {
       self.push(JSON.stringify(data));
       self.push(null);
     } else {
       self.push(null);
     }
-  }, function(err){
+  }).catch(err => {
     self.emit('error', err);
+    self.push(null);
   });
 };
 

@@ -1,66 +1,68 @@
 'use strict';
 
-var Schema = require('warehouse').Schema;
-var util = require('hexo-util');
-var slugize = util.slugize;
+const Schema = require('warehouse').Schema;
+const util = require('hexo-util');
+const slugize = util.slugize;
+const hasOwn = Object.prototype.hasOwnProperty;
 
-module.exports = function(ctx){
-  var Tag = new Schema({
+module.exports = ctx => {
+  const Tag = new Schema({
     name: {type: String, required: true}
   });
 
-  Tag.virtual('slug').get(function(){
-    var map = ctx.config.tag_map || {};
-    var name = this.name;
+  Tag.virtual('slug').get(function() {
+    const map = ctx.config.tag_map || {};
+    let name = this.name;
     if (!name) return;
 
-    name = map[name] || name;
+    if (hasOwn.call(map, name)) {
+      name = map[name] || name;
+    }
+
     return slugize(name, {transform: ctx.config.filename_case});
   });
 
-  Tag.virtual('path').get(function(){
-    var tagDir = ctx.config.tag_dir;
+  Tag.virtual('path').get(function() {
+    let tagDir = ctx.config.tag_dir;
     if (tagDir[tagDir.length - 1] !== '/') tagDir += '/';
 
-    return tagDir + this.slug + '/';
+    return `${tagDir + this.slug}/`;
   });
 
-  Tag.virtual('permalink').get(function(){
-    return ctx.config.url + '/' + this.path;
+  Tag.virtual('permalink').get(function() {
+    return `${ctx.config.url}/${this.path}`;
   });
 
-  Tag.virtual('posts').get(function(){
-    var PostTag = ctx.model('PostTag');
+  Tag.virtual('posts').get(function() {
+    const PostTag = ctx.model('PostTag');
 
-    var ids = PostTag.find({tag_id: this._id}).map(function(item){
-      return item.post_id;
-    });
+    const ids = PostTag.find({tag_id: this._id}).map(item => item.post_id);
 
     return ctx.locals.get('posts').find({
       _id: {$in: ids}
     });
   });
 
-  Tag.virtual('length').get(function(){
+  Tag.virtual('length').get(function() {
     return this.posts.length;
   });
 
   // Check whether a tag exists
-  Tag.pre('save', function(data){
-    var name = data.name;
+  Tag.pre('save', data => {
+    const name = data.name;
     if (!name) return;
 
-    var Tag = ctx.model('Tag');
-    var tag = Tag.findOne({name: name});
+    const Tag = ctx.model('Tag');
+    const tag = Tag.findOne({name}, {lean: true});
 
-    if (tag){
-      throw new Error('Tag `' + name + '` has already existed!');
+    if (tag) {
+      throw new Error(`Tag \`${name}\` has already existed!`);
     }
   });
 
   // Remove PostTag references
-  Tag.pre('remove', function(data){
-    var PostTag = ctx.model('PostTag');
+  Tag.pre('remove', data => {
+    const PostTag = ctx.model('PostTag');
     return PostTag.remove({tag_id: data._id});
   });
 

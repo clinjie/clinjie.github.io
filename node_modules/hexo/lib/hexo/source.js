@@ -1,9 +1,9 @@
 'use strict';
 
-var Box = require('../box');
-var util = require('util');
+const Box = require('../box');
+const util = require('util');
 
-function Source(ctx){
+function Source(ctx) {
   Box.call(this, ctx, ctx.source_dir);
 
   this.processors = ctx.extend.processor.list();

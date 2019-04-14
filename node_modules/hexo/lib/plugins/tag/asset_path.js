@@ -1,21 +1,23 @@
 'use strict';
 
+const url = require('url');
+
 /**
  * Asset path tag
  *
  * Syntax:
  *   {% asset_path slug %}
  */
-module.exports = function(ctx){
-  var PostAsset = ctx.model('PostAsset');
+module.exports = ctx => {
+  const PostAsset = ctx.model('PostAsset');
 
-  return function assetPathTag(args){
-    var slug = args.shift();
+  return function assetPathTag(args) {
+    const slug = args.shift();
     if (!slug) return;
 
-    var asset = PostAsset.findOne({post: this._id, slug: slug});
+    const asset = PostAsset.findOne({post: this._id, slug});
     if (!asset) return;
 
-    return ctx.config.root + asset.path;
+    return url.resolve(ctx.config.root, asset.path);
   };
 };

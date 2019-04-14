@@ -1,26 +1,36 @@
 'use strict';
 
-var chalk = require('chalk');
-var table = require('text-table');
-var common = require('./common');
+const chalk = require('chalk');
+const table = require('text-table');
+const common = require('./common');
 
-function listPost(){
-  /* jshint validthis: true */
-  var Post = this.model('Post');
+function mapName(item) {
+  return item.name;
+}
 
-  var data = Post.sort({published: -1, date: 1}).map(function(post){
-    var date = post.published ? post.date.format('YYYY-MM-DD') : 'Draft';
-    return [chalk.gray(date), post.title, chalk.magenta(post.source)];
+function listPost() {
+  const Post = this.model('Post');
+
+  const data = Post.sort({published: -1, date: 1}).map(post => {
+    const date = post.published ? post.date.format('YYYY-MM-DD') : 'Draft';
+    const tags = post.tags.map(mapName);
+    const categories = post.categories.map(mapName);
+
+    return [
+      chalk.gray(date),
+      post.title,
+      chalk.magenta(post.source),
+      categories.join(', '),
+      tags.join(', ')
+    ];
   });
 
   // Table header
-  var header = ['Date', 'Title', 'Path'].map(function(str){
-    return chalk.underline(str);
-  });
+  const header = ['Date', 'Title', 'Path', 'Category', 'Tags'].map(str => chalk.underline(str));
 
   data.unshift(header);
 
-  var t = table(data, {
+  const t = table(data, {
     stringLength: common.stringLength
   });
 

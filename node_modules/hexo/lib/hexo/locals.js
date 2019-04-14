@@ -1,17 +1,17 @@
 'use strict';
 
-function Locals(){
+function Locals() {
   this.cache = {};
   this.getters = {};
 }
 
-Locals.prototype.get = function(name){
+Locals.prototype.get = function(name) {
   if (typeof name !== 'string') throw new TypeError('name must be a string!');
 
-  var cache = this.cache[name];
+  let cache = this.cache[name];
 
-  if (cache == null){
-    var getter = this.getters[name];
+  if (cache == null) {
+    const getter = this.getters[name];
     if (!getter) return;
 
     cache = this.cache[name] = getter();
@@ -20,18 +20,16 @@ Locals.prototype.get = function(name){
   return cache;
 };
 
-Locals.prototype.set = function(name, value){
+Locals.prototype.set = function(name, value) {
   if (typeof name !== 'string') throw new TypeError('name must be a string!');
   if (value == null) throw new TypeError('value is required!');
 
-  var getter;
+  let getter;
 
-  if (typeof value === 'function'){
+  if (typeof value === 'function') {
     getter = value;
   } else {
-    getter = function(){
-      return value;
-    };
+    getter = () => value;
   }
 
   this.getters[name] = getter;
@@ -40,7 +38,7 @@ Locals.prototype.set = function(name, value){
   return this;
 };
 
-Locals.prototype.remove = function(name){
+Locals.prototype.remove = function(name) {
   if (typeof name !== 'string') throw new TypeError('name must be a string!');
 
   this.getters[name] = null;
@@ -49,19 +47,19 @@ Locals.prototype.remove = function(name){
   return this;
 };
 
-Locals.prototype.invalidate = function(){
+Locals.prototype.invalidate = function() {
   this.cache = {};
 
   return this;
 };
 
-Locals.prototype.toObject = function(){
-  var result = {};
-  var keys = Object.keys(this.getters);
-  var key = '';
-  var item;
+Locals.prototype.toObject = function() {
+  const result = {};
+  const keys = Object.keys(this.getters);
+  let key = '';
+  let item;
 
-  for (var i = 0, len = keys.length; i < len; i++){
+  for (let i = 0, len = keys.length; i < len; i++) {
     key = keys[i];
     item = this.get(key);
 

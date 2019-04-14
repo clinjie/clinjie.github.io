@@ -21,6 +21,15 @@ var toLaxTitleCase = require('titlecase').toLaxTitleCase
 console.log(toLaxTitleCase('foo bar baz'))
 ```
 
+**Using as an executable**
+
+Install with `npm install titlecase -g` and you'll get a `to-title-case` executable that you can run to titlecase strings:
+
+```
+$ to-title-case "what is this thing?"
+What Is This Thing?
+```
+
 *Original README:*
 
 # To Title Case for JavaScript

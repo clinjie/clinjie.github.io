@@ -1,67 +1,67 @@
 'use strict';
 
-var yaml = require('js-yaml');
-var fs = require('hexo-fs');
-var pathFn = require('path');
+const yaml = require('js-yaml');
+const fs = require('hexo-fs');
+const pathFn = require('path');
+const Promise = require('bluebird');
 
-function configConsole(args){
-  /* jshint validthis: true */
-  var key = args._[0];
-  var value = args._[1];
-  var self = this;
+function configConsole(args) {
+  const key = args._[0];
+  let value = args._[1];
+  const self = this;
 
-  if (!key){
+  if (!key) {
     console.log(this.config);
-    return;
+    return Promise.resolve();
   }
 
-  if (!value){
+  if (!value) {
     value = getProperty(this.config, key);
     if (value) console.log(value);
-    return;
+    return Promise.resolve();
   }
 
-  var configPath = this.config_path;
-  var extname = pathFn.extname(configPath);
+  const configPath = this.config_path;
+  const extname = pathFn.extname(configPath);
 
-  return fs.exists(configPath).then(function(exist){
+  return fs.exists(configPath).then(exist => {
     if (!exist) return {};
     return self.render.render({path: configPath});
-  }).then(function(config){
+  }).then(config => {
     if (!config) config = {};
 
-    var result = '';
+    let result = '';
 
     setProperty(config, key, castValue(value));
 
-    if (extname === '.json'){
+    if (extname === '.json') {
       result = JSON.stringify(config);
     } else {
-      result = yaml.safeDump(config);
+      result = yaml.dump(config);
     }
 
     return fs.writeFile(configPath, result);
   });
 }
 
-function getProperty(obj, key){
-  var split = key.split('.');
-  var result = obj[split[0]];
+function getProperty(obj, key) {
+  const split = key.split('.');
+  let result = obj[split[0]];
 
-  for (var i = 1, len = split.length; i < len; i++){
+  for (let i = 1, len = split.length; i < len; i++) {
     result = result[split[i]];
   }
 
   return result;
 }
 
-function setProperty(obj, key, value){
-  var split = key.split('.');
-  var cursor = obj;
-  var name = '';
-  var lastKey = split.pop();
+function setProperty(obj, key, value) {
+  const split = key.split('.');
+  let cursor = obj;
+  let name = '';
+  const lastKey = split.pop();
 
-  for (var i = 0, len = split.length; i < len; i++){
+  for (let i = 0, len = split.length; i < len; i++) {
     name = split[i];
     cursor = cursor[name] = cursor[name] || {};
   }
@@ -69,8 +69,8 @@ function setProperty(obj, key, value){
   cursor[lastKey] = value;
 }
 
-function castValue(value){
-  switch (value){
+function castValue(value) {
+  switch (value) {
     case 'true':
       return true;
 
@@ -84,7 +84,7 @@ function castValue(value){
       return undefined;
   }
 
-  var num = Number(value);
+  const num = Number(value);
   if (!isNaN(num)) return num;
 
   return value;

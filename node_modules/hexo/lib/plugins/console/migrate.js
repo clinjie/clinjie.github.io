@@ -1,24 +1,23 @@
 'use strict';
 
-var chalk = require('chalk');
+const chalk = require('chalk');
 
-function migrateConsole(args){
-  /* jshint validthis: true */
+function migrateConsole(args) {
   // Display help message if user didn't input any arguments
-  if (!args._.length){
+  if (!args._.length) {
     return this.call('help', {_: ['migrate']});
   }
 
-  var type = args._.shift();
-  var migrators = this.extend.migrator.list();
+  const type = args._.shift();
+  const migrators = this.extend.migrator.list();
 
-  if (!migrators[type]){
-    var help = '';
+  if (!migrators[type]) {
+    let help = '';
 
-    help += type.magenta + ' migrator plugin is not installed.\n\n';
+    help += `${type.magenta} migrator plugin is not installed.\n\n`;
     help += 'Installed migrator plugins:\n';
-    help += '  ' + Object.keys(migrators).join(', ') + '\n\n';
-    help += 'For more help, you can check the online docs: ' + chalk.underline('http://hexo.io/');
+    help += `  ${Object.keys(migrators).join(', ')}\n\n`;
+    help += `For more help, you can check the online docs: ${chalk.underline('http://hexo.io/')}`;
 
     console.log(help);
     return;

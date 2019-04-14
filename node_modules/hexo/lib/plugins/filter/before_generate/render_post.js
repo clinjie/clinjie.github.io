@@ -1,18 +1,18 @@
 'use strict';
 
-var Promise = require('bluebird');
+const Promise = require('bluebird');
 
-function renderPostFilter(){
-  /* jshint validthis: true */
-  var self = this;
+function renderPostFilter(data) {
+  const self = this;
 
-  function renderPosts(model){
-    return Promise.map(model.toArray(), function(post){
+  function renderPosts(model) {
+    const posts = model.toArray().filter(post => post.content == null);
+
+    return Promise.map(posts, post => {
       post.content = post._content;
+      post.site = {data};
 
-      return self.post.render(post.full_source, post).then(function(){
-        return post.save();
-      });
+      return self.post.render(post.full_source, post).then(() => post.save());
     });
   }
 

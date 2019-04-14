@@ -1,49 +1,46 @@
 'use strict';
 
-function numberFormatHelper(num, options){
-  /* jshint validthis: true */
-  options = options || {};
+function numberFormatHelper(num, options = {}) {
+  const split = num.toString().split('.');
+  let before = split.shift();
+  let after = split.length ? split[0] : '';
+  const delimiter = options.delimiter || ',';
+  const separator = options.separator || '.';
+  const precision = options.precision;
+  let i, len;
 
-  var split = num.toString().split('.');
-  var before = split.shift();
-  var after = split.length ? split[0] : '';
-  var delimiter = options.delimiter || ',';
-  var separator = options.separator || '.';
-  var precision = options.precision;
-  var i, len;
-
-  if (delimiter){
-    var beforeArr = [];
-    var beforeLength = before.length;
-    var beforeFirst = beforeLength % 3;
+  if (delimiter) {
+    const beforeArr = [];
+    const beforeLength = before.length;
+    const beforeFirst = beforeLength % 3;
 
     if (beforeFirst) beforeArr.push(before.substr(0, beforeFirst));
 
-    for (i = beforeFirst; i < beforeLength; i += 3){
+    for (i = beforeFirst; i < beforeLength; i += 3) {
       beforeArr.push(before.substr(i, 3));
     }
 
     before = beforeArr.join(delimiter);
   }
 
-  if (precision){
-    var afterLength = after.length;
-    var afterResult = '';
+  if (precision) {
+    const afterLength = after.length;
+    let afterResult = '';
 
-    if (afterLength > precision){
-      var afterLast = after[precision];
-      var last = parseInt(after[precision - 1]);
+    if (afterLength > precision) {
+      const afterLast = after[precision];
+      const last = parseInt(after[precision - 1], 10);
 
       afterResult = after.substr(0, precision - 1) + (afterLast < 5 ? last : last + 1);
     } else {
       afterResult = after;
-      for (i = 0, len = precision - afterLength; i < len; i++){
+      for (i = 0, len = precision - afterLength; i < len; i++) {
         afterResult += '0';
       }
     }
 
     after = afterResult;
-  } else if (precision === 0 || precision === '0'){
+  } else if (precision === 0 || precision === '0') {
     after = '';
   }
 

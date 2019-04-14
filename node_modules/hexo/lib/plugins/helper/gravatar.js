@@ -1,21 +1,21 @@
 'use strict';
 
-var crypto = require('crypto');
-var querystring = require('querystring');
+const crypto = require('crypto');
+const querystring = require('querystring');
 
-function md5(str){
+function md5(str) {
   return crypto.createHash('md5').update(str).digest('hex');
 }
 
-function gravatarHelper(email, options){
-  if (typeof options === 'number'){
+function gravatarHelper(email, options) {
+  if (typeof options === 'number') {
     options = {s: options};
   }
 
-  var str = 'http://www.gravatar.com/avatar/' + md5(email.toLowerCase());
-  var qs = querystring.stringify(options);
+  let str = `https://www.gravatar.com/avatar/${md5(email.toLowerCase())}`;
+  const qs = querystring.stringify(options);
 
-  if (qs) str += '?' + qs;
+  if (qs) str += `?${qs}`;
 
   return str;
 }

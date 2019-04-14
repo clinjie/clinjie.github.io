@@ -1,12 +1,11 @@
 'use strict';
 
-function saveDatabaseFilter(){
-  /* jshint validthis: true */
+function saveDatabaseFilter() {
   if (!this.env.init) return;
 
-  var self = this;
+  const self = this;
 
-  return this.database.save().then(function(){
+  return this.database.save().then(() => {
     self.log.debug('Database saved');
   });
 }

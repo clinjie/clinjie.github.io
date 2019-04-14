@@ -1,13 +1,12 @@
 'use strict';
 
-var Schema = require('warehouse').Schema;
-var pathFn = require('path');
-var Moment = require('./types/moment');
-var moment = require('moment');
-var CacheString = require('./types/cachestring');
+const Schema = require('warehouse').Schema;
+const pathFn = require('path');
+const Moment = require('./types/moment');
+const moment = require('moment');
 
-module.exports = function(ctx){
-  var Page = new Schema({
+module.exports = ctx => {
+  const Page = new Schema({
     title: {type: String, default: ''},
     date: {
       type: Moment,
@@ -27,16 +26,16 @@ module.exports = function(ctx){
     source: {type: String, required: true},
     path: {type: String, required: true},
     raw: {type: String, default: ''},
-    content: {type: CacheString, default: ''},
-    excerpt: {type: CacheString, default: ''},
-    more: {type: CacheString, default: ''}
+    content: {type: String},
+    excerpt: {type: String},
+    more: {type: String}
   });
 
-  Page.virtual('permalink').get(function(){
-    return ctx.config.url + '/' + this.path;
+  Page.virtual('permalink').get(function() {
+    return `${ctx.config.url}/${this.path}`;
   });
 
-  Page.virtual('full_source').get(function(){
+  Page.virtual('full_source').get(function() {
     return pathFn.join(ctx.source_dir, this.source || '');
   });
 

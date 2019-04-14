@@ -1,31 +1,26 @@
 module.exports = function(hljs) {
   var XML_IDENT_RE = '[A-Za-z0-9\\._:-]+';
-  var PHP = {
-    begin: /<\?(php)?(?!\w)/, end: /\?>/,
-    subLanguage: 'php'
-  };
   var TAG_INTERNALS = {
     endsWithParent: true,
     illegal: /</,
     relevance: 0,
     contains: [
-      PHP,
       {
-        className: 'attribute',
+        className: 'attr',
         begin: XML_IDENT_RE,
         relevance: 0
       },
       {
-        begin: '=',
+        begin: /=\s*/,
         relevance: 0,
         contains: [
           {
-            className: 'value',
-            contains: [PHP],
+            className: 'string',
+            endsParent: true,
             variants: [
               {begin: /"/, end: /"/},
               {begin: /'/, end: /'/},
-              {begin: /[^\s\/>]+/}
+              {begin: /[^\s"'=<>`]+/}
             ]
           }
         ]
@@ -33,11 +28,11 @@ module.exports = function(hljs) {
     ]
   };
   return {
-    aliases: ['html', 'xhtml', 'rss', 'atom', 'xsl', 'plist'],
+    aliases: ['html', 'xhtml', 'rss', 'atom', 'xjb', 'xsd', 'xsl', 'plist'],
     case_insensitive: true,
     contains: [
       {
-        className: 'doctype',
+        className: 'meta',
         begin: '<!DOCTYPE', end: '>',
         relevance: 10,
         contains: [{begin: '\\[', end: '\\]'}]
@@ -50,9 +45,13 @@ module.exports = function(hljs) {
         }
       ),
       {
-        className: 'cdata',
         begin: '<\\!\\[CDATA\\[', end: '\\]\\]>',
         relevance: 10
+      },
+      {
+        begin: /<\?(php)?/, end: /\?>/,
+        subLanguage: 'php',
+        contains: [{begin: '/\\*', end: '\\*/', skip: true}]
       },
       {
         className: 'tag',
@@ -63,36 +62,37 @@ module.exports = function(hljs) {
         by hljs.subMode() that tests lexemes outside the stream.
         */
         begin: '<style(?=\\s|>|$)', end: '>',
-        keywords: {title: 'style'},
+        keywords: {name: 'style'},
         contains: [TAG_INTERNALS],
         starts: {
           end: '</style>', returnEnd: true,
-          subLanguage: 'css'
+          subLanguage: ['css', 'xml']
         }
       },
       {
         className: 'tag',
         // See the comment in the <style tag about the lookahead pattern
         begin: '<script(?=\\s|>|$)', end: '>',
-        keywords: {title: 'script'},
+        keywords: {name: 'script'},
         contains: [TAG_INTERNALS],
         starts: {
           end: '\<\/script\>', returnEnd: true,
-          subLanguage: ['actionscript', 'javascript', 'handlebars']
+          subLanguage: ['actionscript', 'javascript', 'handlebars', 'xml']
         }
       },
-      PHP,
       {
-        className: 'pi',
-        begin: /<\?\w+/, end: /\?>/,
-        relevance: 10
+        className: 'meta',
+        variants: [
+          {begin: /<\?xml/, end: /\?>/, relevance: 10},
+          {begin: /<\?\w+/, end: /\?>/}
+        ]
       },
       {
         className: 'tag',
         begin: '</?', end: '/?>',
         contains: [
           {
-            className: 'title', begin: /[^ \/><\n\t]+/, relevance: 0
+            className: 'name', begin: /[^\/><\s]+/, relevance: 0
           },
           TAG_INTERNALS
         ]

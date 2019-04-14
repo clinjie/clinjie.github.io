@@ -1,30 +1,29 @@
 'use strict';
 
-var pathFn = require('path');
-var tildify = require('tildify');
-var prettyHrtime = require('pretty-hrtime');
-var fs = require('hexo-fs');
-var chalk = require('chalk');
+const pathFn = require('path');
+const tildify = require('tildify');
+const prettyHrtime = require('pretty-hrtime');
+const fs = require('hexo-fs');
+const chalk = require('chalk');
 
-function renderConsole(args){
-  /* jshint validthis: true */
+function renderConsole(args) {
   // Display help message if user didn't input any arguments
-  if (!args._.length){
+  if (!args._.length) {
     return this.call('help', {_: 'render'});
   }
 
-  var baseDir = this.base_dir;
-  var src = pathFn.resolve(baseDir, args._[0]);
-  var output = args.o || args.output;
-  var start = process.hrtime();
-  var log = this.log;
+  const baseDir = this.base_dir;
+  const src = pathFn.resolve(baseDir, args._[0]);
+  const output = args.o || args.output;
+  const start = process.hrtime();
+  const log = this.log;
 
   return this.render.render({
     path: src,
     engine: args.engine
-  }).then(function(result){
-    if (typeof result === 'object'){
-      if (args.pretty){
+  }).then(result => {
+    if (typeof result === 'object') {
+      if (args.pretty) {
         result = JSON.stringify(result, null, '  ');
       } else {
         result = JSON.stringify(result);
@@ -33,8 +32,8 @@ function renderConsole(args){
 
     if (!output) return console.log(result);
 
-    var dest = pathFn.resolve(baseDir, output);
-    var interval = prettyHrtime(process.hrtime(start));
+    const dest = pathFn.resolve(baseDir, output);
+    const interval = prettyHrtime(process.hrtime(start));
 
     log.info('Rendered in %s: %s -> %s', chalk.cyan(interval), chalk.magenta(tildify(src)), chalk.magenta(tildify(dest)));
     return fs.writeFile(dest, result);

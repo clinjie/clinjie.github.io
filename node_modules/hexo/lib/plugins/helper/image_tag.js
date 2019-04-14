@@ -1,24 +1,21 @@
 'use strict';
 
-var htmlTag = require('hexo-util').htmlTag;
+const htmlTag = require('hexo-util').htmlTag;
 
-function imageTagHelper(path, options){
-  /* jshint validthis: true */
-  options = options || {};
-
-  var attrs = {
+function imageTagHelper(path, options = {}) {
+  const attrs = {
     src: this.url_for(path)
   };
 
-  var keys = Object.keys(options);
-  var key = '';
+  const keys = Object.keys(options);
+  let key = '';
 
-  for (var i = 0, len = keys.length; i < len; i++){
+  for (let i = 0, len = keys.length; i < len; i++) {
     key = keys[i];
     attrs[key] = options[key];
   }
 
-  if (attrs.class && Array.isArray(attrs.class)){
+  if (attrs.class && Array.isArray(attrs.class)) {
     attrs.class = attrs.class.join(' ');
   }
 

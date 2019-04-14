@@ -1,13 +1,13 @@
 'use strict';
 
-var pathFn = require('path');
-var util = require('util');
-var Box = require('../box');
-var View = require('./view');
-var i18n = require('hexo-i18n');
-var _ = require('lodash');
+const pathFn = require('path');
+const util = require('util');
+const Box = require('../box');
+const View = require('./view');
+const I18n = require('hexo-i18n');
+const _ = require('lodash');
 
-function Theme(ctx){
+function Theme(ctx) {
   Box.call(this, ctx, ctx.theme_dir);
 
   this.config = {};
@@ -21,19 +21,19 @@ function Theme(ctx){
     require('./processors/view')
   ];
 
-  var languages = ctx.config.language;
+  let languages = ctx.config.language;
 
-  if (!Array.isArray(languages)){
+  if (!Array.isArray(languages)) {
     languages = [languages];
   }
 
   languages.push('default');
 
-  this.i18n = new i18n({
+  this.i18n = new I18n({
     languages: _(languages).compact().uniq().value()
   });
 
-  var _View = this.View = function(path, data){
+  const _View = this.View = function(path, data) {
     View.call(this, path, data);
   };
 
@@ -46,35 +46,35 @@ function Theme(ctx){
 
 util.inherits(Theme, Box);
 
-Theme.prototype.getView = function(path){
+Theme.prototype.getView = function(path) {
   // Replace backslashes on Windows
   path = path.replace(/\\/g, '/');
 
-  var extname = pathFn.extname(path);
-  var name = path.substring(0, path.length - extname.length);
-  var views = this.views[name];
+  const extname = pathFn.extname(path);
+  const name = path.substring(0, path.length - extname.length);
+  const views = this.views[name];
 
   if (!views) return;
 
-  if (extname){
+  if (extname) {
     return views[extname];
-  } else {
-    return views[Object.keys(views)[0]];
   }
+
+  return views[Object.keys(views)[0]];
 };
 
-Theme.prototype.setView = function(path, data){
-  var extname = pathFn.extname(path);
-  var name = path.substring(0, path.length - extname.length);
-  var views = this.views[name] = this.views[name] || {};
+Theme.prototype.setView = function(path, data) {
+  const extname = pathFn.extname(path);
+  const name = path.substring(0, path.length - extname.length);
+  const views = this.views[name] = this.views[name] || {};
 
   views[extname] = new this.View(path, data);
 };
 
-Theme.prototype.removeView = function(path){
-  var extname = pathFn.extname(path);
-  var name = path.substring(0, path.length - extname.length);
-  var views = this.views[name];
+Theme.prototype.removeView = function(path) {
+  const extname = pathFn.extname(path);
+  const name = path.substring(0, path.length - extname.length);
+  const views = this.views[name];
 
   if (!views) return;
 

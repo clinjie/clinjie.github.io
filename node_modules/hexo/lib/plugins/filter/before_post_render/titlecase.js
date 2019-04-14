@@ -1,9 +1,8 @@
 'use strict';
 
-var titlecase = require('titlecase');
+const titlecase = require('titlecase');
 
-function titlecaseFilter(data){
-  /* jshint validthis: true */
+function titlecaseFilter(data) {
   if (!this.config.titlecase || !data.title) return;
 
   data.title = titlecase(data.title);
