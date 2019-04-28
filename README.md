@@ -1,18 +1,8 @@
-# 已安装Plugin:
+# 重新安装
 
-- npm install hexo-generator-feed --save
-
-- npm install hexo-generator-baidu-sitemap --save
-
-- npm install hexo-generator-sitemap
-
-- npm install hexo-math --save
-
-- npm install hexo-generator-searchdb --save
- 
-
-# 解压到目录之后，需要重新安装hexo-server
-
-`npm install hexo-server --save`
+1. 安装node
+2. `git clone -b source-code git@github.com:clinjie/clinjie.github.io.git`
+3. 新建hexo目录，执行`hexo`
+4. 将clinjie.guthub.io目录中出了node_modules外复制到hexo目录
 
 # 配置 SSH 公钥使用`hexo d`
