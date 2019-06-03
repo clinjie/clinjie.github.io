@@ -1,0 +1,1206 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Verilog HDL,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="临街小站" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="模块模块介绍 模块是Verilog HDL语言的基本单元，数字系统是用模块的形式来描述。  模块是描述某个设计的功能、结构和其他模块通信的外部端口。">
+<meta name="keywords" content="Verilog HDL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="verilog笔记">
+<meta property="og:url" content="http://peihao.space/2016/03/24/verilog_date/index.html">
+<meta property="og:site_name" content="临街小站">
+<meta property="og:description" content="模块模块介绍 模块是Verilog HDL语言的基本单元，数字系统是用模块的形式来描述。  模块是描述某个设计的功能、结构和其他模块通信的外部端口。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://peihao.space/img/article/verilog_data_setvalue.jpg">
+<meta property="og:image" content="http://peihao.space/img/article/verilog_date_setvalue2.jpg">
+<meta property="og:updated_time" content="2019-04-28T16:21:32.346Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="verilog笔记">
+<meta name="twitter:description" content="模块模块介绍 模块是Verilog HDL语言的基本单元，数字系统是用模块的形式来描述。  模块是描述某个设计的功能、结构和其他模块通信的外部端口。">
+<meta name="twitter:image" content="http://peihao.space/img/article/verilog_data_setvalue.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://peihao.space/2016/03/24/verilog_date/">
+
+
+
+
+
+  <title> verilog笔记 | 临街小站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">临街小站</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photos" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br>
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+
+	  </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://peihao.space/2016/03/24/verilog_date/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="clinjie">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/img/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="临街小站">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="临街小站" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                verilog笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-24T15:23:35+08:00">
+                2016-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Verilog/" itemprop="url" rel="index">
+                    <span itemprop="name">Verilog</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/03/24/verilog_date/" class="leancloud_visitors" data-flag-title="verilog笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+		
+		
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h1><h2 id="模块介绍"><a href="#模块介绍" class="headerlink" title="模块介绍"></a>模块介绍</h2><ul>
+<li><p>模块是Verilog HDL语言的基本单元，数字系统是用模块的形式来描述。</p>
+</li>
+<li><p>模块是描述某个设计的功能、结构和其他模块通信的外部端口。</p>
+<a id="more"></a></li>
+<li><p>Verilog HDL中的各个模块是并行运行的</p>
+</li>
+<li><p>模块可以调用其他模块的实例   </p>
+</li>
+</ul>
+<h2 id="模块结构"><a href="#模块结构" class="headerlink" title="模块结构"></a>模块结构</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> &lt;模块名&gt;(&lt;端口列表&gt;)</span><br><span class="line">	端口说明（input，output，inout）</span><br><span class="line">	参数定义（可选）</span><br><span class="line">	数据类型定义<span class="comment">//wire、reg、task、function</span></span><br><span class="line">	连续赋值语句（assign）<span class="comment">//组合逻辑</span></span><br><span class="line">	过程块（always和initial）</span><br><span class="line">	-行为描述语句</span><br><span class="line">	低层模块实例<span class="comment">//调用其它模块</span></span><br><span class="line">	任务和函数</span><br><span class="line">	延时说明块</span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+<h1 id="语句模块描述方式"><a href="#语句模块描述方式" class="headerlink" title="语句模块描述方式"></a>语句模块描述方式</h1><p>Verilog有三种建模方式，分别是</p>
+<ul>
+<li><p>结构化描述方式</p>
+</li>
+<li><p>数据流描述方式</p>
+</li>
+<li><p>行为描述方式</p>
+</li>
+</ul>
+<h2 id="结构型描述"><a href="#结构型描述" class="headerlink" title="结构型描述"></a>结构型描述</h2><p>通过实例进行描述的方法，将预定义的基本原件实例嵌入语言中，监控实例的输入，一单任何一个发生变化便重新运算并输出。</p>
+<h2 id="数据流型描述"><a href="#数据流型描述" class="headerlink" title="数据流型描述"></a>数据流型描述</h2><p>是一种描述组合逻辑功能的方法，用<code>assign</code>连续赋值语句来实现。</p>
+<p>连续赋值语句完成如下的组合功能：等式右边的所有变量受持续监控，每当这些变量中有任何一个发生变化，整个表达式被重新赋值并送给等式左端。</p>
+<h2 id="行为级描述"><a href="#行为级描述" class="headerlink" title="行为级描述"></a>行为级描述</h2><p>是通过描述行为特性来实现，关键词是<code>always</code>，含义是一单敏感变量发货时能变化，就重新一次进行赋值，有无限循环之意。这种描述方法常用来实现时序电路，也可用来描述组合功能。</p>
+<h2 id="Tip"><a href="#Tip" class="headerlink" title="Tip"></a>Tip</h2><p>用户可以混用上述三种描述方法，但需要说明的是，模块中门的实例、模块实例语句、assign语句和always语句是并发执行的，即执行顺序和书写次序无关。</p>
+<ul>
+<li><p>Verilog HDL区分大小写</p>
+</li>
+<li><p>Verilog HDL关键字一般为小写</p>
+</li>
+</ul>
+<p>其中数据流描述方式经常使用连续赋值语句，某个值被赋给某个网线变量。</p>
+<p><code>assign [delay] net_name = expression;</code></p>
+<p>注意在各assign 语句之间，是并行执行的，即各语句的执行与语句之间的顺序无关。</p>
+<p>行为描述方式经常使用always、initial语句赋值。使用reg进行寄存器的声明。always是指一直在重复运行，由always后面括号的变量变化时触发。在always以及end之间是串行顺序执行的。</p>
+<p>数据流型描述是一种描述组合逻辑功能的方法，用assign连续赋值语句来实现。</p>
+<h1 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h1><h2 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h2><p>语法：</p>
+<p><code>&lt;位宽&gt;&#39;&lt;进制&gt;&lt;数值&gt;</code></p>
+<p>其中位宽是指对应二进制的位数    </p>
+<p>需要注意的是，尾款小于相应数值的实际位数时，相应的高位部分被忽略。<code>4&#39;D61</code>与<code>4&#39;B1101</code>相同。因为十进制下<code>61==111101</code>，这里要求二进制4bit，所以是<code>1101</code>.</p>
+<h2 id="parameter"><a href="#parameter" class="headerlink" title="parameter"></a>parameter</h2><p>语法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">parameter 参数名1=表达式，参数名2=表达式，......；</span><br><span class="line"></span><br><span class="line">例：</span><br><span class="line"></span><br><span class="line">parameter count_bits=8;</span><br><span class="line">parameter sel=8,code=8&apos;ha3;</span><br><span class="line">parameter datawidth=8;addwidth=datawidth*2;</span><br></pre></td></tr></table></figure>
+<p>使用常量的目的:</p>
+<ul>
+<li><p>便于阅读</p>
+</li>
+<li><p>便于修改 </p>
+</li>
+</ul>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><ul>
+<li>网络型 nets type</li>
+</ul>
+<p>指硬件电路中的各种连接，输出始终根据输入的变化更新其值的变化。</p>
+<ul>
+<li>寄存器型 register type </li>
+</ul>
+<p>常指硬件中电路中具有状态保持作用的器件，如触发器、寄存器等等。</p>
+<hr>
+<p>nets type中最主要的就是wire型变量，常用来表示用assign语句赋值的组合逻辑信号。可以取值为0，1，x（不定值），z（高阻）    </p>
+<p>注意，Verilog HDL模块中的输入输出信号类型缺省时，自动定义为wire型变量。</p>
+<p>语法：<br>wire 数据1，数据2，……数据n.</p>
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wire a,b,c //定义了三个wire型变量</span><br><span class="line"></span><br><span class="line">wire[7:0] databus //定义了8bit宽wire型向量数据总线</span><br><span class="line"></span><br><span class="line">wire[20:1] addrbus  //定义了20bit宽的wire型向量地址总线</span><br></pre></td></tr></table></figure>
+<hr>
+<p>这里记录下register type中的reg型，常用的寄存器型变量</p>
+<p>语法： reg 数据1，数据2，数据3……;</p>
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">reg a,b;</span><br><span class="line"></span><br><span class="line">reg[8:1] data //定义可8bit宽的reg型向量</span><br><span class="line"></span><br><span class="line">reg[7:0] mymem[1023:0] //定义了1024字节（8bit*1024）的存储器</span><br></pre></td></tr></table></figure>
+<h1 id="常用语句"><a href="#常用语句" class="headerlink" title="常用语句"></a>常用语句</h1><ul>
+<li><p>赋值           连续赋值语句、过程赋值语句</p>
+</li>
+<li><p>条件语句         if-else语句、case语句</p>
+</li>
+<li><p>循环语句         forever、repeat、while、for语句</p>
+</li>
+<li><p>结构说明语句     initial、always、task、function语句</p>
+</li>
+<li><p>编译预处理语句     ‘define ‘include ‘timescale语句</p>
+</li>
+</ul>
+<h2 id="过程块"><a href="#过程块" class="headerlink" title="过程块"></a>过程块</h2><ol>
+<li>always过程块</li>
+</ol>
+<p>模板：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">always @(&lt;敏感信号表达式&gt;)</span><br><span class="line">begin</span><br><span class="line">	<span class="comment">//过程赋值</span></span><br><span class="line">	<span class="comment">//if语句	</span></span><br><span class="line">	<span class="comment">//case语句</span></span><br><span class="line">	<span class="comment">//while、repeat、for语句</span></span><br><span class="line">	<span class="comment">//task、function调用</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>当敏感信号表达式的值改变时候，就执行一遍块内语句。同时always过程块是不能够嵌套使用的。</p>
+<p><strong>关键字</strong><code>posedge</code>与<code>negedge</code>关键字分别是上升沿以及下降沿</p>
+<p>例如：同步时序电路的时钟信号为clk，clear为异步清零信号。敏感信号可写为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//上升沿触发，高电平清0有效</span><br><span class="line">always @(posedge clk or posedge clear)</span><br><span class="line"></span><br><span class="line">//上升沿触发，低电平清0有效</span><br><span class="line">always @(posedge clk or negedge clear)</span><br></pre></td></tr></table></figure>
+<p>例如当<code>negedge clear</code>表示当<code>clear==0</code>时</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">always @(posedge clk or negedge clear)</span><br><span class="line">	begin</span><br><span class="line">		if(!clear)//当clear==0时候，always会由事件驱动</span><br><span class="line">			qout=0;</span><br><span class="line">		else</span><br><span class="line">			qout=in;</span><br><span class="line">	end</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>initial过程块</li>
+</ol>
+<p>initial模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">initial</span><br><span class="line">begin</span><br><span class="line">	语句1；</span><br><span class="line">	语句2；</span><br><span class="line">	......</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>对变量和存贮器初始化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">initial</span><br><span class="line">begin</span><br><span class="line">	reg1=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(addr=<span class="number">0</span>;addr&lt;size;addr=addr+<span class="number">1</span>)</span><br><span class="line">		memory[addr]=<span class="number">0</span>;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>initial语句主要面向功能模拟，通常不具有可综合性。</p>
+</li>
+<li><p>模拟0时刻开始执行，只执行一次</p>
+</li>
+<li><p>同一模块内的多个initial过程块，模拟0时刻开始并行执行。</p>
+</li>
+</ul>
+<p>initial与always语句一样，是不能嵌套使用的。即在initial语句中不能再次嵌套initial语句块。 </p>
+<h2 id="赋值语句"><a href="#赋值语句" class="headerlink" title="赋值语句"></a>赋值语句</h2><ol>
+<li>连续赋值语句assign常用于对wire型变量进行赋值</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">input a,b;</span><br><span class="line">output c;</span><br><span class="line">assign c=a&amp;b;</span><br></pre></td></tr></table></figure>
+<p>a,b信号的任何变化，都将随时反映到c上来。</p>
+<ol start="2">
+<li>过程赋值语句<strong>常用于对reg型变量进行赋值</strong></li>
+</ol>
+<p>一般分为两种方式：</p>
+<ul>
+<li><p>非阻塞赋值：一条非阻塞赋值语句的执行是不会阻塞下一条语句的执行，也就是收本条非阻塞赋值语句的执行完毕之前，下一条语句也可以开始执行。非阻塞赋值语句在块结束时才一同完成赋值操作，在一块内非阻塞赋值语句并行执行。赋值符号<code>&lt;=</code></p>
+</li>
+<li><p>阻塞赋值：该语句结束时就完成赋值操作，前面的语句没有完成之前，后面的语句是不能执行的，在一块内非阻塞赋值语句顺序执行。赋值符号<code>=</code></p>
+</li>
+</ul>
+<p>非阻塞赋值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">module non_block (c, a,b,clk);</span><br><span class="line">output c,b;</span><br><span class="line">input a,clk;</span><br><span class="line">reg c,b;</span><br><span class="line">always @(posedge clk)</span><br><span class="line">	begin</span><br><span class="line">		b&lt;=a;</span><br><span class="line">		c&lt;=b;</span><br><span class="line">	end</span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+<p>由于是非阻塞赋值，bc在clk上升沿同时进行状态变化。所以<code>b&lt;=a;c&lt;=b;</code>语句在同时执行，所以c的值是b上一个上升沿的值，b的值被赋值为a上一个上升沿的值。</p>
+<p><img src="/img/article/verilog_data_setvalue.jpg" alt="仿真图片"></p>
+<p>阻塞赋值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">module block (c, a,b,clk);</span><br><span class="line">output c,b;</span><br><span class="line">input a,clk;</span><br><span class="line">reg c,b;</span><br><span class="line">always @(posedge clk)</span><br><span class="line">	begin</span><br><span class="line">		b=a;</span><br><span class="line">		c=b;</span><br><span class="line">	end</span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+<p>顺序执行有<code>c==b</code></p>
+<p><img src="/img/article/verilog_date_setvalue2.jpg" alt="仿真图片"></p>
+<h2 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h2><p>if-else语句块</p>
+<p><code>pass</code></p>
+<p>case语句</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> （&lt;敏感表达式&gt;）</span><br><span class="line">	值<span class="number">1</span>：语句或语句块<span class="number">1</span> ；<span class="comment">//case分支项</span></span><br><span class="line">	值<span class="number">2</span>：语句或语句块<span class="number">2</span> ；</span><br><span class="line">	……</span><br><span class="line">	值n：语句或语句块n ；</span><br><span class="line">	<span class="keyword">default</span>：语句或语句块n+<span class="number">1</span>；<span class="comment">//可省略</span></span><br><span class="line">endcase</span><br></pre></td></tr></table></figure>
+<h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><ul>
+<li><p>若没有列出所有条件分支，编译器认为条件不满足时，会引进触发器保持原值。</p>
+</li>
+<li><p>时序电路可利用上述特性来保持状态。</p>
+</li>
+<li><p>组合电路必须列出所有条件分支，否则会产生隐含触发器。</p>
+</li>
+</ul>
+<p>8bit二进制乘法器  integer</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">module mult_for (outcome,a,b);</span><br><span class="line">parameter size=8 ;</span><br><span class="line">output[2*size:1] outcome;</span><br><span class="line">input[size:1] a,b; //乘数</span><br><span class="line">reg[2*size:1] outcome; //积</span><br><span class="line">integer i;</span><br><span class="line">always @(a or b)</span><br><span class="line">	begin</span><br><span class="line">		outcome=0;</span><br><span class="line">		for (i=1;i&lt;=size;i=i+1)</span><br><span class="line">		if(b[i]) outcome=outcome+( a&lt;&lt;(i-1) ) ;</span><br><span class="line">	end</span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+<h1 id="task、function"><a href="#task、function" class="headerlink" title="task、function"></a>task、function</h1><h2 id="task"><a href="#task" class="headerlink" title="task"></a>task</h2><p>定义格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">task&lt;任务名&gt;</span><br><span class="line">	端口与类型说明</span><br><span class="line">	局部变量说明</span><br><span class="line">	语句或语句块</span><br><span class="line">endtask</span><br></pre></td></tr></table></figure>
+<p>调用格式：</p>
+<p><code>&lt;任务名&gt;(port1，port2，port3,......)</code></p>
+<h2 id="函数function"><a href="#函数function" class="headerlink" title="函数function"></a>函数function</h2><p>定义格式:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function &lt;返回值位宽或类型&gt; &lt;函数名&gt;</span><br><span class="line">	输入端口与类型说明</span><br><span class="line">	局部变量说明</span><br><span class="line">	语句或语句块</span><br><span class="line">endfunction</span><br></pre></td></tr></table></figure>
+<p>调用格式:</p>
+<p><code>&lt;函数名&gt; (&lt;输入表达式1&gt;,&lt;输入表达式2&gt;,&lt;输入表达式3&gt;,......)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">module function_example(i,out);</span><br><span class="line">input[7:0] in;</span><br><span class="line">output[2:0] out;</span><br><span class="line">reg[2:0] out;</span><br><span class="line">	function[2:0] gefun;</span><br><span class="line">		input[7:0] x; //输入端口说明</span><br><span class="line">		reg[2:0] count;</span><br><span class="line">		integer i;</span><br><span class="line">		begin</span><br><span class="line">			count=0;</span><br><span class="line">			for(i=0;i&lt;=7;i=i+1)</span><br><span class="line">				if(x[i]==1&apos;b0)count=count+1;</span><br><span class="line">			gefun=count;</span><br><span class="line">		end</span><br><span class="line">	endfunction</span><br><span class="line">	always @(in) out=gefun(in);//这里要注意的是 in要与x位宽相同</span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+<p>Verilog中函数function声明，在声明的最后一句一般都是对结果赋值。也就是对函数名赋值。如上例中，函数名gefun，在声明最后一句就是对gefun的赋值。</p>
+<h1 id="编译预处理"><a href="#编译预处理" class="headerlink" title="编译预处理"></a>编译预处理</h1><ul>
+<li><p>`define</p>
+</li>
+<li><p>`include</p>
+</li>
+<li><p>`timescale</p>
+</li>
+</ul>
+<p>编译指令以”`”反引号开头。不同于整数的单引号，预编译使用的是反引号，一般在键盘的左上角。</p>
+<h1 id="顺序与并行"><a href="#顺序与并行" class="headerlink" title="顺序与并行"></a>顺序与并行</h1><ul>
+<li><p>assign语句<code>之间</code>:并行执行（同时执行）</p>
+</li>
+<li><p>过程块<code>之间</code>（always、initial）：并行执行</p>
+</li>
+<li><p>assign语句与过程块<code>之间</code>：并行执行</p>
+</li>
+<li><p>过程块（initial、always）内部</p>
+</li>
+</ul>
+<ol>
+<li><p>串行块（begin-end）：顺序执行—非阻塞语句类似于并行语句</p>
+</li>
+<li><p>并行快（fork-join）：并行执行</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/mp-qr.jpg" alt="clinjie wechat" style="width: 200px; max-width: 100%;">
+    <div>Think about u every day</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Verilog-HDL/" rel="tag"># Verilog HDL</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/23/verilog_instance/" rel="next" title="verilog实例">
+                <i class="fa fa-chevron-left"></i> verilog实例
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/27/SA/" rel="prev" title="模拟退火">
+                模拟退火 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      <! -- 添加微信图标 -->
+	    
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+    <div class="comments" id="comments">
+       
+            <div id="uyan_frame"></div>
+       
+    </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/img/avatar.jpg" alt="clinjie">
+          <p class="site-author-name" itemprop="name">clinjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chuangwailinjie" target="_blank" title="github" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chuangwalinjie" target="_blank" title="weibo" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/peihaozhu" target="_blank" title="zhihu" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#模块"><span class="nav-number">1.</span> <span class="nav-text">模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模块介绍"><span class="nav-number">1.1.</span> <span class="nav-text">模块介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块结构"><span class="nav-number">1.2.</span> <span class="nav-text">模块结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#语句模块描述方式"><span class="nav-number">2.</span> <span class="nav-text">语句模块描述方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#结构型描述"><span class="nav-number">2.1.</span> <span class="nav-text">结构型描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据流型描述"><span class="nav-number">2.2.</span> <span class="nav-text">数据流型描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行为级描述"><span class="nav-number">2.3.</span> <span class="nav-text">行为级描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip"><span class="nav-number">2.4.</span> <span class="nav-text">Tip</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常量"><span class="nav-number">3.</span> <span class="nav-text">常量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数字"><span class="nav-number">3.1.</span> <span class="nav-text">数字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#parameter"><span class="nav-number">3.2.</span> <span class="nav-text">parameter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量"><span class="nav-number">3.3.</span> <span class="nav-text">变量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用语句"><span class="nav-number">4.</span> <span class="nav-text">常用语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#过程块"><span class="nav-number">4.1.</span> <span class="nav-text">过程块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#赋值语句"><span class="nav-number">4.2.</span> <span class="nav-text">赋值语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件语句"><span class="nav-number">4.3.</span> <span class="nav-text">条件语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tips"><span class="nav-number">4.4.</span> <span class="nav-text">Tips</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#task、function"><span class="nav-number">5.</span> <span class="nav-text">task、function</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#task"><span class="nav-number">5.1.</span> <span class="nav-text">task</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数function"><span class="nav-number">5.2.</span> <span class="nav-text">函数function</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译预处理"><span class="nav-number">6.</span> <span class="nav-text">编译预处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#顺序与并行"><span class="nav-number">7.</span> <span class="nav-text">顺序与并行</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clinjie</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+    
+      
+    
+
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2142203"></script>
+        <!-- UY END -->
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("BKt7qufuU6B0ix9a9ik7kejs-gzGzoHsz", "pfDjDmIpP09Fj9QNLGzSL2Ox");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+	
+	
+
+<!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<!-- 颗粒漂浮背景 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript">var OriginTitile=document.title,st;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="你要去哪里",clearTimeout(st)):(document.title="clinjie~~"+OriginTitile,st=setTimeout(function(){document.title=OriginTitile},3e3))})</script>
+</body>
+</html>

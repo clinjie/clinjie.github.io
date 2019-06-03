@@ -1,0 +1,1158 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Verilog HDL,仿真,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="临街小站" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="好的，接着上篇文章Verilog小叙(二) 数据流建模之前的介绍中，我们已经初步了解到数据流描述方式，本节对数据流的建模方式进一步讨论，主要讲述连续赋值语句、阻塞赋值语句、非阻塞赋值语句，并针对一个系统设计频率计数器的实例进行讲解。 连续赋值语句数据流的描述是采用连续赋值语句(assign )语句来实现的。语法如下：assign net_type = 表达式；连续赋值语句用于组合逻辑的建模。 等式">
+<meta name="keywords" content="Verilog HDL,仿真">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Verilog小叙(三)">
+<meta property="og:url" content="http://peihao.space/2016/03/09/verilog_hdl3/index.html">
+<meta property="og:site_name" content="临街小站">
+<meta property="og:description" content="好的，接着上篇文章Verilog小叙(二) 数据流建模之前的介绍中，我们已经初步了解到数据流描述方式，本节对数据流的建模方式进一步讨论，主要讲述连续赋值语句、阻塞赋值语句、非阻塞赋值语句，并针对一个系统设计频率计数器的实例进行讲解。 连续赋值语句数据流的描述是采用连续赋值语句(assign )语句来实现的。语法如下：assign net_type = 表达式；连续赋值语句用于组合逻辑的建模。 等式">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/top_down.png">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/verilog_stream.png">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/mealy.png">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/moore.png">
+<meta property="og:updated_time" content="2019-04-28T16:21:32.347Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Verilog小叙(三)">
+<meta name="twitter:description" content="好的，接着上篇文章Verilog小叙(二) 数据流建模之前的介绍中，我们已经初步了解到数据流描述方式，本节对数据流的建模方式进一步讨论，主要讲述连续赋值语句、阻塞赋值语句、非阻塞赋值语句，并针对一个系统设计频率计数器的实例进行讲解。 连续赋值语句数据流的描述是采用连续赋值语句(assign )语句来实现的。语法如下：assign net_type = 表达式；连续赋值语句用于组合逻辑的建模。 等式">
+<meta name="twitter:image" content="http://7xowaa.com1.z0.glb.clouddn.com/top_down.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://peihao.space/2016/03/09/verilog_hdl3/">
+
+
+
+
+
+  <title> Verilog小叙(三) | 临街小站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">临街小站</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photos" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br>
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+
+	  </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://peihao.space/2016/03/09/verilog_hdl3/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="clinjie">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/img/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="临街小站">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="临街小站" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Verilog小叙(三)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-09T22:23:35+08:00">
+                2016-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Verilog/" itemprop="url" rel="index">
+                    <span itemprop="name">Verilog</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/03/09/verilog_hdl3/" class="leancloud_visitors" data-flag-title="Verilog小叙(三)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+		
+		
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>好的，接着上篇文章<a href="/2016/03/08/verilog_hdl2/">Verilog小叙(二)</a></p>
+<h1 id="数据流建模"><a href="#数据流建模" class="headerlink" title="数据流建模"></a>数据流建模</h1><p>之前的介绍中，我们已经初步了解到数据流描述方式，本节对数据流的建模方式进一步讨论，主要讲述连续赋值语句、阻塞赋值语句、非阻塞赋值语句，并针对一个系统设计频率计数器的实例进行讲解。</p>
+<h2 id="连续赋值语句"><a href="#连续赋值语句" class="headerlink" title="连续赋值语句"></a>连续赋值语句</h2><p>数据流的描述是采用连续赋值语句(assign )语句来实现的。语法如下：<br><code>assign net_type = 表达式；</code><br>连续赋值语句用于组合逻辑的建模。 等式左边是wire 类型的变量。等式右边可以是常量、由运算符如逻辑运算符、算术运算符参与的表达。<br>如下几个实例：</p>
+<a id="more"></a>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wire [<span class="number">3</span>:<span class="number">0</span>] Z, preset,clear; <span class="comment">//线网说明</span></span><br><span class="line">assign z = preset &amp; clear; <span class="comment">//连续赋值语句</span></span><br><span class="line">wire <span class="built_in">cout</span>, <span class="built_in">cin</span> ;</span><br><span class="line">wire [<span class="number">3</span>:<span class="number">0</span>] sum, a, bB;</span><br><span class="line">. . .</span><br><span class="line">assign &#123;<span class="built_in">cout</span>,sum&#125; = a + b + <span class="built_in">cin</span>;</span><br><span class="line">assign mux = (s == 3)? d : 'bz;</span><br></pre></td></tr></table></figure>
+<p>注意如下几个方面：</p>
+<ol>
+<li>连续赋值语句的执行是：只要右边表达式任一个变量有变化，表达式立即被计算，计算的结果立即赋给左边信号。</li>
+<li>连续赋值语句之间是并行语句，因此与位置顺序无关。</li>
+</ol>
+<p><strong>Tips：</strong><br>实际电路中赋值语句的执行其实会有ps级别的延迟，这个延迟是线、门器件本身特性造成的，不过只要是同步电路，那么ps级别延迟就可以忽略不计，因为后续的寄存器是在时钟上升沿采样，ps级别延迟和一个典型的时钟周期来比，完全不用考虑。</p>
+<h2 id="阻塞赋值语句"><a href="#阻塞赋值语句" class="headerlink" title="阻塞赋值语句"></a>阻塞赋值语句</h2><p>“=”用于阻塞的赋值，凡是在组合逻辑（如在assign 语句中）赋值的请用阻塞赋值。阻塞赋值“=”在begin 和end 之间的语句是顺序执行，属于串行语句<br>说明：<br>always语句的敏感变量如果不含有时钟，即always（*）这样描述，那么也属于组合逻辑，需要使用阻塞赋值。<br>一个组合逻辑的例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">always @(*) begin</span><br><span class="line"><span class="keyword">if</span> ( new_vld_after == <span class="number">1'b</span>1 )</span><br><span class="line">port_win = new_port_after ;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> ( new_vld_before ==<span class="number">1'b</span>1 )</span><br><span class="line">port_win = new_port_before ;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">port_win = last_sel_port ;</span><br><span class="line">end<span class="comment">//阻塞赋值在begin-end之间串行执行</span></span><br></pre></td></tr></table></figure>
+<h2 id="非阻塞赋值语句"><a href="#非阻塞赋值语句" class="headerlink" title="非阻塞赋值语句"></a>非阻塞赋值语句</h2><p><code>“&lt;=”</code>用于阻塞的赋值，凡是在时序逻辑（如在always语句中）赋值的请用非阻塞赋值，非阻塞赋值<code>“&lt;=”</code>在<code>begin</code>和<code>end</code>之间的语句是并行执行，属于并行执语句。</p>
+<p><strong>Tips：</strong></p>
+<p><code>时序逻辑值</code>的是<code>带有时钟的always块逻辑</code>，只有always带有时钟，那么这个逻辑才能是寄存器。<br>一个时序逻辑的例子：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">always @(posedge sys_clk <span class="keyword">or</span> negedge sys_rst_n) begin</span><br><span class="line"><span class="keyword">if</span> (sys_rst_n ==<span class="number">1'b</span>0)</span><br><span class="line">clk_cnt &lt;= <span class="number">26'b</span>0;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">clk_cnt &lt;= clk_cnt + <span class="number">26'b</span>1;</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<h2 id="数据流建模具体实例"><a href="#数据流建模具体实例" class="headerlink" title="数据流建模具体实例"></a>数据流建模具体实例</h2><p>以上面的频率计数器为例，其中的AND2模块我们用数据流来建模。</p>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/top_down.png" alt></p>
+<p>AND2模块对应文件AND2.v 的内容如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">module</span> <span class="title">AND2</span> <span class="params">(A0, A1, Y)</span></span>;</span><br><span class="line">input A0;</span><br><span class="line">input A1;</span><br><span class="line">output Y;</span><br><span class="line">wire A0;</span><br><span class="line">wire A1;</span><br><span class="line">wire Y;</span><br><span class="line">assign Y = A0 &amp; A1;<span class="comment">//连续赋值语句</span></span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+<h1 id="行为建模"><a href="#行为建模" class="headerlink" title="行为建模"></a>行为建模</h1><p>在第四节中，我们已经对行为描述方式有个概念，这里对行为建模进一步的描述，并通过一个系统设计频率计数器加以巩固。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>行为建模方式是通过对设计的行为的描述来实现对设计建模，一般是指用过程赋值语句（<code>initial</code>语句和<code>always</code>语句）来设计的称为行为建模。</p>
+<h2 id="顺序语句块"><a href="#顺序语句块" class="headerlink" title="顺序语句块"></a>顺序语句块</h2><p>语句块提供将两条或更多条语句组合成语法结构上相当于一条语句的机制。这里主要讲Verilog HDL的顺序语句块(begin . . . end)：语句块中的语句按给定次序顺序执行。<br>顺序语句块中的语句按顺序方式执行。每条语句中的时延值与其前面的语句执行的模拟时间相关。一旦顺序语句块执行结束，跟随顺序语句块过程的下一条语句继续执行。顺序语句块的语法如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">begin [:block_id&#123;declarations&#125;]</span><br><span class="line">procedural_statement (s)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 产生波形:</span><br><span class="line">begin</span><br><span class="line"> #2 Stream = 1;</span><br><span class="line"> #5 Stream = 0;</span><br><span class="line"> #3 Stream = 1;</span><br><span class="line"> #4 Stream = 0;</span><br><span class="line"> #2 Stream = 1;</span><br><span class="line"> #5 Stream = 0;</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>假定顺序语句块在第10个时间单位开始执行。两个时间单位后第1条语句执行，即第12个时间单位。此执行完成后，下1条语句在第17个时间单位执行(延迟5 个时间单位)。然后下1条语句在第20个时间单位执行，以此类推。该顺序语句块执行过程中产生的波形如图：</p>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/verilog_stream.png" alt></p>
+<h2 id="过程赋值语句"><a href="#过程赋值语句" class="headerlink" title="过程赋值语句"></a>过程赋值语句</h2><p>Verilog HDL中提供两种过程赋值语句initial和always语句，用这两种语句来实现行为的建模。这两种语句之间的执行是并行的，即语句的执行与位置顺序无关。这两种语句通常与语句块（begin ….end）相结合，则语句块中的执行是按顺序执行的。</p>
+<ol>
+<li>initial 语句</li>
+</ol>
+<hr>
+<p>initial语句只执行一次，即在设计被开始模拟执行时开始（0时刻）。<em>通常只用在对设计进行仿真的测试文件中，用于对一些信号进行初始化和产生特定的信号波形</em>。<br>语法如下：（大家只要先有个概念就可以）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">initial</span><br><span class="line">[timing_control] procedural_statement</span><br><span class="line">procedural_statement 是下列语句之一：</span><br><span class="line">procedural_assignment(blocking <span class="keyword">or</span> non-blocking) <span class="comment">//阻塞或非阻塞性过程赋值语句</span></span><br><span class="line">procedural_continuous_assignment</span><br><span class="line">conditional_statement</span><br><span class="line">case_statement</span><br><span class="line">loop_statement</span><br><span class="line">wait_statement</span><br><span class="line">disable_statement</span><br><span class="line">event_trigger</span><br><span class="line">task_enable (user <span class="keyword">or</span> system)</span><br></pre></td></tr></table></figure>
+<p>例子如上产生一个信号波形：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">initial</span><br><span class="line">begin</span><br><span class="line">#<span class="number">2</span> Stream = <span class="number">1</span>;</span><br><span class="line">#<span class="number">5</span> Stream = <span class="number">0</span>;</span><br><span class="line">#<span class="number">3</span> Stream = <span class="number">1</span>;</span><br><span class="line">#<span class="number">4</span> Stream = <span class="number">0</span>;</span><br><span class="line">#<span class="number">2</span> Stream = <span class="number">1</span>;</span><br><span class="line">#<span class="number">5</span> Stream = <span class="number">0</span>;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>说明：<br>initial只能使用在仿真中，是不可综合语法，很多初学者在开始的时候以为initial是可以综合的。</p>
+<ol start="2">
+<li>always 语句</li>
+</ol>
+<hr>
+<p>always语句与initial语句相反，是被重复执行，执行机制是通过对一个称为敏感变量表的<strong>事件驱动</strong>来实现的，下面会具体讲到。always 语句可实现组合逻辑或时序逻辑的建模。<br>例子1：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">initial</span><br><span class="line">clk = <span class="number">0</span> ；</span><br><span class="line">always</span><br><span class="line">#<span class="number">5</span> clk = ~clk；</span><br></pre></td></tr></table></figure>
+<p>因为always 语句是重复执行的，因此，clk是初始值为0 的，周期为10 的方波。<br>例子2： D触发器</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//并行执行</span></span><br><span class="line">always @ ( posedge clk <span class="keyword">or</span> negedge rst ) begin</span><br><span class="line">	<span class="keyword">if</span> （ rst == <span class="number">1</span>’b0 ）<span class="comment">//当rst为0时</span></span><br><span class="line">		q &lt;= ‘ b <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		q &lt;= d;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>上面<em>括号内的内容称为敏感变量</em>，即整个always 语句当敏感变量有变化时被执行，否则不执行。因此，当rst为0时，q被复位，在时钟上升沿时，d被采样到q。</p>
+<p>例子3： 2选一的分配器</p>
+<p><code>always @( sel ，a ，b）</code><br><code>c = sel ? a ：b；</code></p>
+<p>这里的sel ，a，b 同样称为敏感变量，当三者之一有变化时，always 被执行，当sel 为 1 ，c被赋值为a ，否则为b 。描述的是一个组合逻辑 mux 器件。<br>说明：<br>Verilog 2001语法定义敏感变量可以使用“*”代替，<br>例子3的2 选一的分配器可以这样写：：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">always @(*）</span><br><span class="line">c = sel ? a ：b；</span><br></pre></td></tr></table></figure></p>
+<p>此处强烈建议大家使用*替代敏感变量，减少错误发生。</p>
+<p><strong>Tips:</strong></p>
+<ol>
+<li>对<strong>组合逻辑</strong>的always 语句，敏感变量建议使用*替代。</li>
+<li>对组合逻辑器件的赋值采用阻塞赋值 “=”。</li>
+<li>时序逻辑器件的赋值语句采用非阻塞赋值 “&lt;=”；</li>
+</ol>
+<h1 id="状态机"><a href="#状态机" class="headerlink" title="状态机"></a>状态机</h1><p>有限状态机英文名字，<em>Finite State Machine</em>，简称状态机，缩写为FSM。</p>
+<p>有限状态机是指输出取决于过去输入部分和当前输入部分的时序逻辑电路。有限状态机又可以认为是组合逻辑和寄存器逻辑的一种组合。状态机特别适合描述那些发生有先后顺序或者有逻辑规律的事情，其实这就是状态机的本质。状态机就是对具有逻辑顺序或时序规律的事件进行描述的一种方法</p>
+<p>根据状态机的输出是否与输入条件相关，可将状态机分为两大类，即摩尔 (Moore) 型状态机和米勒 (Mealy) 型状态机。</p>
+<ul>
+<li><p>Mealy状态机：时序逻辑的输出不仅取决于当前状态，还取决于输入。</p>
+</li>
+<li><p>Moore状态机：时序逻辑的输出只取决于当前。</p>
+</li>
+</ul>
+<p>根据实际写法，状态机还可以分为一段式、二段式和三段式状态机。</p>
+<ul>
+<li><p>一段式： 把整个状态机写在一个always模块中， 并且这个模块既包含状态转移，又含有组合逻辑输入 /输出 。</p>
+</li>
+<li><p>二段式： 状态切换用时序逻辑，次态输出和信号输出用组合逻辑。</p>
+</li>
+<li><p>三段式： 状态切换用时序逻辑，次态输出用组合逻辑，信号输出用时序逻辑。</p>
+</li>
+</ul>
+<p><strong>Tips：</strong></p>
+<p>实际应用中三段式使用最多，也最为可靠，避免了状态和输入输出的干扰，推荐大家使用第三种写法，我们实际项目中基本全部是第三种写法。本文也着重讲解三段式。</p>
+<h2 id="Mealy状态机"><a href="#Mealy状态机" class="headerlink" title="Mealy状态机"></a>Mealy状态机</h2><ul>
+<li><p>下一个状态 = F(当前状态，输入信号)； </p>
+</li>
+<li><p>输出信号 = G(当前状态，输入信号)；</p>
+</li>
+</ul>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/mealy.png" alt></p>
+<h2 id="Moore状态机"><a href="#Moore状态机" class="headerlink" title="Moore状态机"></a>Moore状态机</h2><ul>
+<li><p>下一个状态 = F(当前状态，输入信号)； </p>
+</li>
+<li><p>输出信号 = G(当前状态)；</p>
+</li>
+</ul>
+<p><img src="http://7xowaa.com1.z0.glb.clouddn.com/moore.png" alt></p>
+<h2 id="三段式状态机"><a href="#三段式状态机" class="headerlink" title="三段式状态机"></a>三段式状态机</h2><p>两段式直接采用组合逻辑输出，而三段式则通过在组合逻辑后再增加一级寄存器来实现时序逻辑输出。这样做的好处是可以有效地滤去租个逻辑输出的毛刺，同时可以有效地进行时序计算与约束，另外对于总线形式的输出信号来说，容易使总线数据对齐，从而减小总线数据间的偏移，减小接收端数据采样出错的频率。<br>三段式状态机的基本格式是：</p>
+<ul>
+<li><p>第一个always语句实现同步状态跳转；</p>
+</li>
+<li><p>第二个always语句实现组合逻辑；</p>
+</li>
+<li><p>第三个always语句实现同步输出。</p>
+</li>
+</ul>
+<p>Verilog描述状态机需要注意的事项：</p>
+<ol>
+<li><p>定义模块名和输入出端口；</p>
+</li>
+<li><p>定义输入、输出变量或寄存器；</p>
+</li>
+<li><p>定义时钟和复位信号；</p>
+</li>
+<li><p>定义状态变量和状态寄存器；</p>
+</li>
+<li><p>用时钟沿触发的<code>always</code>块表示状态转移过程；</p>
+</li>
+<li><p>在复位信号有效时给状态寄存器赋初始值；</p>
+</li>
+<li><p>描述状态的转换过程：符合条件，从一个状态到另外一个状态。否则留在原状态；</p>
+</li>
+<li><p>验证状态转移的正确性，必须完整和全面。</p>
+</li>
+</ol>
+<p>一个三段式状态机例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">module</span> <span class="title">divider7_fsm</span> <span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">//input</span></span></span><br><span class="line"><span class="function"><span class="params">input sys_clk ,    //系统时钟</span></span></span><br><span class="line"><span class="function"><span class="params">input sys_rst_n ,  //系统复位，以n结尾-低为有效</span></span></span><br><span class="line"><span class="function"><span class="params">//output</span></span></span><br><span class="line"><span class="function"><span class="params">output reg clk_divide_7 // 七分Clock</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//reg define</span></span><br><span class="line"></span><br><span class="line">reg [<span class="number">6</span>:<span class="number">0</span>] curr_st ; <span class="comment">// 状态机目前的状态</span></span><br><span class="line">reg [<span class="number">6</span>:<span class="number">0</span>] next_st ; <span class="comment">// 状态机下一时刻状态</span></span><br><span class="line">reg clk_divide_7 ; <span class="comment">// 时钟七分频</span></span><br><span class="line"><span class="comment">//wire define</span></span><br><span class="line"><span class="comment">//parameter define</span></span><br><span class="line"><span class="comment">//one hot code design</span></span><br><span class="line">parameter S0 = <span class="number">7</span><span class="string">'b0000000;</span></span><br><span class="line"><span class="string">parameter S1 = 7'</span>b0000001;</span><br><span class="line">parameter S2 = <span class="number">7</span><span class="string">'b0000010;</span></span><br><span class="line"><span class="string">parameter S3 = 7'</span>b0000100;</span><br><span class="line">parameter S4 = <span class="number">7</span><span class="string">'b0001000;</span></span><br><span class="line"><span class="string">parameter S5 = 7'</span>b0010000;</span><br><span class="line">parameter S6 = <span class="number">7</span><span class="string">'b0100000;</span></span><br><span class="line"><span class="string">/********************************************</span></span><br><span class="line"><span class="string">** Main Program</span></span><br><span class="line"><span class="string">**</span></span><br><span class="line"><span class="string">*********************************************/</span></span><br><span class="line"><span class="string">//同步状态跳转  时钟上升沿或下降沿系统复位为低是事件驱动</span></span><br><span class="line"><span class="string">always @(posedge sys_clk or negedge sys_rst_n) begin</span></span><br><span class="line"><span class="string">	if (sys_rst_n ==1'</span>b0) begin</span><br><span class="line">		curr_st &lt;= <span class="number">7</span><span class="string">'b0;//非阻塞赋值，并行</span></span><br><span class="line"><span class="string">	end</span></span><br><span class="line"><span class="string">	else begin//系统时钟上升沿</span></span><br><span class="line"><span class="string">		curr_st &lt;= next_st;</span></span><br><span class="line"><span class="string">	end</span></span><br><span class="line"><span class="string">end</span></span><br><span class="line"><span class="string">//实现组合逻辑</span></span><br><span class="line"><span class="string">always @(*) begin</span></span><br><span class="line"><span class="string">	case (curr_st)</span></span><br><span class="line"><span class="string">		S0: begin</span></span><br><span class="line"><span class="string">			next_st = S1;</span></span><br><span class="line"><span class="string">		end</span></span><br><span class="line"><span class="string">		S1: begin</span></span><br><span class="line"><span class="string">			next_st = S2;</span></span><br><span class="line"><span class="string">		end</span></span><br><span class="line"><span class="string">		S2: begin</span></span><br><span class="line"><span class="string">			next_st = S3;</span></span><br><span class="line"><span class="string">		end</span></span><br><span class="line"><span class="string">		S3: begin</span></span><br><span class="line"><span class="string">			next_st = S4;</span></span><br><span class="line"><span class="string">		end</span></span><br><span class="line"><span class="string">		S4: begin</span></span><br><span class="line"><span class="string">			next_st = S5;</span></span><br><span class="line"><span class="string">		end</span></span><br><span class="line"><span class="string">		S5: begin</span></span><br><span class="line"><span class="string">			next_st = S6;</span></span><br><span class="line"><span class="string">		end</span></span><br><span class="line"><span class="string">		S6: begin</span></span><br><span class="line"><span class="string">			next_st = S0;</span></span><br><span class="line"><span class="string">		end</span></span><br><span class="line"><span class="string">		default: next_st = S0;</span></span><br><span class="line"><span class="string">	endcase</span></span><br><span class="line"><span class="string">end</span></span><br><span class="line"><span class="string">//control divide clock offset实现同步输出</span></span><br><span class="line"><span class="string">always @(posedge sys_clk or negedge sys_rst_n) begin</span></span><br><span class="line"><span class="string">	if (sys_rst_n ==1'</span>b0) begin</span><br><span class="line">		clk_divide_7 &lt;= <span class="number">1</span><span class="string">'b0;</span></span><br><span class="line"><span class="string">	end</span></span><br><span class="line"><span class="string">	else if ((curr_st == S0) | (curr_st == S1) | (curr_st == S2) | (curr_st == S3))</span></span><br><span class="line"><span class="string">		clk_divide_7 &lt;= 1'</span>b0;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> ((curr_st == S4) | (curr_st == S5) | (curr_st == S6))</span><br><span class="line">		clk_divide_7 &lt;= <span class="number">1</span><span class="string">'b1;</span></span><br><span class="line"><span class="string">	else</span></span><br><span class="line"><span class="string">		;</span></span><br><span class="line"><span class="string">end</span></span><br><span class="line"><span class="string">endmodule</span></span><br><span class="line"><span class="string">//end of RTL code</span></span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<ol>
+<li>本状态机采用独热码设计，简称one-hot code，独热码编码的最大优势在于状态比较时仅仅需要比较一个位，从而一定程度上简化了译码逻辑。</li>
+<li>一般状态机状态编码使用二进制编码、格雷码、独热码。 各种编码比较: 二进制编码、格雷码编码使用最少的触发器，消耗较多的组合逻辑，而独热码编码反之。独热码编码的最大优势在于状态比较时仅仅需要比较一个位，从而一定程度上简化了译码逻辑。虽然在需要表示同样的状态数时，独热编码占用较多的位，也就是消耗较多的触发器，但这些额外触发器占用的面积可与译码电路省下来的面积相抵消。 Binary（二进制编码）、gray-code（格雷码）编码使用最少的触发器，较多的组合逻辑，而one-hot（独热码）编码反之。one-hot 编码的最大优势在于状态比较时仅仅需要比较一个bit，一定程度上从而简化了比较逻辑，减少了毛刺产生的概率。另一方面，对于小型设计使用gray-code和binary编码更有效，而大型状态机使用one-hot更高效。</li>
+</ol>
+<h2 id="行为建模具体实例"><a href="#行为建模具体实例" class="headerlink" title="行为建模具体实例"></a>行为建模具体实例</h2><p>以上面的LED流水灯为例，采用行为建模方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">module</span> <span class="title">LED</span> <span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">//input</span></span></span><br><span class="line"><span class="function"><span class="params">input sys_clk , //系统时钟</span></span></span><br><span class="line"><span class="function"><span class="params">input sys_rst_n , //系统复位，低电平有效</span></span></span><br><span class="line"><span class="function"><span class="params">//output</span></span></span><br><span class="line"><span class="function"><span class="params">output reg [<span class="number">7</span>:<span class="number">0</span>] LED )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Parameter define</span></span><br><span class="line">parameter WIDTH = <span class="number">8</span> ;</span><br><span class="line">parameter SIZE = <span class="number">8</span> ;</span><br><span class="line">parameter WIDTH2 = <span class="number">18</span> ;</span><br><span class="line">parameter Para = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Reg define</span></span><br><span class="line">reg [SIZE-<span class="number">1</span>:<span class="number">0</span>] counter ;</span><br><span class="line">reg [WIDTH2-<span class="number">1</span>:<span class="number">0</span>] count ;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Wire define</span></span><br><span class="line"><span class="comment">//*****************************************************</span></span><br><span class="line"><span class="comment">//** Main Program</span></span><br><span class="line"><span class="comment">//**</span></span><br><span class="line"><span class="comment">//*****************************************************</span></span><br><span class="line"><span class="comment">// count for add counter</span></span><br><span class="line"></span><br><span class="line">always @(posedge sys_clk or negedge sys_rst_n) begin</span><br><span class="line">	<span class="keyword">if</span> (sys_rst_n ==<span class="number">1</span><span class="string">'b0)</span></span><br><span class="line"><span class="string">		count &lt;= 18'</span>b0;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		count &lt;= count + <span class="number">18</span><span class="string">'b1;</span></span><br><span class="line"><span class="string">end</span></span><br><span class="line"><span class="string">// counter for delay time to LED display</span></span><br><span class="line"><span class="string">always @(posedge sys_clk or negedge sys_rst_n) begin</span></span><br><span class="line"><span class="string">	if (sys_rst_n ==1'</span>b0)</span><br><span class="line">		counter &lt;= <span class="number">8</span><span class="string">'b0;</span></span><br><span class="line"><span class="string">	else if ( count == Para)</span></span><br><span class="line"><span class="string">		counter &lt;= counter + 8'</span>b1;</span><br><span class="line">	<span class="keyword">else</span> ;</span><br><span class="line">end</span><br><span class="line"><span class="comment">// ctrlLED pipeline display when counter is equal 10 or 20 ....</span></span><br><span class="line">always @(posedge sys_clk or negedge sys_rst_n) begin</span><br><span class="line">	<span class="keyword">if</span> (sys_rst_n ==<span class="number">1</span><span class="string">'b0)</span></span><br><span class="line"><span class="string">		LED &lt;= 8'</span>b0;</span><br><span class="line">	<span class="keyword">else</span> begin</span><br><span class="line">		<span class="keyword">case</span> (counter)</span><br><span class="line">			<span class="number">8</span><span class="string">'d10 : LED &lt;= 8'</span>b10000000 ;</span><br><span class="line">			<span class="number">8</span><span class="string">'d20 : LED &lt;= 8'</span>b01000000 ;</span><br><span class="line">			<span class="number">8</span><span class="string">'d30 : LED &lt;= 8'</span>b00100000 ;</span><br><span class="line">			<span class="number">8</span><span class="string">'d40 : LED &lt;= 8'</span>b00010000 ;</span><br><span class="line">			<span class="number">8</span><span class="string">'d50 : LED &lt;= 8'</span>b00001000 ;</span><br><span class="line">			<span class="number">8</span><span class="string">'d60 : LED &lt;= 8'</span>b00000100 ;</span><br><span class="line">			<span class="number">8</span><span class="string">'d70 : LED &lt;= 8'</span>b00000010 ;</span><br><span class="line">			<span class="number">8</span><span class="string">'d80 : LED &lt;= 8'</span>b00000001 ;</span><br><span class="line">			<span class="keyword">default</span> : LED &lt;= <span class="number">8</span><span class="string">'b00000000 ;</span></span><br><span class="line"><span class="string">		endcase</span></span><br><span class="line"><span class="string">	end</span></span><br><span class="line"><span class="string">end</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/mp-qr.jpg" alt="clinjie wechat" style="width: 200px; max-width: 100%;">
+    <div>Think about u every day</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Verilog-HDL/" rel="tag"># Verilog HDL</a>
+          
+            <a href="/tags/仿真/" rel="tag"># 仿真</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/08/verilog_hdl2/" rel="next" title="Verilog小叙(二)">
+                <i class="fa fa-chevron-left"></i> Verilog小叙(二)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/14/torrent/" rel="prev" title="torrent文件编码">
+                torrent文件编码 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      <! -- 添加微信图标 -->
+	    
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+    <div class="comments" id="comments">
+       
+            <div id="uyan_frame"></div>
+       
+    </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/img/avatar.jpg" alt="clinjie">
+          <p class="site-author-name" itemprop="name">clinjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chuangwailinjie" target="_blank" title="github" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chuangwalinjie" target="_blank" title="weibo" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/peihaozhu" target="_blank" title="zhihu" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据流建模"><span class="nav-number">1.</span> <span class="nav-text">数据流建模</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#连续赋值语句"><span class="nav-number">1.1.</span> <span class="nav-text">连续赋值语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阻塞赋值语句"><span class="nav-number">1.2.</span> <span class="nav-text">阻塞赋值语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非阻塞赋值语句"><span class="nav-number">1.3.</span> <span class="nav-text">非阻塞赋值语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据流建模具体实例"><span class="nav-number">1.4.</span> <span class="nav-text">数据流建模具体实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#行为建模"><span class="nav-number">2.</span> <span class="nav-text">行为建模</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#顺序语句块"><span class="nav-number">2.2.</span> <span class="nav-text">顺序语句块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过程赋值语句"><span class="nav-number">2.3.</span> <span class="nav-text">过程赋值语句</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态机"><span class="nav-number">3.</span> <span class="nav-text">状态机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mealy状态机"><span class="nav-number">3.1.</span> <span class="nav-text">Mealy状态机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Moore状态机"><span class="nav-number">3.2.</span> <span class="nav-text">Moore状态机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三段式状态机"><span class="nav-number">3.3.</span> <span class="nav-text">三段式状态机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行为建模具体实例"><span class="nav-number">3.4.</span> <span class="nav-text">行为建模具体实例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clinjie</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+    
+      
+    
+
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2142203"></script>
+        <!-- UY END -->
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("BKt7qufuU6B0ix9a9ik7kejs-gzGzoHsz", "pfDjDmIpP09Fj9QNLGzSL2Ox");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+	
+	
+
+<!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<!-- 颗粒漂浮背景 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript">var OriginTitile=document.title,st;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="你要去哪里",clearTimeout(st)):(document.title="clinjie~~"+OriginTitile,st=setTimeout(function(){document.title=OriginTitile},3e3))})</script>
+</body>
+</html>

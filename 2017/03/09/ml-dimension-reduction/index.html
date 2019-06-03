@@ -1,0 +1,1115 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="ML,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="临街小站" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="k近邻学习k近邻（k-Nearest Neighboor，KNN）是一种常用的监督学习方法：给定测试样本，基于某种距离距离度量找出训练集中与其最靠近的k个训练样本，然后基于这k个训练样本的信息对本样本进行预测。分类学习中通常使用投票法，少数服从多数；回归学习中则使用平均法。通常为了体现出靠近的距离指标，在分类学习与回归学习中使用加权法，越靠近样本的权值越大。 给定测试样本x，若其最近邻样本为z，则">
+<meta name="keywords" content="ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="降维">
+<meta property="og:url" content="http://peihao.space/2017/03/09/ml-dimension-reduction/index.html">
+<meta property="og:site_name" content="临街小站">
+<meta property="og:description" content="k近邻学习k近邻（k-Nearest Neighboor，KNN）是一种常用的监督学习方法：给定测试样本，基于某种距离距离度量找出训练集中与其最靠近的k个训练样本，然后基于这k个训练样本的信息对本样本进行预测。分类学习中通常使用投票法，少数服从多数；回归学习中则使用平均法。通常为了体现出靠近的距离指标，在分类学习与回归学习中使用加权法，越靠近样本的权值越大。 给定测试样本x，若其最近邻样本为z，则">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://peihao.space/img/article/ml/ml-intro9-2.png">
+<meta property="og:image" content="http://peihao.space/img/article/ml/ml-intro9-1.png">
+<meta property="og:image" content="http://peihao.space/img/article/ml/ml-intro9-3.png">
+<meta property="og:image" content="http://peihao.space/img/article/ml/ml-intro9-4.png">
+<meta property="og:updated_time" content="2019-04-28T16:21:32.329Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="降维">
+<meta name="twitter:description" content="k近邻学习k近邻（k-Nearest Neighboor，KNN）是一种常用的监督学习方法：给定测试样本，基于某种距离距离度量找出训练集中与其最靠近的k个训练样本，然后基于这k个训练样本的信息对本样本进行预测。分类学习中通常使用投票法，少数服从多数；回归学习中则使用平均法。通常为了体现出靠近的距离指标，在分类学习与回归学习中使用加权法，越靠近样本的权值越大。 给定测试样本x，若其最近邻样本为z，则">
+<meta name="twitter:image" content="http://peihao.space/img/article/ml/ml-intro9-2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://peihao.space/2017/03/09/ml-dimension-reduction/">
+
+
+
+
+
+  <title> 降维 | 临街小站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">临街小站</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photos" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br>
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+
+	  </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://peihao.space/2017/03/09/ml-dimension-reduction/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="clinjie">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/img/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="临街小站">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="临街小站" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                降维
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-09T10:36:28+08:00">
+                2017-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index">
+                    <span itemprop="name">ML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/09/ml-dimension-reduction/" class="leancloud_visitors" data-flag-title="降维">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+		
+		
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="k近邻学习"><a href="#k近邻学习" class="headerlink" title="k近邻学习"></a>k近邻学习</h1><p>k近邻（k-Nearest Neighboor，KNN）是一种常用的监督学习方法：给定测试样本，基于某种距离距离度量找出训练集中与其最靠近的k个训练样本，然后基于这k个训练样本的信息对本样本进行预测。分类学习中通常使用投票法，少数服从多数；回归学习中则使用平均法。通常为了体现出靠近的距离指标，在分类学习与回归学习中使用加权法，越靠近样本的权值越大。</p>
+<p>给定测试样本x，若其最近邻样本为z，则最近邻分类器出错的概率就是x与z类别标记不同的概率：$P(err)=1-\sum\limits_{c \in y}P(c \mid x)P(c \mid z)$</p>
+<a id="more"></a>
+<p>假设样本独立同分布，且对任意x和任意小正数$\delta$，在x附近$\delta$距离范围内找到一个训练样本z；令$c^T=arg \max\limits_{c \in y}P(c \mid x)$表示贝叶斯最优分类器的结果，有：</p>
+<p>$$<br>P(err)=1-\sum\limits_{c \in y}P(c \mid x)P(c \mid z)<br>\approx1-\sum\limits_{c \in y}P^2(c \mid x)<br>\leq 1- P^2(c^T \mid x)<br>=(1+P(c^T \mid x))(1-P(c^T \mid x))<br>\leq 2 \times (1-p(c^T \mid x))<br>$$</p>
+<p>可以看出，在这种理想条件下KNN分类器的泛化错误率不超过贝叶斯错误率的两倍。</p>
+<h1 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h1><p>上面的讨论的基础是在足够小的距离内都有相邻的样本作为参考，考虑到做个属性（也就是多个维度）的情况，需要的合适的样本数量回事天文数字。高维度空间会给距离计算带来很大麻烦。</p>
+<p><img src="http://peihao.space/img/article/ml/ml-intro9-2.png" alt></p>
+<p>一般采用的方式是通过某种数学变换将原始高维属性空间转变为一个低维子空间。子空间中样本密度大幅提升。</p>
+<p><img src="http://peihao.space/img/article/ml/ml-intro9-1.png" alt></p>
+<h2 id="MDS"><a href="#MDS" class="headerlink" title="MDS"></a>MDS</h2><p>MDS即多维缩放(Multiple Dimensional Scaling)，是要就将原始空间中样本间的距离在低维空间中得以保持。</p>
+<p>假定m个样本在原始空间的距离矩阵为$D \in R^{m \times m}$，在第i行j列的元素$dist_{ij}$为样本$x_i$到$s_j$的距离。目标是获得样本在$d^c$维空间的表示$Z \in R^{d^c \times m},d^c \leq d$，且任意两个样本在$d^c$维空间的欧式距离等于原始空间$\mid\mid z_i-z_j \mid\mid = dist_{ij}$</p>
+<p>令$B=Z^TZ \in R^{m \times m}$，其中B为降维后样本的内积矩阵，$b_{ij}=b_{ji}=z_i^Tz_j$</p>
+<p>$$<br>dist_{i.}^2=\frac{1}{m}\sum\limits_{j=1}^m dist_{ij}^2<br>dist_{.j}^2=\frac{1}{m}\sum\limits_{i=1}^m dist_{ij}^2<br>dist_{..}^2=\frac{1}{m^2}\sum\limits_{i=1}^m\sum\limits_{j=1}^m dist_{ij}^2<br>$$</p>
+<p>由以上的式子推出：</p>
+<p>$b_ij=-\frac{1}{2}(dist_{ij}^2-dist_{i.}^2-dist_{.j}^2+dist_{..}^2)$</p>
+<p>依次求出矩阵B中所有的元素，然后对矩阵做特征值分解：$B=V\Lambda V^T$其中V为特征向量矩阵，$\Lambda$为特征值构成的对角矩阵。假定其中有$d^c$个非零特征值，构成对角矩阵$\Lambda_x=diag(\lambda_1,\lambda_2,…,\lambda_{dx})$，令$Vx$表示相应的特征向量矩阵，则：</p>
+<p>$Z=\Lambda_c^{1/2}V_c^T \in R^(d^c \times m)$</p>
+<h1 id="主成分分析"><a href="#主成分分析" class="headerlink" title="主成分分析"></a>主成分分析</h1><p>通过正交变换将一组可能存在相关性的变量转换为一组线性不相关的变量，转换后的这组变量叫主成分。</p>
+<p>主成份（Principal Component Analysis）分析是降维（Dimension Reduction）的重要手段。每一个主成分都是数据在某一个方向上的投影，在不同的方向上这些数据方差Variance的大小由其特征值（eigenvalue）决定。一般我们会选取最大的几个特征值所在的特征向量（eigenvector），这些方向上的信息丰富，一般认为包含了更多我们所感兴趣的信息。</p>
+<blockquote>
+<p>在很多情形，变量之间是有一定的相关关系的，当两个变量之间有一定相关关系时，可以解释为这两个变量反映此课题的信息有一定的重叠。主成分分析是对于原先提出的所有变量，将重复的变量（关系紧密的变量）删去多余，建立尽可能少的新变量，使得这些新变量是两两不相关的，而且这些新变量在反映课题的信息方面尽可能保持原有的信息。</p>
+</blockquote>
+<p>设法将原来变量重新组合成一组新的互相无关的几个综合变量，同时根据实际需要从中可以取出几个较少的综合变量尽可能多地反映原来变量的信息的统计方法叫做主成分分析或称主分量分析，是数学上用来降维的一种方法。</p>
+<p>先定义一些变量：</p>
+<p>样本$(\vec{x_1},\vec{x_2},\vec{x_3},…,\vec{x_m})$</p>
+<p>投影变换得到的 <strong>新坐标系</strong>${ \vec{\omega_1},\vec{\omega_2},…,\vec{\omega_d}, }$</p>
+<p>样本点在低维坐标系中的投影是$z_i=(z_{i1};z_{i2};z_{i3};…;z_{id_‘};)$</p>
+<p>其中$z_{ij}=\vec{\omega}_j^T\vec{x_i}$是x在低维坐标系下的第j维坐标</p>
+<p>投影点方差是$\sum_i W^Tx_ix_i^TW$ 优化目标是最大化这个方差，使得在投影之后尽可能的分散</p>
+<p>PCA一般有以下几个步骤：</p>
+<ol>
+<li><p>数据减去均值：样本中心化$\sum_i \vec{x_i}=\vec{0}$</p>
+</li>
+<li><p>计算协方差矩阵：$C=\frac{XX^T}{N}$</p>
+</li>
+<li><p>计算协方差矩阵的特征矢量和特征值：对协方差矩阵$\frac{XX^T}{N}$特征分解$CU=U\Lambda$，其中C为方差矩阵，U为计算的特征矢量，$\Lambda$是对角线矩阵$\Lambda=diag(\lambda_1,\lambda_2,…,\lambda_d)$</p>
+</li>
+<li><p><strong>选择成分组成模式矢量</strong>对应最大特征值的特征矢量就是数据的主成分：取最大的d个特征值所对应的特征向量$u_1,u_2,…,u_d$</p>
+</li>
+</ol>
+<p>一般地，从协方差矩阵找到特征矢量以后，下一步就是按照特征值由大到小进行排列，这将给出成分的重要性级别。现在，如果你喜欢，可以忽略那些重要性很小的成分，当然这会丢失一些信息，但是如果对应的特征值很小，你不会丢失很多信息。</p>
+<ol start="5">
+<li>获得投影的新数据$y_i=U_k^T x_i$</li>
+</ol>
+<h1 id="核化线性降维"><a href="#核化线性降维" class="headerlink" title="核化线性降维"></a>核化线性降维</h1><p>线性降维假设从高维空间到低维度空间的函数映射是线性的，然而在不少的现实任务中，可能需要非线性映射才能找到恰当的低维嵌入。</p>
+<p>非线性降维的一种常用方法是基于核技巧对线性降维方法进行”核化”。</p>
+<blockquote>
+<p><a href="http://zhanxw.com/blog/2011/02/kernel-pca-%E5%8E%9F%E7%90%86%E5%92%8C%E6%BC%94%E7%A4%BA/" target="_blank" rel="noopener">在KPCA中</a>，除了在PCA中的一些先决条件外，我们认为原有的数据有更高的维数，我们可以在更高的维度空间中做PCA分析（即在更高维里，把原始数据向不同方向进行投影）</p>
+</blockquote>
+<p>我们拿到样本点，需要将它映射到高维空间中，然后使用PCA算法进行降维。</p>
+<p>假定我们将在高维特征空间中把数据投影到由W确定的超平面上，即PCA欲求解$(\sum\limits_{i=1}^m)\vec(W)=\lambda \vec{W}$  （拉格朗日乘子法）</p>
+<p>其中$z_i$是样本点在高维特征空间的像，有$\vec{W}=\sum\limits_{i=1}^m z_i \alpha _i$</p>
+<p>$\alpha_i=\frac{1}{\lambda}z_i^T \vec{W}$</p>
+<p>z是由原始属性空间中的样本点x通过映射$\phi$产生。但是在映射到高维空间这一步，一般情况下，我们并不知道映射函数$phi$的具体形，不知道要映射到哪重维度上，于是引入核函数$\kappa(x_i,x_j)=\phi(x_i)^T\phi(x_j)$</p>
+<p>化简式子：$KA=\lambda A$，K为$\kappa$对应核矩阵，$A=(\alpha_1;\alpha_2;…;\alpha_m)$</p>
+<p>上式是特征值分解问题，取K对应的最大的d个特征值对应的特征向量。</p>
+<p>对于新样本x，投影的第j维坐标为$z_j=\omega_j^T \phi(x)=\sum\limits_{i=1}^m \alpha_i^j \kappa(x_i,x)$</p>
+<h1 id="流形学习"><a href="#流形学习" class="headerlink" title="流形学习"></a>流形学习</h1><p>流形是一类借鉴了拓扑流形概念的降维方法，在局部有欧式空间的性质，能用欧式距离来进行距离计算。</p>
+<p>若低维流形嵌入到高维空间中，则数据样本在高维空间的分布虽然看上去非常复杂，但在局部上仍具有欧式空间的性质。因此可以容易的在局部建立降维映射关系，然后再设法将局部映射关系推广到全局。</p>
+<h2 id="等度量映射"><a href="#等度量映射" class="headerlink" title="等度量映射"></a>等度量映射</h2><p>等度量映射（Isometric Mapping）认为低维流形嵌入到高维空间后，直接在高维空间中计算直线距离具有误导性，因为高维空间中的直线距离往往在低维嵌入流形上是不可达的。</p>
+<p><img src="http://peihao.space/img/article/ml/ml-intro9-3.png" alt></p>
+<p>对每个点基于欧式距离找出其近邻点，然后就能建立一个近邻连接图，图中近邻点之间存在连接，而非近邻之间不存在连接，于是计算两点间测地线距离的问题，转变为了计算近邻点之间最短路径问题。</p>
+<p>步骤：</p>
+<ol>
+<li><p>确定$x_i$的k近邻，并将$x_i$与k近邻之间的距离设置为欧氏距离，与其他点的距离设置为无穷大</p>
+</li>
+<li><p>调用最短路径算法计算任意来那个样本之间的距离$dist(x_i,dist_j)$</p>
+</li>
+<li><p>将$dist(x_i,dist_j)$作为MDS算法的输入求解</p>
+</li>
+</ol>
+<h2 id="局部线性嵌入"><a href="#局部线性嵌入" class="headerlink" title="局部线性嵌入"></a>局部线性嵌入</h2><p>局部线性嵌入（Locally Linear Embedding，LEE）试图保持邻域内样本之间的线性关系。假定样本点$x_i$的坐标能通过他的邻域样本$x_j,x_k,x_l$的坐标通过线性组合组成，$x_i=w_{ij}x_j+w_{ik}x_k+w_{il}x_l$</p>
+<p>LLE希望关系在低维空间中得以保持。</p>
+<p><img src="http://peihao.space/img/article/ml/ml-intro9-4.png" alt></p>
+<p>LLE算法的主要原理就是先在高维空间，计算出相应的重构系数序列$W={w_1,w_2,…,_m}$，随后在低维空间中通过相同的重构系数获取投影点。</p>
+<p>令$Z=(z_1,z_2,…,z_m) \in R^{d^. \times m}$</p>
+<p>$M = (I-W)^T(I-W)$则寻求最小化：$\min\limits_z tr(ZMZ^T)$，约束条件$ZZ^T=I$</p>
+<p>上式通过特征值分解，M最小的$d^.$个特征值对应的特征向量组成的矩阵就是$Z^T$，即在低维的投影</p>
+<h1 id="度量学习"><a href="#度量学习" class="headerlink" title="度量学习"></a>度量学习</h1><p>对两个d维样本$x_i  x_j$，他们之间的平方欧式距离可写为：$dist^2(x_i,x_j)=dist_{ij,1}^2+dist_{ij,2}^2+…+dist_{ij,d}^2$</p>
+<p>其中$dist_{ij,k}$表示$x_i,x_j$在第k维上的距离，若嘉定不同属性的重要程度不一样，可以引入属性权重$\omega$</p>
+<p>$dist^2(w_i,x_j)=\omega_1\cdot dist_{ij,1}^2+\omega_2\cdot dist_{ij,2}^2+…+\omega_d\cdot dist_{ij,d}^2=(x_i-x_j)^T W(x_i-x_j)$</p>
+<p>其中$\omega_i \geq 0,W=diag(\omega)$是一个对角矩阵</p>
+<p>W是对角矩阵，坐标轴正交，属性之间无关；然而现实中并不是这样将W图换位一个普通的半正定对称矩阵M，得到马氏距离。</p>
+<p>其中M称作“度量矩阵”，而度量学习是对M进行学习。M必须是正定对称的，即必有正交基P使得M能写成$M=PP^T$</p>
+<p>对M的学习，我们需要把M直接嵌入到需要提高效率的评价指标中，通过优化指标求得M</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/mp-qr.jpg" alt="clinjie wechat" style="width: 200px; max-width: 100%;">
+    <div>Think about u every day</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ML/" rel="tag"># ML</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/08/ml-clustering/" rel="next" title="聚类">
+                <i class="fa fa-chevron-left"></i> 聚类
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/12/ml-feature-chosen/" rel="prev" title="特征选择/稀疏学习">
+                特征选择/稀疏学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      <! -- 添加微信图标 -->
+	    
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+    <div class="comments" id="comments">
+       
+            <div id="uyan_frame"></div>
+       
+    </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/img/avatar.jpg" alt="clinjie">
+          <p class="site-author-name" itemprop="name">clinjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chuangwailinjie" target="_blank" title="github" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chuangwalinjie" target="_blank" title="weibo" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/peihaozhu" target="_blank" title="zhihu" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#k近邻学习"><span class="nav-number">1.</span> <span class="nav-text">k近邻学习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#降维"><span class="nav-number">2.</span> <span class="nav-text">降维</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MDS"><span class="nav-number">2.1.</span> <span class="nav-text">MDS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主成分分析"><span class="nav-number">3.</span> <span class="nav-text">主成分分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#核化线性降维"><span class="nav-number">4.</span> <span class="nav-text">核化线性降维</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流形学习"><span class="nav-number">5.</span> <span class="nav-text">流形学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#等度量映射"><span class="nav-number">5.1.</span> <span class="nav-text">等度量映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#局部线性嵌入"><span class="nav-number">5.2.</span> <span class="nav-text">局部线性嵌入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#度量学习"><span class="nav-number">6.</span> <span class="nav-text">度量学习</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clinjie</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+    
+      
+    
+
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2142203"></script>
+        <!-- UY END -->
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("BKt7qufuU6B0ix9a9ik7kejs-gzGzoHsz", "pfDjDmIpP09Fj9QNLGzSL2Ox");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+	
+	
+
+<!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<!-- 颗粒漂浮背景 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript">var OriginTitile=document.title,st;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="你要去哪里",clearTimeout(st)):(document.title="clinjie~~"+OriginTitile,st=setTimeout(function(){document.title=OriginTitile},3e3))})</script>
+</body>
+</html>

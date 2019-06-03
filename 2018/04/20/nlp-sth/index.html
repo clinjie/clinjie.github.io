@@ -1,0 +1,1104 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="NLP,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="临街小站" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="一些NLP简单的例子，判断一个词的词性，是动词还是名词。用机器学习的思路，我们有一系列样本(x,y)，这里 x 是词语，y 是它们的词性，我们要构建 f(x)-&amp;gt;y 的映射，但这里的数学模型 f（比如神经网络、SVM）只接受数值型输入，而 NLP 里的词语，一般的表现形式并不是数值型，所以需要把他们转换成数值形式，或者说——嵌入到一个数学空间里。这种嵌入方式，就叫词嵌入（word embed">
+<meta name="keywords" content="NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一些NLP知识">
+<meta property="og:url" content="http://peihao.space/2018/04/20/nlp-sth/index.html">
+<meta property="og:site_name" content="临街小站">
+<meta property="og:description" content="一些NLP简单的例子，判断一个词的词性，是动词还是名词。用机器学习的思路，我们有一系列样本(x,y)，这里 x 是词语，y 是它们的词性，我们要构建 f(x)-&amp;gt;y 的映射，但这里的数学模型 f（比如神经网络、SVM）只接受数值型输入，而 NLP 里的词语，一般的表现形式并不是数值型，所以需要把他们转换成数值形式，或者说——嵌入到一个数学空间里。这种嵌入方式，就叫词嵌入（word embed">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://peihao.space/img/clinjie/18-4-20/67314351.jpg">
+<meta property="og:image" content="http://peihao.space/img/clinjie/18-4-20/46209492.jpg">
+<meta property="og:image" content="http://opu8lkq3n.bkt.clouddn.com/18-4-20/37728731.jpg">
+<meta property="og:image" content="http://opu8lkq3n.bkt.clouddn.com/18-4-20/64583235.jpg">
+<meta property="og:image" content="http://opu8lkq3n.bkt.clouddn.com/18-4-20/27252002.jpg">
+<meta property="og:image" content="http://opu8lkq3n.bkt.clouddn.com/18-4-20/31789162.jpg">
+<meta property="og:image" content="http://img.mp.itc.cn/upload/20161024/f4f60271bdd84160a4826ec8924f53d4_th.jpeg">
+<meta property="og:image" content="http://img.mp.itc.cn/upload/20161024/590c2f3fb8924c7c92201024ff42bff7.png">
+<meta property="og:updated_time" content="2019-04-28T16:21:32.332Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一些NLP知识">
+<meta name="twitter:description" content="一些NLP简单的例子，判断一个词的词性，是动词还是名词。用机器学习的思路，我们有一系列样本(x,y)，这里 x 是词语，y 是它们的词性，我们要构建 f(x)-&amp;gt;y 的映射，但这里的数学模型 f（比如神经网络、SVM）只接受数值型输入，而 NLP 里的词语，一般的表现形式并不是数值型，所以需要把他们转换成数值形式，或者说——嵌入到一个数学空间里。这种嵌入方式，就叫词嵌入（word embed">
+<meta name="twitter:image" content="http://peihao.space/img/clinjie/18-4-20/67314351.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://peihao.space/2018/04/20/nlp-sth/">
+
+
+
+
+
+  <title> 一些NLP知识 | 临街小站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">临街小站</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photos" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br>
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+
+	  </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://peihao.space/2018/04/20/nlp-sth/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="clinjie">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/img/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="临街小站">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="临街小站" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                一些NLP知识
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-20T23:35:03+08:00">
+                2018-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/04/20/nlp-sth/" class="leancloud_visitors" data-flag-title="一些NLP知识">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+		
+		
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一些NLP"><a href="#一些NLP" class="headerlink" title="一些NLP"></a>一些NLP</h1><p>简单的例子，判断一个词的词性，是动词还是名词。用机器学习的思路，我们有一系列样本(x,y)，这里 x 是词语，y 是它们的词性，我们要构建 <code>f(x)-&gt;y</code> 的映射，但这里的数学模型 f（比如神经网络、SVM）只接受数值型输入，而 NLP 里的词语，一般的表现形式并不是数值型，所以需要把他们转换成数值形式，或者说——嵌入到一个数学空间里。这种嵌入方式，就叫词嵌入（word embedding)，而 Word2vec，就是词嵌入（ word embedding) 的一种。</p>
+<p>一般的数学模型只接受数值型输入，这里的x经常使用one-hot encoder，这种方式忽略了句子当中词语的次序，但是将每个词装换成为一个列表，词语之间的距离都为1。例如’我喜欢你’，转化成3个词：’’我’，’喜欢，’你’，三个word分别可以表示为可以表示为<code>[1,0,0],[0,1,0],[0,0,1]</code></p>
+<p>现在已经可以将句子中的词转化成为数值型数据，输入到模型中，为什么还要word2vec呢？</p>
+<a id="more"></a>
+<p>word2vec从大量文本语料中以无监督的方式学习语义信息，即通过一个嵌入空间使得语义上相似的单词在该空间内距离很近。比如“机器”和“机械”意思很相近，而“机器”和“猴子”的意思相差就很远了，那么由word2vec构建的这个数值空间中，“机器”和“机械”的距离较“机器”和“猴子”的距离而言是要近很多的。</p>
+<p><strong>word2vec是将onehot encoder后的数据，通过训练映射到新的特征空间中。原始的onehot-encoder是将所有word的间隔（距离）都设置为1，</strong>这在实际中是不复合认知的。word2vec中，相似的word的向量在距离上也是相近的，没什么关系的距离较远；同时，对于一个大文本来讲，词形成的词典大小很大，相应的表示为每个词需要的长度也很大，这些词中有用的信息很少，只有那个为1的index是有用的，表示形式很sparse，稀疏，<strong>word2vec的size一般情况下远远小于词语总数，相当于将onehot-encoder降维。</strong></p>
+<p>我们来看个例子，如何用 Word2vec 寻找相似词：</p>
+<ol>
+<li>对于一句话：『她们 夸 吴彦祖 帅 到 没朋友』，如果输入 x 是『吴彦祖』，那么 y 可以是『她们』、『夸』、『帅』、『没朋友』这些词</li>
+<li>现有另一句话：『她们 夸 我 帅 到 没朋友』，如果输入 x 是『我』，那么不难发现，这里的上下文 y 跟上面一句话一样</li>
+<li>从而 f(吴彦祖) = f(我) = y，所以大数据告诉我们：我 = 吴彦祖（完美的结论）</li>
+</ol>
+<h2 id="Skip-gram-CBOW"><a href="#Skip-gram-CBOW" class="headerlink" title="Skip-gram/CBOW"></a>Skip-gram/CBOW</h2><p><img src="/img/clinjie/18-4-20/67314351.jpg" alt></p>
+<p>一个word作为输入，预测周围的上下文，模型叫做Skip-gram模型；<br>一个word的上下文（窗口）作为输入，预测这个word本身，模型叫做CBOW模型</p>
+<p>先以Skip-gram为例，一个word x作为输入，预测周围的一个word y为输出</p>
+<p><img src="/img/clinjie/18-4-20/46209492.jpg" alt></p>
+<p>x是上面提到的经过onehot-encoder形式的输入，y是在V（词典的size）个词上输出的概率，期望形式是y真实的onehot-encoder</p>
+<p>在这里，跟常规的NN不同的是，Wordvec的隐层激活函数是线性的，而非sigmoid、relu这些非线性形式。</p>
+<p>当模型训练完成之后，需要的的是神经网络的权重。</p>
+<p>比如现在输入一个 x 的 one-hot encoder: [1,0,0,…,0]，对应刚说的那个词语『吴彦祖』，则在输入层到隐含层的权重里，只有对应 1 这个位置的权重被激活，这些权重的个数，跟隐含层节点数是一致的，从而这些权重组成一个向量 vx 来表示x，而因为每个词语的 one-hot encoder 里面 1 的位置是不同的，所以，这个向量 vx 就可以用来唯一表示 x。这就是Word2vec的核心思想。</p>
+<p>如图，这里有两个部分的参数W，分别是输入到隐层以及隐层到输出，这两部分都可以作为词向量形式，默认使用输入到隐层的参数作为 词向量。</p>
+<p>假设共有词10000个，则one-hot encoder有10000维，对于一对一的预测，输入是10000维的onehot encoder，输出是10000维的每个词出现的概率值（一般通过softmax层进行归一化），这样维度实在是太大了。我们设置隐层，有神经元500个，那么参数w就是10000<em>500，现在一个词可以表示为500维度。方法是训练后的参数10000</em>500，对于输入x，找到值为1的index，提取出来对应的w[index]即可。</p>
+<p>上面的形式是极端情况，通过一个word来预测周围的一个word或者通过上下文的一个word来预测word。上面提到过，CBOW是上下文预测word，Skip-gram是word预测上下文，常规形式如下：</p>
+<p><img src="http://opu8lkq3n.bkt.clouddn.com/18-4-20/37728731.jpg" alt="CBOW"></p>
+<p><img src="http://opu8lkq3n.bkt.clouddn.com/18-4-20/64583235.jpg" alt="Skip-gram"></p>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p>CBOW用于普通的数据量计算；Skip-gram用于数据量较大的情况。</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><ol>
+<li>获取语料库</li>
+<li>对语料进行分词（jieba分词）、去停用词</li>
+<li>将分词、去停用词后的语料填充到word2vec模型中训练（使用<code>gensim.models.word2vec</code>）</li>
+<li>使用model[word]获得词向量，使用model.similarity(word1,word2)计算word间的相似度</li>
+</ol>
+<h2 id="一些进阶"><a href="#一些进阶" class="headerlink" title="一些进阶"></a>一些进阶</h2><p>Word2vec 本质上是一个语言模型，它的输出节点数是 V 个，对应了 V 个词语，本质上是一个多分类问题，但实际当中，词语的个数非常非常多，会给计算造成很大困难，所以需要用技巧来加速训练。</p>
+<h3 id="hierarchical-softmax"><a href="#hierarchical-softmax" class="headerlink" title="hierarchical softmax"></a>hierarchical softmax</h3><p>本质是把 N 分类问题变成 log(N)次二分类</p>
+<h3 id="negative-sampling"><a href="#negative-sampling" class="headerlink" title="negative sampling"></a>negative sampling</h3><p>本质是预测总体类别的一个子集</p>
+<h2 id="BOW"><a href="#BOW" class="headerlink" title="BOW"></a>BOW</h2><p>Bag of words词袋模型。忽略了文本的语法和语序等要素（举个例子，Bow模型认为“我爱你”和“你爱我”是相同的），将其仅仅看作是若干词汇的集合。BoW 使用一组无序的单词（word）来表达一段文字或一个文档，并且文档中每个单词的出现都是独立的。</p>
+<p>举例：</p>
+<blockquote>
+<p>John likes to watch movies. Mary likes too.<br>John also likes to watch football games.</p>
+</blockquote>
+<p>基于上述两个文档中出现的单词，构建如下一个词典 (dictionary)：</p>
+<p><code>{&#39;John&#39;: 1, &#39;likes&#39;: 2,&#39;to&#39;: 3, &#39;watch&#39;: 4, &#39;movies&#39;: 5,&#39;also&#39;: 6, &#39;football&#39;: 7, &#39;games&#39;: 8,&#39;Mary&#39;: 9, &#39;too&#39;: 10}</code></p>
+<p>上面的词典中包含10个单词, 每个单词有唯一的索引, 那么每个文本我们可以使用一个10维的向量来表示，向量中的元素是词典中对应的词语出现的频数。如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 1, 1, 1, 0, 0, 0, 1, 1]</span><br><span class="line">[1, 1,1, 1, 0, 1, 1, 1, 0, 0]</span><br></pre></td></tr></table></figure>
+<p>该向量与原来文本中单词出现的顺序没有关系，而是词典中每个单词在文本中出现的频数</p>
+<h2 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a>哈夫曼树</h2><p>满二叉树：除了叶节点外每一个结点都有左右子女且叶节点都处在最底层的二叉树。<br>完全二叉树：只有最下面的两层结点度小于2，并且最下面一层的结点都集中在该层最左边的若干位置的二叉树。<br>平衡二叉树：又称为AVL树，它是一颗空树或它的左右两个子树的高度差的绝对值不超过1</p>
+<p>哈夫曼树：带权路径长度达到最小的二叉树，也叫做最优二叉树。</p>
+<p>注意到这里，哈夫曼树只是一棵最优二叉树，不一定是完全二叉树，也不一定是平衡二叉树。</p>
+<p><img src="http://opu8lkq3n.bkt.clouddn.com/18-4-20/27252002.jpg" alt></p>
+<p>fastText的霍夫曼树叶子结点对应为最终的label，可以看到，权重最大的，也就是权重最大的label，其深度最小，fastText 充分利用了这个性质，使得其速度得以提升。</p>
+<h2 id="fastText"><a href="#fastText" class="headerlink" title="fastText"></a>fastText</h2><p>fastText通过上下文预测标签（这个标签就是文本的类别，是训练模型之前通过人工标注等方法事先确定下来的），沿用了CBOW的单层神经网络的模式。</p>
+<p>fastText模型的输入是一个词的序列（一段文本或者一句话)，输出是这个词序列属于不同类别的概率。在序列中的词和词组构成特征向量，特征向量通过线性变换映射到中间层，再由中间层映射到标签。<strong>fastText在预测标签时使用了非线性激活函数，但在中间层不使用非线性激活函数</strong>。</p>
+<p><img src="http://opu8lkq3n.bkt.clouddn.com/18-4-20/31789162.jpg" alt></p>
+<p>第一个权重矩阵$w_1$可以被视作某个句子的词向量，然后被平均成一个文本表征，然后其会被馈送入一个线性分类器。这个构架和CBOW模型相似，只是中间词（middle word）被替换成了标签（label）。</p>
+<p>模型将一系列单词作为输入并产生一个预定义类的概率分布。使用softmax方程来计算这些概率。当数据量巨大时，线性分类器的计算代价十分大，所以fastText使用了一个基于霍夫曼编码树的<strong>分层softmax</strong>方法。</p>
+<p>常用的文本特征表示方法是词袋模型，然而词袋（BoW）是忽略词序的。作为替代，fastText使用n-gram获取额外特征来得到关于局部词顺序的部分信息。</p>
+<h3 id="分层softmax"><a href="#分层softmax" class="headerlink" title="分层softmax"></a>分层softmax</h3><p>分层softmax的目的是降低softmax层的计算复杂度。</p>
+<p><img src="http://img.mp.itc.cn/upload/20161024/f4f60271bdd84160a4826ec8924f53d4_th.jpeg" alt></p>
+<p>把原来的softmax看做深度为1的树，词表V中的每一个词语表示一个叶子节点。如果把softmax改为二叉树结构，每个word表示叶子节点，那么只需要沿着通向该词语的叶子节点的路径搜索，而不需要考虑其它的节点。这就是为什<strong>么fastText可以解决不平衡分类问题</strong>，因为在对某个节点进行计算时，完全<strong>不依赖于它的上一层的叶子节点</strong>（即权重大于它的叶结点），也就是数目较大的label不能影响数目较小的label</p>
+<p>具体说来，当遍历树的时候，我们需要能够计算左侧分枝或是右侧分枝的概率值。</p>
+<p><img src="http://img.mp.itc.cn/upload/20161024/590c2f3fb8924c7c92201024ff42bff7.png" alt></p>
+<p><strong>哈夫曼树与分层softmax的关系：fasttext输出是一个哈夫曼树，模型构造了一颗哈夫曼树，计算softmax的时候，需要计算向左还是向右，这里就需要基于词频作为权重构造的哈夫曼树结构，在这里加快了训练速度。</strong></p>
+<p>fasttext采用了基于哈夫曼树的分层softmax方法。label样本多的，离顶点近，样本少的离顶点远，综合起来时间复杂度为O(hlog2k)</p>
+<p>值得注意的是，此方法只是加速了训练过程，因为我们可以提前知道将要预测的词语（以及其搜索路径）。在测试过程中，被预测词语是未知的，仍然无法避免计算所有词语的概率值。</p>
+<p>fasttext输入是简单的BOW模型加上局部的ngram（考虑词序），每个哈夫曼的节点向量都是训练的结果，也是通过梯度向下方法不断拟合。最后与相应的h(input)相乘，得出偏向左还是偏向右。</p>
+<p>fasttext的hierarhical loss，粗略地说，是将所有的label，也就是所有的单词，放到一个哈夫曼树里面，<strong>出现频率越少的单词越接近叶子端</strong>。假设我们有一万个单词在词典里面，简单的softmax是一个10000类的分类问题；<strong>假设我们的一个目标单词在哈夫曼树上面是01001位置（比如我们用0表示左子树，1表示右子树）那么在这个样本上的分类问题是5个二分类问题</strong>：我们期望预测的单词在这条路径上每一个位置都更倾向于正确的方向。</p>
+<h3 id="fasttext中的ngram"><a href="#fasttext中的ngram" class="headerlink" title="fasttext中的ngram"></a>fasttext中的ngram</h3><p>常用的特征是词袋模型，在第一部分小编已经介绍过词袋模型了。词袋模型不考虑词之间的顺序，因此 fastText 还加入了 N-gram 特征。</p>
+<p>“我爱你”：如果使用2-gram，这句话的特征还有 “我-爱”和“爱-你”，这两句话“我爱你”和“你爱我”就能区别开来了，因为“你爱我”的2-gram的特征还包括“你-爱”和“爱-我”，这样就可以区分“你爱我”和“我爱你”了。为了提高效率，实务中会过滤掉低频的 N-gram。否则将会严重影响速度。</p>
+<p>在fastText 中一个低维度向量与每个单词都相关。隐藏表征在不同类别所有分类器中进行共享，使得文本信息在不同类别中能够共同使用。这类表征被称为词袋（bag of words）（此处忽视词序）。在 fastText中也使用向量表征单词 n-gram来将局部词序考虑在内，这对很多文本分类问题来说十分重要。</p>
+<h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><p>文本分类</p>
+<p>同近义词的挖掘</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/mp-qr.jpg" alt="clinjie wechat" style="width: 200px; max-width: 100%;">
+    <div>Think about u every day</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag"># NLP</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/01/sql-review/" rel="next" title="sql复习">
+                <i class="fa fa-chevron-left"></i> sql复习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/26/golang-tutorial/" rel="prev" title="Golang入门">
+                Golang入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      <! -- 添加微信图标 -->
+	    
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+    <div class="comments" id="comments">
+       
+            <div id="uyan_frame"></div>
+       
+    </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/img/avatar.jpg" alt="clinjie">
+          <p class="site-author-name" itemprop="name">clinjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chuangwailinjie" target="_blank" title="github" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chuangwalinjie" target="_blank" title="weibo" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/peihaozhu" target="_blank" title="zhihu" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一些NLP"><span class="nav-number">1.</span> <span class="nav-text">一些NLP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Skip-gram-CBOW"><span class="nav-number">1.1.</span> <span class="nav-text">Skip-gram/CBOW</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#区别"><span class="nav-number">1.1.1.</span> <span class="nav-text">区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">1.1.2.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些进阶"><span class="nav-number">1.2.</span> <span class="nav-text">一些进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hierarchical-softmax"><span class="nav-number">1.2.1.</span> <span class="nav-text">hierarchical softmax</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#negative-sampling"><span class="nav-number">1.2.2.</span> <span class="nav-text">negative sampling</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BOW"><span class="nav-number">1.3.</span> <span class="nav-text">BOW</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哈夫曼树"><span class="nav-number">1.4.</span> <span class="nav-text">哈夫曼树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fastText"><span class="nav-number">1.5.</span> <span class="nav-text">fastText</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分层softmax"><span class="nav-number">1.5.1.</span> <span class="nav-text">分层softmax</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fasttext中的ngram"><span class="nav-number">1.5.2.</span> <span class="nav-text">fasttext中的ngram</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用途"><span class="nav-number">1.5.3.</span> <span class="nav-text">用途</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clinjie</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+    
+      
+    
+
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2142203"></script>
+        <!-- UY END -->
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("BKt7qufuU6B0ix9a9ik7kejs-gzGzoHsz", "pfDjDmIpP09Fj9QNLGzSL2Ox");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+	
+	
+
+<!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<!-- 颗粒漂浮背景 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript">var OriginTitile=document.title,st;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="你要去哪里",clearTimeout(st)):(document.title="clinjie~~"+OriginTitile,st=setTimeout(function(){document.title=OriginTitile},3e3))})</script>
+</body>
+</html>

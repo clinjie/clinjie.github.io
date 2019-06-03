@@ -1,0 +1,1398 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Front End,CSS,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="临街小站" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="一些CSS选择器1.*1234* &amp;#123;margin: 0;padding: 0;&amp;#125; 　　在我们看比较高级的选择器之前，应该认识下这个众所周知的清空选择器。星号呢会将页面上所有每一个元素都选到。许多开发者都用它来清空margin和padding。当然你在练习的时候使用这个没问题，但是我不建议在生产环境中使用它。它会给浏览器凭添许多不必要的东西。">
+<meta name="keywords" content="Front End,CSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一些CSS选择器">
+<meta property="og:url" content="http://peihao.space/2015/06/05/some-css-selector/index.html">
+<meta property="og:site_name" content="临街小站">
+<meta property="og:description" content="一些CSS选择器1.*1234* &amp;#123;margin: 0;padding: 0;&amp;#125; 　　在我们看比较高级的选择器之前，应该认识下这个众所周知的清空选择器。星号呢会将页面上所有每一个元素都选到。许多开发者都用它来清空margin和padding。当然你在练习的时候使用这个没问题，但是我不建议在生产环境中使用它。它会给浏览器凭添许多不必要的东西。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://7xowaa.com1.z0.glb.clouddn.com/css.jpg">
+<meta property="og:updated_time" content="2019-04-28T16:21:32.342Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一些CSS选择器">
+<meta name="twitter:description" content="一些CSS选择器1.*1234* &amp;#123;margin: 0;padding: 0;&amp;#125; 　　在我们看比较高级的选择器之前，应该认识下这个众所周知的清空选择器。星号呢会将页面上所有每一个元素都选到。许多开发者都用它来清空margin和padding。当然你在练习的时候使用这个没问题，但是我不建议在生产环境中使用它。它会给浏览器凭添许多不必要的东西。">
+<meta name="twitter:image" content="http://7xowaa.com1.z0.glb.clouddn.com/css.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://peihao.space/2015/06/05/some-css-selector/">
+
+
+
+
+
+  <title> 一些CSS选择器 | 临街小站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">临街小站</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photos" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br>
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+
+	  </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://peihao.space/2015/06/05/some-css-selector/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="clinjie">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/img/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="临街小站">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="临街小站" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                一些CSS选择器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-06-05T22:23:35+08:00">
+                2015-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/06/05/some-css-selector/" class="leancloud_visitors" data-flag-title="一些CSS选择器">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+		
+		
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://7xowaa.com1.z0.glb.clouddn.com/css.jpg" alt></p>
+<h1 id="一些CSS选择器"><a href="#一些CSS选择器" class="headerlink" title="一些CSS选择器"></a>一些CSS选择器</h1><h2 id="1"><a href="#1" class="headerlink" title="1.*"></a>1.*</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">margin: 0;</span><br><span class="line">padding: 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　在我们看比较高级的选择器之前，应该认识下这个众所周知的清空选择器。星号呢会将页面上所有每一个元素都选到。许多开发者都用它来清空margin和padding。当然你在练习的时候使用这个没问题，但是我不建议在生产环境中使用它。它会给浏览器凭添许多不必要的东西。</p>
+<a id="more"></a>
+<p>*也可以用来选择某元素的所有子元素。</p>
+<p> #id</p>
+<pre><code>#container * {
+  border: 1px solid black;
+}
+</code></pre><p>　　它会选中#container下的所有元素。当然，我还是不建议你去使用它，如果可能的话。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/star.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="2">
+<li>#X</li>
+</ol>
+<hr>
+<pre><code>#container {
+   width: 960px;
+   margin: auto;
+}  
+</code></pre><p>　　在选择器中使用#可以用id来定位某个元素。大家通常都会这么使用，然后使用的时候大家还是得相当小心的。<br>需要问自己一下：我是不是必须要给这个元素来赋值个id来定位它呢？</p>
+<p>　　id选择器是很严格的并且你没办法去复用它。如果可能的话，首先试试用标签名字，HTML5中的新元素，或者是伪类。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/id.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="3">
+<li>.X</li>
+</ol>
+<hr>
+<pre><code>.error {
+  color: red;
+}
+</code></pre><p>　　这是个class选择器。它跟id选择器不同的是，它可以定位多个元素。当你想对多个元素进行样式修饰的时候就可以使用class。当你要对某个特定的元素进行修饰那就是用id来定位它。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/class.html" target="_blank" rel="noopener">DEMO</a></p>
+<p>　</p>
+<ol start="4">
+<li>X Y</li>
+</ol>
+<hr>
+<pre><code>li a {
+  text-decoration: none;
+}  
+</code></pre><p>　　下一个常用的就是descendant选择器。如果你想更加具体的去定位元素，你可以使用它。例如，假如，你不需要定位所有的a元素，而只需要定位li标签下的a标签？这时候你就需要使用descendant选择器了。</p>
+<p>　　专家提示：如果你的选择器像X Y Z A B.error这样，那你就错了。时刻都提醒自己，是否真的需要对那么多元素修饰。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/descend.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="5">
+<li>X</li>
+</ol>
+<hr>
+<pre><code>a { color: red; }
+ul { margin-left: 0; }
+</code></pre><p>　　如果你想定位页面上所有的某标签，不是通过id或者是’class’，这简单，直接使用类型选择器。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/tagName.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="6">
+<li>X:visited and X:link</li>
+</ol>
+<hr>
+<pre><code>a:link {color:red;}
+a:visited {color: purple;}  
+</code></pre><p>　　我们使用:link这个伪类来定位所有还没有被访问过的链接。</p>
+<p>　　另外，我们也使用:visited来定位所有已经被访问过的链接。  </p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/links.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="7">
+<li>X+Y</li>
+</ol>
+<hr>
+<pre><code>ul + p {
+   color: red;
+}  
+</code></pre><p>　　这个叫相邻选择器。它指挥选中指定元素的直接后继元素。上面那个例子就是选中了所有ul标签后面的第一段，并将它们的颜色都设置为红色。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/adjacent.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="8">
+<li>X&gt;Y</li>
+</ol>
+<hr>
+<pre><code>div#container &gt; ul {
+  border: 1px solid black;
+}  
+</code></pre><p>　　X Y和X &gt; Y的差别就是后面这个指挥选择它的直接子元素。看下面的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;container&quot;&gt;</span><br><span class="line">   &lt;ul&gt;</span><br><span class="line">      &lt;li&gt; List Item</span><br><span class="line">	&lt;ul&gt;</span><br><span class="line">	   &lt;li&gt; Child &lt;/li&gt;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">      &lt;/li&gt;</span><br><span class="line">      &lt;li&gt; List Item &lt;/li&gt;</span><br><span class="line">      &lt;li&gt; List Item &lt;/li&gt;</span><br><span class="line">      &lt;li&gt; List Item &lt;/li&gt;</span><br><span class="line">   &lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>　　#container &gt; ul只会选中id为’container’的div下的所有直接ul元素。它不会定位到如第一个li下的ul元素。</p>
+<p>　　由于某些原因，使用子节点组合选择器会在性能上有许多的优势。事实上，当在javascript中使用css选择器时候是强烈建议这么做的。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/childcombinator.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="9">
+<li>X ~ Y</li>
+</ol>
+<hr>
+<pre><code>ul ~ p {
+  color: red;
+}  
+</code></pre><p>　　兄弟节点组合选择器跟X+Y很相似，然后它又不是那么的严格。ul + p选择器只会选择紧挨跟着指定元素的那些元素。而这个选择器，会选择跟在目标元素后面的所有匹配的元素。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/generalcombinator.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="10">
+<li>X[title]</li>
+</ol>
+<hr>
+<pre><code>a[title] {
+  color: green;
+}
+</code></pre><p>　　这个叫属性选择器，上面的这个例子中，只会选择有title属性的元素。那些没有此属性的锚点标签将不会被这个代码修饰。那再想想如果你想更加具体的去筛选？那…  </p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/attributes.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="11">
+<li>X[href=”foo”]</li>
+</ol>
+<hr>
+<pre><code>a[href=&quot;http://strongme.cn&quot;] {
+  color: #1f6053; /* nettuts green */
+}
+</code></pre><p>　　上面这片代码将会把href属性值为<a href="http://strongme.cn的锚点标签设置为绿色，而其他标签则不受影响。" target="_blank" rel="noopener">http://strongme.cn的锚点标签设置为绿色，而其他标签则不受影响。</a></p>
+<p>注意我们将值用双引号括起来了。那么在使用Javascript的时候也要使用双引号括起来。可以的话，尽量使用标准的CSS3选择器。</p>
+<p>　　这样可以用了，但是还是有点死，如果不是这个链接，而是类似的链接，那么这时就得用正则表达式了。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/attributes2.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="12">
+<li>X[href*=”strongme”]</li>
+</ol>
+<hr>
+<pre><code>a[href*=&quot;strongme&quot;] {
+  color: #1f6053;
+}
+</code></pre><p>　　Tada,正是我们需要的，这样，就指定了strongme这个值必须出现在锚点标签的href属性中，不管是strongme.cn还是strongme.com还是<a href="http://www.strongme.cn都可以被选中。" target="_blank" rel="noopener">www.strongme.cn都可以被选中。</a><br>但是记得这是个很宽泛的表达方式。如果锚点标签指向的不是strongme相关的站点，如果要更加具体的限制的话，那就使用^和$，分别表示字符串的开始和结束。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/attributes3.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="13">
+<li>X[href^=”href”]</li>
+</ol>
+<hr>
+<pre><code>a[href^=&quot;http&quot;] {
+   background: url(path/to/external/icon.png) no-repeat;
+   padding-left: 10px;
+}
+</code></pre><p>　　大家肯定好奇过，有些站点的锚点标签旁边会有一个外链图标，我也相信大家肯定见过这种情况。这样的设计会很明确的告诉你会跳转到别的网站。<br>用克拉符号就可以轻易做到。它通常使用在正则表达式中标识开头。如果我们想定位锚点属性href中以http开头的标签，那我们就可以用与上面相似的代码。</p>
+<p>注意我们没有搜索http://，那是没必要的，因为它都不包含https://。</p>
+<p>　　那如果我们想找到所有指向一张图片的锚点标签呢？那我们来使用下&amp;字符。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/attributes4.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="14">
+<li>X[href$=”.jpg”]</li>
+</ol>
+<hr>
+<pre><code>a[href$=&quot;.jpg&quot;] {
+  color: red;
+}
+</code></pre><p>　　这次我们又使用了正则表达式$，表示字符串的结尾处。这段代码的意思就是去搜索所有的图片链接，或者其它链接是以.jpg结尾的。但是记住这种写法是不会对gifs和pngs起作用的。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/attributes5.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="15">
+<li>X[data-*=”foo”]</li>
+</ol>
+<hr>
+<pre><code>a[data-filetype=&quot;image&quot;] {
+   color: red;
+}
+</code></pre><p>　　在回到第8条，我们如何把所有的图片类型都选中呢png,jpeg,’jpg’,’gif’？我们可以使用多选择器。看下面：</p>
+<pre><code>a[href$=&quot;.jpg&quot;],
+a[href$=&quot;.jpeg&quot;],
+a[href$=&quot;.png&quot;],
+a[href$=&quot;.gif&quot;] {
+   color: red;
+}
+</code></pre><p>　　但是这样写着很蛋疼啊，而且效率会很低。另外一个办法就是使用自定义属性。我们可以给每个锚点加个属性data-filetype指定这个链接指向的图片类型。</p>
+<pre><code>&lt;a href=&quot;path/to/image.jpg&quot; data-filetype=&quot;image&quot;&gt; Image Link &lt;/a&gt;
+</code></pre><p>　　那有了这个钩子，我们就可以去用标准的办法只去选定文件类型为image的锚点了。</p>
+<pre><code>a[data-filetype=&quot;image&quot;] {
+   color: red;
+}
+</code></pre><p>　　</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/attributes6.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="16">
+<li>X[foo~=”bar”]</li>
+</ol>
+<hr>
+<pre><code>a[data-info~=&quot;external&quot;] {
+   color: red;
+}
+
+a[data-info~=&quot;image&quot;] {
+   border: 1px solid black;
+}  
+</code></pre><p>　　这个我想会让你的小伙伴惊呼妙极了。很少有人知道这个技巧。这个~符号可以定位那些某属性值是空格分隔多值的标签。<br>继续使用第15条那个例子，我们可以设置一个data-info属性，它可以用来设置任何我们需要的空格分隔的值。这个例子我们将指示它们为外部连接和图片链接。</p>
+<pre><code>&lt;a href=&quot;path/to/image.jpg&quot; data-info=&quot;external image&quot;&gt; Click Me, Fool &lt;/a&gt;
+</code></pre><p>　　给这些元素设置了这个标志之后，我们就可以使用~来定位这些标签了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/* Target data-info attr that contains the value &quot;external&quot; */</span><br><span class="line">a[data-info~=&quot;external&quot;] &#123;</span><br><span class="line">   color: red;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">/* And which contain the value &quot;image&quot; */</span><br><span class="line">a[data-info~=&quot;image&quot;] &#123;</span><br><span class="line">  border: 1px solid black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="17">
+<li>X:checked</li>
+</ol>
+<hr>
+<pre><code>input[type=radio]:checked {
+   border: 1px solid black;
+}
+</code></pre><p>　　上面这个伪类写法可以定位那些被选中的单选框和多选框，就是这么简单。  </p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/checked.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="18">
+<li>X:after</li>
+</ol>
+<hr>
+<p>　　before和after这俩伪类。好像每天大家都能找到使用它们的创造性方法。它们会在被选中的标签周围生成一些内容。<br>当使用.clear-fix技巧时许多属性都是第一次被使用到里面的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.clearfix:after &#123;</span><br><span class="line">    content: &quot;&quot;;</span><br><span class="line">    display: block;</span><br><span class="line">    clear: both;</span><br><span class="line">    visibility: hidden;</span><br><span class="line">    font-size: 0;</span><br><span class="line">    height: 0;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">.clearfix &#123; </span><br><span class="line">   *display: inline-block; </span><br><span class="line">   _height: 1%;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　上面这段代码会在目标标签后面补上一段空白，然后将它清除。这个方法你一定得放你的聚宝盆里面。特别是当overflow:hidden方法不顶用的时候，这招就特别管用了。<br>还想看其他创造性的使用这个伪类，看这里。</p>
+<p>根据CSS3标准规定，可以使用两个冒号<code>::</code>。然后为了兼容性，浏览器也会接受一个双引号的写法。其实在这个情况下，用一个冒号还是比较明智的。</p>
+<ol start="19">
+<li>X::hover</li>
+</ol>
+<hr>
+<pre><code>div:hover {
+  background: #e3e3e3;
+}
+</code></pre><p>　　不用说，大家肯定知道它。官方的说法是user action pseudo class.听起来有点儿迷糊，其实还好。如果想在用户鼠标飘过的地方涂点儿彩，那这个伪类写法可以办到。</p>
+<p>注意旧版本的IE只会对加在锚点<code>a</code>标签上的<code>:hover</code>伪类起作用。</p>
+<p>　　通常大家在鼠标飘过锚点链接时候加下边框的时候用到它。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a:hover &#123;</span><br><span class="line"> border-bottom: 1px solid black;</span><br><span class="line">&#125;</span><br><span class="line">//专家提示：</span><br><span class="line">border-bottom:1px solid black;比text-decoration:underline;  //要好看很多。</span><br></pre></td></tr></table></figure>
+<ol start="20">
+<li>X:not(selector)</li>
+</ol>
+<hr>
+<pre><code>div:not(#container) {
+   color: blue;
+}  
+</code></pre><p>　　取反伪类是相当有用的，假设我们要把除id为container之外的所有div标签都选中。那上面那么代码就可以做到。</p>
+<p>　　或者说我想选中所有出段落标签之外的所有标签。</p>
+<pre><code>*:not(p) {
+  color: green;
+}  
+</code></pre><p>　　<br><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/not.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="21">
+<li>X::pseudoElement</li>
+</ol>
+<hr>
+<pre><code>p::first-line {
+  font-weight: bold;
+  font-size:1.2em;
+}
+</code></pre><p>　　</p>
+<p>我们可以使用::来选中某标签的部分内容，如地一段，或者是第一个字没有。但是记得必须使用在块式标签上才起作用。</p>
+<p>伪标签是由两个冒号<code>::</code>组成的。</p>
+<p>　　定位第一个字</p>
+<pre><code>p::first-letter {
+   float: left;
+   font-size: 2em;
+   font-weight: bold;
+   font-family: cursive;
+   padding-right: 2px;
+}
+</code></pre><p>　　上面这段代码会找到页面上所有段落，并且指定为每一段的第一个字。</p>
+<p>　　它通常在一些新闻报刊内容的重点突出会使用到。</p>
+<p>　　定位某段的第一行</p>
+<pre><code>p::first-line {
+   font-weight: bold;
+   font-size: 1.2em;
+}
+</code></pre><p>　　跟::first-line相似，会选中段落的第一行 。</p>
+<p>　　为了兼容性，之前旧版浏览器也会兼容单冒号的写法，例如:first-line,:first-letter,:before,:after.但是这个兼容对新介绍的特性不起作用。  </p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/pseudoElements.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="22">
+<li>X:nth-child(n)</li>
+</ol>
+<hr>
+<pre><code>li:nth-child(3) {
+   color: red;
+}
+</code></pre><p>　　还记得我们面对如何取到推跌式标签的第几个元素是无处下手的时光么，有了nth-child那日子就一去不复返了。</p>
+<p>　　请注意nth-child接受一个整形参数，然后它不是从0开始的。如果你想获取第二个元素那么你传的值就是li:nth-child(2).</p>
+<p>　　我们甚至可以获取到由变量名定义的个数个子标签。例如我们可以用li:nth-child(4n)去每隔3个元素获取一次标签。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/nth.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="23">
+<li>X:nth-last-child(n)</li>
+</ol>
+<hr>
+<pre><code>li:nth-last-child(2) {
+   color: red;
+}
+</code></pre><p>　　假设你在一个ul标签中有N多的元素，而你只想获取最后三个元素，甚至是这样li:nth-child(397)，你可以用nth-last-child伪类去代替它。</p>
+<p>　　这个技巧可以很正确的代替第16个TIP，不同的就是它是从结尾处开始的，倒回去的。  </p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/nthLast.html" target="_blank" rel="noopener">DEMO</a>
+　　</p>
+<ol start="24">
+<li>X:nth-of-type(n)</li>
+</ol>
+<hr>
+<pre><code>ul:nth-of-type(3) {
+   border: 1px solid black;
+}
+</code></pre><p>　　曾几何时，我们不想去选择子节点，而是想根据元素的类型来进行选择。</p>
+<p>　　想象一下有5个ul标签。如果你只想对其中的第三个进行修饰，而且你也不想使用id属性，那你就可以使用nth-of-type(n)伪类来实现了，上面的那个代码，只有第三个ul标签会被设置边框。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/nthOfType.html" target="_blank" rel="noopener">DEMO</a></p>
+<p>　</p>
+<ol start="25">
+<li>X:nth-last-of-type(n)</li>
+</ol>
+<hr>
+<pre><code>ul:nth-last-of-type(3) {
+   border: 1px solid black;
+}
+</code></pre><p>　　同样，也可以类似的使用nth-last-of-type来倒序的获取标签。</p>
+<p>　</p>
+<ol start="26">
+<li>X:first-child</li>
+</ol>
+<hr>
+<pre><code>ul li:first-child {
+   border-top: none;
+}
+</code></pre><p>　　这个结构性的伪类可以选择到第一个子标签，你会经常使用它来取出第一个和最后一个的边框。</p>
+<p>　　假设有个列表，没个标签都有上下边框，那么效果就是第一个和最后一个就会看起来有点奇怪。这时候就可以使用这个伪类来处理这种情况了。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/firstChild.html" target="_blank" rel="noopener">DEMO</a></p>
+<p>　　</p>
+<ol start="27">
+<li>X:last-child</li>
+</ol>
+<hr>
+<pre><code>ul &gt; li:last-child {
+   color: green;
+}
+</code></pre><p>　　跟first-child相反，last-child取的是父标签的最后一个标签。</p>
+<p>　　例如标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">   &lt;li&gt; List Item &lt;/li&gt;</span><br><span class="line">   &lt;li&gt; List Item &lt;/li&gt;</span><br><span class="line">   &lt;li&gt; List Item &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">ul &#123;</span><br><span class="line"> width: 200px;</span><br><span class="line"> background: #292929;</span><br><span class="line"> color: white;</span><br><span class="line"> list-style: none;</span><br><span class="line"> padding-left: 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">li &#123;</span><br><span class="line"> padding: 10px;</span><br><span class="line"> border-bottom: 1px solid black;</span><br><span class="line"> border-top: 1px solid #3c3c3c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　上面的代码将设置背景色，移除浏览器默认的内边距，为每个li设置边框以凸显一定的深度。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/firstChild.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="28">
+<li>X:only-child</li>
+</ol>
+<hr>
+<pre><code>div p:only-child {
+   color: red;
+}
+</code></pre><p>　　说实话，你会发现你几乎都不会用到这个伪类。然而，它是可用的，有会需要它的。</p>
+<p>　　它允许你获取到那些只有一个子标签的父标签。就像上面那段代码，只有一个段落标签的div才被着色。</p>
+<pre><code>&lt;div&gt;&lt;p&gt; My paragraph here. &lt;/p&gt;&lt;/div&gt;
+
+&lt;div&gt;
+   &lt;p&gt; Two paragraphs total. &lt;/p&gt;
+   &lt;p&gt; Two paragraphs total. &lt;/p&gt;
+&lt;/div&gt;  
+</code></pre><p>　　上面例子中，第二个div不会被选中。一旦第一个div有了多个子段落，那这个就不再起作用了。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/onlyChild.html" target="_blank" rel="noopener">DEMO</a></p>
+<p>　</p>
+<ol start="29">
+<li>X:only-of-type</li>
+</ol>
+<hr>
+<pre><code>li:only-of-type {
+   font-weight: bold;
+}  
+</code></pre><p>　　结构性伪类可以用的很聪明。它会定位某标签只有一个子标签的目标。设想你想获取到只有一个子标签的ul标签？</p>
+<p>　　使用ul li会选中所有li标签。这时候就要使用only-of-type了。</p>
+<pre><code>ul &gt; li:only-of-type {
+   font-weight: bold;
+}
+</code></pre><p>　</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/onlyOfType.html" target="_blank" rel="noopener">DEMO</a></p>
+<ol start="30">
+<li>X:first-of-type</li>
+</ol>
+<hr>
+<p>　　first-of-type伪类可以选择指定标签的第一个兄弟标签。</p>
+<p>　　测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">   &lt;p&gt; My paragraph here. &lt;/p&gt;</span><br><span class="line">   &lt;ul&gt;</span><br><span class="line">      &lt;li&gt; List Item 1 &lt;/li&gt;</span><br><span class="line">      &lt;li&gt; List Item 2 &lt;/li&gt;</span><br><span class="line">   &lt;/ul&gt;</span><br><span class="line">  </span><br><span class="line">   &lt;ul&gt;</span><br><span class="line">      &lt;li&gt; List Item 3 &lt;/li&gt;</span><br><span class="line">      &lt;li&gt; List Item 4 &lt;/li&gt;</span><br><span class="line">   &lt;/ul&gt;   </span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>　　来你把List Item 2取出来，如果你已经取出来或者是放弃了，来继续。</p>
+<p>　　解决办法1</p>
+<p>　　办法很多，我们看一些比较方便的。首先是first-of-type。</p>
+<pre><code>ul:first-of-type &gt; li:nth-child(2) {
+   font-weight: bold;
+}
+</code></pre><p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/firstOfType.html" target="_blank" rel="noopener">DEMO</a></p>
+<p>　　找到第一个ul标签，然后找到直接子标签li，然后找到第二个子节点。</p>
+<p>　　解决办法2</p>
+<p>　　另一个解决办法就是邻近选择器。</p>
+<pre><code>p + ul li:last-child {
+   font-weight: bold;
+}  
+</code></pre><p>　　这种情况下，找到p下的直接ul标签，然后找到它的最后一个直接子标签。</p>
+<p>　　解决办法3</p>
+<p>　　我们可以随便玩耍这些选择器。来看看：</p>
+<pre><code>ul:first-of-type li:nth-last-child(1) {
+   font-weight: bold;   
+}  
+</code></pre><p>　　先获取到页面上第一个ul标签，然后找到最后一个子标签。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/mp-qr.jpg" alt="clinjie wechat" style="width: 200px; max-width: 100%;">
+    <div>Think about u every day</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Front-End/" rel="tag"># Front End</a>
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/04/15/router-testbench-note/" rel="next" title="router-testbench注解">
+                <i class="fa fa-chevron-left"></i> router-testbench注解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/05/JQuery选择器、过滤器介绍/" rel="prev" title="JQuery选择器、过滤器介绍">
+                JQuery选择器、过滤器介绍 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      <! -- 添加微信图标 -->
+	    
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+    <div class="comments" id="comments">
+       
+            <div id="uyan_frame"></div>
+       
+    </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/img/avatar.jpg" alt="clinjie">
+          <p class="site-author-name" itemprop="name">clinjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chuangwailinjie" target="_blank" title="github" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chuangwalinjie" target="_blank" title="weibo" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/peihaozhu" target="_blank" title="zhihu" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一些CSS选择器"><span class="nav-number">1.</span> <span class="nav-text">一些CSS选择器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1"><span class="nav-number">1.1.</span> <span class="nav-text">1.*</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clinjie</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+    
+      
+    
+
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2142203"></script>
+        <!-- UY END -->
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("BKt7qufuU6B0ix9a9ik7kejs-gzGzoHsz", "pfDjDmIpP09Fj9QNLGzSL2Ox");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+	
+	
+
+<!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<!-- 颗粒漂浮背景 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript">var OriginTitile=document.title,st;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="你要去哪里",clearTimeout(st)):(document.title="clinjie~~"+OriginTitile,st=setTimeout(function(){document.title=OriginTitile},3e3))})</script>
+</body>
+</html>

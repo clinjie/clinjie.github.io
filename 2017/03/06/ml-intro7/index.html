@@ -1,0 +1,1082 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="ML,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="临街小站" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="贝叶斯决策论在相关概率已知的情况下，贝叶斯决策论考虑如何基于这些概率和误判损失选择最优的类别标记。 假设有N中可能的类别标记${c_1,c_2,c_3,…,c_N}, \lambda_{ij}$是将一个真实标记为$c_j$的样本误分类为i产生的损失。推出来样本x分类为$c_i$所产生的期望损失： $R(c_i \mid x)=\sum\limits_{j=1}^N \lambda_{ij}P(c_">
+<meta name="keywords" content="ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贝叶斯Bayesian">
+<meta property="og:url" content="http://peihao.space/2017/03/06/ml-intro7/index.html">
+<meta property="og:site_name" content="临街小站">
+<meta property="og:description" content="贝叶斯决策论在相关概率已知的情况下，贝叶斯决策论考虑如何基于这些概率和误判损失选择最优的类别标记。 假设有N中可能的类别标记${c_1,c_2,c_3,…,c_N}, \lambda_{ij}$是将一个真实标记为$c_j$的样本误分类为i产生的损失。推出来样本x分类为$c_i$所产生的期望损失： $R(c_i \mid x)=\sum\limits_{j=1}^N \lambda_{ij}P(c_">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://peihao.space/img/article/ml/ml-intro7-1.png">
+<meta property="og:updated_time" content="2019-04-28T16:21:32.331Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="贝叶斯Bayesian">
+<meta name="twitter:description" content="贝叶斯决策论在相关概率已知的情况下，贝叶斯决策论考虑如何基于这些概率和误判损失选择最优的类别标记。 假设有N中可能的类别标记${c_1,c_2,c_3,…,c_N}, \lambda_{ij}$是将一个真实标记为$c_j$的样本误分类为i产生的损失。推出来样本x分类为$c_i$所产生的期望损失： $R(c_i \mid x)=\sum\limits_{j=1}^N \lambda_{ij}P(c_">
+<meta name="twitter:image" content="http://peihao.space/img/article/ml/ml-intro7-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://peihao.space/2017/03/06/ml-intro7/">
+
+
+
+
+
+  <title> 贝叶斯Bayesian | 临街小站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">临街小站</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photos" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br>
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+
+	  </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://peihao.space/2017/03/06/ml-intro7/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="clinjie">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/img/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="临街小站">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="临街小站" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                贝叶斯Bayesian
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-06T13:18:42+08:00">
+                2017-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index">
+                    <span itemprop="name">ML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/06/ml-intro7/" class="leancloud_visitors" data-flag-title="贝叶斯Bayesian">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+		
+		
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="贝叶斯决策论"><a href="#贝叶斯决策论" class="headerlink" title="贝叶斯决策论"></a>贝叶斯决策论</h1><p>在相关概率已知的情况下，贝叶斯决策论考虑如何基于这些概率和误判损失选择最优的类别标记。</p>
+<p>假设有N中可能的类别标记${c_1,c_2,c_3,…,c_N}, \lambda_{ij}$是将一个真实标记为$c_j$的样本误分类为i产生的损失。推出来样本x分类为$c_i$所产生的期望损失：</p>
+<p>$R(c_i \mid x)=\sum\limits_{j=1}^N \lambda_{ij}P(c_j \mid x)$</p>
+<a id="more"></a>
+<p>显然对每个样本x，若能最小化条件风险$R(h(x)\mid x)$，即在每个样本上选择那个使条件风险$R(c\mid x)$最小的类别标记，总体风险R(h)也将最小化。</p>
+<p>$h^{*}(x)=arg_{c in y}\min R(c\mid x)$</p>
+<p>此时$h^<em>$称为贝叶斯最优分类器，与之对应的总体风险$R(h^</em>)$称为贝叶斯风险。$1-R(h^*)$反映了分类器能达到的理论上限。</p>
+<p>若目标是最小化分类错误率，则误判损失$\lambda_{ij}$可写为：$\lambda_{ij} =0 if i==j else 1$</p>
+<p>此时的条件风险：$R(c \mid x)=1-P(c \mid x)$，于是最小化分类错误率的贝叶斯最优分类器为$h^*(x)=arg_{c \in y}\max P(c \mid x)$</p>
+<p>这里有两种策略估计后验概率$P(c \mid x)$：</p>
+<ol>
+<li><p>给定x，直接建模$P(c \mid x)$预测c，这种判别式模型，之前介绍的决策树、神经网络、SVM都可行</p>
+</li>
+<li><p>对联合分布P(x,c)建模，之后获得$P(c \mid x)$，这种生成式建模 $P(c \mid x)=\frac{P(c)P(x \mid c)}{P()x}$</p>
+</li>
+</ol>
+<p>上式，其中$P(c)$是累先验概率，也就是预估概率；$P(x \mid c)$是样本x相对于类标记c的类条件概率，也称为似然likelihood；$P(x)$是用于归一化的证据因子。对于给定样本x，证据因子$P(x)$与类标记无关。</p>
+<p>类先验概率$P(c)$表达了样本空间中各类样本所占的比例；当训练集中包含充足的独立同分布样本时，$P(c)$可通过各类样本出现的频率估计。</p>
+<h1 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h1><p>估计类条件概率的一种常用策略就是先假定其具有某种确定的概率分布形式，再基于训练样本对概率分布的参数进行估计。</p>
+<p>具体到上节的类条件概率上，记关于类别c的类条件概率为$P(x \mid c)$，假定$P(x \mid c)$具有确定的形式并且被参数向量$\theta_c$唯一确定，则我们的任务就是利用训练集D估计参数$\theta_c$。此时我们记$P(x \mid c)$为$P(x \mid \theta_c)$</p>
+<h1 id="朴素贝叶斯分类器"><a href="#朴素贝叶斯分类器" class="headerlink" title="朴素贝叶斯分类器"></a>朴素贝叶斯分类器</h1><p>基于贝叶斯公式来估计后验概率$P(c \mid x)$的主要困难在于累条件概率$P(x \mid c)$是所有属性上的联合概率，难以从有限的训练样本直接估计得到。</p>
+<p>为了避开这个障碍，朴素贝叶斯分类采用属性条件独立性假设：对已知类别假设所有的属性相互独立。</p>
+<p>$P(c \mid x)=\frac{P(c)P(x \mid c)}{P(x)}=\frac{P(c)}{P(x)}\prod\limits_{i=1}^dP(x_i \mid c)$</p>
+<p>其中d为属性数目，$x_i$为x在第i个属性上的取值。</p>
+<p>由于对所有的类别来讲$P(x)$相同，因此贝叶斯判定准则有$h_{nb}=arg\max\limits_{c \in y}P(c)\prod\limits_{i=1}^dP(x_i \mid c)$</p>
+<p>显然朴素贝叶斯分类器的训练过程就是基于训练集D来估计类先验概率P(c)，并为ie每个属性估计条件概率$p(x_i \mid c)$</p>
+<h2 id="小例子"><a href="#小例子" class="headerlink" title="小例子"></a>小例子</h2><p>令$D_c$表示训练集D中第c类样本组成的集合，若有充足的独立同分布样本，则可以容易的估计出类先验概率：$P(c)=\frac{\mid D_c \mid}{\mid D \mid}$</p>
+<p>对离散属性而言，令$D_{c,x_i}$表示$D_c$中在第i个属性上取值为$x_i$的样本组成的集合，则条件概率$P(x_i \mid c)$可以估计为：$P(x_i \mid c)=\frac{\mid D_{c,x_i} \mid}{\mid D_c \mid}$</p>
+<p>对于连续属性，假定$p(x_i \mid c) \sim N(\mu_{c,i},\theta_{c,i}^2)$,其中$\mu_{c,i}$和$\theta_{c,i}^2$分别是第c类样本在第i个属性上取指的均值和方差。$p(x_i \mid c)=\frac{exp^({-\frac{(x_i-\mu_{c,i})^2}{2\theta_{c,i}^2}})}{\sqrt{2\pi}\theta_{c,i}}$</p>
+<h2 id="拉普拉斯修正"><a href="#拉普拉斯修正" class="headerlink" title="拉普拉斯修正"></a>拉普拉斯修正</h2><p>如果某个属性在训练集中没有与某个类同时出现过，则直接使用上式判别将出现问题。具体表现在连乘过程中，一个变量为0，则整个式子都为0.为了避免这种情况的发生，使用拉普拉丝修正：$\hat{P(c)}=\frac{\mid D_c \mid+1}{\mid D \mid+N}$，条件概率修正为$\hat{P}(x_i \mid c)=\frac{\mid D_{c,x_i} \mid+1}{\mid D_c \mid+N_i}$</p>
+<h1 id="半朴素贝叶斯"><a href="#半朴素贝叶斯" class="headerlink" title="半朴素贝叶斯"></a>半朴素贝叶斯</h1><p>放宽朴素贝叶斯分类中对属性条件独立性的要求，使得贝叶斯更加的普适性，人们在朴素贝叶斯的基础上提出了半朴素贝叶斯。</p>
+<p>半朴素贝叶斯适当的考虑一部分属性间的相互依赖关系，从而不至于彻底忽略比较强的属性依赖；但是为了避免问题陷入到复杂的联合概率计算中，一般会对属性依赖的数量有要求。</p>
+<p>假定只能最多一个依赖关系，也就是”独依赖估计”：$P(c\mid x) \propto P(c)\prod\limits_{i=1}^dP(x_i \mid c,pa_i) $</p>
+<p>其中$pa_i$为属性$x_i$所依赖的属性，称为$x_i$的父属性。若每个属性的父属性都已知，则可直接使用之前的公式求解；否则我们需要确定每个属性的父属性。</p>
+<p><img src="http://peihao.space/img/article/ml/ml-intro7-1.png" alt></p>
+<p>上图是朴素贝叶斯（独、无依赖立）以及两种常见的半贝叶斯（独依赖）：SPODE（SUper Parent ODE）和TAN（Tree Augmented naive Bayes）</p>
+<p>SPODE中有一个超属性，属性如果有依赖，则都依赖到此属性上面；</p>
+<p>TAN则是在最大带权生成树算法基础上通过转换将依赖结构化简。</p>
+<p>AODE（Averaged One Dependent Estimator）尝试将每个属性作为超父来构建SPODE，然后将那些有足够训练数据支撑的SPODE继承起来作为最终结果。</p>
+<h1 id="贝叶斯网"><a href="#贝叶斯网" class="headerlink" title="贝叶斯网"></a>贝叶斯网</h1><p>贝叶斯网B由结构G和参数$\Theta$两部分组成，即$B=\langle F,\Theta \rangle$。网络结构G是一个有向无环图，每个节点对应一个属性，若两个属性有直接的依赖关系，则由一条边连接起来；参数$\Theta$定量的描述依赖关系。例如属性$x_i$在G中的父节点集为$\pi_i$，则$\Theta$包含了每个属性的条件概率表$\theta_{x_i \mid \pi_i}=P_B(x_i \mid \pi_i)$</p>
+<p>贝叶斯网有效的表达了属性间的条件独立性。给定父节点集合，贝叶斯网假设每个属性与它的非后裔属性独立。</p>
+<h2 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h2><p>正常情况下，我们并不知晓网络结构，需要通过学习方法建立或匹配上适当的网络结构。</p>
+<p>评分搜索：定义评分函数来评估贝叶斯网与训练数据的契合程度，然后基于这个评分函数来寻找结构最优的贝叶斯网。</p>
+<h1 id="EM算法"><a href="#EM算法" class="headerlink" title="EM算法"></a>EM算法</h1><p>对于不完整的训练样本，或者说是未观测的变量，学名是隐变量：令X表示已观测变量集，Z表示隐变量集，$\Theta$表示模型参数</p>
+<p>对$\Theta$做极大似然估计，则最大化对数似然$LL(\Theta \mid X,Z)=ln P(X,Z\mid \Theta)$</p>
+<p>无法直接求解的隐变量，通过对Z计算期望，最大化已观测数据的对数“边际似然”</p>
+<p>EM算法是常用的估计参数隐变量的迭代方法：</p>
+<p><strong>（E）若参数$\Theta$已知，则可根据训练数据推断出最优隐变量Z的值</strong></p>
+<p><strong>（M）反之做Z值已知，可方便的对参数$\Theta$做极大似然估计</strong></p>
+<p>以初始值$\Theta^0$迭代步骤：</p>
+<ol>
+<li><p>基于$\Theta^t$推断隐变量Z的期望记为$Z^t$</p>
+</li>
+<li><p>基于已观测变量X和$Z^t$对参数$\Theta$做极大似然估计，记为$\Theta^{t+1}$</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/mp-qr.jpg" alt="clinjie wechat" style="width: 200px; max-width: 100%;">
+    <div>Think about u every day</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ML/" rel="tag"># ML</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/05/ml-intro6/" rel="next" title="ML学习-SVM">
+                <i class="fa fa-chevron-left"></i> ML学习-SVM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/07/ml-integration/" rel="prev" title="集成学习">
+                集成学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      <! -- 添加微信图标 -->
+	    
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+    <div class="comments" id="comments">
+       
+            <div id="uyan_frame"></div>
+       
+    </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/img/avatar.jpg" alt="clinjie">
+          <p class="site-author-name" itemprop="name">clinjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chuangwailinjie" target="_blank" title="github" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chuangwalinjie" target="_blank" title="weibo" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/peihaozhu" target="_blank" title="zhihu" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#贝叶斯决策论"><span class="nav-number">1.</span> <span class="nav-text">贝叶斯决策论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#极大似然估计"><span class="nav-number">2.</span> <span class="nav-text">极大似然估计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#朴素贝叶斯分类器"><span class="nav-number">3.</span> <span class="nav-text">朴素贝叶斯分类器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#小例子"><span class="nav-number">3.1.</span> <span class="nav-text">小例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拉普拉斯修正"><span class="nav-number">3.2.</span> <span class="nav-text">拉普拉斯修正</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#半朴素贝叶斯"><span class="nav-number">4.</span> <span class="nav-text">半朴素贝叶斯</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#贝叶斯网"><span class="nav-number">5.</span> <span class="nav-text">贝叶斯网</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#学习"><span class="nav-number">5.1.</span> <span class="nav-text">学习</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EM算法"><span class="nav-number">6.</span> <span class="nav-text">EM算法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clinjie</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+    
+      
+    
+
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2142203"></script>
+        <!-- UY END -->
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("BKt7qufuU6B0ix9a9ik7kejs-gzGzoHsz", "pfDjDmIpP09Fj9QNLGzSL2Ox");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+	
+	
+
+<!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<!-- 颗粒漂浮背景 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript">var OriginTitile=document.title,st;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="你要去哪里",clearTimeout(st)):(document.title="clinjie~~"+OriginTitile,st=setTimeout(function(){document.title=OriginTitile},3e3))})</script>
+</body>
+</html>

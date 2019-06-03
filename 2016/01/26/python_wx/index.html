@@ -1,0 +1,1041 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="python,微信,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="临街小站" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="查看被删的微信好友 原理就是新建群组,如果加不进来就是被删好友了(不要在群组里讲话,别人是看不见的) 用的是微信网页版的接口 查询结果可能会引起一些心理上的不适,请小心使用 :) 还有些小问题: 结果好像有疏漏一小部分,原因不明.. 最终会遗留下一个只有自己的群组,需要手工删一下 没试过被拉黑的情况 转自 https://github.com/0x5e/wechat-deleted-friends">
+<meta name="keywords" content="python,微信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python查看微信删除好友">
+<meta property="og:url" content="http://peihao.space/2016/01/26/python_wx/index.html">
+<meta property="og:site_name" content="临街小站">
+<meta property="og:description" content="查看被删的微信好友 原理就是新建群组,如果加不进来就是被删好友了(不要在群组里讲话,别人是看不见的) 用的是微信网页版的接口 查询结果可能会引起一些心理上的不适,请小心使用 :) 还有些小问题: 结果好像有疏漏一小部分,原因不明.. 最终会遗留下一个只有自己的群组,需要手工删一下 没试过被拉黑的情况 转自 https://github.com/0x5e/wechat-deleted-friends">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://p3.image.hiapk.com/uploads/allimg/160107/0932512E2-0.jpg">
+<meta property="og:updated_time" content="2019-04-28T16:21:32.337Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python查看微信删除好友">
+<meta name="twitter:description" content="查看被删的微信好友 原理就是新建群组,如果加不进来就是被删好友了(不要在群组里讲话,别人是看不见的) 用的是微信网页版的接口 查询结果可能会引起一些心理上的不适,请小心使用 :) 还有些小问题: 结果好像有疏漏一小部分,原因不明.. 最终会遗留下一个只有自己的群组,需要手工删一下 没试过被拉黑的情况 转自 https://github.com/0x5e/wechat-deleted-friends">
+<meta name="twitter:image" content="http://p3.image.hiapk.com/uploads/allimg/160107/0932512E2-0.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://peihao.space/2016/01/26/python_wx/">
+
+
+
+
+
+  <title> Python查看微信删除好友 | 临街小站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?07ad8ea412265d4e0ce713ba2e3cd40a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">临街小站</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photos" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br>
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+
+	  </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://peihao.space/2016/01/26/python_wx/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="clinjie">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/img/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="临街小站">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="临街小站" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python查看微信删除好友
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-26T18:28:30+08:00">
+                2016-01-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/01/26/python_wx/" class="leancloud_visitors" data-flag-title="Python查看微信删除好友">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+		
+		
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="查看被删的微信好友"><a href="#查看被删的微信好友" class="headerlink" title="查看被删的微信好友"></a>查看被删的微信好友</h1><p><img src="http://p3.image.hiapk.com/uploads/allimg/160107/0932512E2-0.jpg" alt></p>
+<p>原理就是新建群组,如果加不进来就是被删好友了(不要在群组里讲话,别人是看不见的)</p>
+<p>用的是微信网页版的接口</p>
+<p>查询结果可能会引起一些心理上的不适,请小心使用 :)</p>
+<p>还有些小问题:</p>
+<p>结果好像有疏漏一小部分,原因不明..</p>
+<p>最终会遗留下一个只有自己的群组,需要手工删一下</p>
+<p>没试过被拉黑的情况</p>
+<p>转自 <a href="https://github.com/0x5e/wechat-deleted-friends" title="github" target="_blank" rel="noopener">https://github.com/0x5e/wechat-deleted-friends</a></p>
+<h1 id="用法"><a href="#用法" class="headerlink" title="用法:"></a>用法:</h1><p>启动终端Terminal</p>
+<p>$ python code.py</p>
+<p>原作者是是py2.x平台下编写，所以不能直接在py3.x平台下直接使用，本文的代码是适配py3.4之后，提升了程序稳定性，并增加查看被拉黑名单功能</p>
+<a id="more"></a>
+<h1 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> xml.dom.minidom</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> ssl</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">DEBUG = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">MAX_GROUP_NUM = <span class="number">35</span>  <span class="comment"># 每组人数</span></span><br><span class="line">INTERFACE_CALLING_INTERVAL = <span class="number">20</span>  <span class="comment"># 接口调用时间间隔, 间隔太短容易出现"操作太频繁", 会被限制操作半小时左右</span></span><br><span class="line">MAX_PROGRESS_LEN = <span class="number">50</span></span><br><span class="line"></span><br><span class="line">QRImagePath = os.path.join(os.getcwd(), <span class="string">'qrcode.jpg'</span>)</span><br><span class="line"></span><br><span class="line">tip = <span class="number">0</span></span><br><span class="line">uuid = <span class="string">''</span></span><br><span class="line"></span><br><span class="line">base_uri = <span class="string">''</span></span><br><span class="line">redirect_uri = <span class="string">''</span></span><br><span class="line">push_uri = <span class="string">''</span></span><br><span class="line"></span><br><span class="line">skey = <span class="string">''</span></span><br><span class="line">wxsid = <span class="string">''</span></span><br><span class="line">wxuin = <span class="string">''</span></span><br><span class="line">pass_ticket = <span class="string">''</span></span><br><span class="line">deviceId = <span class="string">'e000000000000000'</span></span><br><span class="line"></span><br><span class="line">BaseRequest = &#123;&#125;</span><br><span class="line"></span><br><span class="line">ContactList = []</span><br><span class="line">My = []</span><br><span class="line">SyncKey = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">responseState</span><span class="params">(func, BaseResponse)</span>:</span></span><br><span class="line">    ErrMsg = BaseResponse[<span class="string">'ErrMsg'</span>]</span><br><span class="line">    Ret = BaseResponse[<span class="string">'Ret'</span>]</span><br><span class="line">    <span class="keyword">if</span> DEBUG <span class="keyword">or</span> Ret != <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'func: %s, Ret: %d, ErrMsg: %s'</span> % (func, Ret, ErrMsg))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> Ret != <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getUUID</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> uuid</span><br><span class="line"></span><br><span class="line">    url = <span class="string">'https://login.weixin.qq.com/jslogin'</span></span><br><span class="line">    params = &#123;</span><br><span class="line">        <span class="string">'appid'</span>: <span class="string">'wx782c26e4c19acffb'</span>,</span><br><span class="line">        <span class="string">'fun'</span>: <span class="string">'new'</span>,</span><br><span class="line">        <span class="string">'lang'</span>: <span class="string">'zh_CN'</span>,</span><br><span class="line">        <span class="string">'_'</span>: int(time.time()),</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    r= myRequests.get(url=url, params=params)</span><br><span class="line">    r.encoding = <span class="string">'utf-8'</span></span><br><span class="line">    data = r.text</span><br><span class="line"></span><br><span class="line">    <span class="comment"># print(data)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># window.QRLogin.code = 200; window.QRLogin.uuid = "oZwt_bFfRg==";</span></span><br><span class="line">    regx = <span class="string">r'window.QRLogin.code = (\d+); window.QRLogin.uuid = "(\S+?)"'</span></span><br><span class="line">    pm = re.search(regx, data)</span><br><span class="line"></span><br><span class="line">    code = pm.group(<span class="number">1</span>)</span><br><span class="line">    uuid = pm.group(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> code == <span class="string">'200'</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">showQRImage</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> tip</span><br><span class="line"></span><br><span class="line">    url = <span class="string">'https://login.weixin.qq.com/qrcode/'</span> + uuid</span><br><span class="line">    params = &#123;</span><br><span class="line">        <span class="string">'t'</span>: <span class="string">'webwx'</span>,</span><br><span class="line">        <span class="string">'_'</span>: int(time.time()),</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    r = myRequests.get(url=url, params=params)</span><br><span class="line"></span><br><span class="line">    tip = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    f = open(QRImagePath, <span class="string">'wb'</span>)</span><br><span class="line">    f.write(r.content)</span><br><span class="line">    f.close()</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> sys.platform.find(<span class="string">'darwin'</span>) &gt;= <span class="number">0</span>:</span><br><span class="line">        subprocess.call([<span class="string">'open'</span>, QRImagePath])</span><br><span class="line">    <span class="keyword">elif</span> sys.platform.find(<span class="string">'linux'</span>) &gt;= <span class="number">0</span>:</span><br><span class="line">        subprocess.call([<span class="string">'xdg-open'</span>, QRImagePath])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        os.startfile(QRImagePath)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'请使用微信扫描二维码以登录'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">waitForLogin</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> tip, base_uri, redirect_uri, push_uri</span><br><span class="line"></span><br><span class="line">    url = <span class="string">'https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login?tip=%s&amp;uuid=%s&amp;_=%s'</span> % (</span><br><span class="line">        tip, uuid, int(time.time()))</span><br><span class="line"></span><br><span class="line">    r = myRequests.get(url=url)</span><br><span class="line">    r.encoding = <span class="string">'utf-8'</span></span><br><span class="line">    data = r.text</span><br><span class="line"></span><br><span class="line">    <span class="comment"># print(data)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># window.code=500;</span></span><br><span class="line">    regx = <span class="string">r'window.code=(\d+);'</span></span><br><span class="line">    pm = re.search(regx, data)</span><br><span class="line"></span><br><span class="line">    code = pm.group(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> code == <span class="string">'201'</span>:  <span class="comment"># 已扫描</span></span><br><span class="line">        print(<span class="string">'成功扫描,请在手机上点击确认以登录'</span>)</span><br><span class="line">        tip = <span class="number">0</span></span><br><span class="line">    <span class="keyword">elif</span> code == <span class="string">'200'</span>:  <span class="comment"># 已登录</span></span><br><span class="line">        print(<span class="string">'正在登录...'</span>)</span><br><span class="line">        regx = <span class="string">r'window.redirect_uri="(\S+?)";'</span></span><br><span class="line">        pm = re.search(regx, data)</span><br><span class="line">        redirect_uri = pm.group(<span class="number">1</span>) + <span class="string">'&amp;fun=new'</span></span><br><span class="line">        base_uri = redirect_uri[:redirect_uri.rfind(<span class="string">'/'</span>)]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># push_uri与base_uri对应关系(排名分先后)(就是这么奇葩..)</span></span><br><span class="line">        services = [</span><br><span class="line">            (<span class="string">'wx2.qq.com'</span>, <span class="string">'webpush2.weixin.qq.com'</span>),</span><br><span class="line">            (<span class="string">'qq.com'</span>, <span class="string">'webpush.weixin.qq.com'</span>),</span><br><span class="line">            (<span class="string">'web1.wechat.com'</span>, <span class="string">'webpush1.wechat.com'</span>),</span><br><span class="line">            (<span class="string">'web2.wechat.com'</span>, <span class="string">'webpush2.wechat.com'</span>),</span><br><span class="line">            (<span class="string">'wechat.com'</span>, <span class="string">'webpush.wechat.com'</span>),</span><br><span class="line">            (<span class="string">'web1.wechatapp.com'</span>, <span class="string">'webpush1.wechatapp.com'</span>),</span><br><span class="line">        ]</span><br><span class="line">        push_uri = base_uri</span><br><span class="line">        <span class="keyword">for</span> (searchUrl, pushUrl) <span class="keyword">in</span> services:</span><br><span class="line">            <span class="keyword">if</span> base_uri.find(searchUrl) &gt;= <span class="number">0</span>:</span><br><span class="line">                push_uri = <span class="string">'https://%s/cgi-bin/mmwebwx-bin'</span> % pushUrl</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># closeQRImage</span></span><br><span class="line">        <span class="keyword">if</span> sys.platform.find(<span class="string">'darwin'</span>) &gt;= <span class="number">0</span>:  <span class="comment"># for OSX with Preview</span></span><br><span class="line">            os.system(<span class="string">"osascript -e 'quit app \"Preview\"'"</span>)</span><br><span class="line">    <span class="keyword">elif</span> code == <span class="string">'408'</span>:  <span class="comment"># 超时</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="comment"># elif code == '400' or code == '500':</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> code</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> skey, wxsid, wxuin, pass_ticket, BaseRequest</span><br><span class="line"></span><br><span class="line">    r = myRequests.get(url=redirect_uri)</span><br><span class="line">    r.encoding = <span class="string">'utf-8'</span></span><br><span class="line">    data = r.text</span><br><span class="line"></span><br><span class="line">    <span class="comment"># print(data)</span></span><br><span class="line"></span><br><span class="line">    doc = xml.dom.minidom.parseString(data)</span><br><span class="line">    root = doc.documentElement</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> node <span class="keyword">in</span> root.childNodes:</span><br><span class="line">        <span class="keyword">if</span> node.nodeName == <span class="string">'skey'</span>:</span><br><span class="line">            skey = node.childNodes[<span class="number">0</span>].data</span><br><span class="line">        <span class="keyword">elif</span> node.nodeName == <span class="string">'wxsid'</span>:</span><br><span class="line">            wxsid = node.childNodes[<span class="number">0</span>].data</span><br><span class="line">        <span class="keyword">elif</span> node.nodeName == <span class="string">'wxuin'</span>:</span><br><span class="line">            wxuin = node.childNodes[<span class="number">0</span>].data</span><br><span class="line">        <span class="keyword">elif</span> node.nodeName == <span class="string">'pass_ticket'</span>:</span><br><span class="line">            pass_ticket = node.childNodes[<span class="number">0</span>].data</span><br><span class="line"></span><br><span class="line">    <span class="comment"># print('skey: %s, wxsid: %s, wxuin: %s, pass_ticket: %s' % (skey, wxsid,</span></span><br><span class="line">    <span class="comment"># wxuin, pass_ticket))</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> all((skey, wxsid, wxuin, pass_ticket)):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    BaseRequest = &#123;</span><br><span class="line">        <span class="string">'Uin'</span>: int(wxuin),</span><br><span class="line">        <span class="string">'Sid'</span>: wxsid,</span><br><span class="line">        <span class="string">'Skey'</span>: skey,</span><br><span class="line">        <span class="string">'DeviceID'</span>: deviceId,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">webwxinit</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">    url = (base_uri +</span><br><span class="line">        <span class="string">'/webwxinit?pass_ticket=%s&amp;skey=%s&amp;r=%s'</span> % (</span><br><span class="line">            pass_ticket, skey, int(time.time())) )</span><br><span class="line">    params  = &#123;<span class="string">'BaseRequest'</span>: BaseRequest &#125;</span><br><span class="line">    headers = &#123;<span class="string">'content-type'</span>: <span class="string">'application/json; charset=UTF-8'</span>&#125;</span><br><span class="line"></span><br><span class="line">    r = myRequests.post(url=url, data=json.dumps(params),headers=headers)</span><br><span class="line">    r.encoding = <span class="string">'utf-8'</span></span><br><span class="line">    data = r.json()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> DEBUG:</span><br><span class="line">        f = open(os.path.join(os.getcwd(), <span class="string">'webwxinit.json'</span>), <span class="string">'wb'</span>)</span><br><span class="line">        f.write(r.content)</span><br><span class="line">        f.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># print(data)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">global</span> ContactList, My, SyncKey</span><br><span class="line">    dic = data</span><br><span class="line">    ContactList = dic[<span class="string">'ContactList'</span>]</span><br><span class="line">    My = dic[<span class="string">'User'</span>]</span><br><span class="line">    SyncKey = dic[<span class="string">'SyncKey'</span>]</span><br><span class="line"></span><br><span class="line">    state = responseState(<span class="string">'webwxinit'</span>, dic[<span class="string">'BaseResponse'</span>])</span><br><span class="line">    <span class="keyword">return</span> state</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">webwxgetcontact</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">    url = (base_uri +</span><br><span class="line">        <span class="string">'/webwxgetcontact?pass_ticket=%s&amp;skey=%s&amp;r=%s'</span> % (</span><br><span class="line">            pass_ticket, skey, int(time.time())) )</span><br><span class="line">    headers = &#123;<span class="string">'content-type'</span>: <span class="string">'application/json; charset=UTF-8'</span>&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    r = myRequests.post(url=url,headers=headers)</span><br><span class="line">    r.encoding = <span class="string">'utf-8'</span></span><br><span class="line">    data = r.json()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> DEBUG:</span><br><span class="line">        f = open(os.path.join(os.getcwd(), <span class="string">'webwxgetcontact.json'</span>), <span class="string">'wb'</span>)</span><br><span class="line">        f.write(r.content)</span><br><span class="line">        f.close()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># print(data)</span></span><br><span class="line"></span><br><span class="line">    dic = data</span><br><span class="line">    MemberList = dic[<span class="string">'MemberList'</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 倒序遍历,不然删除的时候出问题..</span></span><br><span class="line">    SpecialUsers = [<span class="string">"newsapp"</span>, <span class="string">"fmessage"</span>, <span class="string">"filehelper"</span>, <span class="string">"weibo"</span>, <span class="string">"qqmail"</span>, <span class="string">"tmessage"</span>, <span class="string">"qmessage"</span>, <span class="string">"qqsync"</span>, <span class="string">"floatbottle"</span>, <span class="string">"lbsapp"</span>, <span class="string">"shakeapp"</span>, <span class="string">"medianote"</span>, <span class="string">"qqfriend"</span>, <span class="string">"readerapp"</span>, <span class="string">"blogapp"</span>, <span class="string">"facebookapp"</span>, <span class="string">"masssendapp"</span>,</span><br><span class="line">                    <span class="string">"meishiapp"</span>, <span class="string">"feedsapp"</span>, <span class="string">"voip"</span>, <span class="string">"blogappweixin"</span>, <span class="string">"weixin"</span>, <span class="string">"brandsessionholder"</span>, <span class="string">"weixinreminder"</span>, <span class="string">"wxid_novlwrv3lqwv11"</span>, <span class="string">"gh_22b87fa7cb3c"</span>, <span class="string">"officialaccounts"</span>, <span class="string">"notification_messages"</span>, <span class="string">"wxitil"</span>, <span class="string">"userexperience_alarm"</span>]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(MemberList) - <span class="number">1</span>, <span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">        Member = MemberList[i]</span><br><span class="line">        <span class="keyword">if</span> Member[<span class="string">'VerifyFlag'</span>] &amp; <span class="number">8</span> != <span class="number">0</span>:  <span class="comment"># 公众号/服务号</span></span><br><span class="line">            MemberList.remove(Member)</span><br><span class="line">        <span class="keyword">elif</span> Member[<span class="string">'UserName'</span>] <span class="keyword">in</span> SpecialUsers:  <span class="comment"># 特殊账号</span></span><br><span class="line">            MemberList.remove(Member)</span><br><span class="line">        <span class="keyword">elif</span> Member[<span class="string">'UserName'</span>].find(<span class="string">'@@'</span>) != <span class="number">-1</span>:  <span class="comment"># 群聊</span></span><br><span class="line">            MemberList.remove(Member)</span><br><span class="line">        <span class="keyword">elif</span> Member[<span class="string">'UserName'</span>] == My[<span class="string">'UserName'</span>]:  <span class="comment"># 自己</span></span><br><span class="line">            MemberList.remove(Member)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> MemberList</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">createChatroom</span><span class="params">(UserNames)</span>:</span></span><br><span class="line">    MemberList = [&#123;<span class="string">'UserName'</span>: UserName&#125; <span class="keyword">for</span> UserName <span class="keyword">in</span> UserNames]</span><br><span class="line"></span><br><span class="line">    url = (base_uri +</span><br><span class="line">        <span class="string">'/webwxcreatechatroom?pass_ticket=%s&amp;r=%s'</span> % (</span><br><span class="line">            pass_ticket, int(time.time())) )</span><br><span class="line">    params = &#123;</span><br><span class="line">        <span class="string">'BaseRequest'</span>: BaseRequest,</span><br><span class="line">        <span class="string">'MemberCount'</span>: len(MemberList),</span><br><span class="line">        <span class="string">'MemberList'</span>: MemberList,</span><br><span class="line">        <span class="string">'Topic'</span>: <span class="string">''</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    headers = &#123;<span class="string">'content-type'</span>: <span class="string">'application/json; charset=UTF-8'</span>&#125;</span><br><span class="line"></span><br><span class="line">    r = myRequests.post(url=url, data=json.dumps(params),headers=headers)</span><br><span class="line">    r.encoding = <span class="string">'utf-8'</span></span><br><span class="line">    data = r.json()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># print(data)</span></span><br><span class="line"></span><br><span class="line">    dic = data</span><br><span class="line">    ChatRoomName = dic[<span class="string">'ChatRoomName'</span>]</span><br><span class="line">    MemberList = dic[<span class="string">'MemberList'</span>]</span><br><span class="line">    DeletedList = []</span><br><span class="line">    BlockedList = []</span><br><span class="line">    <span class="keyword">for</span> Member <span class="keyword">in</span> MemberList:</span><br><span class="line">        <span class="keyword">if</span> Member[<span class="string">'MemberStatus'</span>] == <span class="number">4</span>:  <span class="comment"># 被对方删除了</span></span><br><span class="line">            DeletedList.append(Member[<span class="string">'UserName'</span>])</span><br><span class="line">        <span class="keyword">elif</span> Member[<span class="string">'MemberStatus'</span>] == <span class="number">3</span>:  <span class="comment"># 被加入黑名单</span></span><br><span class="line">            BlockedList.append(Member[<span class="string">'UserName'</span>])</span><br><span class="line"></span><br><span class="line">    state = responseState(<span class="string">'createChatroom'</span>, dic[<span class="string">'BaseResponse'</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ChatRoomName, DeletedList, BlockedList</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">deleteMember</span><span class="params">(ChatRoomName, UserNames)</span>:</span></span><br><span class="line">    url = (base_uri +</span><br><span class="line">        <span class="string">'/webwxupdatechatroom?fun=delmember&amp;pass_ticket=%s'</span> % (pass_ticket) )</span><br><span class="line">    params = &#123;</span><br><span class="line">        <span class="string">'BaseRequest'</span>: BaseRequest,</span><br><span class="line">        <span class="string">'ChatRoomName'</span>: ChatRoomName,</span><br><span class="line">        <span class="string">'DelMemberList'</span>: <span class="string">','</span>.join(UserNames),</span><br><span class="line">    &#125;</span><br><span class="line">    headers = &#123;<span class="string">'content-type'</span>: <span class="string">'application/json; charset=UTF-8'</span>&#125;</span><br><span class="line"></span><br><span class="line">    r = myRequests.post(url=url, data=json.dumps(params),headers=headers)</span><br><span class="line">    r.encoding = <span class="string">'utf-8'</span></span><br><span class="line">    data = r.json()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># print(data)</span></span><br><span class="line"></span><br><span class="line">    dic = data</span><br><span class="line"></span><br><span class="line">    state = responseState(<span class="string">'deleteMember'</span>, dic[<span class="string">'BaseResponse'</span>])</span><br><span class="line">    <span class="keyword">return</span> state</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">addMember</span><span class="params">(ChatRoomName, UserNames)</span>:</span></span><br><span class="line">    url = (base_uri +</span><br><span class="line">        <span class="string">'/webwxupdatechatroom?fun=addmember&amp;pass_ticket=%s'</span> % (pass_ticket) )</span><br><span class="line">    params = &#123;</span><br><span class="line">        <span class="string">'BaseRequest'</span>: BaseRequest,</span><br><span class="line">        <span class="string">'ChatRoomName'</span>: ChatRoomName,</span><br><span class="line">        <span class="string">'AddMemberList'</span>: <span class="string">','</span>.join(UserNames),</span><br><span class="line">    &#125;</span><br><span class="line">    headers = &#123;<span class="string">'content-type'</span>: <span class="string">'application/json; charset=UTF-8'</span>&#125;</span><br><span class="line"></span><br><span class="line">    r = myRequests.post(url=url, data=json.dumps(params),headers=headers)</span><br><span class="line">    r.encoding = <span class="string">'utf-8'</span></span><br><span class="line">    data = r.json()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># print(data)</span></span><br><span class="line"></span><br><span class="line">    dic = data</span><br><span class="line">    MemberList = dic[<span class="string">'MemberList'</span>]</span><br><span class="line">    DeletedList = []</span><br><span class="line">    BlockedList = []</span><br><span class="line">    <span class="keyword">for</span> Member <span class="keyword">in</span> MemberList:</span><br><span class="line">        <span class="keyword">if</span> Member[<span class="string">'MemberStatus'</span>] == <span class="number">4</span>:  <span class="comment"># 被对方删除了</span></span><br><span class="line">            DeletedList.append(Member[<span class="string">'UserName'</span>])</span><br><span class="line">        <span class="keyword">elif</span> Member[<span class="string">'MemberStatus'</span>] == <span class="number">3</span>:  <span class="comment"># 被加入黑名单</span></span><br><span class="line">            BlockedList.append(Member[<span class="string">'UserName'</span>])</span><br><span class="line"></span><br><span class="line">    state = responseState(<span class="string">'addMember'</span>, dic[<span class="string">'BaseResponse'</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> DeletedList, BlockedList</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">syncKey</span><span class="params">()</span>:</span></span><br><span class="line">    SyncKeyItems = [<span class="string">'%s_%s'</span> % (item[<span class="string">'Key'</span>], item[<span class="string">'Val'</span>])</span><br><span class="line">                    <span class="keyword">for</span> item <span class="keyword">in</span> SyncKey[<span class="string">'List'</span>]]</span><br><span class="line">    SyncKeyStr = <span class="string">'|'</span>.join(SyncKeyItems)</span><br><span class="line">    <span class="keyword">return</span> SyncKeyStr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">syncCheck</span><span class="params">()</span>:</span></span><br><span class="line">    url = push_uri + <span class="string">'/synccheck?'</span></span><br><span class="line">    params = &#123;</span><br><span class="line">        <span class="string">'skey'</span>: BaseRequest[<span class="string">'Skey'</span>],</span><br><span class="line">        <span class="string">'sid'</span>: BaseRequest[<span class="string">'Sid'</span>],</span><br><span class="line">        <span class="string">'uin'</span>: BaseRequest[<span class="string">'Uin'</span>],</span><br><span class="line">        <span class="string">'deviceId'</span>: BaseRequest[<span class="string">'DeviceID'</span>],</span><br><span class="line">        <span class="string">'synckey'</span>: syncKey(),</span><br><span class="line">        <span class="string">'r'</span>: int(time.time()),</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    r = myRequests.get(url=url,params=params)</span><br><span class="line">    r.encoding = <span class="string">'utf-8'</span></span><br><span class="line">    data = r.text</span><br><span class="line"></span><br><span class="line">    <span class="comment"># print(data)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># window.synccheck=&#123;retcode:"0",selector:"2"&#125;</span></span><br><span class="line">    regx = <span class="string">r'window.synccheck=&#123;retcode:"(\d+)",selector:"(\d+)"&#125;'</span></span><br><span class="line">    pm = re.search(regx, data)</span><br><span class="line"></span><br><span class="line">    retcode = pm.group(<span class="number">1</span>)</span><br><span class="line">    selector = pm.group(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> selector</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">webwxsync</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> SyncKey</span><br><span class="line"></span><br><span class="line">    url = base_uri + <span class="string">'/webwxsync?lang=zh_CN&amp;skey=%s&amp;sid=%s&amp;pass_ticket=%s'</span> % (</span><br><span class="line">        BaseRequest[<span class="string">'Skey'</span>], BaseRequest[<span class="string">'Sid'</span>], quote_plus(pass_ticket))</span><br><span class="line">    params = &#123;</span><br><span class="line">        <span class="string">'BaseRequest'</span>: BaseRequest,</span><br><span class="line">        <span class="string">'SyncKey'</span>: SyncKey,</span><br><span class="line">        <span class="string">'rr'</span>: ~int(time.time()),</span><br><span class="line">    &#125;</span><br><span class="line">    headers = &#123;<span class="string">'content-type'</span>: <span class="string">'application/json; charset=UTF-8'</span>&#125;</span><br><span class="line"></span><br><span class="line">    r = myRequests.post(url=url, data=json.dumps(params))</span><br><span class="line">    r.encoding = <span class="string">'utf-8'</span></span><br><span class="line">    data = r.json()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># print(data)</span></span><br><span class="line"></span><br><span class="line">    dic = data</span><br><span class="line">    SyncKey = dic[<span class="string">'SyncKey'</span>]</span><br><span class="line"></span><br><span class="line">    state = responseState(<span class="string">'webwxsync'</span>, dic[<span class="string">'BaseResponse'</span>])</span><br><span class="line">    <span class="keyword">return</span> state</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">heartBeatLoop</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        selector = syncCheck()</span><br><span class="line">        <span class="keyword">if</span> selector != <span class="string">'0'</span>:</span><br><span class="line">            webwxsync()</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> myRequests</span><br><span class="line"></span><br><span class="line">    ssl._create_default_https_context = ssl._create_unverified_context</span><br><span class="line">    headers = &#123;<span class="string">'User-agent'</span>: <span class="string">'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.125 Safari/537.36'</span>&#125;</span><br><span class="line">    myRequests = requests.Session()</span><br><span class="line">    myRequests.headers.update(headers)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> getUUID():</span><br><span class="line">        print(<span class="string">'获取uuid失败'</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    print(<span class="string">'正在获取二维码图片...'</span>)</span><br><span class="line">    showQRImage()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> waitForLogin() != <span class="string">'200'</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    os.remove(QRImagePath)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> login():</span><br><span class="line">        print(<span class="string">'登录失败'</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> webwxinit():</span><br><span class="line">        print(<span class="string">'初始化失败'</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    MemberList = webwxgetcontact()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'开启心跳线程'</span>)</span><br><span class="line">    threading.Thread(target=heartBeatLoop)</span><br><span class="line"></span><br><span class="line">    MemberCount = len(MemberList)</span><br><span class="line">    print(<span class="string">'通讯录共%s位好友'</span> % MemberCount)</span><br><span class="line"></span><br><span class="line">    ChatRoomName = <span class="string">''</span></span><br><span class="line">    result = []</span><br><span class="line">    d = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> Member <span class="keyword">in</span> MemberList:</span><br><span class="line">        d[Member[<span class="string">'UserName'</span>]] = (Member[<span class="string">'NickName'</span>], Member[<span class="string">'RemarkName'</span>])</span><br><span class="line">    print(<span class="string">'开始查找...'</span>)</span><br><span class="line">    group_num = int(math.ceil(MemberCount / float(MAX_GROUP_NUM)))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, group_num):</span><br><span class="line">        UserNames = []</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, MAX_GROUP_NUM):</span><br><span class="line">            <span class="keyword">if</span> i * MAX_GROUP_NUM + j &gt;= MemberCount:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            Member = MemberList[i * MAX_GROUP_NUM + j]</span><br><span class="line">            UserNames.append(Member[<span class="string">'UserName'</span>])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 新建群组/添加成员</span></span><br><span class="line">        <span class="keyword">if</span> ChatRoomName == <span class="string">''</span>:</span><br><span class="line">            (ChatRoomName, DeletedList, BlockedList) = createChatroom(</span><br><span class="line">                UserNames)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            (DeletedList, BlockedList) = addMember(ChatRoomName, UserNames)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># todo BlockedList 被拉黑列表</span></span><br><span class="line"></span><br><span class="line">        DeletedCount = len(DeletedList)</span><br><span class="line">        <span class="keyword">if</span> DeletedCount &gt; <span class="number">0</span>:</span><br><span class="line">            result += DeletedList</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 删除成员</span></span><br><span class="line">        deleteMember(ChatRoomName, UserNames)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 进度条</span></span><br><span class="line">        progress = MAX_PROGRESS_LEN * (i + <span class="number">1</span>) / group_num</span><br><span class="line">        print(<span class="string">'['</span>, <span class="string">'#'</span> * int(progress), <span class="string">'-'</span> * int(MAX_PROGRESS_LEN - progress), <span class="string">']'</span>, end=<span class="string">' '</span>)</span><br><span class="line">        print(<span class="string">'新发现你被%d人删除'</span> % DeletedCount)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(DeletedCount):</span><br><span class="line">            <span class="keyword">if</span> d[DeletedList[i]][<span class="number">1</span>] != <span class="string">''</span>:</span><br><span class="line">                print(<span class="string">'%s(%s)'</span> % (d[DeletedList[i]][<span class="number">0</span>],d[DeletedList[i]][<span class="number">1</span>]))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(d[DeletedList[i]][<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> i != group_num - <span class="number">1</span>:</span><br><span class="line">            print(<span class="string">'正在继续查找,请耐心等待...'</span>)</span><br><span class="line">            <span class="comment"># 下一次进行接口调用需要等待的时间</span></span><br><span class="line">            time.sleep(INTERFACE_CALLING_INTERVAL)</span><br><span class="line">    <span class="comment"># todo 删除群组</span></span><br><span class="line"></span><br><span class="line">    print(<span class="string">'\n结果汇总完毕,20s后可重试...'</span>)</span><br><span class="line">    resultNames = []</span><br><span class="line">    <span class="keyword">for</span> r <span class="keyword">in</span> result:</span><br><span class="line">        <span class="keyword">if</span> d[r][<span class="number">1</span>] != <span class="string">''</span>:</span><br><span class="line">            resultNames.append(<span class="string">'%s(%s)'</span> % (d[r][<span class="number">0</span>],d[r][<span class="number">1</span>]))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            resultNames.append(d[r][<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'---------- 被删除的好友列表(共%d人) ----------'</span> % len(result))</span><br><span class="line">    <span class="comment"># 过滤emoji</span></span><br><span class="line">    resultNames = list(map(<span class="keyword">lambda</span> x: re.sub(<span class="string">r'&lt;span.+/span&gt;'</span>, <span class="string">''</span>, x), resultNames))</span><br><span class="line">    <span class="keyword">if</span> len(resultNames):</span><br><span class="line">        print(<span class="string">'\n'</span>.join(resultNames))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">"无"</span>)</span><br><span class="line">    print(<span class="string">'---------------------------------------------'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UnicodeStreamFilter</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, target)</span>:</span></span><br><span class="line">        self.target = target</span><br><span class="line">        self.encoding = <span class="string">'utf-8'</span></span><br><span class="line">        self.errors = <span class="string">'replace'</span></span><br><span class="line">        self.encode_to = self.target.encoding</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> type(s) == str:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                s = s.decode(<span class="string">'utf-8'</span>)</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line">        s = s.encode(self.encode_to, self.errors).decode(self.encode_to)</span><br><span class="line">        self.target.write(s)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> sys.stdout.encoding == <span class="string">'cp936'</span>:</span><br><span class="line">    sys.stdout = UnicodeStreamFilter(sys.stdout)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'本程序的查询结果可能会引起一些心理上的不适,请小心使用...'</span>)</span><br><span class="line">    print(<span class="string">'1小时内只能使用一次，否则会因操作繁忙阻止建群'</span>)</span><br><span class="line">    main()</span><br><span class="line">    print(<span class="string">'回车键退出...'</span>)</span><br><span class="line">    input()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/mp-qr.jpg" alt="clinjie wechat" style="width: 200px; max-width: 100%;">
+    <div>Think about u every day</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/微信/" rel="tag"># 微信</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/26/python_lambda/" rel="next" title="Lambda">
+                <i class="fa fa-chevron-left"></i> Lambda
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/30/QR/" rel="prev" title="二维码与Python">
+                二维码与Python <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      <! -- 添加微信图标 -->
+	    
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+    <div class="comments" id="comments">
+       
+            <div id="uyan_frame"></div>
+       
+    </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/img/avatar.jpg" alt="clinjie">
+          <p class="site-author-name" itemprop="name">clinjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chuangwailinjie" target="_blank" title="github" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chuangwalinjie" target="_blank" title="weibo" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/peihaozhu" target="_blank" title="zhihu" rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#查看被删的微信好友"><span class="nav-number">1.</span> <span class="nav-text">查看被删的微信好友</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用法"><span class="nav-number">2.</span> <span class="nav-text">用法:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代码"><span class="nav-number">3.</span> <span class="nav-text">源代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clinjie</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+    
+      
+    
+
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2142203"></script>
+        <!-- UY END -->
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("BKt7qufuU6B0ix9a9ik7kejs-gzGzoHsz", "pfDjDmIpP09Fj9QNLGzSL2Ox");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+	
+	
+
+<!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<!-- 颗粒漂浮背景 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript">var OriginTitile=document.title,st;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="你要去哪里",clearTimeout(st)):(document.title="clinjie~~"+OriginTitile,st=setTimeout(function(){document.title=OriginTitile},3e3))})</script>
+</body>
+</html>
